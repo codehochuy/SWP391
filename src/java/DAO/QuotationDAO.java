@@ -1,0 +1,112 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package DAO;
+
+import DTO.HouseType;
+import DTO.Quotation;
+import DTO.Service;
+import DTO.Style;
+import Utils.DBContext;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author ACER
+ */
+public class QuotationDAO {
+
+    private DBContext db;
+
+    public QuotationDAO() {
+        db = new DBContext();
+    }
+
+    public QuotationDAO(DBContext db) {
+        this.db = db;
+    }
+
+    public DBContext getDb() {
+        return db;
+    }
+
+    public void setDb(DBContext db) {
+        this.db = db;
+    }
+
+    public List<Quotation> getAll() {
+        List<Quotation> list = new ArrayList<>();
+        String sql = "SELECT\n"
+                + "    Q.*,\n"
+                + "    HT.HouseTypeName,\n"
+                + "    Svc.ServiceName,\n"
+                + "	S.StyleName\n"
+                + "FROM\n"
+                + "    Quotation Q\n"
+                + "JOIN\n"
+                + "    Style S ON Q.StyleID = S.StyleID\n"
+                + "JOIN\n"
+                + "    HouseType HT ON Q.HouseTypeID = HT.HouseTypeID\n"
+                + "JOIN\n"
+                + "    [Service] Svc ON Q.ServiceID = Svc.ServiceID;";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Quotation c = new Quotation();
+                c.setId(rs.getInt("QuotationID"));
+                c.setPrice1(rs.getDouble("Price1"));
+                c.setPrice2(rs.getDouble("Price2"));
+                c.setTime(rs.getInt("Time"));
+                c.setHouseType(new HouseType(rs.getInt("HouseTypeID"), rs.getString("HouseTypeName")));
+                c.setService(new Service(rs.getInt("ServiceID"), rs.getString("ServiceName")));
+                c.setStyle(new Style(rs.getInt("StyleID"), rs.getString("StyleName")));
+
+                list.add(c);
+            }
+            return list;
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return list;
+    }
+    public static void main(String[] args) {
+        QuotationDAO dao = new QuotationDAO();
+        System.out.println(dao.getAll());
+    }
+
+}
