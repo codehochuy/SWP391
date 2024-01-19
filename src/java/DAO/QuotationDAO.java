@@ -104,9 +104,29 @@ public class QuotationDAO {
         }
         return list;
     }
+    
+    public boolean deleteQuotation(String id) {
+    try (Connection con = db.getConn();
+         PreparedStatement stm = con.prepareStatement("DELETE FROM Quotation WHERE QuotationID = ?")) {
+
+        stm.setString(1, id);
+        int effectRow = stm.executeUpdate();
+
+        return effectRow > 0;
+
+    } catch (SQLException e) {
+        e.printStackTrace(); // Handle the exception (log it, throw it, etc.)
+        return false;
+    }
+}
+
+    
+         
     public static void main(String[] args) {
         QuotationDAO dao = new QuotationDAO();
-        System.out.println(dao.getAll());
+//        System.out.println(dao.getAll());
+System.out.println(dao.deleteQuotation("12"));
+        
     }
 
 }
