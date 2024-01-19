@@ -130,11 +130,11 @@
                         <div class="row">
                             <div class="form-group  col-md-12">
                                 <span class="thong-tin-thanh-toan">
-                                    <h5>Chỉnh sửa thông tin sản phẩm cơ bản</h5>
+                                    <h5>Chỉnh sửa thông tin bảng giá cơ bản</h5>
                                 </span>
                             </div>
                         </div>
-                        <form action="updateQuotation" method="POST" id="updatesp">
+                        <form action="UpdateQuotation" method="POST" id="updatesp">
 
 
                         </form>
@@ -226,6 +226,20 @@
                     }
 
                 });
+            }
+        </script>
+        <script>
+            function getData(i) {
+                $.ajax({
+                    type: 'GET',
+                    url: '${pageContext.request.contextPath}/LoadQuotationByID',
+                    data: {
+                        id: i
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        $('#updatesp').html(data);
+                    }
+                })
             }
         </script>
          <script>
