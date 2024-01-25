@@ -64,10 +64,10 @@
                     <div class="row">
                         <div class="col-12">
                             <ul id="portfolio-flters">
-                                <li data-filter="*" class="filter-active">BIỆT THỰ</li>
+                                <li data-filter="*" class="filter-active">All</li>
                                 <li data-filter=".first">NHÀ PHỐ</li>
-                                <li data-filter=".second">CĂN HỘ</li>
-                                <li data-filter=".third">CÔNG TRÌNH DỊCH VỤ</li>
+                                <li data-filter=".second">Chung Cư</li>
+                                <li data-filter=".third">Biệt thự</li>
                             </ul>
                         </div>
                     </div>
