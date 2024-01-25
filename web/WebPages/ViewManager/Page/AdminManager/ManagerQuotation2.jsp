@@ -89,7 +89,7 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${list}" var="list">
-                                        <c:if test="${list.service.id eq '1'}">
+                                        <c:if test="${list.service.id eq '2'}">
                                             <tr> 
                                                 <td width="10"><input type="checkbox" name="check1" value="1"></td>
                                                 <td>${list.service.name}</td>                              

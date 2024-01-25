@@ -50,6 +50,11 @@
                                     Bạn quên mật khẩu?
                                 </a>
                             </div>
+                            <div class="text-right p-t-12">
+                                <a class="txt2" href="WebPages/ViewWebPage/Project.jsp">
+                                    Project
+                                </a>
+                            </div>
                         </form>
 
                         <p style="color: red">${mess}</p>
