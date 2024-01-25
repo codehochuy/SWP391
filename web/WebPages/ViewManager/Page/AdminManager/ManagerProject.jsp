@@ -33,7 +33,7 @@
         <main class="app-content">
             <div class="app-title"> 
                 <ul class="app-breadcrumb breadcrumb side">
-                    <li class="breadcrumb-item active"><a href="#"><b>Danh sách báo giá dịch vụ thi công</b></a></li>
+                    <li class="breadcrumb-item active"><a href="#"><b>Dự án đã hoàn thành</b></a></li>
                 </ul>
                 <div id="clock"></div>
             </div>
@@ -81,9 +81,13 @@
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
-                                                <button class="btn btn-primary btn-sm trash" type="button" title="Xem chi tiết">
-                                                    <i class="far fa-eye"></i>
-                                                </button>
+
+                                                <form action="ViewProjectDetail" method="post">
+                                                    <input type="hidden" name="projectId" value="${list.id}">
+                                                    <button class="btn btn-primary btn-sm trash" type="submit" title="Xem chi tiết">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </form>
 
                                             </td>
                                         </tr>
@@ -96,7 +100,7 @@
                 </div>
             </div>
         </main>
-      
+
         <!-- Essential javascripts for application to work-->
         <script src="./js/jquery-3.2.1.min.js"></script>
         <script src="./js/popper.min.js"></script>

@@ -112,7 +112,7 @@ public class ProjectDAO {
 
         return user;
     }
-    
+
     public boolean deleteProject(String id) {
         try (Connection con = db.getConn();
                 PreparedStatement stm = con.prepareStatement("DELETE FROM Projects WHERE ProjectID = ?")) {
@@ -128,9 +128,59 @@ public class ProjectDAO {
         }
     }
 
+    public Project getProjectbyID(String id) {
+        String sql = "SELECT\n"
+                + "    P.ProjectID, P.ProjectName, P.Description, P.Date, P.Time,\n"
+                + "    S.ServiceID, S.ServiceName,\n"
+                + "    H.HouseTypeID, H.HouseTypeName,\n"
+                + "    U.UsersID, U.UserName, U.Name, U.Avatar, U.Email, U.[Password], U.Address, U.Phone, U.UserStatus,\n"
+                + "    R.RoleID, R.RoleName,\n"
+                + "    St.StyleID, St.StyleName\n"
+                + "FROM\n"
+                + "    Projects P\n"
+                + "INNER JOIN\n"
+                + "    [Service] S ON P.ServiceID = S.ServiceID\n"
+                + "INNER JOIN\n"
+                + "    [HouseType] H ON P.HouseTypeID = H.HouseTypeID\n"
+                + "INNER JOIN\n"
+                + "    Users U ON P.UsersID = U.UsersID\n"
+                + "INNER JOIN\n"
+                + "    Roles R ON U.RoleID = R.RoleID\n"
+                + "INNER JOIN\n"
+                + "    [Style] St ON P.StyleID = St.StyleID\n"
+                + "WHERE\n"
+                + "    P.ProjectID = ?;";
+
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Project project = new Project();
+                    project.setId(rs.getInt("ProjectID"));
+                    project.setName(rs.getString("ProjectName"));
+                    project.setDescription(rs.getString("Description"));
+                    project.setDate(rs.getDate("Date"));
+                    project.setTime(rs.getInt("Time"));
+                    project.setHouseType(new HouseType(rs.getInt("HouseTypeID"), rs.getString("HouseTypeName")));
+                    project.setService(new Service(rs.getInt("ServiceID"), rs.getString("ServiceName")));
+                    project.setStyle(new Style(rs.getInt("StyleID"), rs.getString("StyleName")));
+                    project.setUser(extractUserFromResultSet(rs));
+                    return project;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception (log it, throw it, etc.)
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         ProjectDAO dao = new ProjectDAO();
-        System.out.println(dao.deleteProject("6"));
+        System.out.println(dao.getProjectbyID("1"));
     }
 
 }
