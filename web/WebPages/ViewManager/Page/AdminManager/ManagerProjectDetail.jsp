@@ -47,7 +47,7 @@
                     <div class="tile">
                         <h1 class="tile-title">Thông tin chi tiết</h1>
                         <div class="tile-body">
-                            <form class="row" action="createProduct?userId=${sessionScope.USER.id}" method="post" enctype="multipart/form-data" id="createPro">
+                            <form class="row" action="UpdateProject" method="post" enctype="multipart/form-data" id="createPro">
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Tên dự án</label>
                                     <input class="form-control" type="text" name="projectname" value="${project.name}">

@@ -44,8 +44,10 @@
                         <div class="tile-body">
                             <div class="row element-button">
                                 <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" href="createProduct" title="Thêm"><i class="fas fa-plus"></i>
-                                        Thêm dự án</a>
+                                    <a class="btn btn-add btn-sm" href="CreateProject" title="Thêm">
+                                        <i class="fas fa-plus"></i> Thêm dự án
+                                    </a>
+
                                 </div>
                                 <div class="col-sm-2">
                                     <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
