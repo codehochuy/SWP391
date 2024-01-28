@@ -6,11 +6,16 @@
 package Controller.ManagerProject;
 
 import DAO.HouseTypeDAO;
+import DAO.ProjectDAO;
+import DAO.ProjectImageDAO;
 import DAO.ServiceDAO;
 import DAO.StyleDAO;
+import DAO.UserDAO;
 import DTO.HouseType;
+import DTO.ProjectImage;
 import DTO.Service;
 import DTO.Style;
+import DTO.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -41,19 +46,23 @@ public class CreateProject extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             ServiceDAO serviceDAO = new ServiceDAO();
-        List<Service> services = serviceDAO.getAll();
-        
-        StyleDAO styleDAO = new StyleDAO();
-        List<Style> styles = styleDAO.getAll();
-        
-        HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-        List<HouseType> houseTypes = houseTypeDAO.getAll();
-        
-        request.setAttribute("services", services);
-        request.setAttribute("styles", styles);
-        request.setAttribute("houseTypes", houseTypes);
-        
-         request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateProject.jsp").forward(request, response);
+            List<Service> services = serviceDAO.getAll();
+
+            StyleDAO styleDAO = new StyleDAO();
+            List<Style> styles = styleDAO.getAll();
+
+            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+            List<HouseType> houseTypes = houseTypeDAO.getAll();
+
+            UserDAO aO = new UserDAO();
+            List<User> user = aO.getAll();
+
+            request.setAttribute("services", services);
+            request.setAttribute("user", user);
+            request.setAttribute("styles", styles);
+            request.setAttribute("houseTypes", houseTypes);
+
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateProject.jsp").forward(request, response);
         }
     }
 
@@ -83,7 +92,32 @@ public class CreateProject extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        String projectname = request.getParameter("projectname");
+        String date = request.getParameter("date");
+//        int time = Integer.parseInt(request.getParameter("time"));
+        int service = Integer.parseInt(request.getParameter("service"));
+        int houseTypes = Integer.parseInt(request.getParameter("houseTypes"));
+        int styles = Integer.parseInt(request.getParameter("styles"));
+        String description = request.getParameter("description");
+        String timeParameter = request.getParameter("time");
+        int time = (timeParameter != null && !timeParameter.isEmpty()) ? Integer.parseInt(timeParameter) : 0;
+        int userid = Integer.parseInt(request.getParameter("user"));
+
+        ProjectDAO dao = new ProjectDAO();
+        boolean result = dao.createProject(projectname, description, date, time, service, houseTypes, styles, userid);
+
+        if (result) {
+            request.setAttribute("messtrue", "Thêm dự án thành công");
+            int projectid = dao.getProjectId();
+            ProjectImageDAO aO = new ProjectImageDAO();
+        } else {
+            request.setAttribute("messefalse", "Thêm dự án thất bại");
+        }
+
+//        
+//        response.sendRedirect(request.getContextPath() + "/CreateProject");
+        doGet(request, response);
     }
 
     /**

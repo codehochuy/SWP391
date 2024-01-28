@@ -83,6 +83,12 @@ public class ProjectImageDAO {
         }
         return imageList;
     }
+    
+    
+    public void CreateProjectImage(String link ,String projectid){
+        
+    }
+        
 
     public static void main(String[] args) {
         ProjectImageDAO dao = new ProjectImageDAO();

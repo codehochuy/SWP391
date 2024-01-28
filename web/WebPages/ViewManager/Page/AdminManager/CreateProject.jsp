@@ -1,6 +1,3 @@
-
-
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -47,20 +44,20 @@
                     <div class="tile">
                         <h1 class="tile-title">Thông tin chi tiết</h1>
                         <div class="tile-body">
-                            <form class="row" action="CreateProject" method="post" enctype="multipart/form-data" id="createPro">
+                            <form class="row" action="CreateProject" method="post" id="createPro">
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Tên dự án</label>
-                                    <input class="form-control" type="text" name="projectname" >
+                                    <input class="form-control" type="text" name="projectname" required>
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Ngày hoàn thành</label>
-                                    <input class="form-control" type="date" name="date" >
+                                    <input class="form-control" type="date" name="date" required>
                                     <div class="error-message" id="price-error"></div>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Thời gian hoàn thành/ngày</label>
-                                    <input class="form-control" type="number" min="0" name="time" >
+                                    <input class="form-control" type="number" min="0" name="time" required>
                                     <div class="error-message" id="quantity-error"></div>
                                 </div>
                                 <div class="form-group col-md-4">
@@ -91,27 +88,32 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-12">
-                                    <label class="control-label">Description</label>
-                                    <textarea class="form-control" name="description" id="description" rows="5"></textarea>
-                                    <div class="error-message" id="description-error"></div>
+                                <div class="form-group col-md-4">
+                                    <label for="exampleSelect4" class="control-label">Chủ sở hữu</label>
+                                    <select class="form-control" id="exampleSelect4" name="user">
+                                        <option disabled>--Chọn khách hàng--</option>
+                                        <c:forEach items="${requestScope.user}" var="i">
+                                            <option value="${i.id}">${i.name}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-12">
+                                    <label class="control-label">Description</label>
+                                    <textarea  required="" class="form-control" name="description" id="description" rows="5"></textarea>
+                                    <div class="error-message" id="description-error"></div>
+                                </div>
+<!--                                <div class="form-group col-md-12">
                                     <label class="control-label">Ảnh dự án</label>
                                     <div id="myfileupload">
                                         <input type="file" id="uploadfile" name="ImageUpload" onchange="readURL(this);" multiple>
                                     </div>
                                     <div id="thumbbox">
-                                        <!-- Hiển thị các ảnh đã chọn -->
+                                         Các ảnh đã chọn 
                                         <div id="thumbimages"></div>
                                         <a class="removeimg" href="javascript:"></a>
-                                    </div>
-                                    <!--                                    <div id="boxchoice">
-                                                                            <a href="javascript:" class="Choicefile"><i class="fas fa-cloud-upload-alt"></i> Chọn ảnh</a>
-                                                                            <p style="clear:both"></p>
-                                                                        </div>-->
+                                    </div>                     
                                     <span id="imageError" class="error"></span>
-                                </div>
+                                </div>-->
                                 <button class="btn btn-save" type="submit" >Lưu lại</button>
                                 <a class="btn btn-cancel" href="ManagerProject">Hủy bỏ</a>
 
@@ -146,47 +148,47 @@
 
 
         <script type="text/javascript">
-                                     $('#sampleTable').DataTable();
-                                     //Thời Gian
-                                     function time() {
-                                         var today = new Date();
-                                         var weekday = new Array(7);
-                                         weekday[0] = "Chủ Nhật";
-                                         weekday[1] = "Thứ Hai";
-                                         weekday[2] = "Thứ Ba";
-                                         weekday[3] = "Thứ Tư";
-                                         weekday[4] = "Thứ Năm";
-                                         weekday[5] = "Thứ Sáu";
-                                         weekday[6] = "Thứ Bảy";
-                                         var day = weekday[today.getDay()];
-                                         var dd = today.getDate();
-                                         var mm = today.getMonth() + 1;
-                                         var yyyy = today.getFullYear();
-                                         var h = today.getHours();
-                                         var m = today.getMinutes();
-                                         var s = today.getSeconds();
-                                         m = checkTime(m);
-                                         s = checkTime(s);
-                                         nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                         if (dd < 10) {
-                                             dd = '0' + dd
-                                         }
-                                         if (mm < 10) {
-                                             mm = '0' + mm
-                                         }
-                                         today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                         tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                                 '</span>';
-                                         document.getElementById("clock").innerHTML = tmp;
-                                         clocktime = setTimeout("time()", "1000", "Javascript");
+                                            $('#sampleTable').DataTable();
+                                            //Thời Gian
+                                            function time() {
+                                                var today = new Date();
+                                                var weekday = new Array(7);
+                                                weekday[0] = "Chủ Nhật";
+                                                weekday[1] = "Thứ Hai";
+                                                weekday[2] = "Thứ Ba";
+                                                weekday[3] = "Thứ Tư";
+                                                weekday[4] = "Thứ Năm";
+                                                weekday[5] = "Thứ Sáu";
+                                                weekday[6] = "Thứ Bảy";
+                                                var day = weekday[today.getDay()];
+                                                var dd = today.getDate();
+                                                var mm = today.getMonth() + 1;
+                                                var yyyy = today.getFullYear();
+                                                var h = today.getHours();
+                                                var m = today.getMinutes();
+                                                var s = today.getSeconds();
+                                                m = checkTime(m);
+                                                s = checkTime(s);
+                                                nowTime = h + " giờ " + m + " phút " + s + " giây";
+                                                if (dd < 10) {
+                                                    dd = '0' + dd
+                                                }
+                                                if (mm < 10) {
+                                                    mm = '0' + mm
+                                                }
+                                                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                                                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                                                        '</span>';
+                                                document.getElementById("clock").innerHTML = tmp;
+                                                clocktime = setTimeout("time()", "1000", "Javascript");
 
-                                         function checkTime(i) {
-                                             if (i < 10) {
-                                                 i = "0" + i;
-                                             }
-                                             return i;
-                                         }
-                                     }
+                                                function checkTime(i) {
+                                                    if (i < 10) {
+                                                        i = "0" + i;
+                                                    }
+                                                    return i;
+                                                }
+                                            }
         </script>
         <script>
             function readURL(input) {
@@ -210,6 +212,19 @@
                 }
             }
 
+        </script>
+        
+        <script>
+            <% if (request.getAttribute("messtrue") != null) {%>
+            swal("<%= request.getAttribute("messtrue")%>", "", "success");
+            <% request.removeAttribute("messtrue"); %>
+            <% } %>
+        </script>
+        <script>
+            <% if (request.getAttribute("messefalse") != null) {%>
+            swal("<%= request.getAttribute("messefalse")%>", "", "error");
+            <% request.removeAttribute("messefalse"); %>
+            <% }%>
         </script>
 
     </body>

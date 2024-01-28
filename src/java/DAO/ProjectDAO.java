@@ -178,9 +178,55 @@ public class ProjectDAO {
         return null;
     }
 
+    public boolean createProject(String name, String description, String date, int time, int serviceID,
+            int houseTypeID, int styleID, int userID) {
+        String sql = "INSERT INTO Projects (ProjectName, [Description], [Date], [Time], ServiceID, HouseTypeID, UsersID, StyleID)\n"
+                + "VALUES (?, ?,?, ?, ?, ?, ?, ?);";
+
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ps.setString(2, description);
+            ps.setString(3, date);
+            ps.setInt(4, time);
+            ps.setInt(5, serviceID);
+            ps.setInt(6, houseTypeID);
+            ps.setInt(7, userID);
+            ps.setInt(8, styleID);
+
+            int rowsAffected = ps.executeUpdate();
+
+            // Check if at least one row was affected
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            // Log or handle the exception as needed
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+     public int getProjectId() {
+        int projectID = 0;
+
+        try {
+            String sql = "SELECT MAX(ProjectID) AS MaxProjectID FROM Projects";
+            PreparedStatement stmt = db.getConn().prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                projectID = rs.getInt("MaxProjectID");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProjectDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return projectID;
+    }
     public static void main(String[] args) {
         ProjectDAO dao = new ProjectDAO();
-        System.out.println(dao.getProjectbyID("1"));
+//        System.out.println(dao.createProject("huy", "huy", "2022-01-02", 100, 1, 2, 1, 2));
+System.out.println(dao.getProjectId());
+
     }
 
 }
