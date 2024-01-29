@@ -16,21 +16,34 @@ import DTO.ProjectImage;
 import DTO.Service;
 import DTO.Style;
 import DTO.User;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author ACER
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+        maxFileSize = 1024 * 1024 * 5,
+        maxRequestSize = 1024 * 1024 * 5 * 5)
 @WebServlet(name = "CreateProject", urlPatterns = {"/CreateProject"})
 public class CreateProject extends HttpServlet {
+
+    private static final String DEFAULT_FILENAME = "default.file";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -109,8 +122,29 @@ public class CreateProject extends HttpServlet {
 
         if (result) {
             request.setAttribute("messtrue", "Thêm dự án thành công");
-            int projectid = dao.getProjectId();
-            ProjectImageDAO aO = new ProjectImageDAO();
+            ProjectDAO dAO = new ProjectDAO();
+            int projectid = dAO.getProjectId();
+            int length = getServletContext().getRealPath("/").length();
+            String uploadPath = new StringBuilder(getServletContext().getRealPath("/")).delete(length - 10, length - 4).toString() + File.separator + "img";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            try {
+                List<String> fileNames = new ArrayList<>();
+                for (Part part : request.getParts()) {
+                    String fileName = getFileName(part);
+                    if (!fileName.equals(DEFAULT_FILENAME)) {
+                        fileNames.add(fileName);
+                        part.write(uploadPath + File.separator + fileName);
+                    }
+                    ProjectImageDAO aO = new ProjectImageDAO();
+                    aO.createProjectImage(fileName, "", projectid);
+                }
+            } catch (FileNotFoundException fne) {
+                request.setAttribute("message", "There was an error: " + fne.getMessage());
+            }
+
         } else {
             request.setAttribute("messefalse", "Thêm dự án thất bại");
         }
@@ -118,6 +152,15 @@ public class CreateProject extends HttpServlet {
 //        
 //        response.sendRedirect(request.getContextPath() + "/CreateProject");
         doGet(request, response);
+    }
+
+    private String getFileName(Part part) {
+        for (String content : part.getHeader("content-disposition").split(";")) {
+            if (content.trim().startsWith("filename")) {
+                return content.substring(content.indexOf("=") + 2, content.length() - 1);
+            }
+        }
+        return DEFAULT_FILENAME;
     }
 
     /**

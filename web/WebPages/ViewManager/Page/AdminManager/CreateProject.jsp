@@ -44,7 +44,7 @@
                     <div class="tile">
                         <h1 class="tile-title">Thông tin chi tiết</h1>
                         <div class="tile-body">
-                            <form class="row" action="CreateProject" method="post" id="createPro">
+                            <form class="row" action="CreateProject" method="post" id="createPro"enctype="multipart/form-data" >
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Tên dự án</label>
                                     <input class="form-control" type="text" name="projectname" required>
@@ -102,7 +102,7 @@
                                     <textarea  required="" class="form-control" name="description" id="description" rows="5"></textarea>
                                     <div class="error-message" id="description-error"></div>
                                 </div>
-<!--                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-12">
                                     <label class="control-label">Ảnh dự án</label>
                                     <div id="myfileupload">
                                         <input type="file" id="uploadfile" name="ImageUpload" onchange="readURL(this);" multiple>
@@ -113,7 +113,7 @@
                                         <a class="removeimg" href="javascript:"></a>
                                     </div>                     
                                     <span id="imageError" class="error"></span>
-                                </div>-->
+                                </div>
                                 <button class="btn btn-save" type="submit" >Lưu lại</button>
                                 <a class="btn btn-cancel" href="ManagerProject">Hủy bỏ</a>
 
