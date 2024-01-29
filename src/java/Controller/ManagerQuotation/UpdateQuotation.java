@@ -5,8 +5,12 @@
  */
 package Controller.ManagerQuotation;
 
+import DAO.HouseTypeDAO;
 import DAO.QuotationDAO;
+import DAO.StyleDAO;
+import DTO.HouseType;
 import DTO.Quotation;
+import DTO.Style;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -88,18 +92,35 @@ public class UpdateQuotation extends HttpServlet {
         if (result) {
             QuotationDAO dAO = new QuotationDAO();
             List<Quotation> list = dAO.getAll();
+
+            StyleDAO styleDAO = new StyleDAO();
+            List<Style> styles = styleDAO.getAll();
+
+            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+            List<HouseType> houseTypes = houseTypeDAO.getAll();
+
+            request.setAttribute("styles", styles);
+            request.setAttribute("houseTypes", houseTypes);
             request.setAttribute("list", list);
             request.setAttribute("messtrue", "Cập nhật bảng giá thành công");
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
 
-        }
-        else{
-             QuotationDAO dAO = new QuotationDAO();
+        } else {
+            QuotationDAO dAO = new QuotationDAO();
             List<Quotation> list = dAO.getAll();
+
+            StyleDAO styleDAO = new StyleDAO();
+            List<Style> styles = styleDAO.getAll();
+
+            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+            List<HouseType> houseTypes = houseTypeDAO.getAll();
+
+            request.setAttribute("styles", styles);
+            request.setAttribute("houseTypes", houseTypes);
             request.setAttribute("list", list);
             request.setAttribute("messefalse", "Cập nhật bảng giá thất bại");
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
-            
+
         }
 
     }
