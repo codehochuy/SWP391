@@ -184,36 +184,117 @@ public class QuotationDAO {
 //            e.printStackTrace();
 //        }
 //    }
-    
     public boolean updateQuotation(String id, String price1, String price2, String time) {
-    String sql = "UPDATE Quotation SET Price1 = ?, Price2 = ?, [Time] = ? WHERE QuotationID = ?";
+        String sql = "UPDATE Quotation SET Price1 = ?, Price2 = ?, [Time] = ? WHERE QuotationID = ?";
 
-    try (Connection conn = db.getConn();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        ps.setDouble(1, Double.parseDouble(price1));
-        ps.setDouble(2, Double.parseDouble(price2));
-        ps.setInt(3, Integer.parseInt(time));
-        ps.setInt(4, Integer.parseInt(id));
+            ps.setDouble(1, Double.parseDouble(price1));
+            ps.setDouble(2, Double.parseDouble(price2));
+            ps.setInt(3, Integer.parseInt(time));
+            ps.setInt(4, Integer.parseInt(id));
 
-        int rowsAffected = ps.executeUpdate();
-        return rowsAffected > 0;
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
 
-    } catch (SQLException | NumberFormatException e) {
-        e.printStackTrace();
+        } catch (SQLException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
-    return false;
-}
+    public boolean createQuotation(double price1, double price2, int time, int styleID, int houseTypeID, int serviceID) {
+        String sql = "INSERT INTO Quotation (Price1, Price2, [Time], StyleID, HouseTypeID, ServiceID)\n"
+                + "VALUES (?, ?, ?, ?, ?, ?);";
 
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setDouble(1, price1);
+            ps.setDouble(2, price2);
+            ps.setInt(3, time);
+            ps.setInt(4, styleID);
+            ps.setInt(5, houseTypeID);
+            ps.setInt(6, serviceID);
 
+            int rowsAffected = ps.executeUpdate();
+
+            // Kiểm tra xem ít nhất một dòng có được ảnh hưởng hay không
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            // Ghi log hoặc xử lý ngoại lệ theo cách cần thiết
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+//    public boolean createQuotation(double price1, double price2, int houseTypeID, int serviceID, int styleID, int time) {
+//    Connection conn = null;
+//
+//    try {
+//        conn = db.getConn();
+//
+//        // Kiểm tra xem dữ liệu đã tồn tại chưa
+//        if (!quotationExists(conn, houseTypeID, serviceID, styleID)) {
+//            // Nếu chưa tồn tại, thực hiện câu truy vấn INSERT
+//            String sql = "INSERT INTO Quotation (Price1, Price2, HouseTypeID, ServiceID, StyleID, Time) " +
+//                    "VALUES (?, ?, ?, ?, ?, ?)";
+//
+//            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+//
+//                ps.setDouble(1, price1);
+//                ps.setDouble(2, price2);
+//                ps.setInt(3, houseTypeID);
+//                ps.setInt(4, serviceID);
+//                ps.setInt(5, styleID);
+//                ps.setInt(6, time);
+//
+//                int rowsAffected = ps.executeUpdate();
+//
+//                return rowsAffected > 0;
+//            }
+//        }
+//
+//        return false;
+//    } catch (SQLException e) {
+//        e.printStackTrace();
+//        return false;
+//    } finally {
+//        try {
+//            if (conn != null && !conn.isClosed()) {
+//                conn.close();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//}
+//
+//private boolean quotationExists(Connection conn, int houseTypeID, int serviceID, int styleID) {
+//    // Kiểm tra xem dữ liệu đã tồn tại hay không
+//    String checkSql = "SELECT 1 FROM Quotation WHERE HouseTypeID = ? AND ServiceID = ? AND StyleID = ?";
+//
+//    try (PreparedStatement ps = conn.prepareStatement(checkSql)) {
+//        ps.setInt(1, houseTypeID);
+//        ps.setInt(2, serviceID);
+//        ps.setInt(3, styleID);
+//
+//        try (ResultSet rs = ps.executeQuery()) {
+//            return rs.next(); // Nếu có dòng dữ liệu, tức là đã tồn tại
+//        }
+//    } catch (SQLException e) {
+//        e.printStackTrace();
+//        return false;
+//    }
+//}
     public static void main(String[] args) {
         QuotationDAO dao = new QuotationDAO();
 //        System.out.println(dao.getAll());
 //        System.out.println(dao.deleteQuotation("12"));
 //        System.out.println(dao.getQuotationID("3"));
-        System.out.println(dao.updateQuotation("10", "5900000", "6000000", "8"));
-
+//        System.out.println(dao.updateQuotation("10", "5900000", "6000000", "8"));
+        System.out.println(dao.createQuotation(10, 20, 9, 1, 1, 1));
     }
 
 }

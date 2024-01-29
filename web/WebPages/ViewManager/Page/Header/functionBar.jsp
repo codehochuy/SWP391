@@ -14,6 +14,12 @@
     <body>
         <div class="row element-button">
             <div class="col-sm-2">
+                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addhousquotation">
+                    <i class="fas fa-plus"></i> Báo giá
+                </a>
+
+            </div>
+            <div class="col-sm-2">
                 <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addhousestyle"><i
                         class="fas fa-folder-plus"></i> Thêm kiểu nhà</a>
             </div>
@@ -21,10 +27,6 @@
                 <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
                         class="fas fa-folder-plus"></i> Thêm phong cách</a>
             </div>
-            <!--                                <div class="col-sm-2">
-                                                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addsize"><i
-                                                        class="fas fa-folder-plus"></i> Thêm </a>
-                                            </div>-->
         </div>
     </body>
 </html>

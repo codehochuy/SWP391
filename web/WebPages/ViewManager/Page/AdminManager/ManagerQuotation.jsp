@@ -43,20 +43,20 @@
                         <!--huycute-->
                         <div class="tile-body">
                             <jsp:include page="../../Page/Header/functionBar.jsp"/>
-<!--                            <div class="row element-button">
-                                <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addhousestyle"><i
-                                            class="fas fa-folder-plus"></i> Thêm kiểu nhà</a>
-                                </div>
-                                <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
-                                            class="fas fa-folder-plus"></i> Thêm phong cách</a>
-                                </div>
-                                <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addsize"><i
-                                            class="fas fa-folder-plus"></i> Thêm </a>
-                                </div>
-                            </div>-->
+                            <!--                            <div class="row element-button">
+                                                            <div class="col-sm-2">
+                                                                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addhousestyle"><i
+                                                                        class="fas fa-folder-plus"></i> Thêm kiểu nhà</a>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
+                                                                        class="fas fa-folder-plus"></i> Thêm phong cách</a>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addsize"><i
+                                                                        class="fas fa-folder-plus"></i> Thêm </a>
+                                                            </div>
+                                                        </div>-->
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
@@ -211,6 +211,78 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="addhousquotation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <form action="CreateQuotation" method="post">
+                            <div class="row">
+                                <div class="form-group  col-md-12">
+                                    <span class="thong-tin-thanh-toan">
+                                        <h5>Thêm báo giá mới </h5>
+                                    </span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label">Dịch vụ</label>
+                                    <input readonly=""class="form-control" type="text" name="service" value="Thi công thô">
+                                    <div class="error-message" id="tensp-error"></div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="exampleSelect2" class="control-label">Kiểu nhà</label>
+                                    <select class="form-control" id="exampleSelect2" name="houseTypes">
+                                        <option disabled>-- Chọn kiểu nhà --</option>
+                                        <c:forEach items="${requestScope.houseTypes}" var="i">
+                                            <option value="${i.id}">${i.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="exampleSelect3" class="control-label">Phong cách</label>
+                                    <select class="form-control" id="exampleSelect3" name="styles">
+                                        <option disabled>-- Chọn phong cách --</option>
+                                        <c:forEach items="${requestScope.styles}" var="i">
+                                            <option value="${i.id}">${i.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Giá dao động/m&#178;</label>
+                                    <input class="form-control" type="number" name="price1" required>
+                                    <div class="error-message" id="tensp-error"></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="control-label">Giá dao động/m&#178;</label>
+                                    <input class="form-control" type="number" name="prcie2" required>
+                                    <div class="error-message" id="tensp-error"></div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Thời gian hoàn thành/tháng</label>
+                                    <input class="form-control" type="number" name="time" required min="1" max="50">
+                                    <div class="error-message" id="tensp-error"></div>
+                                </div>
+                            </div>
+                            <c:if test="${not empty requestScope.messefalse1}">
+                                <div style="color: red;">
+                                    ${requestScope.messefalse1}
+                                </div>
+                            </c:if>
+
+
+                            <button class="btn btn-save" type="submit">Lưu lại</button>
+                            <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -318,7 +390,7 @@
             <% request.removeAttribute("messefalse"); %>
             <% }%>
         </script>
-        
+
         <style>
             ul.compact-list {
                 max-height: 100px; /* Điều chỉnh chiều cao tối đa của danh sách */
