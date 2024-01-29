@@ -5,8 +5,12 @@
  */
 package Controller.ManagerQuotation;
 
+import DAO.HouseTypeDAO;
 import DAO.QuotationDAO;
+import DAO.StyleDAO;
+import DTO.HouseType;
 import DTO.Quotation;
+import DTO.Style;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -38,6 +42,13 @@ public class ManagerQuotation2 extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             QuotationDAO dAO = new QuotationDAO();
             List<Quotation> list = dAO.getAll();
+            StyleDAO styleDAO = new StyleDAO();
+            List<Style> styles = styleDAO.getAll();
+
+            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+            List<HouseType> houseTypes = houseTypeDAO.getAll();
+            request.setAttribute("styles", styles);
+            request.setAttribute("houseTypes", houseTypes);
             request.setAttribute("list", list);
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
         }

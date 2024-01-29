@@ -42,38 +42,7 @@
                     <div class="tile">
                         <!--huycute-->
                         <div class="tile-body">
-                            <!--                            <div class="row element-button">
-                                                            <div class="col-sm-2">
-                            
-                                                                <a class="btn btn-add btn-sm" href="createProduct" title="Thêm"><i class="fas fa-plus"></i>
-                                                                    Tạo mới sản phẩm</a>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
-                                                                        class="fas fa-file-upload"></i> Tải từ file</a>
-                                                            </div>
-                            
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
-                                                                        class="fas fa-print"></i> In dữ liệu</a>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép"><i
-                                                                        class="fas fa-copy"></i> Sao chép</a>
-                                                            </div>
-                            
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm pdf-file" type="button" title="In" onclick="myFunction(this)"><i
-                                                                        class="fas fa-file-pdf"></i> Xuất PDF</a>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)"><i
-                                                                        class="fas fa-trash-alt"></i> Xóa tất cả </a>
-                                                            </div>
-                                                        </div>-->
+                            <jsp:include page="../../Page/Header/functionBar.jsp"/>
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
@@ -148,6 +117,86 @@
         <!--
         MODAL
         -->
+        <div class="modal fade" id="addhousestyle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <form action="CreateHouseStyle" method="post">
+                            <div class="row">
+                                <div class="form-group  col-md-12">
+                                    <span class="thong-tin-thanh-toan">
+                                        <h5>Thêm mới kiểu nhà mới </h5>
+                                    </span>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Nhập tên kiểu nhà mới</label>
+                                    <input class="form-control" type="text" required name="housestyle">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Danh sách các kiểu nhà nhà hiện có</label>
+                                    <ul class="compact-list">
+                                        <c:forEach items="${requestScope.houseTypes}" var="i" varStatus="status">
+                                            <div>${status.index + 1}. ${i.name}</div>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <button class="btn btn-save" type="submit">Lưu lại</button>
+                            <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="addstyle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <form action="CreateStyle" method="post">
+                            <div class="row">
+                                <div class="form-group  col-md-12">
+                                    <span class="thong-tin-thanh-toan">
+                                        <h5>Thêm mới phong cách mới </h5>
+                                    </span>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Nhập tên phong cách nhà mới</label>
+                                    <input class="form-control" type="text" required name="style">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Danh sách các phong cách nhà hiện có</label>
+                                    <ul class="compact-list">
+                                        <c:forEach items="${requestScope.styles}" var="i" varStatus="status">
+                                            <div>${status.index + 1}. ${i.name}</div>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            <button class="btn btn-save" type="submit">Lưu lại</button>
+                            <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 

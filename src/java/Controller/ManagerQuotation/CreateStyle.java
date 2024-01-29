@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,7 +13,10 @@ import DTO.Quotation;
 import DTO.Style;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +27,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "ManagerQuotation", urlPatterns = {"/ManagerQuotation"})
-public class ManagerQuotation extends HttpServlet {
+@WebServlet(name = "CreateStyle", urlPatterns = {"/CreateStyle"})
+public class CreateStyle extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,18 +44,15 @@ public class ManagerQuotation extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            QuotationDAO dAO = new QuotationDAO();
-            List<Quotation> list = dAO.getAll();
-            StyleDAO styleDAO = new StyleDAO();
-            List<Style> styles = styleDAO.getAll();
-
-            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-            List<HouseType> houseTypes = houseTypeDAO.getAll();
-            request.setAttribute("styles", styles);
-            request.setAttribute("houseTypes", houseTypes);
-            request.setAttribute("list", list);
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
-            
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CreateStyle</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CreateStyle at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -83,7 +82,48 @@ public class ManagerQuotation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            request.setCharacterEncoding("UTF-8");
+             StyleDAO aO = new StyleDAO();
+            String name = request.getParameter("style");
+            boolean result = aO.addStyle(name);
+            if (result) {
+                QuotationDAO dAO = new QuotationDAO();
+                List<Quotation> list = dAO.getAll();
+                
+                StyleDAO styleDAO = new StyleDAO();
+                List<Style> styles = styleDAO.getAll();
+
+                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                List<HouseType> houseTypes = houseTypeDAO.getAll();
+                
+                request.setAttribute("styles", styles);
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("list", list);
+
+                request.setAttribute("messtrue", "Đã thêm thành công");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+
+            } else {
+                QuotationDAO dAO = new QuotationDAO();
+                List<Quotation> list = dAO.getAll();
+                
+                StyleDAO styleDAO = new StyleDAO();
+                List<Style> styles = styleDAO.getAll();
+
+                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                List<HouseType> houseTypes = houseTypeDAO.getAll();
+                
+                request.setAttribute("styles", styles);
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("list", list);
+
+                request.setAttribute("messefalse", "Đã thêm thất bại");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CreateHouseStyle.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
