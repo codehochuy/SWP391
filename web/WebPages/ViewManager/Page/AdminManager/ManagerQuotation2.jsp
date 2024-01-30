@@ -68,7 +68,7 @@
                                                 <td>${list.price1}</td>
                                                 <td>${list.price2}</td>
                                                 <td style="display: flex; justify-content: space-left">
-                                                    <form action="DeleteQuotation" method="Post"">
+                                                    <form action="DeleteQuotation2" method="Post">
                                                         <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
                                                                 data-userID="${list.id}">
                                                             <i class="fas fa-trash-alt"></i>
@@ -104,7 +104,7 @@
                                 </span>
                             </div>
                         </div>
-                        <form action="UpdateQuotation" method="POST" id="updatesp">
+                        <form action="UpdateQuotation2" method="POST" id="updatesp">
 
 
                         </form>
@@ -343,7 +343,7 @@
                 }).then((willDelete) => {
                     if (willDelete) {
                         var form = button.closest("form");
-                        form.action = "DeleteQuotation?id=" + quotationid;
+                        form.action = "DeleteQuotation2?id=" + quotationid;
                         form.submit();
                     }
 
@@ -354,7 +354,7 @@
             function getData(i) {
                 $.ajax({
                     type: 'GET',
-                    url: '${pageContext.request.contextPath}/LoadQuotationByID',
+                    url: '${pageContext.request.contextPath}/LoadQuotationByID2',
                     data: {
                         id: i
                     },
