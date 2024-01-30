@@ -203,5 +203,6 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+        <jsp:include page="../../PluginChatMess.jsp"/>
     </body>
 </html>
