@@ -142,6 +142,7 @@
                                         </c:forEach>
                                     </ul>
                                 </div>
+                                <input type="hidden" name="houseversion" value="2">
                             </div>
 
 
@@ -182,6 +183,7 @@
                                         </c:forEach>
                                     </ul>
                                 </div>
+                                <input type="hidden" name="styleversion" value="2">
                             </div>
 
 

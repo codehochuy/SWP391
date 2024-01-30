@@ -84,6 +84,7 @@ public class CreateHouseStyle extends HttpServlet {
             throws ServletException, IOException {
         try {
             request.setCharacterEncoding("UTF-8");
+            String houseversion = request.getParameter("houseversion");
             HouseTypeDAO aO = new HouseTypeDAO();
             String name = request.getParameter("housestyle");
             boolean result = aO.addHouseStyle(name);
@@ -102,7 +103,12 @@ public class CreateHouseStyle extends HttpServlet {
                 request.setAttribute("list", list);
 
                 request.setAttribute("messtrue", "Đã thêm thành công");
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+                if(houseversion.equalsIgnoreCase("1")){
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);                    
+                }
+                else{
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                }
 
             } else {
                 QuotationDAO dAO = new QuotationDAO();
@@ -119,7 +125,12 @@ public class CreateHouseStyle extends HttpServlet {
                 request.setAttribute("list", list);
 
                 request.setAttribute("messefalse", "Đã thêm thất bại");
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+                if(houseversion.equalsIgnoreCase("1")){
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);                    
+                }
+                else{
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateHouseStyle.class.getName()).log(Level.SEVERE, null, ex);

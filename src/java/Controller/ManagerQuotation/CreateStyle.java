@@ -84,6 +84,7 @@ public class CreateStyle extends HttpServlet {
             throws ServletException, IOException {
         try {
             request.setCharacterEncoding("UTF-8");
+            String styleversion = request.getParameter("styleversion");
              StyleDAO aO = new StyleDAO();
             String name = request.getParameter("style");
             boolean result = aO.addStyle(name);
@@ -102,7 +103,13 @@ public class CreateStyle extends HttpServlet {
                 request.setAttribute("list", list);
 
                 request.setAttribute("messtrue", "Đã thêm thành công");
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+                if(styleversion.equalsIgnoreCase("1")){
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);                    
+                }
+                else{
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                }
+                
 
             } else {
                 QuotationDAO dAO = new QuotationDAO();
@@ -119,7 +126,12 @@ public class CreateStyle extends HttpServlet {
                 request.setAttribute("list", list);
 
                 request.setAttribute("messefalse", "Đã thêm thất bại");
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+                if(styleversion.equalsIgnoreCase("1")){
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);                    
+                }
+                else{
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateHouseStyle.class.getName()).log(Level.SEVERE, null, ex);

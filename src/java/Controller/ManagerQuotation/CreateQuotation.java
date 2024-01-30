@@ -126,8 +126,12 @@ public class CreateQuotation extends HttpServlet {
             request.setAttribute("houseTypes", houseTypes);
             request.setAttribute("list", list);
             request.setAttribute("messtrue", "Thêm báo giá mới thành công");
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
-
+            if(serviceid == 1){
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);       
+            }else{
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);     
+            }
+            
         } else {
             QuotationDAO dAO = new QuotationDAO();
             List<Quotation> list = dAO.getAll();
@@ -143,7 +147,11 @@ public class CreateQuotation extends HttpServlet {
             request.setAttribute("list", list);
             request.setAttribute("messefalse", "Tồn tại 1 báo giá tương tự");
             request.setAttribute("messefalse1", "Tồn tại 1 báo giá tương tự");
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+            if(serviceid == 1){
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);       
+            }else{
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);     
+            }
         }
     }
 
