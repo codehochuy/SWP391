@@ -12,16 +12,19 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <!-- Messenger Chat plugin Code -->
+        <!-- Messenger Chat plugin Code -->
         <div id="fb-root"></div>
 
-        <!-- Your Chat plugin code -->
+        <!-- Messenger Plugin chat Code -->
+        <div id="fb-root"></div>
+
+        <!-- Your Plugin chat code -->
         <div id="fb-customer-chat" class="fb-customerchat">
         </div>
 
         <script>
             var chatbox = document.getElementById('fb-customer-chat');
-            chatbox.setAttribute("page_id", "237812559407746");
+            chatbox.setAttribute("page_id", "234746966382535");
             chatbox.setAttribute("attribution", "biz_inbox");
         </script>
 
