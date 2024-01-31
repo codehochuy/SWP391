@@ -109,7 +109,7 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tin tức</a>
                                 <div class="dropdown-menu">
                                     <a href="blog.html" class="dropdown-item">Blog Page</a>
-                                    <a href="single.html" class="dropdown-item">Single Page</a>
+                                    <a href="single.jsp" class="dropdown-item">Single Page</a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
