@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.ManagerProject;
+package Controller.WebPage;
 
-import DAO.ProjectDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,14 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ACER
+ * @author PC
  */
-@WebServlet(name = "Project", urlPatterns = {"/Project"})
-public class Project extends HttpServlet {
+@WebServlet(name = "Blog", urlPatterns = {"/Blog"})
+public class Blog extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -36,11 +33,7 @@ public class Project extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ProjectDAO dao = new ProjectDAO();
-            List<DTO.Project> list = dao.getAll();
-            request.setAttribute("list", list);
-            request.getRequestDispatcher("WebPages/ViewWebPage/project.jsp").forward(request, response);
-           
+            request.getRequestDispatcher("WebPages/ViewWebPage/blog.jsp").forward(request, response);
         }
     }
 

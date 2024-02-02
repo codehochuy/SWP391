@@ -3,28 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.ManagerProject;
+package Controller.Profile;
 
-import DAO.ProjectDAO;
+import DTO.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ACER
+ * @author PC
  */
-@WebServlet(name = "Project", urlPatterns = {"/Project"})
-public class Project extends HttpServlet {
+@WebServlet(name = "Profile", urlPatterns = {"/Profile"})
+public class Profile extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -36,11 +35,10 @@ public class Project extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            ProjectDAO dao = new ProjectDAO();
-            List<DTO.Project> list = dao.getAll();
-            request.setAttribute("list", list);
-            request.getRequestDispatcher("WebPages/ViewWebPage/project.jsp").forward(request, response);
-           
+            HttpSession session = request.getSession(false);
+            User user = (User) session.getAttribute("USER");
+            request.setAttribute("user", user);
+            request.getRequestDispatcher("WebPages/ViewWebPage/profile.jsp").forward(request, response);
         }
     }
 

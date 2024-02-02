@@ -3,39 +3,14 @@
     Created on : Jan 25, 2024, 12:04:45 AM
     Author     : ACER
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta charset="utf-8">
-    <title>TITAN - Dự Án Đã Thi Công</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Construction Company Website Template" name="keywords">
-    <meta content="Construction Company Website Template" name="description">
-
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
-
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
-    <!-- CSS Libraries -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-    <link href="lib/slick/slick.css" rel="stylesheet">
-    <link href="lib/slick/slick-theme.css" rel="stylesheet">
-     <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
-         <!-- Top Bar Start -->
+        <!-- Top Bar Start -->
         <div class="top-bar">
             <div class="container-fluid">
                 <div class="row align-items-center">
@@ -100,50 +75,64 @@
 
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto">
-                            <a href="index.html" class="nav-item nav-link">Trang chủ</a>
-                            <a href="about.html" class="nav-item nav-link">Giới thiệu</a>
-                            <a href="service.html" class="nav-item nav-link">Dịch vụ</a>
-                            <a href="team.html" class="nav-item nav-link">Đội ngũ nhân sự</a>
-                            <a href="Project.jsp" class="nav-item nav-link active">Dự án</a>
+                            <a href="<%=request.getContextPath()%>/index" class="nav-item nav-link">Trang chủ</a>
+                            <a href="About" class="nav-item nav-link">Giới thiệu</a>
+                            <a href="Service" class="nav-item nav-link">Dịch vụ</a>
+                            <a href="Team" class="nav-item nav-link">Đội ngũ nhân sự</a>
+                            <a href="Project" class="nav-item nav-link">Dự án</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tin tức</a>
                                 <div class="dropdown-menu">
-                                    <a href="blog.html" class="dropdown-item">Blog Page</a>
-                                    <a href="single.html" class="dropdown-item">Single Page</a>
+                                    <a href="Blog" class="dropdown-item">Blog Page</a>
+                                    <a href="single.jsp" class="dropdown-item">Single Page</a>
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Bảng giá</a>
                                 <div class="dropdown-menu">
-                                    <a href="blog.html" class="dropdown-item">Bảng Giá Xây Nhà Trọn Gói</a>
-                                    <a href="blog.html" class="dropdown-item">Bảng Giá Xây Nhà Hoàn Thiện</a>
-                                    <a href="blog.html" class="dropdown-item">Bảng Giá Xây Nhà Phần Thô</a>
+                                    <a href="FullContructionPrice" class="dropdown-item">Bảng Giá Xây Nhà Trọn Gói</a>
+                                    <a href="CompleteContructionPrice" class="dropdown-item">Bảng Giá Xây Nhà Hoàn Thiện</a>
+                                    <a href="RawContructionPrice" class="dropdown-item">Bảng Giá Xây Nhà Phần Thô</a>
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
+                            <a href="Contact" class="nav-item nav-link">Liên hệ</a>
                         </div>
-                        <div class="ml-auto">
-                            <a class="btn" href="../../Login.jsp">Đăng nhập</a>
-                        </div>
+                        <c:if test="${empty sessionScope.USER}">
+                            <div class="ml-auto">
+                                <a class="btn" href="../../Login.jsp">Đăng nhập</a>
+                            </div>
+                        </c:if>
+                        <c:if test="${not empty sessionScope.USER}">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><img alt="avatar" src="./img/${sessionScope.USER.avatar}" width="50px"></a>
+                                <div class="dropdown-menu">
+                                    <a href="Profile" class="dropdown-item">Hồ sơ</a>
+                                    <a href ="#" class="dropdown-item">Lịch sử báo giá</a>
+                                    <a href="Logout" class="dropdown-item">Đăng xuất</a>
+                                </div>
+                            </div>
+                        </c:if>
+
+
                     </div>
                 </nav>
             </div>
         </div>
         <!-- Nav Bar End -->
-        
-    </body>
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/isotope/isotope.pkgd.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/slick/slick.min.js"></script>
+        <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var currentUrl = window.location.href;
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+        // Tìm phần tử a có href tương ứng với URL hiện tại và thêm lớp active
+        var navLinks = document.querySelectorAll(".nav-link");
+        navLinks.forEach(function (link) {
+            if (link.href === currentUrl) {
+                link.classList.add("active");
+            }
+        });
+    });
+</script>
+
+
+    </body>
 </html>

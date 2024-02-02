@@ -1,7 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+<%-- 
+    Document   : rawContructionPrice
+    Created on : Feb 2, 2024, 12:07:50 PM
+    Author     : PC
+--%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <title>TITAN - Bảng Giá Xây Nhà Phần Thô</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -9,7 +16,7 @@
         <meta content="Construction Company Website Template" name="description">
 
         <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
+        <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
 
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
@@ -18,15 +25,14 @@
         <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-        <link href="lib/slick/slick.css" rel="stylesheet">
-        <link href="lib/slick/slick-theme.css" rel="stylesheet">
-
+        <link href="WebPages/ViewWebPage/lib/flaticon/font/flaticon.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/animate/animate.min.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/slick/slick.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/slick/slick-theme.css" rel="stylesheet">
         <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/css/style.css" rel="stylesheet">
         <style>
             table {
                 width: 100%;
@@ -53,10 +59,10 @@
                 background-color: #ecf0f1;
             }
             img {
-                display: block;
-                margin: 15px auto;
-                width: 80%;
-                height: auto;
+                /*                display: block;
+                                margin: 15px auto;
+                                width: 80%;
+                                height: auto;*/
             }
             /* styles.css */
             #table-of-contents {
@@ -80,110 +86,15 @@
             #table-of-contents a:hover {
                 color: #fdbe33;
             }
-            
+
             #toggle-contents {
                 margin-bottom: 10px;
             }
         </style>
     </head>
-
     <body>
         <div class="wrapper">
-            <!-- Top Bar Start -->
-            <div class="top-bar">
-                <div class="container-fluid">
-                    <div class="row align-items-center">
-                        <div class="col-lg-4 col-md-12">
-                            <div class="logo">
-                                <a href="index.html">
-                                    <h1>TITAN</h1>
-                                    <!-- <img src="img/logo.jpg" alt="Logo"> -->
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-8 col-md-7 d-none d-lg-block">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="top-bar-item">
-                                        <div class="top-bar-icon">
-                                            <i class="flaticon-calendar"></i>
-                                        </div>
-                                        <div class="top-bar-text">
-                                            <h3>MỞ CỬA</h3>
-                                            <p>THỨ 2 - THỨ 6, 8:00 - 21:00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="top-bar-item">
-                                        <div class="top-bar-icon">
-                                            <i class="flaticon-call"></i>
-                                        </div>
-                                        <div class="top-bar-text">
-                                            <h3>LIÊN HỆ</h3>
-                                            <p>+84 123 456 789</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="top-bar-item">
-                                        <div class="top-bar-icon">
-                                            <i class="flaticon-send-mail"></i>
-                                        </div>
-                                        <div class="top-bar-text">
-                                            <h3>Email</h3>
-                                            <p>titan@gmail.com</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Top Bar End -->
-
-            <!-- Nav Bar Start -->
-            <div class="nav-bar">
-                <div class="container-fluid">
-                    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-                        <a href="#" class="navbar-brand">MENU</a>
-                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-
-                        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                            <div class="navbar-nav mr-auto">
-                                <a href="index.html" class="nav-item nav-link">Trang chủ</a>
-                                <a href="about.html" class="nav-item nav-link">Giới thiệu</a>
-                                <a href="service.html" class="nav-item nav-link">Dịch vụ</a>
-                                <a href="team.html" class="nav-item nav-link">Đội ngũ nhân sự</a>
-                                <a href="project.html" class="nav-item nav-link">Dự án</a>
-                                <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tin tức</a>
-                                    <div class="dropdown-menu">
-                                        <a href="blog.html" class="dropdown-item">Blog Page</a>
-                                        <a href="single.html" class="dropdown-item">Single Page</a>
-                                    </div>
-                                </div>
-                                <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown">Bảng giá</a>
-                                    <div class="dropdown-menu">
-                                        <a href="fullContructionPrice.html" class="dropdown-item">Bảng Giá Xây Nhà Trọn Gói</a>
-                                        <a href="completeContructionPrice.html" class="dropdown-item">Bảng Giá Xây Nhà Hoàn Thiện</a>
-                                        <a href="rawContructionPrice.html" class="dropdown-item">Bảng Giá Xây Nhà Phần Thô</a>
-                                    </div>
-                                </div>
-                                <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
-                            </div>
-                            <div class="ml-auto">
-                                <a class="btn" href="#">Nhận Báo Giá</a>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-            <!-- Nav Bar End -->
+            <jsp:include page="../../WebPages/ViewWebPage/HeaderPage.jsp"/>
 
 
             <!-- Page Header Start -->
@@ -229,7 +140,7 @@
                                     <h3>1. Vậy xây dựng phần thô là gì?</h3>
                                     <p>Xây dựng phần thô được hiểu là việc thi công định hình phần khung sườn cho ngôi nhà bao gồm phần móng và bể ngầm; Các hệ thống kết cấu chịu lực (như cột, dầm, khung, sàn, bê tông,…); Phần cầu thang; Bản và bậc; Hệ thống tường bao che, ngăn phòng…vv.</p>
                                     <p>Đây là giai đoạn hết sức quan trọng bởi nó quyết định đến độ an toàn, chắc chắn của công trình. Phần thô càng tốt, càng chuẩn, chính xác thì những phần thi công sau này càng thuận lợi như tiết kiệm thời gian và chi phí, hạn chế tối đa những ảnh hưởng đến chất lượng công trình.</p>
-                                    <img src="img/quotation-raw-1.jpg" alt="Quptation Image">
+                                    <img src="WebPages/ViewWebPage/img/quotation-raw-1.jpg" alt="Quptation Image">
                                     <p>Bảng giá xây dựng phần thô được TITAN cung cấp dưới đây sẽ giúp quý khách hàng có thể ước lượng được chi phí xây dựng phần thô, xây tổ ấm của mình một cách dễ dàng, nhanh chóng. Bảng giá được chia làm 3 hạng mục công trình cơ bản:</p>
                                     <ul>
                                         <li><strong>Công trình nhà phố hiện đại</strong>: Giá thi công phần thô giao động từ <strong>3.400.000 đ/m2</strong> đến <strong>3.600.000 đ/m2</strong>.</li>
@@ -401,7 +312,7 @@
 
                             <section id="section-4">
                                 <div class="single-content wow fadeInUp">
-                                    9                        <h3>4. Cách tính diện tích xây dựng phần thô 2024</h3>
+                                    <h3>4. Cách tính diện tích xây dựng phần thô 2024</h3>
                                     <ul>
                                         <li>Phần móng băng: Tính 50% diện tích đất.</li>
                                         <li>Phần móng cọc: Tính 30% – 50% diện tích đất.</li>
@@ -448,7 +359,7 @@
                             <section id="section-6">
                                 <div class="single-content wow fadeInUp">
                                     <h3>6. Một số lưu ý về thi công, báo giá xây dựng nhà phần thô 2024</h3>
-                                    <img src="img/quotation-raw-2.png" alt="Quotation Image">
+                                    <img src="WebPages/ViewWebPage/img/quotation-raw-2.png" alt="Quotation Image">
                                     <p><strong>Xây nhà phần thô</strong> quyết định trực tiếp đến chất lượng công trình, cho nên việc lựa chọn một công ty xây dựng uy tín, chuyên nghiệp để <strong>đảm bảo xây dựng ngôi nhà</strong> chắc chắn và đẹp đồng thời lên dự toán chính xác chi phí xây dựng, cũng như hạn chế tối đa phát sinh chi phí, là những vấn đề quý khách hàng cần lưu ý ngoài ra những vấn đề ảnh hưởng trực tiếp đến đơn giá thi công.</p>
                                     <p><strong>Quy mô công trình nào được áp dụng đơn giá trên theo m2?</strong></p>
                                     <ul>
@@ -478,7 +389,7 @@
                             <section id="section-7">
                                 <div class="single-content wow fadeInUp">
                                     <h3>7. Quy trình thi công xây dựng phần thô TITAN</h3>
-                                    <img src="img/quotation-raw-3.jpg" alt="Quotation Image">
+                                    <img src="WebPages/ViewWebPage/img/quotation-raw-3.jpg" alt="Quotation Image">
                                     <p><strong>Là một trong những đơn vị thi công các công trình biệt thự, nhà phố,… TITAN xin gửi lời cảm ơn sâu sắc tới quý khách hàng đã tin tưởng hợp tác cũng như đồng hành cùng công ty trong thời gian qua. Chúng tôi luôn tuân thủ quy trình rõ ràng, chuẩn mực khi làm việc với khách hàng, cụ thể:</strong></p>
                                     <ul>
                                         <li>Tiếp nhận thông tin của khách hàng về nhu cầu xây dựng, vị trí, diện tích, chi phí đầu tư tương ứng,…</li>
@@ -529,71 +440,7 @@
             <!-- Portfolio End -->
 
 
-            <!-- Footer Start -->
-            <div class="footer wow fadeIn" data-wow-delay="0.3s">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-contact">
-                                <h2>Liên Hệ</h2>
-                                <p><i class="fa fa-map-marker-alt"></i>123 Đường Lê Văn Việt, Quận 9, HCM</p>
-                                <p><i class="fa fa-phone-alt"></i>+84 123 456 789</p>
-                                <p><i class="fa fa-envelope"></i>titan@gmail.com</p>
-                                <div class="footer-social">
-                                    <a href=""><i class="fab fa-twitter"></i></a>
-                                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a href=""><i class="fab fa-youtube"></i></a>
-                                    <a href=""><i class="fab fa-instagram"></i></a>
-                                    <a href=""><i class="fab fa-linkedin-in"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-link">
-                                <h2>Dịch Vụ</h2>
-                                <a href="">Xây Nhà Trọn Gói</a>
-                                <a href="">Xây Nhà Hoàn Thiện</a>
-                                <a href="">Xây Nhà Phần Thô</a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="footer-link">
-                                <h2>Thông Tin Hữu Ích</h2>
-                                <a href="">Giới Thiệu</a>
-                                <a href="">Bảng Giá</a>
-                                <a href="">Dự Án</a>
-                                <a href="">Tin Tức</a>
-                                <a href="">Liên Hệ</a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3">
-                            <div class="newsletter">
-                                <h2>Nhận Thông Tin Mới Nhất</h2>
-                                <p>Đừng bỏ lỡ thông tin mới nhất! Hãy kết nối với chúng tôi để cập nhật những tin tức, sự
-                                    kiện và thông điệp quan trọng.
-                                </p>
-                                <div class="form">
-                                    <input class="form-control" placeholder="Nhập Email...">
-                                    <button class="btn">Đăng Ký</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="container footer-menu">
-                    <div class="f-menu">
-                        <a href="">Điều khoản sử dụng</a>
-                        <a href="">Chính sách bảo mật</a>
-                        <a href="">Cookies</a>
-                        <a href="">Hỗ Trợ</a>
-                        <a href="">Các câu hỏi thường gặp</a>
-                    </div>
-                </div>
-                <div class="container copyright">
-                    <p>Copyright &copy; <a href="#">2024</a>- A Brand of TITAN</p>
-                </div>
-            </div>
-            <!-- Footer End -->
+            <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
 
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
@@ -601,17 +448,17 @@
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/wow/wow.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/isotope/isotope.pkgd.min.js"></script>
-        <script src="lib/lightbox/js/lightbox.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/counterup/counterup.min.js"></script>
-        <script src="lib/slick/slick.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/easing/easing.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/wow/wow.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/isotope/isotope.pkgd.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/lightbox/js/lightbox.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
 
         <!-- Template Javascript -->
-        <script src="js/main.js"></script>
+        <script src="WebPages/ViewWebPage/js/main.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 var toggleButton = document.getElementById('toggle-contents');
@@ -630,5 +477,4 @@
             });
         </script>
     </body>
-
 </html>

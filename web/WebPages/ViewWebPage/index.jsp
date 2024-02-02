@@ -1,131 +1,42 @@
+<%-- 
+    Document   : index
+    Created on : Feb 2, 2024, 12:02:55 PM
+    Author     : PC
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title>TITAN - Trang Chủ</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="Construction Company Website Template" name="keywords">
+        <meta content="Construction Company Website Template" name="description">
 
-<head>
-    <meta charset="utf-8">
-    <title>TITAN - Trang chủ</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Construction Company Website Template" name="keywords">
-    <meta content="Construction Company Website Template" name="description">
+        <!-- Favicon -->
+        <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+              rel="stylesheet">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
-    <!-- CSS Libraries -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-    <link href="lib/slick/slick.css" rel="stylesheet">
-    <link href="lib/slick/slick-theme.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
-</head>
-
-<body>
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/flaticon/font/flaticon.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/animate/animate.min.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/slick/slick.css" rel="stylesheet">
+        <link href="WebPages/ViewWebPage/lib/slick/slick-theme.css" rel="stylesheet">
+        <!-- Template Stylesheet -->
+        <link href="WebPages/ViewWebPage/css/style.css" rel="stylesheet">
+    </head>
+    <body>
     <div class="wrapper">
-        <!-- Top Bar Start -->
-        <div class="top-bar">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 col-md-12">
-                        <div class="logo">
-                            <a href="index.html">
-                                <h1>TITAN</h1>
-                                <!-- <img src="img/logo.jpg" alt="Logo"> -->
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 col-md-7 d-none d-lg-block">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="flaticon-calendar"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>MỞ CỬA</h3>
-                                        <p>THỨ 2 - THỨ 6, 8:00 - 21:00</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="flaticon-call"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>LIÊN HỆ</h3>
-                                        <p>+84 123 456 789</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="top-bar-item">
-                                    <div class="top-bar-icon">
-                                        <i class="flaticon-send-mail"></i>
-                                    </div>
-                                    <div class="top-bar-text">
-                                        <h3>Email</h3>
-                                        <p>titan@gmail.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Top Bar End -->
-
-        <!-- Nav Bar Start -->
-        <div class="nav-bar">
-            <div class="container-fluid">
-                <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-                    <a href="#" class="navbar-brand">MENU</a>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                        <div class="navbar-nav mr-auto">
-                            <a href="index.html" class="nav-item nav-link active">Trang chủ</a>
-                            <a href="about.html" class="nav-item nav-link">Giới thiệu</a>
-                            <a href="service.html" class="nav-item nav-link">Dịch vụ</a>
-                            <a href="team.html" class="nav-item nav-link">Đội ngũ nhân sự</a>
-                            <a href="project.html" class="nav-item nav-link">Dự án</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tin tức</a>
-                                <div class="dropdown-menu">
-                                    <a href="blog.html" class="dropdown-item">Blog Page</a>
-                                    <a href="single.html" class="dropdown-item">Single Page</a>
-                                </div>
-                            </div>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Bảng giá</a>
-                                <div class="dropdown-menu">
-                                    <a href="fullContructionPrice.html" class="dropdown-item">Bảng Giá Xây Nhà Trọn Gói</a>
-                                    <a href="completeContructionPrice.html" class="dropdown-item">Bảng Giá Xây Nhà Hoàn Thiện</a>
-                                    <a href="rawContructionPrice.html" class="dropdown-item">Bảng Giá Xây Nhà Phần Thô</a>
-                                </div>
-                            </div>
-                            <a href="contact.html" class="nav-item nav-link">Liên hệ</a>
-                        </div>
-                        <div class="ml-auto">
-                            <a class="btn" href="LoginServlet">Đăng nhập</a>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-        <!-- Nav Bar End -->
+        <jsp:include page="../../WebPages/ViewWebPage/HeaderPage.jsp"/>
 
 
         <!-- Carousel Start -->
@@ -137,7 +48,7 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="img/carousel-1.jpg" alt="Carousel Image">
+                    <img src="WebPages/ViewWebPage/img/carousel-1.jpg" alt="Carousel Image">
                     <div class="carousel-caption">
                         <p class="animated fadeInRight">Thiết Kế Xây Nhà Chắc</p>
                         <h1 class="animated fadeInLeft">Vững Bước Thành Công</h1>
@@ -146,7 +57,7 @@
                 </div>
 
                 <div class="carousel-item">
-                    <img src="img/carousel-2.jpg" alt="Carousel Image">
+                    <img src="WebPages/ViewWebPage/img/carousel-2.jpg" alt="Carousel Image">
                     <div class="carousel-caption">
                         <p class="animated fadeInRight">Xây Vững Niềm Tin</p>
                         <h1 class="animated fadeInLeft">Dựng Uy Tín Vàng</h1>
@@ -155,7 +66,7 @@
                 </div>
 
                 <div class="carousel-item">
-                    <img src="img/carousel-3.jpg" alt="Carousel Image">
+                    <img src="WebPages/ViewWebPage/img/carousel-3.jpg" alt="Carousel Image">
                     <div class="carousel-caption">
                         <p class="animated fadeInRight">Thiết Kế Nhà Chất Lượng Là Sứ Mệnh</p>
                         <h1 class="animated fadeInLeft">Thành Công Là Điểm Đến</h1>
@@ -229,7 +140,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-5 col-md-6">
                         <div class="about-img">
-                            <img src="img/about.jpg" alt="Image">
+                            <img src="WebPages/ViewWebPage/img/about.jpg" alt="Image">
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-6">
@@ -317,7 +228,7 @@
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="service-item">
                             <div class="service-img">
-                                <img src="img/service-1.jpg" alt="Image">
+                                <img src="WebPages/ViewWebPage/img/service-1.jpg" alt="Image">
                                 <div class="service-overlay">
                                     <p>
                                         Với đội ngũ chuyên gia giàu kinh nghiệm, chúng tôi cung cấp dịch vụ xây nhà trọn
@@ -330,14 +241,14 @@
                             </div>
                             <div class="service-text">
                                 <h3>xây Nhà Trọn Gói</h3>
-                                <a class="btn" href="img/service-1.jpg" data-lightbox="service">+</a>
+                                <a class="btn" href="WebPages/ViewWebPage/img/service-1.jpg" data-lightbox="service">+</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
                         <div class="service-item">
                             <div class="service-img">
-                                <img src="img/service-2.jpg" alt="Image">
+                                <img src="WebPages/ViewWebPage/img/service-2.jpg" alt="Image">
                                 <div class="service-overlay">
                                     <p>
                                         Chúng tôi chuyên sâu trong việc cung cấp dịch vụ xây dựng nhà ở chất lượng cao,
@@ -350,14 +261,14 @@
                             </div>
                             <div class="service-text">
                                 <h3>Xây Nhà Hoàn Thiện</h3>
-                                <a class="btn" href="img/service-2.jpg" data-lightbox="service">+</a>
+                                <a class="btn" href="WebPages/ViewWebPage/img/service-2.jpg" data-lightbox="service">+</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                         <div class="service-item">
                             <div class="service-img">
-                                <img src="img/service-3.jpg" alt="Image">
+                                <img src="WebPages/ViewWebPage/img/service-3.jpg" alt="Image">
                                 <div class="service-overlay">
                                     <p>
                                         Với sự chú tâm đặc biệt đến chi tiết và tiến độ, chúng tôi cam kết mang đến cho
@@ -369,14 +280,14 @@
                             </div>
                             <div class="service-text">
                                 <h3>Xây Nhà Phần Thô</h3>
-                                <a class="btn" href="img/service-3.jpg" data-lightbox="service">+</a>
+                                <a class="btn" href="WebPages/ViewWebPage/img/service-3.jpg" data-lightbox="service">+</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
                         <div class="service-item">
                             <div class="service-img">
-                                <img src="img/service-4.jpg" alt="Image">
+                                <img src="WebPages/ViewWebPage/img/service-4.jpg" alt="Image">
                                 <div class="service-overlay">
                                     <p>
                                         Đội ngũ kiến trúc sư và kỹ sư của chúng tôi không chỉ có kinh nghiệm mà còn sáng
@@ -388,14 +299,14 @@
                             </div>
                             <div class="service-text">
                                 <h3>Xây Nhà Phố Hiện Đại</h3>
-                                <a class="btn" href="img/service-4.jpg" data-lightbox="service">+</a>
+                                <a class="btn" href="WebPages/ViewWebPage/img/service-4.jpg" data-lightbox="service">+</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                         <div class="service-item">
                             <div class="service-img">
-                                <img src="img/service-5.jpg" alt="Image">
+                                <img src="WebPages/ViewWebPage/img/service-5.jpg" alt="Image">
                                 <div class="service-overlay">
                                     <p>
                                         Với đội ngũ kiến trúc sư và kỹ sư có tay nghề cao, chúng tôi đưa ra các giải
@@ -407,14 +318,14 @@
                             </div>
                             <div class="service-text">
                                 <h3>Xây Biệt Thự Hiện Đại</h3>
-                                <a class="btn" href="img/service-5.jpg" data-lightbox="service">+</a>
+                                <a class="btn" href="WebPages/ViewWebPage/img/service-5.jpg" data-lightbox="service">+</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
                         <div class="service-item">
                             <div class="service-img">
-                                <img src="img/service-6.jpg" alt="Image">
+                                <img src="WebPages/ViewWebPage/img/service-6.jpg" alt="Image">
                                 <div class="service-overlay">
                                     <p>
                                         Với sự tận tâm đến chi tiết và chất lượng vật liệu, chúng tôi cam kết tái tạo
@@ -426,7 +337,7 @@
                             </div>
                             <div class="service-text">
                                 <h3>Xây Biệt Thự Cổ Điển</h3>
-                                <a class="btn" href="img/service-6.jpg" data-lightbox="service">+</a>
+                                <a class="btn" href="WebPages/ViewWebPage/img/service-6.jpg" data-lightbox="service">+</a>
                             </div>
                         </div>
                     </div>
@@ -480,7 +391,7 @@
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
                         <div class="team-item">
                             <div class="team-img">
-                                <img src="img/team-1.jpg" alt="Team Image">
+                                <img src="WebPages/ViewWebPage/img/team-1.jpg" alt="Team Image">
                             </div>
                             <div class="team-text">
                                 <h2>Đỗ Hiếu</h2>
@@ -497,7 +408,7 @@
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
                         <div class="team-item">
                             <div class="team-img">
-                                <img src="img/team-2.jpg" alt="Team Image">
+                                <img src="WebPages/ViewWebPage/img/team-2.jpg" alt="Team Image">
                             </div>
                             <div class="team-text">
                                 <h2>Huy Phạm</h2>
@@ -514,7 +425,7 @@
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                         <div class="team-item">
                             <div class="team-img">
-                                <img src="img/team-3.jpg" alt="Team Image">
+                                <img src="WebPages/ViewWebPage/img/team-3.jpg" alt="Team Image">
                             </div>
                             <div class="team-text">
                                 <h2>Nhật Hào</h2>
@@ -531,7 +442,7 @@
                     <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
                         <div class="team-item">
                             <div class="team-img">
-                                <img src="img/team-4.jpg" alt="Team Image">
+                                <img src="WebPages/ViewWebPage/img/team-4.jpg" alt="Team Image">
                             </div>
                             <div class="team-text">
                                 <h2>Trọng Vương</h2>
@@ -709,14 +620,14 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="testimonial-slider-nav">
-                            <div class="slider-nav"><img src="img/testimonial-1.jpg" alt="Testimonial"></div>
-                            <div class="slider-nav"><img src="img/testimonial-2.jpg" alt="Testimonial"></div>
-                            <div class="slider-nav"><img src="img/testimonial-3.jpg" alt="Testimonial"></div>
-                            <div class="slider-nav"><img src="img/testimonial-4.jpg" alt="Testimonial"></div>
-                            <div class="slider-nav"><img src="img/testimonial-1.jpg" alt="Testimonial"></div>
-                            <div class="slider-nav"><img src="img/testimonial-2.jpg" alt="Testimonial"></div>
-                            <div class="slider-nav"><img src="img/testimonial-3.jpg" alt="Testimonial"></div>
-                            <div class="slider-nav"><img src="img/testimonial-4.jpg" alt="Testimonial"></div>
+                            <div class="slider-nav"><img src="WebPages/ViewWebPage/img/testimonial-1.jpg" alt="Testimonial"></div>
+                            <div class="slider-nav"><img src="WebPages/ViewWebPage/img/testimonial-2.jpg" alt="Testimonial"></div>
+                            <div class="slider-nav"><img src="WebPages/ViewWebPage/img/testimonial-3.jpg" alt="Testimonial"></div>
+                            <div class="slider-nav"><img src="WebPages/ViewWebPage/img/testimonial-4.jpg" alt="Testimonial"></div>
+                            <div class="slider-nav"><img src="WebPages/ViewWebPage/img/testimonial-1.jpg" alt="Testimonial"></div>
+                            <div class="slider-nav"><img src="WebPages/ViewWebPage/img/testimonial-2.jpg" alt="Testimonial"></div>
+                            <div class="slider-nav"><img src="WebPages/ViewWebPage/img/testimonial-3.jpg" alt="Testimonial"></div>
+                            <div class="slider-nav"><img src="WebPages/ViewWebPage/img/testimonial-4.jpg" alt="Testimonial"></div>
                         </div>
                     </div>
                 </div>
@@ -798,7 +709,7 @@
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
                         <div class="blog-item">
                             <div class="blog-img">
-                                <img src="img/blog-1.jpg" alt="Image">
+                                <img src="WebPages/ViewWebPage/img/blog-1.jpg" alt="Image">
                             </div>
                             <div class="blog-title">
                                 <h3>Kiến Trúc Xây Dựng</h3>
@@ -818,7 +729,7 @@
                     <div class="col-lg-4 col-md-6 wow fadeInUp">
                         <div class="blog-item">
                             <div class="blog-img">
-                                <img src="img/blog-2.jpg" alt="Image">
+                                <img src="WebPages/ViewWebPage/img/blog-2.jpg" alt="Image">
                             </div>
                             <div class="blog-title">
                                 <h3>Kiến Trúc Xây Dựng</h3>
@@ -838,7 +749,7 @@
                     <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
                         <div class="blog-item">
                             <div class="blog-img">
-                                <img src="img/blog-3.jpg" alt="Image">
+                                <img src="WebPages/ViewWebPage/img/blog-3.jpg" alt="Image">
                             </div>
                             <div class="blog-title">
                                 <h3>Kiến Trúc Xây Dựng</h3>
@@ -861,91 +772,24 @@
         <!-- Blog End -->
 
 
-        <!-- Footer Start -->
-        <div class="footer wow fadeIn" data-wow-delay="0.3s">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-lg-3">
-                        <div class="footer-contact">
-                            <h2>Liên Hệ</h2>
-                            <p><i class="fa fa-map-marker-alt"></i>123 Đường Lê Văn Việt, Quận 9, HCM</p>
-                            <p><i class="fa fa-phone-alt"></i>+84 123 456 789</p>
-                            <p><i class="fa fa-envelope"></i>titan@gmail.com</p>
-                            <div class="footer-social">
-                                <a href=""><i class="fab fa-twitter"></i></a>
-                                <a href=""><i class="fab fa-facebook-f"></i></a>
-                                <a href=""><i class="fab fa-youtube"></i></a>
-                                <a href=""><i class="fab fa-instagram"></i></a>
-                                <a href=""><i class="fab fa-linkedin-in"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="footer-link">
-                            <h2>Dịch Vụ</h2>
-                            <a href="service.html">Xây Nhà Trọn Gói</a>
-                            <a href="service.html">Xây Nhà Hoàn Thiện</a>
-                            <a href="service.html">Xây Nhà Phần Thô</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="footer-link">
-                            <h2>Thông Tin Hữu Ích</h2>
-                            <a href="index.html">Giới Thiệu</a>
-                            <a href="service.html">Dịch Vụ</a>
-                            <a href="team.html">Đội Ngũ Nhân Sự</a>
-                            <a href="project.html">Dự Án</a>
-                            <a href="single.html">Tin Tức</a>
-                            <a href="">Bảng Giá</a>
-                            <a href="contact.html">Liên Hệ</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="newsletter">
-                            <h2>Nhận Thông Tin Mới Nhất</h2>
-                            <p>Đừng bỏ lỡ thông tin mới nhất! Hãy kết nối với chúng tôi để cập nhật những tin tức, sự
-                                kiện và thông điệp quan trọng.
-                            </p>
-                            <div class="form">
-                                <input class="form-control" placeholder="Nhập Email...">
-                                <button class="btn">Đăng Ký</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container footer-menu">
-                <div class="f-menu">
-                    <a href="">Điều khoản sử dụng</a>
-                    <a href="">Chính sách bảo mật</a>
-                    <a href="">Cookies</a>
-                    <a href="">Hỗ Trợ</a>
-                    <a href="">Các câu hỏi thường gặp</a>
-                </div>
-            </div>
-            <div class="container copyright">
-                <p>Copyright &copy; <a href="#">2024</a>- A Brand of TITAN</p>
-            </div>
-        </div>
-        <!-- Footer End -->
+        <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
 
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/isotope/isotope.pkgd.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/slick/slick.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/easing/easing.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/wow/wow.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/isotope/isotope.pkgd.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/lightbox/js/lightbox.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
+        <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+        <!-- Template Javascript -->
+        <script src="WebPages/ViewWebPage/js/main.js"></script>
 </body>
-
 </html>

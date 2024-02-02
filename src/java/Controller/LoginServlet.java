@@ -96,7 +96,7 @@ public class LoginServlet extends HttpServlet {
                     response.sendRedirect("Staff");
                 } else {
                     session.setAttribute("USER", user);
-                    response.sendRedirect("Customer");
+                    response.sendRedirect("index");
 
                 }
 
