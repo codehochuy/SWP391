@@ -98,7 +98,8 @@
                                                 Thô</a>
                                         </div>
                                     </div>
-                                    <a href="Contact" class="nav-item nav-link">Liên hệ</a>
+                                    <a href="Contact" class="nav-item nav-link">Liên Hệ</a>
+                                    <a href="Quotation" class="nav-item nav-link">Báo Giá</a>
                                 </div>
                                 <c:if test="${empty sessionScope.USER}">
                                     <div class="ml-auto">
