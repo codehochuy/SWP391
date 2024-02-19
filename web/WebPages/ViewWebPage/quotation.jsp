@@ -172,7 +172,16 @@
 
                 </div>
             </div>
+<!--
+            <c:forEach items="${listQuotation}" var="quotation">
+                <p>${quotation.service.name}</p>
+                <p>${quotation.style.name}</p>
+                <p>${quotation.houseType.name}</p>
+                <p>${quotation.price1}</p>
+                <p>${quotation.price2}</p>
 
+            </c:forEach>
+    -->
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
 
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
@@ -236,37 +245,54 @@
                 </script>-->
         <!--test-->
         <script>
-        $(document).ready(function () {
-        // Biến để lưu trữ giá của quotation phù hợp
-        var quotationPrice = 1;
+            $(document).ready(function () {
+                // Biến để lưu trữ giá của quotation phù hợp
+                var quotationPrice = 0;
 
-        // Bắt sự kiện khi nút "Nhận báo giá" được click
-        $("#sendMessageButton").click(function (event) {
-        // Ngăn chặn hành vi mặc định của form (nếu có)
-        event.preventDefault();
+                // Bắt sự kiện khi nút "Nhận báo giá" được click
+                $("#sendMessageButton").click(function (event) {
+                    // Ngăn chặn hành vi mặc định của form (nếu có)
+                    event.preventDefault();
 
-        // Lấy giá trị đã chọn từ select box
-        var selectedService = $("#serviceSelect").val();
-        var selectedHouseType = $("#houseTypeSelect").val();
-        var selectedStyle = $("#styleSelect").val();
-        var floor = $("#floor").val();
-        var length = $("#length").val();
-        var width = $("#width").val();
-        var FrontYard = $("#FrontYard").val();
-        var BackYard = $("#BackYard").val();
-        var Balcony = $("#Balcony").val();
+                    // Lấy giá trị đã chọn từ select box
+                    var selectedService = $("#serviceSelect").val();
+                    var selectedHouseType = $("#houseTypeSelect").val();
+                    var selectedStyle = $("#styleSelect").val();
+                    var floor = $("#floor").val();
+                    var length = $("#length").val();
+                    var width = $("#width").val();
+                    var FrontYard = $("#FrontYard").val();
+                    var BackYard = $("#BackYard").val();
+                    var Balcony = $("#Balcony").val();
 
-        // Duyệt qua listQuotation để tìm quotation phù hợp
-        <%-- Assume listQuotation is a List of DTO.Quotation objects --%>
-        <c:forEach items="${listQuotation}" var="quotation">
-            <c:if test="${quotation.service.name.equals(selectedService) && quotation.houseType.name.equals(selectedHouseType) && quotation.style.name.equals(selectedStyle)}">
-                // Lấy giá từ quotation phù hợp
-                quotationPrice = ${quotation.price1};
+            <c:forEach items="${listQuotation}" var="quotation">
+                    var quotationService = "${quotation.service.name}";
+                    var quotationHouseType = "${quotation.houseType.name}";
+                    var quotationStyle = "${quotation.style.name}";
+                    var price1 = parseFloat("${quotation.price1}"); // Sử dụng parseFloat để chuyển đổi sang số thực
+                    var price2 = parseFloat("${quotation.price2}");
+                    console.log("Quotation Price: " + price1);
+
+                    // Kiểm tra xem các giá trị đã chọn từ dropdown có trùng khớp với các giá trị của đối tượng quotation không
+                    if (selectedService === quotationService && selectedHouseType === quotationHouseType && selectedStyle === quotationStyle) {
+                        quotationPrice = price1;
+//                        console.log("Quotation Service: " + quotationService);
+//                        console.log("Quotation House Type: " + quotationHouseType);
+//                        console.log("Quotation Style: " + quotationStyle);
+//                        console.log("Quotation Price: " + quotationPrice);
+//                        console.log("Quotation Price: " + price1);
+
+                    }
+            </c:forEach>
                 
-            </c:if>
-        </c:forEach>
-        // Thay thế nội dung trong câu
-        var quotationText = "<h3>Ước tính chi phí</h3>\n\
+
+
+
+
+
+
+                    // Thay thế nội dung trong câu
+                    var quotationText = "<h3>Ước tính chi phí</h3>\n\
         <p><strong>Chi phí " + selectedService + " " + selectedHouseType + " " + selectedStyle + " " + floor + " tầng " + width + "m x " + length + "m:</strong></p>\n\
         <p>Khách hàng có một miếng đất diện tích " + width + "m x " + length + "m, xây dựng 1 trệt, " + floor + " lầu, sân trước chừa " + FrontYard + "m, sân sau chừa " + BackYard + "m, ban công các lầu " + Balcony + "m, thi công móng cọc, mái đổ bê tông giả sử giá " + selectedService + " " + selectedHouseType + " " + selectedStyle + " tại thời điểm hiện tại nếu mặt bằng thi công thuận lợi là " + quotationPrice + "đ/m2 thì cách tính diện và chi phí là:</p>\n\
         <ul>\n\
@@ -280,15 +306,15 @@
         </ul>\n\
         <p>Vậy <strong>chi phí ước lượng cho " + selectedService + " " + selectedHouseType + " " + selectedStyle + " " + floor + " tầng " + width + "m x " + length + "m là: " + ((72 * 0.5 * quotationPrice) + (60 * quotationPrice) + (12 * 0.5 * quotationPrice) + (64.8 * quotationPrice) + (64.8 * quotationPrice) + (64.8 * 0.5 * quotationPrice)) + "đ</strong> (" + ((72 * 0.5 * quotationPrice) + (60 * quotationPrice) + (12 * 0.5 * quotationPrice) + (64.8 * quotationPrice) + (64.8 * quotationPrice) + (64.8 * 0.5 * quotationPrice)) + "đồng).</p>";
 
-        // Thay thế nội dung trong div
-        $("#quotationContent").html(quotationText);
+                    // Thay thế nội dung trong div
+                    $("#quotationContent").html(quotationText);
 
-        // Hiển thị nội dung khi nút được click
-        $("#quotationContent").show();
-        });
-        });
+                    // Hiển thị nội dung khi nút được click
+                    $("#quotationContent").show();
+                });
+            });
 
-        <!--end test-->
+<!--end test-->
 
         </script>
     </body>
