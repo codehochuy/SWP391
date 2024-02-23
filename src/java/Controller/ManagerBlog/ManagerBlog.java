@@ -24,6 +24,7 @@ import java.util.List;
  *
  * @author Admin
  */
+@WebServlet(name = "ManagerBlog", urlPatterns = {"/ManagerBlog"})
 public class ManagerBlog extends HttpServlet {
 
     /**

@@ -56,7 +56,7 @@
 
 
                             <div class="form-group col-md-12">
-                                <label class="control-label">Title</label>
+                                <label class="control-label">Main Title</label>
                                 <input class="form-control" type="text" id="title" name="title" required >
 
                             </div>
@@ -204,6 +204,7 @@
                 textareaContent.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
                 textareaContent.placeholder = "Content";
                 div.appendChild(textareaContent);
+
 
                 var inputBlogID = document.createElement("input"); // Khung chứa BlogID
                 inputBlogID.type = "text";
@@ -400,12 +401,12 @@
 
 
                 // Xử lý sự kiện khi nhận được phản hồi từ servlet
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        // Xử lý phản hồi từ servlet nếu cần
-                        console.log(this.responseText);
-                    }
-                };
+//                xhttp.onreadystatechange = function () {
+//                    if (this.readyState == 4 && this.status == 200) {
+//                        // Xử lý phản hồi từ servlet nếu cần
+//                        console.log(this.responseText);
+//                    }
+//                };
 
                 // Gửi yêu cầu AJAX với các dữ liệu đã lấy được
                 var data = "blogID=" + blogID + "&title=" + title + "&date=" + date + "&userID=" + userID;

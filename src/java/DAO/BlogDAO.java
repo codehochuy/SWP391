@@ -126,9 +126,9 @@ public class BlogDAO {
         try {
             // Tạo file hình ảnh từ byte array
             createImageFile(imageData, filePath);
-            System.out.println("File hình ảnh đã được tạo thành công.");
+//            System.out.println("File hình ảnh đã được tạo thành công.");
         } catch (IOException e) {
-            System.err.println("Đã xảy ra lỗi khi tạo file hình ảnh: " + e.getMessage());
+//            System.err.println("Đã xảy ra lỗi khi tạo file hình ảnh: " + e.getMessage());
         }
 
         // Tạo luồng đầu ra để ghi dữ liệu vào file

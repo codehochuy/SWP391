@@ -24,6 +24,7 @@ import java.util.List;
  *
  * @author Admin
  */
+@WebServlet(name = "DeleteBlog", urlPatterns = {"/DeleteBlog"})
 public class DeleteBlog extends HttpServlet {
 
     /**
@@ -88,14 +89,14 @@ public class DeleteBlog extends HttpServlet {
             BlogDAO blogDAO2 = new BlogDAO();
             List<BlogDTO> blogs = blogDAO2.getAll();
             request.setAttribute("blogs", blogs);
-            request.setAttribute("messtrue", "Xóa dự án thành công");
+            request.setAttribute("messtrue", "Xóa Blog thành công");
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlog.jsp").forward(request, response);
 
         } else {
             BlogDAO blogDAO2 = new BlogDAO();
             List<BlogDTO> blogs = blogDAO2.getAll();
             request.setAttribute("blogs", blogs);
-            request.setAttribute("messefalse", "Xóa dự án thất bại");
+            request.setAttribute("messefalse", "Xóa Blog thất bại");
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlog.jsp").forward(request, response);
         }
 
