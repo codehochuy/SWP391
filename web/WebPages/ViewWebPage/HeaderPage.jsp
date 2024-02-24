@@ -6,8 +6,11 @@
 
     <head>
         <style>
-            html {
-                 /* Set your desired font family */
+            .avatar img {
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                object-fit: cover;
             }
         </style>
     </head>
@@ -21,7 +24,7 @@
                         <div class="logo">
                             <a href="index.html">
                                 <h1>TITAN</h1>
-                                <!-- <img src="img/logo.jpg" alt="Logo"> -->
+                                <!--<img src="img/Product1.jpg" alt="Logo">--> 
                             </a>
                         </div>
                     </div>
@@ -112,7 +115,7 @@
                             </div>
                         </c:if>
                         <c:if test="${not empty sessionScope.USER}">
-                            <div class="nav-item dropdown">
+                            <div class="nav-item dropdown avatar">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><img
                                         alt="avatar" src="./img/${sessionScope.USER.avatar}" width="50px"></a>
                                 <div class="dropdown-menu">

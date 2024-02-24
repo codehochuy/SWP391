@@ -33,6 +33,18 @@
         <link href="WebPages/ViewWebPage/lib/slick/slick-theme.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="WebPages/ViewWebPage/css/style.css" rel="stylesheet">
+        <style>
+            .display img{
+                width: 200px; 
+                height: 250px; 
+                object-fit: cover
+            }
+            .change img{
+                width: 150px; 
+                height: 200px; 
+                object-fit: cover
+            }
+        </style>
     </head>
     <body>
         <div class="wrapper">
@@ -105,8 +117,21 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Địa chỉ:</label>
-                                                                    <%--<c:import url="demoAddress.html"/>--%>
+                                                                    <div>
+                                                                        <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                                                                            <option value="" selected>Chọn tỉnh thành</option>           
+                                                                        </select>
 
+                                                                        <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                                                                            <option value="" selected>Chọn quận huyện</option>
+                                                                        </select>
+
+                                                                        <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                                                                            <option value="" selected>Chọn phường xã</option>
+                                                                        </select>
+                                                                    </div>    
+
+                                                                    <input class="form-control" id="result" name="address" type="text">
                                                                 </div>
                                                                 <div class="modal-footer justify-content-center">
 
@@ -134,7 +159,7 @@
                                 <div class="mb-0" style="padding-left: 15px;"> 
                                     <a href="Profile" class="d-flex">Hồ sơ</a>
                                     <a href="ChangePassword" class="d-flex">Đổi mật khẩu</a>
-                                    <a href="BoughtOrder" class="d-flex">Đơn hàng đã mua</a>
+                                    <a href="BoughtOrder" class="d-flex">Lịch sử báo giá</a>
                                 </div>
                             </div>
 
@@ -167,5 +192,66 @@
 
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <script>
+            var citis = document.getElementById("city");
+            var districts = document.getElementById("district");
+            var wards = document.getElementById("ward");
+            var resultInput = document.getElementById("result");
+            var data;
+
+            var Parameter = {
+                url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+                method: "GET",
+                responseType: "application/json",
+            };
+
+            var promise = axios(Parameter);
+
+            promise.then(function (response) {
+                data = response.data;
+                renderCity(data);
+            });
+
+            function renderCity(data) {
+                for (const x of data) {
+                    citis.options[citis.options.length] = new Option(x.Name, x.Id);
+                }
+
+                citis.onchange = function () {
+                    if (this.value != "") {
+                        resultInput.value = citis.options[citis.selectedIndex].text;
+                        districts.length = 1;
+                        wards.length = 1;
+                        const selectedCity = data.find(city => city.Id === this.value);
+                        for (const district of selectedCity.Districts) {
+                            districts.options[districts.options.length] = new Option(district.Name, district.Id);
+                        }
+                    }
+                };
+
+                districts.onchange = function () {
+                    if (this.value != "") {
+                        const selectedCity = data.find(city => city.Id === citis.value);
+                        const selectedDistrict = selectedCity.Districts.find(district => district.Id === this.value);
+                        resultInput.value = selectedDistrict.Name + ", " + citis.options[citis.selectedIndex].text;
+                        wards.length = 1;
+                        for (const ward of selectedDistrict.Wards) {
+                            wards.options[wards.options.length] = new Option(ward.Name, ward.Id);
+                        }
+                    }
+                };
+
+                wards.onchange = function () {
+                    if (this.value != "") {
+                        const selectedCity = citis.options[citis.selectedIndex].text;
+                        const selectedDistrict = districts.options[districts.selectedIndex].text;
+                        const selectedWard = wards.options[wards.selectedIndex].text;
+                        resultInput.value = selectedWard + ", " + selectedDistrict + ", " + selectedCity;
+                    }
+                };
+            }
+        </script>
     </body>
 </html>

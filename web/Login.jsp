@@ -15,6 +15,9 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+        
+        
+        
     </head>
     <body>
         <div class="limiter">
@@ -28,16 +31,21 @@
                         <span class="login100-form-title">
                             <b>ĐĂNG NHẬP </b>
                         </span>
-                        <!--=====FORM INPUT TÀI KHOẢN VÀ PASSWORD======-->
                         <form action="LoginServlet" method="post">
                             <div class="wrap-input100">
                                 <input class="input100" type="text" placeholder="Tài khoản quản trị" name="username">
-
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class='bx bx-user'></i>
+                                </span> 
                             </div>
                             <div class="wrap-input100">
                                 <input autocomplete="off" class="input100" type="password" placeholder="Mật khẩu"
                                        name="password" >
-
+                                <span class="focus-input100"></span>
+                                <span class="symbol-input100">
+                                    <i class='bx bx-key'></i>
+                                </span> 
                             </div>
 
                             <!--=====ĐĂNG NHẬP======-->
