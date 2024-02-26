@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.ManagerMaterial;
+package Controller.ManageMaterial;
 
+import DAO.MaterialDAO;
+import DTO.Material;
+import DTO.MaterialCategory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ACER
+ * @author DELL
  */
-@WebServlet(name = "ManagerMaterial", urlPatterns = {"/ManagerMaterial"})
-public class ManagerMaterial extends HttpServlet {
+@WebServlet(name = "ShowMaterialDetail", urlPatterns = {"/ShowMaterialDetail"})
+public class ShowMaterialDetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +41,10 @@ public class ManagerMaterial extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManagerMaterial</title>");            
+            out.println("<title>Servlet ShowProjectDetail</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManagerMaterial at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ShowProjectDetail at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,7 +76,18 @@ public class ManagerMaterial extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        String materialID = request.getParameter("materialID");
+        MaterialDAO dao = new MaterialDAO();
+        Material list = dao.getByID(materialID);
+        request.setAttribute("list", list);
+        
+        MaterialDAO dao1 = new MaterialDAO();
+        List<MaterialCategory> list1 = dao1.getMaterialCategory();
+        request.setAttribute("list1", list1);
+        
+        response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ShowMaterialDetail.jsp").forward(request, response);
     }
 
     /**
