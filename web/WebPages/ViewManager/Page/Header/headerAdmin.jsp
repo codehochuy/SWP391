@@ -53,7 +53,7 @@
                 </li><a class="app-menu__item" href="ManagerProject"><i class='app-menu__icon bx bx-task'></i>
                     <span class="app-menu__label">Dự Án Đã Hoàn Thành</span></a><li>
 
-                <li><a class="app-menu__item" href="ManagerMaterial"><i class='app-menu__icon bx bx-run'></i><span
+                <li><a class="app-menu__item" href="ManageMaterial"><i class='app-menu__icon bx bx-run'></i><span
                             class="app-menu__label">Quản lý vật liệu
                         </span></a></li>
                 <li><a class="app-menu__item" href="ManagerBlog"><i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span
