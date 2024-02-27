@@ -120,11 +120,52 @@ public class HouseTypeDAO {
         return result;
 
     }
+    public boolean deleteHouseStyle(int houseStyleID) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            con = db.getConn();
+            if (con != null) {
+                String sql = "DELETE FROM [HouseType] WHERE HouseTypeID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, houseStyleID);
+                int effectRow = stm.executeUpdate();
+                if (effectRow > 0) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            }
+        } catch (SQLException e) {
+            // Xử lý ngoại lệ khi câu lệnh SQL chạy lỗi
+            e.printStackTrace(); // hoặc ghi log
+            result = false;
+        } finally {
+            // Đảm bảo đóng các tài nguyên
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace(); // hoặc ghi log
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace(); // hoặc ghi log
+                }
+            }
+        }
+        return result;
+    }
 
     public static void main(String[] args) throws SQLException {
         HouseTypeDAO dao = new HouseTypeDAO();
 //        System.out.println(dao.getAll());
-        dao.addHouseStyle("huy");
+//        dao.addHouseStyle("huy");
+dao.deleteHouseStyle(11);
     }
 
 }

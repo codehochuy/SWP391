@@ -6,7 +6,6 @@
 package Controller.ManagerHouseStyle;
 
 import DAO.HouseTypeDAO;
-import DAO.StyleDAO;
 import DTO.HouseType;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "ManagerHouseStyle", urlPatterns = {"/ManagerHouseStyle"})
-public class ManagerHouseStyle extends HttpServlet {
+@WebServlet(name = "DeleteHouseStyle", urlPatterns = {"/DeleteHouseStyle"})
+public class DeleteHouseStyle extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +37,24 @@ public class ManagerHouseStyle extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-            List<HouseType> houseTypes = houseTypeDAO.getAll();
-            request.setAttribute("houseTypes", houseTypes);
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
+            String id = request.getParameter("id");
+            int house = Integer.parseInt(id);
+            HouseTypeDAO dao = new HouseTypeDAO();
+            boolean result = dao.deleteHouseStyle(house);
+            if (result) {
+                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                List<HouseType> houseTypes = houseTypeDAO.getAll();
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("messtrue", "Xóa kiểu nhà công");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
+
+            } else {
+                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                 List<HouseType> houseTypes = houseTypeDAO.getAll();
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("messefalse", "Xóa kiểu nhà thất bại");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
+            }
         }
     }
 

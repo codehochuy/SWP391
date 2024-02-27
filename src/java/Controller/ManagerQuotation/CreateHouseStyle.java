@@ -104,10 +104,10 @@ public class CreateHouseStyle extends HttpServlet {
 
                 request.setAttribute("messtrue", "Đã thêm thành công");
                 if(houseversion.equalsIgnoreCase("1")){
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);                    
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateHouseStyle.jsp").forward(request, response);                    
                 }
                 else{
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateHouseStyle.jsp").forward(request, response);
                 }
 
             } else {
@@ -126,10 +126,10 @@ public class CreateHouseStyle extends HttpServlet {
 
                 request.setAttribute("messefalse", "Đã thêm thất bại");
                 if(houseversion.equalsIgnoreCase("1")){
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);                    
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);                    
                 }
                 else{
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
                 }
             }
         } catch (SQLException ex) {

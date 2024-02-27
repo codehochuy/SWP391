@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.ManagerHouseStyle;
+package Controller.Component;
 
-import DAO.HouseTypeDAO;
-import DAO.StyleDAO;
-import DTO.HouseType;
+import DAO.ComponentDAO;
+import DTO.Component;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -21,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "ManagerHouseStyle", urlPatterns = {"/ManagerHouseStyle"})
-public class ManagerHouseStyle extends HttpServlet {
+@WebServlet(name = "ManagerComponent", urlPatterns = {"/ManagerComponent"})
+public class ManagerComponent extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +37,11 @@ public class ManagerHouseStyle extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-            List<HouseType> houseTypes = houseTypeDAO.getAll();
-            request.setAttribute("houseTypes", houseTypes);
+            ComponentDAO aO = new ComponentDAO();
+            List<Component> component = aO.getAll();
+            request.setAttribute("component", component);
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
+            
         }
     }
 
