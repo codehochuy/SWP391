@@ -40,7 +40,7 @@ public class ManagerComponent extends HttpServlet {
             ComponentDAO aO = new ComponentDAO();
             List<Component> component = aO.getAll();
             request.setAttribute("component", component);
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerComponent.jsp").forward(request, response);
             
         }
     }

@@ -44,15 +44,10 @@ public class CreateHouseStyle extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateHouseStyle</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CreateHouseStyle at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+             HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+            List<HouseType> houseTypes = houseTypeDAO.getAll();
+            request.setAttribute("houseTypes", houseTypes);
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateHouseStyle.jsp").forward(request, response);
         }
     }
 

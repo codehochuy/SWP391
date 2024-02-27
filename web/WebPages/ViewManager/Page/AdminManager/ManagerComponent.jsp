@@ -33,7 +33,7 @@
         <main class="app-content">
             <div class="app-title"> 
                 <ul class="app-breadcrumb breadcrumb side">
-                    <li class="breadcrumb-item active"><a href="#"><b>Danh sách kiểu nhà</b></a></li>
+                    <li class="breadcrumb-item active"><a href="#"><b>Danh sách thành phần</b></a></li>
                 </ul>
                 <div id="clock"></div>
             </div>
@@ -44,9 +44,8 @@
                         <div class="tile-body">
                             <div class="row element-button">
                                 <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" href="CreateHouseStyle" title="Thêm">
-                                        <i class="fas fa-plus"></i> Thêm kiểu nhà 
-                                    </a>
+                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
+                                            class="fas fa-folder-plus"></i> Thêm thành phần</a>
                                 </div>
                             </div>
                             <table class="table table-hover table-bordered" id="sampleTable">
@@ -54,26 +53,26 @@
                                     <tr>
                                         <th width="10"><input type="checkbox" id="all"></th>
                                         <th>ID</th>
-                                        <th>Kiểu nhà</th>
+                                        <th>Tên</th>
                                         <th>Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${houseTypes}" var="houseTypes">
+                                    <c:forEach items="${component}" var="component">
                                         <tr> 
                                             <td width="10"><input type="checkbox" name="check1" value="1"></td>
-                                            <td>${houseTypes.id}</td>                              
-                                            <td>${houseTypes.name}</td>
+                                            <td>${component.id}</td>                              
+                                            <td>${component.name}</td>
 
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="DeleteStyle" method="Post" id="deleteForm">
                                                     <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
-                                                            data-userID="${houseTypes.id}">
+                                                            data-userID="${component.id}">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
                                                 <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
-                                                        data-target="#ModalUP" onclick="getData('${houseTypes.id}')"><i class="fas fa-edit"></i></button>
+                                                        data-target="#ModalUP" onclick="getData('${component.id}')"><i class="fas fa-edit"></i></button>
 
 
                                             </td>
@@ -117,32 +116,32 @@
         <!--
         MODAL
         -->
-        <div class="modal fade" id="addcomponent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        <div class="modal fade" id="addstyle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
              data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
 
                     <div class="modal-body">
-                        <form action="CreateHouseStyle" method="post">
+                        <form action="CreateStyle" method="post">
                             <div class="row">
                                 <div class="form-group  col-md-12">
                                     <span class="thong-tin-thanh-toan">
-                                        <h5>Thêm mới kiểu nhà mới </h5>
+                                        <h5>Thêm mới phong cách mới </h5>
                                     </span>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="control-label">Nhập tên kiểu nhà mới</label>
-                                    <input class="form-control" type="text" required name="housestyle">
+                                    <label class="control-label">Nhập tên phong cách nhà mới</label>
+                                    <input class="form-control" type="text" required name="style">
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="control-label">Danh sách các kiểu nhà nhà hiện có</label>
+                                    <label class="control-label">Danh sách các phong cách nhà hiện có</label>
                                     <ul class="compact-list">
-                                        <c:forEach items="${requestScope.houseTypes}" var="i" varStatus="status">
+                                        <c:forEach items="${requestScope.styles}" var="i" varStatus="status">
                                             <div>${status.index + 1}. ${i.name}</div>
                                         </c:forEach>
                                     </ul>
                                 </div>
-                                <input type="hidden" name="houseversion" value="2">
+                                <input type="hidden" name="styleversion" value="2">
                             </div>
 
 
@@ -158,6 +157,7 @@
                 </div>
             </div>
         </div>
+
 
 
         <!-- Essential javascripts for application to work-->
@@ -231,7 +231,7 @@
                 }).then((willDelete) => {
                     if (willDelete) {
                         var form = button.closest("form");
-                        form.action = "DeleteHouseStyle?id=" + userID;
+                        form.action = "DeleteStyle?id=" + userID;
                         form.submit();
                     }
 
