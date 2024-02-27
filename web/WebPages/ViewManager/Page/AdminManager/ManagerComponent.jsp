@@ -32,8 +32,10 @@
         <jsp:include page="../../Page/Header/headerAdmin.jsp"/>
         <main class="app-content">
             <div class="app-title"> 
-                <ul class="app-breadcrumb breadcrumb side">
-                    <li class="breadcrumb-item active"><a href="#"><b>Danh sách thành phần</b></a></li>
+                <ul class="app-breadcrumb breadcrumb">
+                    <li class="breadcrumb-item"><a href="ManagerHouseStyle">Danh Sách Kiểu Nhà</a></li>
+                    <li class="breadcrumb-item"><a href="CreateHouseStyle">Thêm kiểu nhà</a></li>
+                    <li class="breadcrumb-item"><a href="#">Quản lý thành phần</a></li>
                 </ul>
                 <div id="clock"></div>
             </div>
@@ -122,21 +124,21 @@
                 <div class="modal-content">
 
                     <div class="modal-body">
-                        <form action="CreateStyle" method="post">
+                        <form action="CreateComponent" method="post">
                             <div class="row">
                                 <div class="form-group  col-md-12">
                                     <span class="thong-tin-thanh-toan">
-                                        <h5>Thêm mới phong cách mới </h5>
+                                        <h5>Thêm mới thành phần mới </h5>
                                     </span>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="control-label">Nhập tên phong cách nhà mới</label>
-                                    <input class="form-control" type="text" required name="style">
+                                    <label class="control-label">Nhập tên thành phần mới</label>
+                                    <input class="form-control" type="text" required name="name">
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="control-label">Danh sách các phong cách nhà hiện có</label>
+                                    <label class="control-label">Danh sách các thàn phần hiện có</label>
                                     <ul class="compact-list">
-                                        <c:forEach items="${requestScope.styles}" var="i" varStatus="status">
+                                        <c:forEach items="${requestScope.component}" var="i" varStatus="status">
                                             <div>${status.index + 1}. ${i.name}</div>
                                         </c:forEach>
                                     </ul>
@@ -267,6 +269,13 @@
             <% request.removeAttribute("messefalse"); %>
             <% }%>
         </script>
+        <style>
+            ul.compact-list {
+                max-height: 100px; /* Điều chỉnh chiều cao tối đa của danh sách */
+                overflow: auto; /* Hiển thị thanh cuộn khi danh sách quá dài */
+                padding-left: 20px;
+            }
+        </style>
 
     </body>
 

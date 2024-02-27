@@ -267,6 +267,13 @@
             <% request.removeAttribute("messefalse"); %>
             <% }%>
         </script>
+        <style>
+            ul.compact-list {
+                max-height: 100px; /* Điều chỉnh chiều cao tối đa của danh sách */
+                overflow: auto; /* Hiển thị thanh cuộn khi danh sách quá dài */
+                padding-left: 20px;
+            }
+        </style>
 
     </body>
 

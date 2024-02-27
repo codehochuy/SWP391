@@ -81,6 +81,43 @@ public class ComponentDAO {
         }
         return list;
     }
+    public boolean addComponent(String name) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            //1. Connect DB
+            con = db.getConn();
+            if (con != null) {
+                String sql = "INSERT INTO [Component](Component)VALUES (?)";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql); //Nạp tham số 1 lần cho Statement
+                stm.setString(1, name);
+                //4. Execute Statement Object to get result
+                int effectRow = stm.executeUpdate();
+                //Nạp tham số 1 lần cho Statement
+                //5. Process result
+                if (effectRow > 0) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+
+            } //end connection has existed
+        } catch (SQLException e) {
+        } finally {
+
+            if (stm != null) {
+                stm.close();  // tạo sau nên đóng trước
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        System.out.println(result);
+        return result;
+
+    }
     public static void main(String[] args) {
         ComponentDAO dao = new ComponentDAO();
         System.out.println(dao.getAll());
