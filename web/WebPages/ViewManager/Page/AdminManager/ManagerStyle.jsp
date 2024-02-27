@@ -42,38 +42,12 @@
                     <div class="tile">
                         <!--huycute-->
                         <div class="tile-body">
-                            <!--                            <div class="row element-button">
-                                                            <div class="col-sm-2">
-                            
-                                                                <a class="btn btn-add btn-sm" href="createProduct" title="Thêm"><i class="fas fa-plus"></i>
-                                                                    Tạo mới sản phẩm</a>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
-                                                                        class="fas fa-file-upload"></i> Tải từ file</a>
-                                                            </div>
-                            
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
-                                                                        class="fas fa-print"></i> In dữ liệu</a>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép"><i
-                                                                        class="fas fa-copy"></i> Sao chép</a>
-                                                            </div>
-                            
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm pdf-file" type="button" title="In" onclick="myFunction(this)"><i
-                                                                        class="fas fa-file-pdf"></i> Xuất PDF</a>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)"><i
-                                                                        class="fas fa-trash-alt"></i> Xóa tất cả </a>
-                                                            </div>
-                                                        </div>-->
+                            <div class="row element-button">
+                                <div class="col-sm-2">
+                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
+                                            class="fas fa-folder-plus"></i> Thêm phong cách</a>
+                                </div>
+                            </div>
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
@@ -89,7 +63,7 @@
                                             <td width="10"><input type="checkbox" name="check1" value="1"></td>
                                             <td>${styles.id}</td>                              
                                             <td>${styles.name}</td>
-                                            
+
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="DeleteStyle" method="Post" id="deleteForm">
                                                     <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
@@ -98,7 +72,7 @@
                                                     </button>
                                                 </form>
                                                 <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
-                                                            data-target="#ModalUP" onclick="getData('${styles.id}')"><i class="fas fa-edit"></i></button>
+                                                        data-target="#ModalUP" onclick="getData('${styles.id}')"><i class="fas fa-edit"></i></button>
 
 
                                             </td>
@@ -142,6 +116,47 @@
         <!--
         MODAL
         -->
+        <div class="modal fade" id="addstyle" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <form action="CreateStyle" method="post">
+                            <div class="row">
+                                <div class="form-group  col-md-12">
+                                    <span class="thong-tin-thanh-toan">
+                                        <h5>Thêm mới phong cách mới </h5>
+                                    </span>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Nhập tên phong cách nhà mới</label>
+                                    <input class="form-control" type="text" required name="style">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Danh sách các phong cách nhà hiện có</label>
+                                    <ul class="compact-list">
+                                        <c:forEach items="${requestScope.styles}" var="i" varStatus="status">
+                                            <div>${status.index + 1}. ${i.name}</div>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                                <input type="hidden" name="styleversion" value="2">
+                            </div>
+
+
+                            <button class="btn btn-save" type="submit">Lưu lại</button>
+                            <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -162,47 +177,47 @@
 
 
         <script type="text/javascript">
-                                                        $('#sampleTable').DataTable();
-                                                        //Thời Gian
-                                                        function time() {
-                                                            var today = new Date();
-                                                            var weekday = new Array(7);
-                                                            weekday[0] = "Chủ Nhật";
-                                                            weekday[1] = "Thứ Hai";
-                                                            weekday[2] = "Thứ Ba";
-                                                            weekday[3] = "Thứ Tư";
-                                                            weekday[4] = "Thứ Năm";
-                                                            weekday[5] = "Thứ Sáu";
-                                                            weekday[6] = "Thứ Bảy";
-                                                            var day = weekday[today.getDay()];
-                                                            var dd = today.getDate();
-                                                            var mm = today.getMonth() + 1;
-                                                            var yyyy = today.getFullYear();
-                                                            var h = today.getHours();
-                                                            var m = today.getMinutes();
-                                                            var s = today.getSeconds();
-                                                            m = checkTime(m);
-                                                            s = checkTime(s);
-                                                            nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                                            if (dd < 10) {
-                                                                dd = '0' + dd
-                                                            }
-                                                            if (mm < 10) {
-                                                                mm = '0' + mm
-                                                            }
-                                                            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                                            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                                                    '</span>';
-                                                            document.getElementById("clock").innerHTML = tmp;
-                                                            clocktime = setTimeout("time()", "1000", "Javascript");
-
-                                                            function checkTime(i) {
-                                                                if (i < 10) {
-                                                                    i = "0" + i;
+                                                            $('#sampleTable').DataTable();
+                                                            //Thời Gian
+                                                            function time() {
+                                                                var today = new Date();
+                                                                var weekday = new Array(7);
+                                                                weekday[0] = "Chủ Nhật";
+                                                                weekday[1] = "Thứ Hai";
+                                                                weekday[2] = "Thứ Ba";
+                                                                weekday[3] = "Thứ Tư";
+                                                                weekday[4] = "Thứ Năm";
+                                                                weekday[5] = "Thứ Sáu";
+                                                                weekday[6] = "Thứ Bảy";
+                                                                var day = weekday[today.getDay()];
+                                                                var dd = today.getDate();
+                                                                var mm = today.getMonth() + 1;
+                                                                var yyyy = today.getFullYear();
+                                                                var h = today.getHours();
+                                                                var m = today.getMinutes();
+                                                                var s = today.getSeconds();
+                                                                m = checkTime(m);
+                                                                s = checkTime(s);
+                                                                nowTime = h + " giờ " + m + " phút " + s + " giây";
+                                                                if (dd < 10) {
+                                                                    dd = '0' + dd
                                                                 }
-                                                                return i;
+                                                                if (mm < 10) {
+                                                                    mm = '0' + mm
+                                                                }
+                                                                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                                                                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                                                                        '</span>';
+                                                                document.getElementById("clock").innerHTML = tmp;
+                                                                clocktime = setTimeout("time()", "1000", "Javascript");
+
+                                                                function checkTime(i) {
+                                                                    if (i < 10) {
+                                                                        i = "0" + i;
+                                                                    }
+                                                                    return i;
+                                                                }
                                                             }
-                                                        }
         </script>
 
         <script>
@@ -223,7 +238,7 @@
                 });
             }
         </script>
-        
+
         <script>
             function getData(i) {
                 $.ajax({
@@ -240,7 +255,7 @@
         </script>
 
 
-       <script>
+        <script>
             <% if (request.getAttribute("messtrue") != null) {%>
             swal("<%= request.getAttribute("messtrue")%>", "", "success");
             <% request.removeAttribute("messtrue"); %>
