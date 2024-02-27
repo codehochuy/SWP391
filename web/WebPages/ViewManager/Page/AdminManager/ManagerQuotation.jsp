@@ -43,20 +43,6 @@
                         <!--huycute-->
                         <div class="tile-body">
                             <jsp:include page="../../Page/Header/functionBar.jsp"/>
-                            <!--                            <div class="row element-button">
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addhousestyle"><i
-                                                                        class="fas fa-folder-plus"></i> Thêm kiểu nhà</a>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
-                                                                        class="fas fa-folder-plus"></i> Thêm phong cách</a>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addsize"><i
-                                                                        class="fas fa-folder-plus"></i> Thêm </a>
-                                                            </div>
-                                                        </div>-->
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
@@ -82,7 +68,7 @@
                                                 <td>${list.price1}</td>
                                                 <td>${list.price2}</td>
                                                 <td style="display: flex; justify-content: space-left">
-                                                    <form action="DeleteQuotation" method="Post"">
+                                                    <form action="DeleteQuotation" method="Post">
                                                         <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
                                                                 data-userID="${list.id}">
                                                             <i class="fas fa-trash-alt"></i>
@@ -156,7 +142,7 @@
                                         </c:forEach>
                                     </ul>
                                 </div>
-                                <input type="hidden" name="houseversion" value="1">
+                                <input type="hidden" name="houseversion" value="2">
                             </div>
 
 
@@ -197,8 +183,7 @@
                                         </c:forEach>
                                     </ul>
                                 </div>
-                                <input type="hidden" name="styleversion" value="1">
-
+                                <input type="hidden" name="styleversion" value="2">
                             </div>
 
 
@@ -258,7 +243,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Giá dao động/m&#178;</label>
-                                    <input class="form-control" type="number" name="price2" required>
+                                    <input class="form-control" type="number" name="prcie2" required>
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
                                 <div class="form-group col-md-12">
@@ -360,7 +345,7 @@
                 }).then((willDelete) => {
                     if (willDelete) {
                         var form = button.closest("form");
-                        form.action = "DeleteQuotation?id=" + quotationid;
+                        form.action = "DeleteQuotation2?id=" + quotationid;
                         form.submit();
                     }
 
@@ -371,7 +356,7 @@
             function getData(i) {
                 $.ajax({
                     type: 'GET',
-                    url: '${pageContext.request.contextPath}/LoadQuotationByID',
+                    url: '${pageContext.request.contextPath}/LoadQuotationByID2',
                     data: {
                         id: i
                     },
@@ -393,14 +378,6 @@
             <% request.removeAttribute("messefalse"); %>
             <% }%>
         </script>
-
-        <style>
-            ul.compact-list {
-                max-height: 100px; /* Điều chỉnh chiều cao tối đa của danh sách */
-                overflow: auto; /* Hiển thị thanh cuộn khi danh sách quá dài */
-                padding-left: 20px;
-            }
-        </style>
 
     </body>
 

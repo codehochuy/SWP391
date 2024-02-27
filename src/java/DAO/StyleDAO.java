@@ -119,11 +119,53 @@ public class StyleDAO {
         return result;
 
     }
+public boolean deleteStyle(int styleID) {
+    Connection con = null;
+    PreparedStatement stm = null;
+    boolean result = false;
+    try {
+        con = db.getConn();
+        if (con != null) {
+            String sql = "DELETE FROM [Style] WHERE StyleID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, styleID);
+            int effectRow = stm.executeUpdate();
+            if (effectRow > 0) {
+                result = true;
+            } else {
+                result = false;
+            }
+        }
+    } catch (SQLException e) {
+        // Xử lý ngoại lệ khi câu lệnh SQL chạy lỗi
+        e.printStackTrace(); // hoặc ghi log
+        result = false;
+    } finally {
+        // Đảm bảo đóng các tài nguyên
+        if (stm != null) {
+            try {
+                stm.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // hoặc ghi log
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // hoặc ghi log
+            }
+        }
+    }
+    return result;
+}
+
 
     public static void main(String[] args) throws SQLException {
         StyleDAO dao = new StyleDAO();
 //        System.out.println(dao.getAll());
-        dao.addStyle("huy");
+//        dao.addStyle("huy");
+        dao.deleteStyle(2);
 
     }
 
