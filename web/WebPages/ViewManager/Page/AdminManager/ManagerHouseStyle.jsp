@@ -104,7 +104,7 @@
                                 </span>
                             </div>
                         </div>
-                        <form action="UpdateStyle" method="POST" id="updatesp">
+                        <form action="UpdateHouseStyle" method="POST" id="updatesp">
 
 
                         </form>
@@ -117,7 +117,7 @@
         <!--
         MODAL
         -->
-        <div class="modal fade" id="addcomponent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<!--        <div class="modal fade" id="addcomponent" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
              data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -157,7 +157,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
 
 
         <!-- Essential javascripts for application to work-->
@@ -243,7 +243,7 @@
             function getData(i) {
                 $.ajax({
                     type: 'GET',
-                    url: '${pageContext.request.contextPath}/LoadStyleByID',
+                    url: '${pageContext.request.contextPath}/LoadHouseStyleByID',
                     data: {
                         id: i
                     },

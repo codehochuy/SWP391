@@ -160,6 +160,77 @@ public class HouseTypeDAO {
         }
         return result;
     }
+    public HouseType getHouseStyleById(int housestyleID) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        HouseType style = null;
+        try {
+            con = db.getConn();
+            if (con != null) {
+                String sql = "SELECT * FROM [HouseType] WHERE HouseTypeID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, housestyleID);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    style = new HouseType(rs.getInt("HouseTypeID"), rs.getString("HouseTypeName"));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return style;
+    }
+    
+    public boolean updateHouseStyleName(String id, String name) {
+    Connection con = null;
+    PreparedStatement stm = null;
+    boolean result = false;
+    try {
+        con = db.getConn();
+        if (con != null) {
+            String sql = "UPDATE [HouseType] SET HouseTypeName = ? WHERE HouseTypeID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, id);
+            int effectRow = stm.executeUpdate();
+            if (effectRow > 0) {
+                result = true;
+            }
+        }
+    } catch (SQLException e) {
+        // Xử lý ngoại lệ SQL ở đây (nếu cần)
+        e.printStackTrace(); // Hoặc ghi log, hiển thị thông báo lỗi, vv.
+    } finally {
+        if (stm != null) {
+            try {
+                stm.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Hoặc ghi log, hiển thị thông báo lỗi, vv.
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Hoặc ghi log, hiển thị thông báo lỗi, vv.
+            }
+        }
+        // Trả về false nếu có lỗi xảy ra
+        if (!result) {
+            return false;
+        }
+    }
+    return result;
+}
 
     public static void main(String[] args) throws SQLException {
         HouseTypeDAO dao = new HouseTypeDAO();

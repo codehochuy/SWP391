@@ -3,16 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.ManagerStyle;
+package Controller.ManagerHouseStyle;
 
-import DAO.StyleDAO;
-import DTO.Style;
+import DAO.HouseTypeDAO;
+import DTO.HouseType;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "UpdateStyle", urlPatterns = {"/UpdateStyle"})
-public class UpdateStyle extends HttpServlet {
+@WebServlet(name = "UpdateHouseStyle", urlPatterns = {"/UpdateHouseStyle"})
+public class UpdateHouseStyle extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +40,10 @@ public class UpdateStyle extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateStyle</title>");            
+            out.println("<title>Servlet UpdateHouseStyle</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateStyle at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateHouseStyle at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -76,30 +73,29 @@ public class UpdateStyle extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    request.setCharacterEncoding("UTF-8"); 
-    String id = request.getParameter("styleID");
-    String name = request.getParameter("StyleName");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8"); 
+    String id = request.getParameter("id");
+    String name = request.getParameter("name");
     
-    StyleDAO dao = new  StyleDAO();
-    boolean  result = dao.updateStyleName(id, name);
+    HouseTypeDAO dao = new  HouseTypeDAO();
+    boolean  result = dao.updateHouseStyleName(id, name);
     if(result){
-        StyleDAO styleDAO = new StyleDAO();
-        List<Style> styles = styleDAO.getAll();
-        request.setAttribute("styles", styles);
-        request.setAttribute("messtrue", "Cập nhật phong cách công");
-        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+        HouseTypeDAO aO = new HouseTypeDAO();
+        List<HouseType> houseTypes = aO.getAll();
+        request.setAttribute("houseTypes", houseTypes);
+        request.setAttribute("messtrue", "Cập nhật kiểu nhà công");
+        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
     }
     else{
-        StyleDAO styleDAO = new StyleDAO();
-        List<Style> styles = styleDAO.getAll();
-        request.setAttribute("styles", styles);
-        request.setAttribute("messefalse", "Cập nhật phong thất bại");
-        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+        HouseTypeDAO aO = new HouseTypeDAO();
+        List<HouseType> houseTypes = aO.getAll();
+        request.setAttribute("houseTypes", houseTypes);
+        request.setAttribute("messefalse", "Cập nhật kiểu nhà thất bại");
+        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
     }
-}
-
+    }
 
     /**
      * Returns a short description of the servlet.
