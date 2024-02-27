@@ -345,7 +345,7 @@
                 }).then((willDelete) => {
                     if (willDelete) {
                         var form = button.closest("form");
-                        form.action = "DeleteQuotation2?id=" + quotationid;
+                        form.action = "DeleteQuotation?id=" + quotationid;
                         form.submit();
                     }
 

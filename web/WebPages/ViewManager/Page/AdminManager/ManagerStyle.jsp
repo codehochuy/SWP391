@@ -97,12 +97,8 @@
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
-                                                <form action="Update" method="Post">
-                                                    <button class="btn btn-primary btn-sm edit" type="button" title="Update" onclick="confirmAdd(this)"
-                                                            data-userID="${styles.id}">
-                                                        <i class="fas fa-plus"></i>
-                                                    </button>
-                                                </form>
+                                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
+                                                            data-target="#ModalUP" onclick="getData('${styles.id}')"><i class="fas fa-edit"></i></button>
 
 
                                             </td>
@@ -117,6 +113,35 @@
                 </div>
             </div>
         </main>
+        <!--
+         MODAL
+        -->
+        <div class="modal fade" id="ModalUP" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+             data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group  col-md-12">
+                                <span class="thong-tin-thanh-toan">
+                                    <h5>Chỉnh sửa thông tin phong cách cơ bản</h5>
+                                </span>
+                            </div>
+                        </div>
+                        <form action="UpdateStyle" method="POST" id="updatesp">
+
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--
+        MODAL
+        -->
 
 
 
@@ -198,42 +223,23 @@
                 });
             }
         </script>
-
-
-
+        
         <script>
-            <% if (request.getAttribute("messok") != null) {%>
-            swal("<%= request.getAttribute("messok")%>", "", "success");
-            <% request.removeAttribute("messok"); %>
-            <% } %>
-        </script>
-        <script>
-            <% if (request.getAttribute("messerror") != null) {%>
-            swal("<%= request.getAttribute("messerror")%>", "", "error");
-            <% request.removeAttribute("messerror"); %>
-            <% }%>
-        </script>
-
-<!--        Comfirm add nhân viên
-        <script>
-            function confirmAdd(button) {
-                var userID = button.getAttribute("data-userID");
-
-                swal({
-                    title: "Cảnh báo",
-                    text: "Bạn có muốn bỏ cấm người dùng này?",
-                    buttons: ["Hủy bỏ", "Đồng ý"],
-                }).then((willDelete) => {
-                    if (willDelete) {
-                        var form = button.closest("form");
-                        form.action = "UnbanUser?userID=" + userID;
-                        form.submit();
+            function getData(i) {
+                $.ajax({
+                    type: 'GET',
+                    url: '${pageContext.request.contextPath}/LoadStyleByID',
+                    data: {
+                        id: i
+                    },
+                    success: function (data, textStatus, jqXHR) {
+                        $('#updatesp').html(data);
                     }
-
-                });
+                })
             }
+        </script>
 
-        </script>-->
+
        <script>
             <% if (request.getAttribute("messtrue") != null) {%>
             swal("<%= request.getAttribute("messtrue")%>", "", "success");
