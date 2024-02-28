@@ -6,7 +6,9 @@
 package Controller.Component;
 
 import DAO.ComponentDAO;
+import DAO.RoofNFoundationDAO;
 import DTO.Component;
+import DTO.RoofNFoundation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -80,23 +82,23 @@ public class CreateFoundation extends HttpServlet {
             throws ServletException, IOException {
         try {
             request.setCharacterEncoding("UTF-8");
-            ComponentDAO aO = new ComponentDAO();
+            RoofNFoundationDAO aO = new RoofNFoundationDAO();
             String name = request.getParameter("name");
-            boolean result = aO.addComponent(name);
+            String area = request.getParameter("area");
+            boolean result = aO.addFoundation(name,area);
             if (result) {
-                ComponentDAO componentDAO = new ComponentDAO();
-                List<Component> component = componentDAO.getAll();
-                request.setAttribute("component", component);
+                RoofNFoundationDAO dao = new RoofNFoundationDAO();
+                List<RoofNFoundation> foundations = dao.getAll();
+                request.setAttribute("foundations", foundations);
                 request.setAttribute("messtrue", "Đã thêm thành công");
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerComponent.jsp").forward(request, response);
-               
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
 
             } else {
-                ComponentDAO componentDAO = new ComponentDAO();
-                List<Component> component = componentDAO.getAll();
-                request.setAttribute("component", component);
+                RoofNFoundationDAO dao = new RoofNFoundationDAO();
+                List<RoofNFoundation> foundations = dao.getAll();
+                request.setAttribute("foundations", foundations);
                 request.setAttribute("messefalse", "Đã thêm thất bại");
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerComponent.jsp").forward(request, response);
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateComponent.class.getName()).log(Level.SEVERE, null, ex);

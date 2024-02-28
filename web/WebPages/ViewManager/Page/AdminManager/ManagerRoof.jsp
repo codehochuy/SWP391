@@ -44,22 +44,22 @@
                     <div class="tile">
                         <!--huycute-->
                         <div class="tile-body">
-                            <div class="row element-button">
-                                
-<!--                                <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
-                                            class="fas fa-folder-plus"></i> Thêm Móng</a>
-                                </div>-->
+                            <div class="row element-button">       
                                 <div class="col-sm-2">
                                     <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle2"><i
                                             class="fas fa-folder-plus"></i> Thêm Mái</a>
                                 </div>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
+                                            class="fas fa-folder-plus"></i> Thêm Móng</a>
+                                </div>
+                                
                             </div>
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
                                         <th width="10"><input type="checkbox" id="all"></th>
-                                        <th>ID</th>
+<!--                                        <th>ID</th>-->
                                         <th>Tên</th>
                                         <th>% Diện tích </th>
                                         <th>Phân loại</th>
@@ -70,7 +70,7 @@
                                     <c:forEach items="${foundations}" var="foundation">
                                         <tr> 
                                             <td width="10"><input type="checkbox" name="check1" value="1"></td>
-                                            <td>${foundation.id}</td>                              
+<!--                                            <td>${foundation.id}</td>                              -->
                                             <td>${foundation.categoryname}</td>
                                             <td>${foundation.areaPercent}</td>
                                             <td>${foundation.category.name}</td> 
@@ -150,7 +150,7 @@
                                     <ul class="compact-list">
                                         <c:forEach items="${requestScope.foundations}" var="i" varStatus="status">
                                             <c:if test="${i.category.id == 2}">
-                                                <div>${status.index + 1}. ${i.categoryname}</div>
+                                                <div>${i.categoryname}</div>
                                             </c:if>
                                         </c:forEach>
                                     </ul>
@@ -195,7 +195,7 @@
                                     <ul class="compact-list">
                                         <c:forEach items="${requestScope.foundations}" var="i" varStatus="status">
                                             <c:if test="${i.category.id == 1}">
-                                                <div>${status.index + 1}. ${i.categoryname}</div>
+                                                <div>${i.categoryname}</div>
                                             </c:if>
                                         </c:forEach>
                                     </ul>

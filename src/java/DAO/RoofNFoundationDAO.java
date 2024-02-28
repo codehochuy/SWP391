@@ -212,6 +212,35 @@ public class RoofNFoundationDAO {
         }
         return result;
     }
+    public boolean addFoundation(String name, String area) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            con = db.getConn();
+            if (con != null) {
+                String sqlRoof = "INSERT INTO [RoofNFoundation] (Name, AreaPercent, ComponentCategoryID) VALUES (?, ?, 2)";
+                stm = con.prepareStatement(sqlRoof);
+                stm.setString(1, name);
+                stm.setString(2, area);
+                int effectRow = stm.executeUpdate();
+                if (effectRow > 0) {
+                    result = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+    
 
     public static void main(String[] args) throws SQLException {
         RoofNFoundationDAO aO = new RoofNFoundationDAO();
