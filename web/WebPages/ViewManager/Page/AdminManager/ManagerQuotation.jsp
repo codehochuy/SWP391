@@ -50,7 +50,7 @@
                                         <th>Dịch vụ</th>
                                         <th>Kiểu nhà</th>
                                         <th>Phong cách</th>
-                                        <th>Thời gian thi công/Tháng</th>
+<!--                                        <th>Thời gian thi công/Tháng</th>-->
                                         <th>Giá dao động/m&#178;</th>
                                         <th>Giá dao động/m&#178;</th>
                                         <th>Chức năng</th>
@@ -64,7 +64,7 @@
                                                 <td>${list.service.name}</td>                              
                                                 <td>${list.houseType.name}</td>
                                                 <td>${list.style.name}</td>
-                                                <td>${list.time}</td>
+<!--                                                <td>${list.time}</td>-->
                                                 <td>${list.price1}</td>
                                                 <td>${list.price2}</td>
                                                 <td style="display: flex; justify-content: space-left">
@@ -238,19 +238,19 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Giá dao động/m&#178;</label>
-                                    <input class="form-control" type="number" name="price1" required>
+                                    <input class="form-control" type="number" name="price1" required min="0">
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Giá dao động/m&#178;</label>
-                                    <input class="form-control" type="number" name="prcie2" required>
+                                    <input class="form-control" type="number" name="prcie2" required min="0">
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
-                                <div class="form-group col-md-12">
+<!--                                <div class="form-group col-md-12">
                                     <label class="control-label">Thời gian hoàn thành/tháng</label>
                                     <input class="form-control" type="number" name="time" required min="1" max="50">
                                     <div class="error-message" id="tensp-error"></div>
-                                </div>
+                                </div>-->
                             </div>
                             <c:if test="${not empty requestScope.messefalse1}">
                                 <div style="color: red;">

@@ -5,9 +5,11 @@
  */
 package Controller.ManagerQuotation;
 
+import DAO.ComponentDAO;
 import DAO.HouseTypeDAO;
 import DAO.QuotationDAO;
 import DAO.StyleDAO;
+import DTO.Component;
 import DTO.HouseType;
 import DTO.Quotation;
 import DTO.Style;
@@ -44,9 +46,12 @@ public class CreateHouseStyle extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-             HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
             List<HouseType> houseTypes = houseTypeDAO.getAll();
             request.setAttribute("houseTypes", houseTypes);
+            ComponentDAO aO = new ComponentDAO();
+            List<Component> component = aO.getAll();
+            request.setAttribute("component", component);
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateHouseStyle.jsp").forward(request, response);
         }
     }
@@ -79,53 +84,43 @@ public class CreateHouseStyle extends HttpServlet {
             throws ServletException, IOException {
         try {
             request.setCharacterEncoding("UTF-8");
-            String houseversion = request.getParameter("houseversion");
             HouseTypeDAO aO = new HouseTypeDAO();
             String name = request.getParameter("housestyle");
             boolean result = aO.addHouseStyle(name);
             if (result) {
                 QuotationDAO dAO = new QuotationDAO();
                 List<Quotation> list = dAO.getAll();
-                
+
                 StyleDAO styleDAO = new StyleDAO();
                 List<Style> styles = styleDAO.getAll();
 
                 HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
                 List<HouseType> houseTypes = houseTypeDAO.getAll();
-                
+
                 request.setAttribute("styles", styles);
                 request.setAttribute("houseTypes", houseTypes);
                 request.setAttribute("list", list);
 
                 request.setAttribute("messtrue", "Đã thêm thành công");
-                if(houseversion.equalsIgnoreCase("1")){
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateHouseStyle.jsp").forward(request, response);                    
-                }
-                else{
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateHouseStyle.jsp").forward(request, response);
-                }
+
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateHouseStyle.jsp").forward(request, response);
 
             } else {
                 QuotationDAO dAO = new QuotationDAO();
                 List<Quotation> list = dAO.getAll();
-                
+
                 StyleDAO styleDAO = new StyleDAO();
                 List<Style> styles = styleDAO.getAll();
 
                 HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
                 List<HouseType> houseTypes = houseTypeDAO.getAll();
-                
+
                 request.setAttribute("styles", styles);
                 request.setAttribute("houseTypes", houseTypes);
                 request.setAttribute("list", list);
 
-                request.setAttribute("messefalse", "Đã thêm thất bại");
-                if(houseversion.equalsIgnoreCase("1")){
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);                    
-                }
-                else{
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
-                }
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateHouseStyle.class.getName()).log(Level.SEVERE, null, ex);
