@@ -44,7 +44,7 @@ public class LoadComponentByID extends HttpServlet {
             ComponentDAO dAO = new ComponentDAO();
 //            List<Style> styles = dAO.getAll();
             Component s = dAO.getCompomnetById(styleId);
-            out.println("<form action=\"UpdateStyle\" method=\"POST\" id=\"updatesp\">\n"
+            out.println("<form action=\"UpdateComponent\" method=\"POST\" id=\"updatesp\">\n"
                     + "                            <div class=\"row\">\n"
                     + "                                <div class=\"form-group col-md-6\">\n"
                     + "                                    <label class=\"control-label\">Mã phong cách </label>\n"

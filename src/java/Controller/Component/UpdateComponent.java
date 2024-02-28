@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.ManagerHouseStyle;
+package Controller.Component;
 
-import DAO.HouseTypeDAO;
-import DTO.HouseType;
+import DAO.ComponentDAO;
+import DTO.Component;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "UpdateHouseStyle", urlPatterns = {"/UpdateHouseStyle"})
-public class UpdateHouseStyle extends HttpServlet {
+@WebServlet(name = "UpdateComponent", urlPatterns = {"/UpdateComponent"})
+public class UpdateComponent extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +40,10 @@ public class UpdateHouseStyle extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateHouseStyle</title>");            
+            out.println("<title>Servlet UpdateComponent</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateHouseStyle at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateComponent at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -76,25 +76,24 @@ public class UpdateHouseStyle extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-    String id = request.getParameter("id");
-    String name = request.getParameter("name");
-    
-    HouseTypeDAO dao = new  HouseTypeDAO();
-    boolean  result = dao.updateHouseStyleName(id, name);
-    if(result){
-        HouseTypeDAO aO = new HouseTypeDAO();
-        List<HouseType> houseTypes = aO.getAll();
-        request.setAttribute("houseTypes", houseTypes);
-        request.setAttribute("messtrue", "Cập nhật kiểu nhà công");
-        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
-    }
-    else{
-        HouseTypeDAO aO = new HouseTypeDAO();
-        List<HouseType> houseTypes = aO.getAll();
-        request.setAttribute("houseTypes", houseTypes);
-        request.setAttribute("messefalse", "Cập nhật kiểu nhà thất bại");
-        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
-    }
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+
+        ComponentDAO dao = new ComponentDAO();
+        boolean result = dao.updateComponentName(id, name);
+        if (result) {
+            ComponentDAO aO = new ComponentDAO();
+            List<Component> component = aO.getAll();
+            request.setAttribute("component", component);
+            request.setAttribute("messtrue", "Cập nhật thành phần thành công");
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerComponent.jsp").forward(request, response);
+        } else {
+            ComponentDAO aO = new ComponentDAO();
+            List<Component> component = aO.getAll();
+            request.setAttribute("component", component);
+            request.setAttribute("messefalse", "Cập nhật thành phần thất bại");
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerComponent.jsp").forward(request, response);
+        }
     }
 
     /**

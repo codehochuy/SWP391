@@ -189,6 +189,48 @@ public class ComponentDAO {
         }
         return style;
     }
+    
+    public boolean updateComponentName(String id, String name) {
+    Connection con = null;
+    PreparedStatement stm = null;
+    boolean result = false;
+    try {
+        con = db.getConn();
+        if (con != null) {
+            String sql = "UPDATE [Component] SET Component = ? WHERE ComponentID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, id);
+            int effectRow = stm.executeUpdate();
+            if (effectRow > 0) {
+                result = true;
+            }
+        }
+    } catch (SQLException e) {
+        // Xử lý ngoại lệ SQL ở đây (nếu cần)
+        e.printStackTrace(); // Hoặc ghi log, hiển thị thông báo lỗi, vv.
+    } finally {
+        if (stm != null) {
+            try {
+                stm.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Hoặc ghi log, hiển thị thông báo lỗi, vv.
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace(); // Hoặc ghi log, hiển thị thông báo lỗi, vv.
+            }
+        }
+        // Trả về false nếu có lỗi xảy ra
+        if (!result) {
+            return false;
+        }
+    }
+    return result;
+}
     public static void main(String[] args) {
         ComponentDAO dao = new ComponentDAO();
         System.out.println(dao.getAll());

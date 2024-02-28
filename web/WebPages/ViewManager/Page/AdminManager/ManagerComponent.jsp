@@ -105,7 +105,7 @@
                                 </span>
                             </div>
                         </div>
-                        <form action="UpdateStyle" method="POST" id="updatesp">
+                        <form action="UpdateComponent" method="POST" id="updatesp">
 
 
                         </form>
