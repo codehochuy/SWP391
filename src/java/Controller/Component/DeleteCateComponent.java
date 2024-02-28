@@ -5,8 +5,12 @@
  */
 package Controller.Component;
 
+import DAO.ComponentCategoryDAO;
 import DAO.ComponentDAO;
+import DAO.RoofNFoundationDAO;
 import DTO.Component;
+import DTO.ComponentCategory;
+import DTO.RoofNFoundation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -20,8 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "DeleteComponent", urlPatterns = {"/DeleteComponent"})
-public class DeleteComponent extends HttpServlet {
+@WebServlet(name = "DeleteCateComponent", urlPatterns = {"/DeleteCateComponent"})
+public class DeleteCateComponent extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,23 +40,24 @@ public class DeleteComponent extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             String id = request.getParameter("id");
             int styleID = Integer.parseInt(id);
-            ComponentDAO dao = new ComponentDAO();
-            boolean result = dao.deleteComponent(styleID);
+            RoofNFoundationDAO dao = new RoofNFoundationDAO();
+            boolean result = dao.deleteComponentCate(styleID);
             if (result) {
-                ComponentDAO aO = new ComponentDAO();
-                List<Component> component = aO.getAll();
-                request.setAttribute("component", component);
+                RoofNFoundationDAO dao1 = new RoofNFoundationDAO();
+                List<RoofNFoundation> foundations = dao1.getAll();
+                request.setAttribute("foundations", foundations);
                 request.setAttribute("messtrue", "Xóa thành phần cách công");
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerComponent.jsp").forward(request, response);
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
 
             } else {
-                ComponentDAO aO = new ComponentDAO();
-                List<Component> component = aO.getAll();
-                request.setAttribute("component", component);
+                RoofNFoundationDAO dao1 = new RoofNFoundationDAO();
+                List<RoofNFoundation> foundations = dao1.getAll();
+                request.setAttribute("foundations", foundations);
                 request.setAttribute("messefalse", "Xóa thành phần thất bại");
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerComponent.jsp").forward(request, response);
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
             }
         }
     }

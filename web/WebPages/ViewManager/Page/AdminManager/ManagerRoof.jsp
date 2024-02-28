@@ -70,7 +70,7 @@
                                             <td>${foundation.areaPercent}</td>
                                             <td>${foundation.category.name}</td> 
                                             <td style="display: flex; justify-content: space-left">
-                                                <form action="DeleteStyle" method="Post" id="deleteForm">
+                                                <form action="DeleteCateComponent" method="Post" id="deleteForm">
                                                     <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
                                                             data-userID="${foundation.id}">
                                                         <i class="fas fa-trash-alt"></i>
@@ -231,12 +231,12 @@
 
                 swal({
                     title: "Cảnh báo",
-                    text: "Bạn có muốn xóa phong cách này?",
+                    text: "Bạn có muốn xóa thành phần này?",
                     buttons: ["Hủy bỏ", "Đồng ý"],
                 }).then((willDelete) => {
                     if (willDelete) {
                         var form = button.closest("form");
-                        form.action = "DeleteComponent?id=" + userID;
+                        form.action = "DeleteCateComponent?id=" + userID;
                         form.submit();
                     }
 
