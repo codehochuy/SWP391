@@ -45,19 +45,24 @@
                     <div class="tile">
                         <div class="row element-button">
                             <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" href="ManagerComponent" title="Thêm">
-                                        <i class="fas fa-plus"></i> Quản lý thành phần 
-                                    </a>
-                                </div>
+                                <a class="btn btn-add btn-sm" href="ManagerComponent" title="Thêm">
+                                    <i class="fas fa-plus"></i> Quản lý thành phần 
+                                </a>
+                            </div>
                         </div>
                         <h1 class="tile-title">Thông tin chi tiết</h1>
                         <div class="tile-body">
                             <form class="row" action="CreateProject" method="post" id="createPro">
+                                <div class="form-group col-md-4">
+                                    <label class="control-label">Tên kiểu nhà</label>
+                                    <input class="form-control" type="text" name="housetype" required>
+                                    <div class="error-message" id="tensp-error"></div>
+                                </div>
 
-                                <button class="btn btn-save" type="submit" >Lưu lại</button>
-                                <a class="btn btn-cancel" href="ManagerHouseStyle">Hủy bỏ</a>
 
                             </form>
+                            <button class="btn btn-save" type="submit" >Lưu lại</button>
+                            <a class="btn btn-cancel" href="ManagerHouseStyle">Hủy bỏ</a>
                         </div>
 
                     </div>
