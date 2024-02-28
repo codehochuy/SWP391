@@ -233,7 +233,7 @@
                 }).then((willDelete) => {
                     if (willDelete) {
                         var form = button.closest("form");
-                        form.action = "DeleteStyle?id=" + userID;
+                        form.action = "DeleteComponent?id=" + userID;
                         form.submit();
                     }
 
