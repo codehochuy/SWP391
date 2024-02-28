@@ -103,90 +103,120 @@ public class RoofNFoundationDAO {
     }
 
     public RoofNFoundation getComponentCateById(int styleID) throws SQLException {
-    Connection con = null;
-    PreparedStatement stm = null;
-    ResultSet rs = null;
-    RoofNFoundation style = null;
-    try {
-        con = db.getConn();
-        if (con != null) {
-            String sql = "SELECT e.*, r.ComponentCategoryID, r.ComponentCategoryName FROM RoofNFoundation e\n"
-                    + "JOIN ComponentCategory r ON e.ComponentCategoryID = r.ComponentCategoryID\n"
-                    + "WHERE RoofNFoundationID = ?";
-            stm = con.prepareStatement(sql);
-            stm.setInt(1, styleID);
-            rs = stm.executeQuery();
-            if (rs.next()) {
-                // Lấy dữ liệu từ ResultSet
-                int id = rs.getInt("RoofNFoundationID");
-                String name = rs.getString("Name");
-                int areaPercent = rs.getInt("AreaPercent");
-                
-                // Tạo một đối tượng ComponentCategory
-                int categoryId = rs.getInt("ComponentCategoryID");
-                String categoryName = rs.getString("ComponentCategoryName");
-                ComponentCategory category = new ComponentCategory(categoryId, categoryName);
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        RoofNFoundation style = null;
+        try {
+            con = db.getConn();
+            if (con != null) {
+                String sql = "SELECT e.*, r.ComponentCategoryID, r.ComponentCategoryName FROM RoofNFoundation e\n"
+                        + "JOIN ComponentCategory r ON e.ComponentCategoryID = r.ComponentCategoryID\n"
+                        + "WHERE RoofNFoundationID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, styleID);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    // Lấy dữ liệu từ ResultSet
+                    int id = rs.getInt("RoofNFoundationID");
+                    String name = rs.getString("Name");
+                    int areaPercent = rs.getInt("AreaPercent");
 
-                // Tạo đối tượng RoofNFoundation với dữ liệu đã lấy
-                style = new RoofNFoundation(id, name, areaPercent, category);
+                    // Tạo một đối tượng ComponentCategory
+                    int categoryId = rs.getInt("ComponentCategoryID");
+                    String categoryName = rs.getString("ComponentCategoryName");
+                    ComponentCategory category = new ComponentCategory(categoryId, categoryName);
+
+                    // Tạo đối tượng RoofNFoundation với dữ liệu đã lấy
+                    style = new RoofNFoundation(id, name, areaPercent, category);
+                }
             }
-        }
-    } finally {
-        if (rs != null) {
-            rs.close();
-        }
-        if (stm != null) {
-            stm.close();
-        }
-        if (con != null) {
-            con.close();
-        }
-    }
-    return style;
-}
-    public boolean updateComponentCateName(String id, String name, String category, String areaPercent) {
-    Connection con = null;
-    PreparedStatement stm = null;
-    boolean result = false;
-    try {
-        con = db.getConn();
-        if (con != null) {
-            String sql = "UPDATE [RoofNFoundation] SET [Name] = ?, AreaPercent = ?, ComponentCategoryID = ? WHERE RoofNFoundationID = ?";
-            stm = con.prepareStatement(sql);
-            stm.setString(1, name);
-            stm.setString(2, areaPercent);
-            stm.setString(3, category);
-            stm.setString(4, id);
-            int effectRow = stm.executeUpdate();
-            if (effectRow > 0) {
-                result = true;
+        } finally {
+            if (rs != null) {
+                rs.close();
             }
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    } finally {
-        if (stm != null) {
-            try {
+            if (stm != null) {
                 stm.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
             }
-        }
-        if (con != null) {
-            try {
+            if (con != null) {
                 con.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
             }
         }
+        return style;
     }
-    return result;
-}
 
+    public boolean updateComponentCateName(String id, String name, String category, String areaPercent) {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            con = db.getConn();
+            if (con != null) {
+                String sql = "UPDATE [RoofNFoundation] SET [Name] = ?, AreaPercent = ?, ComponentCategoryID = ? WHERE RoofNFoundationID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, name);
+                stm.setString(2, areaPercent);
+                stm.setString(3, category);
+                stm.setString(4, id);
+                int effectRow = stm.executeUpdate();
+                if (effectRow > 0) {
+                    result = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+        return result;
+    }
 
-    public static void main(String[] args) {
+    public boolean addRoof(String name, String area) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        try {
+            con = db.getConn();
+            if (con != null) {
+                String sqlRoof = "INSERT INTO [RoofNFoundation] (Name, AreaPercent, ComponentCategoryID) VALUES (?, ?, 1)";
+                stm = con.prepareStatement(sqlRoof);
+                stm.setString(1, name);
+                stm.setString(2, area);
+                int effectRow = stm.executeUpdate();
+                if (effectRow > 0) {
+                    result = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return result;
+    }
+
+    public static void main(String[] args) throws SQLException {
         RoofNFoundationDAO aO = new RoofNFoundationDAO();
 //        System.out.println(aO.getAll());
-aO.updateComponentCateName("1", "huy", "1", "15");
+//aO.updateComponentCateName("1", "huy", "1", "15");
+        aO.addRoof("huy", "12");
     }
 }
