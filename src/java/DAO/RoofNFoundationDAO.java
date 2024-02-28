@@ -144,9 +144,49 @@ public class RoofNFoundationDAO {
     }
     return style;
 }
+    public boolean updateComponentCateName(String id, String name, String category, String areaPercent) {
+    Connection con = null;
+    PreparedStatement stm = null;
+    boolean result = false;
+    try {
+        con = db.getConn();
+        if (con != null) {
+            String sql = "UPDATE [RoofNFoundation] SET [Name] = ?, AreaPercent = ?, ComponentCategoryID = ? WHERE RoofNFoundationID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setString(1, name);
+            stm.setString(2, areaPercent);
+            stm.setString(3, category);
+            stm.setString(4, id);
+            int effectRow = stm.executeUpdate();
+            if (effectRow > 0) {
+                result = true;
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        if (stm != null) {
+            try {
+                stm.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    return result;
+}
+
 
     public static void main(String[] args) {
         RoofNFoundationDAO aO = new RoofNFoundationDAO();
-        System.out.println(aO.getAll());
+//        System.out.println(aO.getAll());
+aO.updateComponentCateName("1", "huy", "1", "15");
     }
 }

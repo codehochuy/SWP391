@@ -48,7 +48,7 @@ public class LoadRoofByID extends HttpServlet {
             RoofNFoundationDAO dAO = new RoofNFoundationDAO();
 //            List<Style> styles = dAO.getAll();
             RoofNFoundation s = dAO.getComponentCateById(styleId);
-            
+
             ComponentCategoryDAO cdo = new ComponentCategoryDAO();
             List<ComponentCategory> categories = cdo.getAll();
             out.println("<form action=\"UpdateComponentCate\" method=\"POST\" id=\"updatesp\">\n"
@@ -59,11 +59,15 @@ public class LoadRoofByID extends HttpServlet {
                     + "                                </div>\n"
                     + "                                <div class=\"form-group col-md-6\">\n"
                     + "                                    <label class=\"control-label\">Tên</label>\n"
-                    + "                                    <input class=\"form-control\" type=\"text\" required name=\"name\" value=\"" + s.getCategoryname()+ "\" >\n"
+                    + "                                    <input class=\"form-control\" type=\"text\" required name=\"name\" value=\"" + s.getCategoryname() + "\" >\n"
                     + "                                </div>\n"
-                   + "                                <div class=\"form-group col-md-6\">\n"
+                    + "                                <div class=\"form-group col-md-6\">\n"
+                    + "                                    <label class=\"control-label\">Tên</label>\n"
+                    + "                                    <input class=\"form-control\" type=\"text\" required name=\"areapercent\" value=\"" + s.getAreaPercent()+ "\" >\n"
+                    + "                                </div>\n"
+                    + "                                <div class=\"form-group col-md-6\">\n"
                     + "                                    <label for=\"exampleSelect1\" class=\"control-label\">Phân loại</label>\n"
-                    + "                                    <select class=\"form-control\" name=\"categorysp\">\n");
+                    + "                                    <select class=\"form-control\" name=\"category\">\n");
             for (ComponentCategory i : categories) {
                 if (i.getId() == s.getCategory().getId()) {
                     out.println("<option selected value=\"" + i.getId() + "\">" + i.getName() + "</option>");
