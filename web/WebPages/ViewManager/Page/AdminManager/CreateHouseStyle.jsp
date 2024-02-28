@@ -49,6 +49,11 @@
                                     <i class="fas fa-plus"></i> Quản lý thành phần 
                                 </a>
                             </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-add btn-sm" href="ManagerRoof" title="Thêm">
+                                    <i class="fas fa-plus"></i> Quản lý phần Mái và Móng 
+                                </a>
+                            </div>
                         </div>
                         <h1 class="tile-title">Thông tin chi tiết</h1>
                         <div class="tile-body">
