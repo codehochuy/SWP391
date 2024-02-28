@@ -36,7 +36,7 @@ public class RoofNFoundationDAO {
 
     public List<RoofNFoundation> getAll() {
         List<RoofNFoundation> list = new ArrayList<>();
-        String sql = "SELECT e.*, r.Name\n"
+        String sql = "SELECT e.*, r.ComponentCategoryName\n"
                 + "FROM RoofNFoundation e\n"
                 + "JOIN ComponentCategory r ON e.ComponentCategoryID = r.ComponentCategoryID;";
 
@@ -48,9 +48,9 @@ public class RoofNFoundationDAO {
                 RoofNFoundation p = new RoofNFoundation();
 
                 p.setId(rs.getInt("RoofNFoundationID"));
-                p.setName(rs.getString("Name"));
+                p.setCategoryname(rs.getString("Name"));
                 p.setAreaPercent(rs.getInt("AreaPercent"));
-                p.setCategory(new ComponentCategory(rs.getInt("ComponentCategoryID"), rs.getString("Name")));
+                p.setCategory(new ComponentCategory(rs.getInt("ComponentCategoryID"), rs.getString("ComponentCategoryName")));
 
                 list.add(p);
             }

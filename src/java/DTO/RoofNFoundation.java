@@ -11,16 +11,16 @@ package DTO;
  */
 public class RoofNFoundation {
     private int id;
-    private String name;
+    private String categoryname;
     private int areaPercent;
     private ComponentCategory category;
 
     public RoofNFoundation() {
     }
 
-    public RoofNFoundation(int id, String name, int areaPercent, ComponentCategory category) {
+    public RoofNFoundation(int id, String categoryname, int areaPercent, ComponentCategory category) {
         this.id = id;
-        this.name = name;
+        this.categoryname = categoryname;
         this.areaPercent = areaPercent;
         this.category = category;
     }
@@ -33,12 +33,12 @@ public class RoofNFoundation {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryname() {
+        return categoryname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname;
     }
 
     public int getAreaPercent() {
@@ -59,8 +59,10 @@ public class RoofNFoundation {
 
     @Override
     public String toString() {
-        return "RoofNFoundation{" + "id=" + id + ", name=" + name + ", areaPercent=" + areaPercent + ", category=" + category + '}';
+        return "RoofNFoundation{" + "id=" + id + ", categoryname=" + categoryname + ", areaPercent=" + areaPercent + ", category=" + category + '}';
     }
+
+    
     
     
     

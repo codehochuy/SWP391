@@ -45,10 +45,10 @@
                         <!--huycute-->
                         <div class="tile-body">
                             <div class="row element-button">
-<!--                                <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
-                                            class="fas fa-folder-plus"></i> Thêm thành phần</a>
-                                </div>-->
+                                <!--                                <div class="col-sm-2">
+                                                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
+                                                                            class="fas fa-folder-plus"></i> Thêm thành phần</a>
+                                                                </div>-->
                             </div>
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
@@ -62,29 +62,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${foundations}" var="foundations">
+                                    <c:forEach items="${foundations}" var="foundation">
                                         <tr> 
                                             <td width="10"><input type="checkbox" name="check1" value="1"></td>
-                                            <td>${foundations.id}</td>                              
-                                            <td>${foundations.name}</td>
-                                            <td>${foundations.areaPercent}</td>
-                                            <td>${foundations.category.name}</td>
-
+                                            <td>${foundation.id}</td>                              
+                                            <td>${foundation.categoryname}</td>
+                                            <td>${foundation.areaPercent}</td>
+                                            <td>${foundation.category.name}</td> 
                                             <td style="display: flex; justify-content: space-left">
-<!--                                                <form action="DeleteStyle" method="Post" id="deleteForm">
+                                                <form action="DeleteStyle" method="Post" id="deleteForm">
                                                     <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
-                                                            data-userID="${component.id}">
+                                                            data-userID="${foundation.id}">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
                                                 <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
-                                                        data-target="#ModalUP" onclick="getData('${component.id}')"><i class="fas fa-edit"></i></button>-->
-
-
+                                                        data-target="#ModalUP" onclick="getData('${foundation.id}')">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
                                             </td>
                                         </tr>
-
                                     </c:forEach>
+
                                 </tbody>
                             </table>
 
@@ -183,47 +182,47 @@
 
 
         <script type="text/javascript">
-                                                            $('#sampleTable').DataTable();
-                                                            //Thời Gian
-                                                            function time() {
-                                                                var today = new Date();
-                                                                var weekday = new Array(7);
-                                                                weekday[0] = "Chủ Nhật";
-                                                                weekday[1] = "Thứ Hai";
-                                                                weekday[2] = "Thứ Ba";
-                                                                weekday[3] = "Thứ Tư";
-                                                                weekday[4] = "Thứ Năm";
-                                                                weekday[5] = "Thứ Sáu";
-                                                                weekday[6] = "Thứ Bảy";
-                                                                var day = weekday[today.getDay()];
-                                                                var dd = today.getDate();
-                                                                var mm = today.getMonth() + 1;
-                                                                var yyyy = today.getFullYear();
-                                                                var h = today.getHours();
-                                                                var m = today.getMinutes();
-                                                                var s = today.getSeconds();
-                                                                m = checkTime(m);
-                                                                s = checkTime(s);
-                                                                nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                                                if (dd < 10) {
-                                                                    dd = '0' + dd
-                                                                }
-                                                                if (mm < 10) {
-                                                                    mm = '0' + mm
-                                                                }
-                                                                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                                                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                                                        '</span>';
-                                                                document.getElementById("clock").innerHTML = tmp;
-                                                                clocktime = setTimeout("time()", "1000", "Javascript");
+                        $('#sampleTable').DataTable();
+                        //Thời Gian
+                        function time() {
+                            var today = new Date();
+                            var weekday = new Array(7);
+                            weekday[0] = "Chủ Nhật";
+                            weekday[1] = "Thứ Hai";
+                            weekday[2] = "Thứ Ba";
+                            weekday[3] = "Thứ Tư";
+                            weekday[4] = "Thứ Năm";
+                            weekday[5] = "Thứ Sáu";
+                            weekday[6] = "Thứ Bảy";
+                            var day = weekday[today.getDay()];
+                            var dd = today.getDate();
+                            var mm = today.getMonth() + 1;
+                            var yyyy = today.getFullYear();
+                            var h = today.getHours();
+                            var m = today.getMinutes();
+                            var s = today.getSeconds();
+                            m = checkTime(m);
+                            s = checkTime(s);
+                            nowTime = h + " giờ " + m + " phút " + s + " giây";
+                            if (dd < 10) {
+                                dd = '0' + dd
+                            }
+                            if (mm < 10) {
+                                mm = '0' + mm
+                            }
+                            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                                    '</span>';
+                            document.getElementById("clock").innerHTML = tmp;
+                            clocktime = setTimeout("time()", "1000", "Javascript");
 
-                                                                function checkTime(i) {
-                                                                    if (i < 10) {
-                                                                        i = "0" + i;
-                                                                    }
-                                                                    return i;
-                                                                }
-                                                            }
+                            function checkTime(i) {
+                                if (i < 10) {
+                                    i = "0" + i;
+                                }
+                                return i;
+                            }
+                        }
         </script>
 
         <script>
