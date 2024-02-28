@@ -245,7 +245,7 @@
             function getData(i) {
                 $.ajax({
                     type: 'GET',
-                    url: '${pageContext.request.contextPath}/LoadStyleByID',
+                    url: '${pageContext.request.contextPath}/LoadComponentByID',
                     data: {
                         id: i
                     },

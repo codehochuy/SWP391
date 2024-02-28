@@ -160,6 +160,35 @@ public class ComponentDAO {
         return result;
     }
 
+    public Component getCompomnetById(int styleID) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Component style = null;
+        try {
+            con = db.getConn();
+            if (con != null) {
+                String sql = "SELECT * FROM [Component] WHERE ComponentID = ?";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, styleID);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    style = new Component(rs.getInt("ComponentID"), rs.getString("Component"));
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return style;
+    }
     public static void main(String[] args) {
         ComponentDAO dao = new ComponentDAO();
         System.out.println(dao.getAll());
