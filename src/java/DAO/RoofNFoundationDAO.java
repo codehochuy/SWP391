@@ -60,6 +60,7 @@ public class RoofNFoundationDAO {
 
         return list;
     }
+
     public boolean deleteComponentCate(int styleID) {
         Connection con = null;
         PreparedStatement stm = null;
@@ -100,7 +101,50 @@ public class RoofNFoundationDAO {
         }
         return result;
     }
-    
+
+    public RoofNFoundation getComponentCateById(int styleID) throws SQLException {
+    Connection con = null;
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+    RoofNFoundation style = null;
+    try {
+        con = db.getConn();
+        if (con != null) {
+            String sql = "SELECT e.*, r.ComponentCategoryID, r.ComponentCategoryName FROM RoofNFoundation e\n"
+                    + "JOIN ComponentCategory r ON e.ComponentCategoryID = r.ComponentCategoryID\n"
+                    + "WHERE RoofNFoundationID = ?";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, styleID);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                // Lấy dữ liệu từ ResultSet
+                int id = rs.getInt("RoofNFoundationID");
+                String name = rs.getString("Name");
+                int areaPercent = rs.getInt("AreaPercent");
+                
+                // Tạo một đối tượng ComponentCategory
+                int categoryId = rs.getInt("ComponentCategoryID");
+                String categoryName = rs.getString("ComponentCategoryName");
+                ComponentCategory category = new ComponentCategory(categoryId, categoryName);
+
+                // Tạo đối tượng RoofNFoundation với dữ liệu đã lấy
+                style = new RoofNFoundation(id, name, areaPercent, category);
+            }
+        }
+    } finally {
+        if (rs != null) {
+            rs.close();
+        }
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+    return style;
+}
+
     public static void main(String[] args) {
         RoofNFoundationDAO aO = new RoofNFoundationDAO();
         System.out.println(aO.getAll());

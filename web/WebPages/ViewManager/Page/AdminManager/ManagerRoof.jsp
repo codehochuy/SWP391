@@ -104,7 +104,7 @@
                         <div class="row">
                             <div class="form-group  col-md-12">
                                 <span class="thong-tin-thanh-toan">
-                                    <h5>Chỉnh sửa thông tin phong cách cơ bản</h5>
+                                    <h5>Chỉnh sửa thông tin thành phần cơ bản</h5>
                                 </span>
                             </div>
                         </div>
@@ -248,7 +248,7 @@
             function getData(i) {
                 $.ajax({
                     type: 'GET',
-                    url: '${pageContext.request.contextPath}/LoadComponentByID',
+                    url: '${pageContext.request.contextPath}/LoadRoofByID',
                     data: {
                         id: i
                     },
