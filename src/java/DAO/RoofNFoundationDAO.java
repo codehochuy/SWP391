@@ -36,7 +36,7 @@ public class RoofNFoundationDAO {
 
     public List<RoofNFoundation> getAll() {
         List<RoofNFoundation> list = new ArrayList<>();
-        String sql = "SELECT e.*, r.ComponentCategoryName\n"
+        String sql = "SELECT e.*, r.Name\n"
                 + "FROM RoofNFoundation e\n"
                 + "JOIN ComponentCategory r ON e.ComponentCategoryID = r.ComponentCategoryID;";
 
@@ -50,7 +50,7 @@ public class RoofNFoundationDAO {
                 p.setId(rs.getInt("RoofNFoundationID"));
                 p.setCategoryname(rs.getString("Name"));
                 p.setAreaPercent(rs.getInt("AreaPercent"));
-                p.setCategory(new ComponentCategory(rs.getInt("ComponentCategoryID"), rs.getString("ComponentCategoryName")));
+                p.setCategory(new ComponentCategory(rs.getInt("ComponentCategoryID"), rs.getString(5)));
 
                 list.add(p);
             }
@@ -110,7 +110,7 @@ public class RoofNFoundationDAO {
         try {
             con = db.getConn();
             if (con != null) {
-                String sql = "SELECT e.*, r.ComponentCategoryID, r.ComponentCategoryName FROM RoofNFoundation e\n"
+                String sql = "SELECT e.*, r.ComponentCategoryID, r.Name FROM RoofNFoundation e\n"
                         + "JOIN ComponentCategory r ON e.ComponentCategoryID = r.ComponentCategoryID\n"
                         + "WHERE RoofNFoundationID = ?";
                 stm = con.prepareStatement(sql);
@@ -124,7 +124,7 @@ public class RoofNFoundationDAO {
 
                     // Tạo một đối tượng ComponentCategory
                     int categoryId = rs.getInt("ComponentCategoryID");
-                    String categoryName = rs.getString("ComponentCategoryName");
+                    String categoryName = rs.getString("Name");
                     ComponentCategory category = new ComponentCategory(categoryId, categoryName);
 
                     // Tạo đối tượng RoofNFoundation với dữ liệu đã lấy
@@ -244,8 +244,8 @@ public class RoofNFoundationDAO {
 
     public static void main(String[] args) throws SQLException {
         RoofNFoundationDAO aO = new RoofNFoundationDAO();
-//        System.out.println(aO.getAll());
+        System.out.println(aO.getAll());
 //aO.updateComponentCateName("1", "huy", "1", "15");
-        aO.addRoof("huy", "12");
+//        aO.addRoof("huy", "12");
     }
 }
