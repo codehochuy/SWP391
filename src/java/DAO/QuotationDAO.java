@@ -5,8 +5,10 @@
  */
 package DAO;
 
+import DTO.HouseComponent;
 import DTO.HouseType;
 import DTO.Quotation;
+import DTO.RoofNFoundation2;
 import DTO.Service;
 import DTO.Style;
 import Utils.DBContext;
@@ -105,6 +107,62 @@ public class QuotationDAO {
         return list;
     }
 
+    public Quotation getQuotaitonByServiveTypeStyle(int service, int type, int style) {
+        Quotation quotation = new Quotation();
+        String sql = "SELECT Q.*, HT.HouseTypeName, Svc.ServiceName, S.StyleName\n"
+                + "FROM Quotation Q JOIN Style S ON Q.StyleID = S.StyleID\n"
+                + "JOIN HouseType HT ON Q.HouseTypeID = HT.HouseTypeID\n"
+                + "JOIN [Service] Svc ON Q.ServiceID = Svc.ServiceID\n"
+                + "WHERE Q.StyleID = ? and Q.HouseTypeID = ? and Q.ServiceID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, style);
+            ps.setInt(2, type);
+            ps.setInt(3, service);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                Quotation c = new Quotation();
+                c.setId(rs.getInt("QuotationID"));
+                c.setPrice1(rs.getDouble("Price1"));
+                c.setPrice2(rs.getDouble("Price2"));
+                c.setTime(rs.getInt("Time"));
+                c.setHouseType(new HouseType(rs.getInt("HouseTypeID"), rs.getString("HouseTypeName")));
+                c.setService(new Service(rs.getInt("ServiceID"), rs.getString("ServiceName")));
+                c.setStyle(new Style(rs.getInt("StyleID"), rs.getString("StyleName")));
+
+                return c;
+            }
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return null;
+    }
+
     public boolean deleteQuotation(String id) {
         try (Connection con = db.getConn();
                 PreparedStatement stm = con.prepareStatement("DELETE FROM Quotation WHERE QuotationID = ?")) {
@@ -153,6 +211,35 @@ public class QuotationDAO {
                     quotation.setService(new Service(rs.getInt("ServiceID"), rs.getString("ServiceName")));
                     quotation.setStyle(new Style(rs.getInt("StyleID"), rs.getString("StyleName")));
                     return quotation;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle the exception (log it, throw it, etc.)
+        }
+        return null;
+    }
+
+    public RoofNFoundation2 getRoofNFoundationByID(int id) {
+        String sql = "SELECT rf.RoofNFoundationID, rf.[Name] as RoofNFoundationName, rf.AreaPercent, cc.*\n"
+                + "FROM RoofNFoundation2 rf \n"
+                + "JOIN ComponentCategory cc ON rf.ComponentCategoryID = cc.ComponentCategoryID\n"
+                + "WHERE rf.RoofNFoundationID = ?;";
+
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    RoofNFoundation2 rf = new RoofNFoundation2();
+                    rf.setRoofNFoundationId(rs.getInt("RoofNFoundationID"));
+                    rf.setRoofNFoundationName(rs.getString("RoofNFoundationName"));
+                    rf.setAreaPercent(rs.getInt("AreaPercent"));
+                    rf.setComponentCategoryID(rs.getInt("ComponentCategoryID"));
+                    rf.setCategoryName(rs.getString("Name"));
+                    return rf;
                 }
             }
 
@@ -288,13 +375,174 @@ public class QuotationDAO {
 //        return false;
 //    }
 //}
+    public List<HouseComponent> getHouseComponent(int houseTypeId) {
+        List<HouseComponent> list = new ArrayList<>();
+        String sql = "Select * from HouseType ht join  HouseComponent hc on ht.HouseTypeID = hc.HouseTypeID\n"
+                + "join Component c on c.ComponentID = hc.ComponentID\n"
+                + "where ht.HouseTypeID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, houseTypeId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                HouseComponent c = new HouseComponent();
+                c.setId(rs.getInt("HouseComponentID"));
+                c.setComponentId(rs.getInt("ComponentID"));
+                c.setHouseTypeId(rs.getInt("HouseTypeID"));
+                c.setComponent(rs.getString("Component"));
+                c.setHouseType(rs.getString("HouseTypeName"));
+                list.add(c);
+            }
+            return list;
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<RoofNFoundation2> getFoundation() {
+        List<RoofNFoundation2> list = new ArrayList<>();
+        String sql = "select rf.RoofNFoundationID, rf.Name as RoofNFoundationName, rf.AreaPercent, rf.ComponentCategoryID, cc.Name as CategoryName\n"
+                + "  from RoofNFoundation rf join ComponentCategory cc on rf.ComponentCategoryID = cc.ComponentCategoryID\n"
+                + "  where rf.ComponentCategoryID = 1";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                RoofNFoundation2 c = new RoofNFoundation2();
+                c.setRoofNFoundationId(rs.getInt("RoofNFoundationID"));
+                c.setRoofNFoundationName(rs.getString("RoofNFoundationName"));
+                c.setAreaPercent(rs.getInt("AreaPercent"));
+                c.setComponentCategoryID(rs.getInt("ComponentCategoryID"));
+                c.setCategoryName(rs.getString("CategoryName"));
+                list.add(c);
+            }
+            return list;
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<RoofNFoundation2> getRoof() {
+        List<RoofNFoundation2> list = new ArrayList<>();
+        String sql = "select rf.RoofNFoundationID, rf.Name as RoofNFoundationName, rf.AreaPercent, rf.ComponentCategoryID, cc.Name as CategoryName\n"
+                + "  from RoofNFoundation rf join ComponentCategory cc on rf.ComponentCategoryID = cc.ComponentCategoryID\n"
+                + "  where rf.ComponentCategoryID = 2";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                RoofNFoundation2 c = new RoofNFoundation2();
+                c.setRoofNFoundationId(rs.getInt("RoofNFoundationID"));
+                c.setRoofNFoundationName(rs.getString("RoofNFoundationName"));
+                c.setAreaPercent(rs.getInt("AreaPercent"));
+                c.setComponentCategoryID(rs.getInt("ComponentCategoryID"));
+                c.setCategoryName(rs.getString("CategoryName"));
+                list.add(c);
+            }
+            return list;
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
+        System.setProperty("file.encoding", "UTF-8");
         QuotationDAO dao = new QuotationDAO();
-//        System.out.println(dao.getAll());
-//        System.out.println(dao.deleteQuotation("12"));
-//        System.out.println(dao.getQuotationID("3"));
-//        System.out.println(dao.updateQuotation("10", "5900000", "6000000", "8"));
-        System.out.println(dao.createQuotation(10, 20, 9, 1, 1, 1));
+        List<RoofNFoundation2> list = dao.getFoundation();
+        for (RoofNFoundation2 roofNFoundation : list) {
+            System.out.println(roofNFoundation.getRoofNFoundationName() + ": " + roofNFoundation.getAreaPercent());
+        }
+    }
+
+    public boolean checkFloor(int selectedHouseType) {
+        QuotationDAO dao = new QuotationDAO();
+        boolean check = false;
+        List<HouseComponent> list = dao.getHouseComponent(selectedHouseType);
+        for (HouseComponent houseComponent : list) {
+            if (houseComponent.getId() == 5){
+                check = true;
+                break;
+            }
+        }
+        return check;
     }
 
 }
