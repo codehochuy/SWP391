@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -143,26 +145,25 @@
                                     <img src="WebPages/ViewWebPage/img/quotation-raw-1.jpg" alt="Quptation Image">
                                     <p>Bảng giá xây dựng phần thô được TITAN cung cấp dưới đây sẽ giúp quý khách hàng có thể ước lượng được chi phí xây dựng phần thô, xây tổ ấm của mình một cách dễ dàng, nhanh chóng. Bảng giá được chia làm 3 hạng mục công trình cơ bản:</p>
                                     <ul>
-                                        <li><strong>Công trình nhà phố hiện đại</strong>: Giá thi công phần thô giao động từ <strong>3.400.000 đ/m2</strong> đến <strong>3.600.000 đ/m2</strong>.</li>
-                                        <li><strong>Công trình biệt thự hiện đại</strong>: Giá xây nhà phần thô giao động từ <strong>3.500.000 đ/m2</strong> đến <strong>3.800.000 đ/m2</strong>.</li>
-                                        <li><strong>Công trình biệt thự cổ điển</strong>: Giá xây dựng nhà phần thô giao động từ <strong>3.800.000 đ/m2</strong> đến <strong>4.500.000 đ/m2</strong>.</li>
+                                        <c:forEach items="${requestScope.list}" var="i">
+                                            <c:if test="${i.service.id eq 1}"><li><strong>Công trình ${i.houseType.name} ${i.style.name}</strong>: Giá thi công phần thô giao động từ <strong><fmt:formatNumber value="${i.price1}" pattern="###,###,###" /></strong> đến <strong><fmt:formatNumber value="${i.price2}" pattern="###,###,###" /> đ/m²</strong>.</li></th></c:if>
+                                            </c:forEach>
+
                                     </ul>
                                     <h4>Bảng giá xây nhà phần thô</h4>
-                                    <table class="table" border="1">
+                                    <table border="1">
                                         <thead>
                                             <tr>
-                                                <th>Hạng công trình</th>
-                                                <th>Nhà phố hiện đại</th>
-                                                <th>Biệt thự hiện đại</th>
-                                                <th>Biệt thự cổ điển</th>
+                                                <c:forEach items="${requestScope.list}" var="i">
+                                                    <c:if test="${i.service.id eq 1}"><th>${i.houseType.name} ${i.style.name}</th></c:if>
+                                                    </c:forEach>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Bảng giá xây nhà phần thô</td>
-                                                <td>3,400,000 đ/m2 đến 3,600,000 đ/m2</td>
-                                                <td>3,500,000 đ/m2 đến 3,800,000 đ/m2</td>
-                                                <td>3,800,000 đ/m2 đến 4,500,000 đ/m2</td>
+                                                <c:forEach items="${requestScope.list}" var="i">
+                                                    <c:if test="${i.service.id eq 1}"><td>Từ <fmt:formatNumber value="${i.price1}" pattern="###,###,###" /> đến <fmt:formatNumber value="${i.price2}" pattern="###,###,###" /> đ/m²</td></c:if>
+                                                </c:forEach>
                                             </tr>
                                         </tbody>
                                     </table>
