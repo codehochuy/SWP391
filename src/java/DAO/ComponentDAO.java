@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import DTO.Component;
 import DTO.Style;
 import Utils.DBContext;
 import java.sql.Connection;
@@ -20,15 +21,14 @@ import java.util.logging.Logger;
  *
  * @author ACER
  */
-public class StyleDAO {
+public class ComponentDAO {
+     private DBContext db;
 
-    private DBContext db;
-
-    public StyleDAO() {
+    public ComponentDAO() {
         db = new DBContext();
     }
 
-    public StyleDAO(DBContext db) {
+    public ComponentDAO(DBContext db) {
         this.db = db;
     }
 
@@ -39,10 +39,10 @@ public class StyleDAO {
     public void setDb(DBContext db) {
         this.db = db;
     }
-
-    public List<Style> getAll() {
-        List<Style> list = new ArrayList<>();
-        String sql = " SELECT * FROM Style";
+    
+    public List<Component> getAll() {
+        List<Component> list = new ArrayList<>();
+        String sql = " SELECT * FROM [Component]";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -51,7 +51,7 @@ public class StyleDAO {
             ps = conn.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
-                Style c = new Style(rs.getInt(1), rs.getString(2));
+                Component c = new Component(rs.getInt(1), rs.getString(2));
                 list.add(c);
             }
             return list;
@@ -61,28 +61,27 @@ public class StyleDAO {
                 try {
                     rs.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(StyleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ComponentDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (ps != null) {
                 try {
                     ps.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(StyleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ComponentDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(StyleDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ComponentDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         return list;
     }
-
-    public boolean addStyle(String name) throws SQLException {
+    public boolean addComponent(String name) throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         boolean result = false;
@@ -90,7 +89,7 @@ public class StyleDAO {
             //1. Connect DB
             con = db.getConn();
             if (con != null) {
-                String sql = "INSERT INTO [Style](StyleName)VALUES (?)";
+                String sql = "INSERT INTO [Component](Component)VALUES (?)";
                 //3. Create Statement Object
                 stm = con.prepareStatement(sql); //Nạp tham số 1 lần cho Statement
                 stm.setString(1, name);
@@ -119,15 +118,15 @@ public class StyleDAO {
         return result;
 
     }
-
-    public boolean deleteStyle(int styleID) {
+    
+    public boolean deleteComponent(int styleID) {
         Connection con = null;
         PreparedStatement stm = null;
         boolean result = false;
         try {
             con = db.getConn();
             if (con != null) {
-                String sql = "DELETE FROM [Style] WHERE StyleID = ?";
+                String sql = "DELETE FROM [Component] WHERE ComponentID = ?";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, styleID);
                 int effectRow = stm.executeUpdate();
@@ -161,20 +160,20 @@ public class StyleDAO {
         return result;
     }
 
-    public Style getStyleById(int styleID) throws SQLException {
+    public Component getCompomnetById(int styleID) throws SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        Style style = null;
+        Component style = null;
         try {
             con = db.getConn();
             if (con != null) {
-                String sql = "SELECT * FROM [Style] WHERE StyleID = ?";
+                String sql = "SELECT * FROM [Component] WHERE ComponentID = ?";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, styleID);
                 rs = stm.executeQuery();
                 if (rs.next()) {
-                    style = new Style(rs.getInt("StyleID"), rs.getString("StyleName"));
+                    style = new Component(rs.getInt("ComponentID"), rs.getString("Component"));
                 }
             }
         } finally {
@@ -190,18 +189,18 @@ public class StyleDAO {
         }
         return style;
     }
-
-    public boolean updateStyleName(String styleID, String newName) {
+    
+    public boolean updateComponentName(String id, String name) {
     Connection con = null;
     PreparedStatement stm = null;
     boolean result = false;
     try {
         con = db.getConn();
         if (con != null) {
-            String sql = "UPDATE [Style] SET StyleName = ? WHERE StyleID = ?";
+            String sql = "UPDATE [Component] SET Component = ? WHERE ComponentID = ?";
             stm = con.prepareStatement(sql);
-            stm.setString(1, newName);
-            stm.setString(2, styleID);
+            stm.setString(1, name);
+            stm.setString(2, id);
             int effectRow = stm.executeUpdate();
             if (effectRow > 0) {
                 result = true;
@@ -232,15 +231,9 @@ public class StyleDAO {
     }
     return result;
 }
-
-    public static void main(String[] args) throws SQLException {
-        StyleDAO dao = new StyleDAO();
-//        System.out.println(dao.getAll());
-//        dao.addStyle("huy");
-//        dao.deleteStyle(2);
-//System.out.println(dao.getStyleById(1));
-        dao.updateStyleName("2", "Hiện Đại");
-
+    public static void main(String[] args) {
+        ComponentDAO dao = new ComponentDAO();
+        System.out.println(dao.getAll());
     }
-
+    
 }

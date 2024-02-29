@@ -67,5 +67,12 @@ public class HouseComponent {
         this.component = component;
     }
 
+    @Override
+    public String toString() {
+        return "HouseComponent{" + "id=" + id + ", houseTypeId=" + houseTypeId + ", componentId=" + componentId + ", houseType=" + houseType + ", component=" + component + '}';
+    }
+
+    
+
     
 }

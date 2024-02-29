@@ -222,7 +222,7 @@ public class QuotationDAO {
 
     public RoofNFoundation2 getRoofNFoundationByID(int id) {
         String sql = "SELECT rf.RoofNFoundationID, rf.[Name] as RoofNFoundationName, rf.AreaPercent, cc.*\n"
-                + "FROM RoofNFoundation2 rf \n"
+                + "FROM RoofNFoundation rf \n"
                 + "JOIN ComponentCategory cc ON rf.ComponentCategoryID = cc.ComponentCategoryID\n"
                 + "WHERE rf.RoofNFoundationID = ?;";
 

@@ -104,10 +104,10 @@ public class CreateStyle extends HttpServlet {
 
                 request.setAttribute("messtrue", "Đã thêm thành công");
                 if(styleversion.equalsIgnoreCase("1")){
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);                    
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);                    
                 }
                 else{
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
                 }
                 
 
@@ -127,10 +127,10 @@ public class CreateStyle extends HttpServlet {
 
                 request.setAttribute("messefalse", "Đã thêm thất bại");
                 if(styleversion.equalsIgnoreCase("1")){
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);                    
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);                    
                 }
                 else{
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
                 }
             }
         } catch (SQLException ex) {

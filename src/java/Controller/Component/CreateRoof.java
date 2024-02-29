@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.ManagerQuotation;
+package Controller.Component;
 
 import DAO.ComponentDAO;
-import DAO.HouseTypeDAO;
-import DAO.QuotationDAO;
-import DAO.StyleDAO;
+import DAO.RoofNFoundationDAO;
 import DTO.Component;
-import DTO.HouseType;
-import DTO.Quotation;
-import DTO.Style;
+import DTO.RoofNFoundation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -29,8 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "CreateHouseStyle", urlPatterns = {"/CreateHouseStyle"})
-public class CreateHouseStyle extends HttpServlet {
+@WebServlet(name = "CreateRoof", urlPatterns = {"/CreateRoof"})
+public class CreateRoof extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,13 +42,15 @@ public class CreateHouseStyle extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-            List<HouseType> houseTypes = houseTypeDAO.getAll();
-            request.setAttribute("houseTypes", houseTypes);
-            ComponentDAO aO = new ComponentDAO();
-            List<Component> component = aO.getAll();
-            request.setAttribute("component", component);
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateHouseStyle.jsp").forward(request, response);
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet CreateRoof</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet CreateRoof at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -84,46 +82,26 @@ public class CreateHouseStyle extends HttpServlet {
             throws ServletException, IOException {
         try {
             request.setCharacterEncoding("UTF-8");
-            HouseTypeDAO aO = new HouseTypeDAO();
-            String name = request.getParameter("housestyle");
-            boolean result = aO.addHouseStyle(name);
+            RoofNFoundationDAO aO = new RoofNFoundationDAO();
+            String name = request.getParameter("name");
+            String area = request.getParameter("area");
+            boolean result = aO.addRoof(name,area);
             if (result) {
-                QuotationDAO dAO = new QuotationDAO();
-                List<Quotation> list = dAO.getAll();
-
-                StyleDAO styleDAO = new StyleDAO();
-                List<Style> styles = styleDAO.getAll();
-
-                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-                List<HouseType> houseTypes = houseTypeDAO.getAll();
-
-                request.setAttribute("styles", styles);
-                request.setAttribute("houseTypes", houseTypes);
-                request.setAttribute("list", list);
-
+                RoofNFoundationDAO dao = new RoofNFoundationDAO();
+                List<RoofNFoundation> foundations = dao.getAll();
+                request.setAttribute("foundations", foundations);
                 request.setAttribute("messtrue", "Đã thêm thành công");
-
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateHouseStyle.jsp").forward(request, response);
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
 
             } else {
-                QuotationDAO dAO = new QuotationDAO();
-                List<Quotation> list = dAO.getAll();
-
-                StyleDAO styleDAO = new StyleDAO();
-                List<Style> styles = styleDAO.getAll();
-
-                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-                List<HouseType> houseTypes = houseTypeDAO.getAll();
-
-                request.setAttribute("styles", styles);
-                request.setAttribute("houseTypes", houseTypes);
-                request.setAttribute("list", list);
-
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
-
+                RoofNFoundationDAO dao = new RoofNFoundationDAO();
+                List<RoofNFoundation> foundations = dao.getAll();
+                request.setAttribute("foundations", foundations);
+                request.setAttribute("messefalse", "Đã thêm thất bại");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CreateHouseStyle.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CreateComponent.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

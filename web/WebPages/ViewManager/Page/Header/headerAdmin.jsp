@@ -44,32 +44,36 @@
 
                 <li><a class="app-menu__item " href="ManagerUser"><i class='app-menu__icon bx bx-user-voice'></i><span
                             class="app-menu__label">Quản lý Khách Hàng</span></a></li>
+                <li><a class="app-menu__item " href="ManagerHouseStyle"><i class='app-menu__icon bx bx-home'></i>
+                        <span class="app-menu__label">Quản lý kiểu nhà</span></a></li>
+                <li><a class="app-menu__item " href="ManagerStyle"><i class='app-menu__icon bx bx-home'></i>
+                        <span class="app-menu__label">Quản lý phong cách</span></a></li>
                 <li><a class="app-menu__item " href="ManagerQuotation"><i class='app-menu__icon bx bx-id-card'></i>
                         <span class="app-menu__label">Giá Thi Công Thô</span></a></li>
                 <li><a class="app-menu__item " href="ManagerQuotation2"><i class='app-menu__icon bx bx-id-card'></i>
-                        <span class="app-menu__label">Giá Thi Công Hoàn Thiện</span></a></li>
+                        <span class="app-menu__label">Giá Thi Công Trọn Gói</span></a></li>
                 <!--                <li><a class="app-menu__item active" href="ManagerProject"><i class='app-menu__icon bx bx-purchase-tag-alt'></i>
                                             <span class="app-menu__label">Quản lý người dùng</span></a>-->
                 </li><a class="app-menu__item" href="ManagerProject"><i class='app-menu__icon bx bx-task'></i>
                     <span class="app-menu__label">Dự Án Đã Hoàn Thành</span></a><li>
 
-                <li><a class="app-menu__item" href="ManagerMaterial"><i class='app-menu__icon bx bx-run'></i><span
+                <li><a class="app-menu__item" href="ManageMaterial"><i class='app-menu__icon bx bx-run'></i><span
                             class="app-menu__label">Quản lý vật liệu
                         </span></a></li>
                 <li><a class="app-menu__item" href="ManagerBlog"><i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span
                             class="app-menu__label">Quản lý Blog
                         </span></a></li>
 
-<!--                
-                            <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-dollar'></i><span
-                                        class="app-menu__label">Bảng kê lương</span></a></li>
-                            <li><a class="app-menu__item" href="#"><i
-                                        class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Báo cáo doanh thu</span></a>
-                            </li>
-                            <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-calendar-check'></i><span
-                                        class="app-menu__label">Lịch công tác </span></a></li>
-                            <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-cog'></i><span class="app-menu__label">Cài
-                                        đặt hệ thống</span></a></li>-->
+                <!--                
+                                            <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-dollar'></i><span
+                                                        class="app-menu__label">Bảng kê lương</span></a></li>
+                                            <li><a class="app-menu__item" href="#"><i
+                                                        class='app-menu__icon bx bx-pie-chart-alt-2'></i><span class="app-menu__label">Báo cáo doanh thu</span></a>
+                                            </li>
+                                            <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-calendar-check'></i><span
+                                                        class="app-menu__label">Lịch công tác </span></a></li>
+                                            <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-cog'></i><span class="app-menu__label">Cài
+                                                        đặt hệ thống</span></a></li>-->
             </ul>
         </aside>
     </body>
