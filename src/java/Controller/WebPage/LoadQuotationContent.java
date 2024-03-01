@@ -10,6 +10,7 @@ import DTO.HouseComponent;
 import DTO.RoofNFoundation2;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,77 +41,126 @@ public class LoadQuotationContent extends HttpServlet {
             int selectedHouseType = Integer.parseInt(request.getParameter("houseType"));
             int selectedService = Integer.parseInt(request.getParameter("service"));
             int selectedStyle = Integer.parseInt(request.getParameter("style"));
-            
+
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
-            
+
             QuotationDAO quotationDao = new QuotationDAO();
             DTO.Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
-            
+
             Double length = Double.parseDouble(request.getParameter("1"));
             Double width = Double.parseDouble(request.getParameter("2"));
-            
-            Double frontYard = Double.parseDouble(request.getParameter("3"));
-            Double backYard = Double.parseDouble(request.getParameter("4"));
-            
-            int roofId = Integer.parseInt(request.getParameter("roof"));
-            int foundationId = Integer.parseInt(request.getParameter("foundation"));
-            
-            QuotationDAO floorDao = new QuotationDAO();
-            boolean checkFloor = floorDao.checkFloor(selectedHouseType);
-            
-            QuotationDAO foundationDao = new QuotationDAO();
-            RoofNFoundation2 foundation = foundationDao.getRoofNFoundationByID(foundationId);
-            QuotationDAO roofDao = new QuotationDAO();
-            RoofNFoundation2 roof = roofDao.getRoofNFoundationByID(roofId);
-            
+
+            double frontYard = (request.getParameter("3") != null && !request.getParameter("3").isEmpty()) ? Double.parseDouble(request.getParameter("3")) : 0;
+            double backYard = (request.getParameter("4") != null && !request.getParameter("4").isEmpty()) ? Double.parseDouble(request.getParameter("4")) : 0;
+            int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
+            int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
+            int floor = (request.getParameter("5") != null && !request.getParameter("5").isEmpty()) ? Integer.parseInt(request.getParameter("5")) : 0;
+            int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
+            double balcony = (request.getParameter("6") != null && !request.getParameter("6").isEmpty()) ? Double.parseDouble(request.getParameter("6")) : 0;
+
             double price = 0;
             double S = length * width;
-            if (S >= 200){
-                price = quotation.getPrice1();
-            } else {
-                price = quotation.getPrice2();
-            }
-              
-            double s = width * (length-frontYard-backYard);
-            
-            double sFrontYard = (width * frontYard) * 0.5;
-            
-            double sBackYard = (width * backYard) * 0.5;
-            double sFoundation = foundation.getAreaPercent()/100 * S; 
-            double sRoof = roof.getAreaPercent()/100 * s;
-                 
-            if (selectedService == 2) {
-                int packagePrice = Integer.parseInt(request.getParameter("packagePrice"));
-                out.println("<h1>Xây trọn gói</h1>");
-                if (checkFloor) {
-                    
+            double s = (length - frontYard - backYard) * width;
+            double totalArea = 0;
+            if (selectedService == 2 && packagePrice != 0) {
+                if (packagePrice == 1) {
+                    price = quotation.getPrice1();
                 } else {
-                    
+                    price = quotation.getPrice2();
                 }
             } else {
-                out.println("<h1>Xây thô</h1>");
-                if (checkFloor) {
-                    
-                } else { //xây thô k lầu
-                    double totalArea = s + sFrontYard + sBackYard + sFoundation + sRoof;
-                    double totalPrice = totalArea * price;
-                    for (int i = 0; i < listHouseComponent.size(); i++) {
-                        out.println("<h1>"+listHouseComponent.get(i).getComponent()+": "+request.getParameter((i+1)+"")+"</h1>");
-                    }
-                    
-                    out.println("<h1>Kết quả tính diện tích và chi phí xây nhà:</h1>");
-                    out.println("<h2>Bạn cần " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + " với diện tích là " + width + "m x " + length + "m:</h2>");
-                    out.println("<h2>Diện tích tầng trệt: " + s + "m2 x 100% = " + s + "m2</h2>");
-                    out.println("<h2>Diện tích sân trước: " +width * frontYard+ "m2 x 50% = " + sFrontYard + "m2</h2>");
-                    out.println("<h2>Diện tích sân sau: " +width * backYard+ "m2 x 50% = " + sFrontYard + "m2</h2>");
-                    out.println("<h2>" + foundation.getRoofNFoundationName() + ": " + S + "m2 x " +foundation.getAreaPercent()+ "% = "+sFoundation+"m2</h2>");
-                    out.println("<h2>" + roof.getRoofNFoundationName() + ": " + s + "m2 x "+roof.getAreaPercent()+"% = "+sRoof+"m2</h2>");
-                    out.println("<h2>Đơn giá "+quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName()+": " +price+ " VNĐ</h2>");
-                    out.println("<h1>Tổng diện tích xây dựng: "+totalArea+"m2</h1>");
-                    out.println("<h1>Tổng chi phí xây dựng: "+totalPrice+"VNĐ</h1>");
+                if (S >= 200) {
+                    price = quotation.getPrice1();
+                } else {
+                    price = quotation.getPrice2();
                 }
             }
+            double sFrontYard = 0;
+            double sBackYard = 0;
+            double sBalcony = 0;
+            double sFoundation = 0;
+            double sRoof = 0;
+
+            //print out result
+            out.println("<h1>Kết quả tính diện tích và chi phí xây nhà</h1>");
+            out.println("<h2>Bạn cần " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + " với diện tích là " + width + "m x " + length + "m:</h2>");
+            DecimalFormat decimalFormat2 = new DecimalFormat("#.##");
+            String formatteds = decimalFormat2.format(s);
+            out.println("<h2>Diện tích tầng trệt: " + s + "m2 x 100% = " + formatteds + "m2</h2>");
+            totalArea += s;
+            if (floor != 0) {
+                for (int i = 1; i <= floor; i++) {
+                    out.println("<h2>Lầu " + i + ": " + s + "m2 x 100% = " + formatteds + "m2</h2>");
+                }
+                totalArea += s * floor;
+            }
+
+            if (balcony != 0 && floor != 0) {
+                sBalcony = (width * balcony) * floor;
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                String formattedsBalcony = decimalFormat.format(sBalcony);
+                out.println("<h2>Ban công: " + (width * balcony) + "m2 x " + floor + " lầu = " + formattedsBalcony + "</h2>");
+                totalArea += sBalcony;
+            }
+
+            if (frontYard != 0) {
+                sFrontYard = (width * frontYard) * 0.5;
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                String formattedSFrontYard = decimalFormat.format(sFrontYard);
+                out.println("<h2>Diện tích sân trước: " + width * frontYard + "m2 x 50% = " + formattedSFrontYard + "m2</h2>");
+                totalArea += sFrontYard;
+            }
+            if (backYard != 0) {
+                sBackYard = (width * backYard) * 0.5;
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                String formattedSBackYard = decimalFormat.format(sBackYard);
+                out.println("<h2>Diện tích sân sau: " + width * backYard + "m2 x 50% = " + formattedSBackYard + "m2</h2>");
+                totalArea += sBackYard;
+            }
+
+            if (foundationId != 0) {
+                QuotationDAO foundationDao = new QuotationDAO();
+                RoofNFoundation2 foundation = foundationDao.getRoofNFoundationByID(foundationId);
+                sFoundation = S * (foundation.getAreaPercent() / 100.0);
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                String formattedSFoundation = decimalFormat.format(sFoundation);
+                out.println("<h2>" + foundation.getRoofNFoundationName() + ": " + S + "m2 x " + foundation.getAreaPercent() + "% = " + formattedSFoundation + "m2</h2>");
+                totalArea += sFoundation;
+            }
+
+            if (roofId != 0) {
+                QuotationDAO roofDao = new QuotationDAO();
+                RoofNFoundation2 roof = roofDao.getRoofNFoundationByID(roofId);
+                sRoof = s * (roof.getAreaPercent() / 100.0);
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                String formattedSRoof = decimalFormat.format(sRoof);
+                out.println("<h2>" + roof.getRoofNFoundationName() + ": " + s + "m2 x " + roof.getAreaPercent() + "% = " + formattedSRoof + "m2</h2>");
+                totalArea += sRoof;
+            }
+
+            DecimalFormat decimalFormat1 = new DecimalFormat("#,###.##");
+            String formattedPrice = decimalFormat1.format(price);
+            if (selectedService == 2 && packagePrice != 0) {
+
+                if (packagePrice == 1) {
+                    out.println("<h2>Gói xây dựng Tiết kiệm: " + formattedPrice + " VNĐ/m2</h2>");
+                } else {
+                    out.println("<h2>Gói xây dựng VIP: " + formattedPrice + " VNĐ/m2</h2>");
+                }
+
+            } else {
+                out.println("<h2>Đơn giá " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + ": " + formattedPrice + " VNĐ/m2</h2>");
+            }
+
+            double totalPrice = totalArea * price;
+            DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
+            String formattedTotalPrice = decimalFormat.format(totalPrice);
+            DecimalFormat decimalFormat3 = new DecimalFormat("#.##");
+            String formattedTotalArea = decimalFormat3.format(sRoof);
+            out.println("<h1>Tổng diện tích xây dựng: " + formattedTotalArea + "m2</h1>");
+            out.println("<h1 style=\"color: red;\">Tổng chi phí xây dựng: " + formattedTotalPrice + "VNĐ</h1>");
+
         }
     }
 
