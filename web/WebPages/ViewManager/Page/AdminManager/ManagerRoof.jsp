@@ -33,9 +33,9 @@
         <main class="app-content">
             <div class="app-title"> 
                 <ul class="app-breadcrumb breadcrumb">
-                    <li class="breadcrumb-item"><a href="ManagerHouseStyle">Danh Sách Kiểu Nhà</a></li>
-                    <li class="breadcrumb-item"><a href="CreateHouseStyle">Thêm kiểu nhà</a></li>
-                    <li class="breadcrumb-item"><a href="#">Quản lý phần Mái và Móng</a></li>
+                    <li class="breadcrumb-item"><a href="ManagerRoof">Quản lý phần Mái và Móng</a></li>
+<!--                    <li class="breadcrumb-item"><a href="CreateHouseStyle">Thêm kiểu nhà</a></li>
+                    <li class="breadcrumb-item"><a href="#"></a></li>-->
                 </ul>
                 <div id="clock"></div>
             </div>
