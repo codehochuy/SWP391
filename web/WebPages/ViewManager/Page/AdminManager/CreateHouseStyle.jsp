@@ -49,25 +49,39 @@
                                     <i class="fas fa-plus"></i> Quản lý thành phần 
                                 </a>
                             </div>
-<!--                            <div class="col-sm-2">
-                                <a class="btn btn-add btn-sm" href="ManagerRoof" title="Thêm">
-                                    <i class="fas fa-plus"></i> Quản lý phần Mái và Móng 
-                                </a>
-                            </div>-->
+                            <!--                            <div class="col-sm-2">
+                                                            <a class="btn btn-add btn-sm" href="ManagerRoof" title="Thêm">
+                                                                <i class="fas fa-plus"></i> Quản lý phần Mái và Móng 
+                                                            </a>
+                                                        </div>-->
                         </div>
                         <h1 class="tile-title">Thông tin chi tiết</h1>
                         <div class="tile-body">
-                            <form class="row" action="CreateProject" method="post" id="createPro">
+                            <form class="row" action="CreateHouseStyle" method="post" id="createPro">
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Tên kiểu nhà</label>
-                                    <input class="form-control" type="text" name="housetype" required>
+                                    <input class="form-control" type="text"     name="housetype" required>
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
-                                
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Các thành phần</label>
+                                    <ul class="component-list">
+                                        <c:forEach items="${component}" var="comp">
+                                            <c:if test="${comp.id != 1 && comp.id != 2}">
+                                                <li class="component-item">
+                                                    <input type="checkbox" name="components" value="${comp.id}">
+                                                    <label>${comp.name}</label>
+                                                </li>
+                                            </c:if>
+                                        </c:forEach>
 
+                                    </ul>
+                                </div>
+
+                                <button class="btn btn-save" type="submit" >Lưu lại</button>
+                                <a class="btn btn-cancel" href="ManagerHouseStyle">Hủy bỏ</a>
                             </form>
-                            <button class="btn btn-save" type="submit" >Lưu lại</button>
-                            <a class="btn btn-cancel" href="ManagerHouseStyle">Hủy bỏ</a>
+
                         </div>
 
                     </div>
@@ -98,47 +112,47 @@
 
 
         <script type="text/javascript">
-                                                            $('#sampleTable').DataTable();
-                                                            //Thời Gian
-                                                            function time() {
-                                                                var today = new Date();
-                                                                var weekday = new Array(7);
-                                                                weekday[0] = "Chủ Nhật";
-                                                                weekday[1] = "Thứ Hai";
-                                                                weekday[2] = "Thứ Ba";
-                                                                weekday[3] = "Thứ Tư";
-                                                                weekday[4] = "Thứ Năm";
-                                                                weekday[5] = "Thứ Sáu";
-                                                                weekday[6] = "Thứ Bảy";
-                                                                var day = weekday[today.getDay()];
-                                                                var dd = today.getDate();
-                                                                var mm = today.getMonth() + 1;
-                                                                var yyyy = today.getFullYear();
-                                                                var h = today.getHours();
-                                                                var m = today.getMinutes();
-                                                                var s = today.getSeconds();
-                                                                m = checkTime(m);
-                                                                s = checkTime(s);
-                                                                nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                                                if (dd < 10) {
-                                                                    dd = '0' + dd
-                                                                }
-                                                                if (mm < 10) {
-                                                                    mm = '0' + mm
-                                                                }
-                                                                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                                                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                                                        '</span>';
-                                                                document.getElementById("clock").innerHTML = tmp;
-                                                                clocktime = setTimeout("time()", "1000", "Javascript");
+        $('#sampleTable').DataTable();
+        //Thời Gian
+        function time() {
+            var today = new Date();
+            var weekday = new Array(7);
+            weekday[0] = "Chủ Nhật";
+            weekday[1] = "Thứ Hai";
+            weekday[2] = "Thứ Ba";
+            weekday[3] = "Thứ Tư";
+            weekday[4] = "Thứ Năm";
+            weekday[5] = "Thứ Sáu";
+            weekday[6] = "Thứ Bảy";
+            var day = weekday[today.getDay()];
+            var dd = today.getDate();
+            var mm = today.getMonth() + 1;
+            var yyyy = today.getFullYear();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            m = checkTime(m);
+            s = checkTime(s);
+            nowTime = h + " giờ " + m + " phút " + s + " giây";
+            if (dd < 10) {
+                dd = '0' + dd
+            }
+            if (mm < 10) {
+                mm = '0' + mm
+            }
+            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                    '</span>';
+            document.getElementById("clock").innerHTML = tmp;
+            clocktime = setTimeout("time()", "1000", "Javascript");
 
-                                                                function checkTime(i) {
-                                                                    if (i < 10) {
-                                                                        i = "0" + i;
-                                                                    }
-                                                                    return i;
-                                                                }
-                                                            }
+            function checkTime(i) {
+                if (i < 10) {
+                    i = "0" + i;
+                }
+                return i;
+            }
+        }
         </script>
         <script>
             function readURL(input) {

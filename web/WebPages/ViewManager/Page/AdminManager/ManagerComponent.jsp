@@ -54,32 +54,33 @@
                                 <thead>
                                     <tr>
                                         <th width="10"><input type="checkbox" id="all"></th>
-                                        <th>ID</th>
+                                        <!--                                        <th>ID</th>-->
                                         <th>Tên</th>
                                         <th>Chức năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${component}" var="component">
-                                        <tr> 
-                                            <td width="10"><input type="checkbox" name="check1" value="1"></td>
-                                            <td>${component.id}</td>                              
-                                            <td>${component.name}</td>
+                                        <c:if test="${component.id != 1 && component.id != 2}">
+                                            <tr> 
+                                                <td width="10"><input type="checkbox" name="check1" value="1"></td>
+    <!--                                            <td>${component.id}</td>                              -->
+                                                <td>${component.name}</td>
 
-                                            <td style="display: flex; justify-content: space-left">
-                                                <form action="DeleteStyle" method="Post" id="deleteForm">
-                                                    <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
-                                                            data-userID="${component.id}">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </form>
-                                                <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
-                                                        data-target="#ModalUP" onclick="getData('${component.id}')"><i class="fas fa-edit"></i></button>
+                                                <td style="display: flex; justify-content: space-left">
+                                                    <form action="DeleteStyle" method="Post" id="deleteForm">
+                                                        <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
+                                                                data-userID="${component.id}">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                    <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
+                                                            data-target="#ModalUP" onclick="getData('${component.id}')"><i class="fas fa-edit"></i></button>
 
 
-                                            </td>
-                                        </tr>
-
+                                                </td>
+                                            </tr>
+                                        </c:if>
                                     </c:forEach>
                                 </tbody>
                             </table>
@@ -179,47 +180,47 @@
 
 
         <script type="text/javascript">
-                                                            $('#sampleTable').DataTable();
-                                                            //Thời Gian
-                                                            function time() {
-                                                                var today = new Date();
-                                                                var weekday = new Array(7);
-                                                                weekday[0] = "Chủ Nhật";
-                                                                weekday[1] = "Thứ Hai";
-                                                                weekday[2] = "Thứ Ba";
-                                                                weekday[3] = "Thứ Tư";
-                                                                weekday[4] = "Thứ Năm";
-                                                                weekday[5] = "Thứ Sáu";
-                                                                weekday[6] = "Thứ Bảy";
-                                                                var day = weekday[today.getDay()];
-                                                                var dd = today.getDate();
-                                                                var mm = today.getMonth() + 1;
-                                                                var yyyy = today.getFullYear();
-                                                                var h = today.getHours();
-                                                                var m = today.getMinutes();
-                                                                var s = today.getSeconds();
-                                                                m = checkTime(m);
-                                                                s = checkTime(s);
-                                                                nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                                                if (dd < 10) {
-                                                                    dd = '0' + dd
-                                                                }
-                                                                if (mm < 10) {
-                                                                    mm = '0' + mm
-                                                                }
-                                                                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                                                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                                                        '</span>';
-                                                                document.getElementById("clock").innerHTML = tmp;
-                                                                clocktime = setTimeout("time()", "1000", "Javascript");
-
-                                                                function checkTime(i) {
-                                                                    if (i < 10) {
-                                                                        i = "0" + i;
+                                                                $('#sampleTable').DataTable();
+                                                                //Thời Gian
+                                                                function time() {
+                                                                    var today = new Date();
+                                                                    var weekday = new Array(7);
+                                                                    weekday[0] = "Chủ Nhật";
+                                                                    weekday[1] = "Thứ Hai";
+                                                                    weekday[2] = "Thứ Ba";
+                                                                    weekday[3] = "Thứ Tư";
+                                                                    weekday[4] = "Thứ Năm";
+                                                                    weekday[5] = "Thứ Sáu";
+                                                                    weekday[6] = "Thứ Bảy";
+                                                                    var day = weekday[today.getDay()];
+                                                                    var dd = today.getDate();
+                                                                    var mm = today.getMonth() + 1;
+                                                                    var yyyy = today.getFullYear();
+                                                                    var h = today.getHours();
+                                                                    var m = today.getMinutes();
+                                                                    var s = today.getSeconds();
+                                                                    m = checkTime(m);
+                                                                    s = checkTime(s);
+                                                                    nowTime = h + " giờ " + m + " phút " + s + " giây";
+                                                                    if (dd < 10) {
+                                                                        dd = '0' + dd
                                                                     }
-                                                                    return i;
+                                                                    if (mm < 10) {
+                                                                        mm = '0' + mm
+                                                                    }
+                                                                    today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                                                                    tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                                                                            '</span>';
+                                                                    document.getElementById("clock").innerHTML = tmp;
+                                                                    clocktime = setTimeout("time()", "1000", "Javascript");
+
+                                                                    function checkTime(i) {
+                                                                        if (i < 10) {
+                                                                            i = "0" + i;
+                                                                        }
+                                                                        return i;
+                                                                    }
                                                                 }
-                                                            }
         </script>
 
         <script>

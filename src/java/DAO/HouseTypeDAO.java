@@ -231,12 +231,30 @@ public class HouseTypeDAO {
     }
     return result;
 }
+    
+    public int getLatestHouseTypeID() {
+        int latestHouseComponentID = -1;
+
+        String sql = "SELECT MAX(HouseTypeID) AS MaxHouseComponentID FROM HouseType";
+        try (Connection conn = db.getConn();
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
+                latestHouseComponentID = rs.getInt("MaxHouseComponentID");
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(HouseTypeDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return latestHouseComponentID;
+    }
 
     public static void main(String[] args) throws SQLException {
         HouseTypeDAO dao = new HouseTypeDAO();
 //        System.out.println(dao.getAll());
 //        dao.addHouseStyle("huy");
-dao.deleteHouseStyle(11);
+//dao.deleteHouseStyle(11);
+System.out.println(dao.getLatestHouseTypeID());;
     }
 
 }
