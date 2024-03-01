@@ -5,11 +5,17 @@
  */
 package DAO;
 
+import DTO.Component;
 import DTO.HouseComponent;
+import DTO.HouseComponent2;
+import DTO.HouseType;
 import Utils.DBContext;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -67,9 +73,49 @@ public class HouseComponentDAO {
             }
         }
     }
-    public static void main(String[] args) {
-        HouseComponentDAO dao = new HouseComponentDAO();
-        System.out.println(dao.createHouseComponent(4, 1));
+
+    public List<HouseComponent2> getHousecomponentbyhousetypeid(int id) throws SQLException {
+    Connection con = null;
+    PreparedStatement stm = null;
+    ResultSet rs = null;
+    List<HouseComponent2> houseComponents = new ArrayList<>();
+    try {
+        con = db.getConn();
+        if (con != null) {
+            String sql = "SELECT hc.HouseComponentID,ht.HouseTypeID,ht.HouseTypeName, c.ComponentID,c.Component\n"
+                    + "FROM HouseComponent hc\n"
+                    + "JOIN HouseType ht ON hc.HouseTypeID = ht.HouseTypeID\n"
+                    + "JOIN Component c ON hc.ComponentID = c.ComponentID\n"
+                    + "WHERE hc.HouseTypeID =?;";
+            stm = con.prepareStatement(sql);
+            stm.setInt(1, id);
+            rs = stm.executeQuery();
+            while (rs.next()) {
+                HouseComponent2 style = new HouseComponent2(rs.getInt("HouseComponentID"),
+                        new HouseType(rs.getInt("HouseTypeID"), rs.getString("HouseTypeName")),
+                        new Component(rs.getInt("ComponentID"), rs.getString("Component")));
+                houseComponents.add(style);
+            }
+        }
+    } finally {
+        if (rs != null) {
+            rs.close();
+        }
+        if (stm != null) {
+            stm.close();
+        }
+        if (con != null) {
+            con.close();
+        }
     }
-    
+    return houseComponents;
+}
+
+
+    public static void main(String[] args) throws SQLException {
+        HouseComponentDAO dao = new HouseComponentDAO();
+//        System.out.println(dao.createHouseComponent(4, 1));
+        System.out.println(dao.getHousecomponentbyhousetypeid(1));
+    }
+
 }

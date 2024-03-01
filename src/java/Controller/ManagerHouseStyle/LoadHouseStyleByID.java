@@ -5,11 +5,15 @@
  */
 package Controller.ManagerHouseStyle;
 
+import DAO.HouseComponentDAO;
 import DAO.HouseTypeDAO;
+import DTO.ComponentCategory;
+import DTO.HouseComponent2;
 import DTO.HouseType;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -39,27 +43,37 @@ public class LoadHouseStyleByID extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-           String id = request.getParameter("id");
+            String id = request.getParameter("id");
             int houseid = Integer.parseInt(id);
             HouseTypeDAO dAO = new HouseTypeDAO();
 //            List<Style> styles = dAO.getAll();
             HouseType s = dAO.getHouseStyleById(houseid);
+            HouseComponentDAO aO = new HouseComponentDAO();
+            List<HouseComponent2> list = aO.getHousecomponentbyhousetypeid(houseid);
             out.println("<form action=\"UpdateHouseStyle\" method=\"POST\" id=\"updatesp\">\n"
-                    + "                            <div class=\"row\">\n"
-                    + "                                <div class=\"form-group col-md-6\">\n"
-                    + "                                    <label class=\"control-label\">Mã phong cách </label>\n"
-                    + "                                    <input readonly=\"true\" class=\"form-control\" type=\"text\" name=\"id\" value=\"" + s.getId() + "\" >\n"
-                    + "                                </div>\n"
-                    + "                                <div class=\"form-group col-md-6\">\n"
-                    + "                                    <label class=\"control-label\">Tên</label>\n"
-                    + "                                    <input class=\"form-control\" type=\"text\" required name=\"name\" value=\"" + s.getName() + "\" >\n"
-                    + "                                </div>\n"
-                    + "                            <BR>\n"
-                    + "                            <button class=\"btn btn-save\" type=\"submit\">Lưu lại</button>\n"
-                    + "                            <a class=\"btn btn-cancel\" data-dismiss=\"modal\" href=\"#\">Hủy bỏ</a>\n"
-                    + "                            <BR>\n"
-                    + "                        </form>"
-            );
+                    + "    <div class=\"row\">\n"
+                    + "        <div class=\"form-group col-md-6\">\n"
+                    + "            <label class=\"control-label\">Mã phong cách </label>\n"
+                    + "            <input readonly=\"true\" class=\"form-control\" type=\"text\" name=\"id\" value=\"" + s.getId() + "\" >\n"
+                    + "        </div>\n"
+                    + "        <div class=\"form-group col-md-6\">\n"
+                    + "            <label class=\"control-label\">Tên</label>\n"
+                    + "            <input class=\"form-control\" type=\"text\" required name=\"name\" value=\"" + s.getName() + "\" >\n"
+                    + "        </div>\n"
+                    + "        <div class=\"form-group col-md-6\">\n"
+                    + "            <label class=\"control-label\">Danh sách thành phần</label>\n"
+                    + "            <ul>");
+            for (HouseComponent2 i : list) {
+                out.println("<li>" + i.getComponent().getName() + "</li>");
+            }
+            out.println("</ul>\n"
+                    + "        </div>\n"
+                    + "    </div>\n"
+                    + "    <button class=\"btn btn-save\" type=\"submit\">Lưu lại</button>\n"
+                    + "    <a class=\"btn btn-cancel\" data-dismiss=\"modal\" href=\"#\">Hủy bỏ</a>\n"
+                    + "    <BR>\n"
+                    + "</form>");
+
         }
     }
 
