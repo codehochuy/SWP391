@@ -5,8 +5,10 @@
  */
 package Controller.ManagerHouseStyle;
 
+import DAO.ComponentDAO;
 import DAO.HouseComponentDAO;
 import DAO.HouseTypeDAO;
+import DTO.Component;
 import DTO.ComponentCategory;
 import DTO.HouseComponent2;
 import DTO.HouseType;
@@ -50,6 +52,8 @@ public class LoadHouseStyleByID extends HttpServlet {
             HouseType s = dAO.getHouseStyleById(houseid);
             HouseComponentDAO aO = new HouseComponentDAO();
             List<HouseComponent2> list = aO.getHousecomponentbyhousetypeid(houseid);
+            ComponentDAO aO1 = new ComponentDAO();
+            List<Component> components = aO1.getAll();
             out.println("<form action=\"UpdateHouseStyle\" method=\"POST\" id=\"updatesp\">\n"
                     + "    <div class=\"row\">\n"
                     + "        <div class=\"form-group col-md-6\">\n"
@@ -61,10 +65,33 @@ public class LoadHouseStyleByID extends HttpServlet {
                     + "            <input class=\"form-control\" type=\"text\" required name=\"name\" value=\"" + s.getName() + "\" >\n"
                     + "        </div>\n"
                     + "        <div class=\"form-group col-md-6\">\n"
-                    + "            <label class=\"control-label\">Danh sách thành phần</label>\n"
+                    + "            <label class=\"control-label\">Danh sách thành phần(Cứng)</label>\n"
                     + "            <ul>");
             for (HouseComponent2 i : list) {
-                out.println("<li>" + i.getComponent().getName() + "</li>");
+                if (i.getComponent().getId() <= 2) {
+                    out.println("<li>" + i.getComponent().getName() + "</li>");
+                }
+            }
+            out.println("</ul>\n"
+                    + "        </div>\n"
+                    + "        <div class=\"form-group col-md-6\">\n"
+                    + "            <label class=\"control-label\">Danh sách thành phần(mềm)</label>\n"
+                    + "            <ul>");
+            for (Component j : components) {
+                if (j.getId() >= 3) { // Chỉ hiển thị những Component có id >= 3
+                    boolean isHouseComponent = false;
+                    for (HouseComponent2 i : list) {
+                        if (i.getComponent().getId() == j.getId()) {
+                            isHouseComponent = true;
+                            break;
+                        }
+                    }
+                    if (isHouseComponent) {
+                        out.println("<input type=\"checkbox\" name=\"componentId\" value=\"" + j.getId() + "\" checked>" + j.getName() + "<br>");
+                    } else {
+                        out.println("<input type=\"checkbox\" name=\"componentId\" value=\"" + j.getId() + "\">" + j.getName() + "<br>");
+                    }
+                }
             }
             out.println("</ul>\n"
                     + "        </div>\n"
