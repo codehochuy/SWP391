@@ -243,7 +243,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="control-label">Giá dao động/m&#178;</label>
-                                    <input class="form-control" type="number" name="prcie2" required min="0">
+                                    <input class="form-control" type="number" name="price2" required min="0">
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
 <!--                                <div class="form-group col-md-12">
