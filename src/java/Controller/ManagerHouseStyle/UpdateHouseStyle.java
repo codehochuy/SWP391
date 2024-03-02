@@ -84,6 +84,10 @@ public class UpdateHouseStyle extends HttpServlet {
         if (componentIds != null) {
             HouseComponentDAO aO2 = new HouseComponentDAO();
             aO2.deleteHouseComponent(housetypeid);
+            HouseComponentDAO aO3 = new HouseComponentDAO();
+            aO3.createHouseComponent(housetypeid, 1);
+            HouseComponentDAO aO4 = new HouseComponentDAO();
+            aO4.createHouseComponent(housetypeid, 2);
             for (String component : componentIds) {
                 HouseComponentDAO houseComponentDAO = new HouseComponentDAO();
                 int componentID = Integer.parseInt(component);
