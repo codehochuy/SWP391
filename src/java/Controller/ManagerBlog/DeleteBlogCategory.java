@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.WebPage;
+package Controller.ManagerBlog;
 
 import DAO.BlogDAO;
 import DTO.BlogCategoryDTO;
@@ -18,16 +18,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import com.google.gson.Gson;
+
 /**
  *
- * @author PC
+ * @author Admin
  */
-@WebServlet(name = "Blog", urlPatterns = {"/Blog"})
-public class Blog extends HttpServlet {
+@WebServlet(name = "DeleteBlogCategory", urlPatterns = {"/DeleteBlogCategory"})
+public class DeleteBlogCategory extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -39,8 +40,15 @@ public class Blog extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
-         
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet DeleteBlogCategory</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet DeleteBlogCategory at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -56,23 +64,8 @@ public class Blog extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-             // Khởi tạo BlogDAO và lấy danh sách blog
-        BlogDAO blogDAO = new BlogDAO();
-        List<BlogDTO> blogs = blogDAO.getAll();
-        
-        BlogDAO dao2 = new BlogDAO();
-        List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
-   
-
-        // Đặt danh sách blog vào thuộc tính của request để hiển thị trên trang JSP
-        request.setAttribute("blogs", blogs);
-         request.setAttribute("blogCategories", blogCategories);
-        // Chuyển hướng đến trang JSP để hiển thị danh sách blog
-        request.getRequestDispatcher("WebPages/ViewWebPage/blog.jsp").forward(request, response);
-
-}
-
-    
+        processRequest(request, response);
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -85,20 +78,29 @@ public class Blog extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      String category = request.getParameter("category");
-   BlogDAO blogDAO = new BlogDAO();
-        List<BlogDTO> blogs = blogDAO.getAllbyCategory(category);
+         // Lấy ID của blog cần xóa từ request
+        int blogCategoryID = Integer.parseInt(request.getParameter("id"));
 
+        // Tạo BlogDAO và xóa blog từ cơ sở dữ liệu
+        BlogDAO blogDAO = new BlogDAO(new DBContext());
 
-        
-         BlogDAO dao2 = new BlogDAO();
-        List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
-     
-        request.setAttribute("blogs", blogs);
-         request.setAttribute("blogCategories", blogCategories);
+        boolean result = blogDAO.deleteBlogCategory(blogCategoryID);
+        if (result) {
+            BlogDAO blogDAO2 = new BlogDAO();
+          List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
+            request.setAttribute("blogCategories", blogCategories);
+            request.setAttribute("messtrue", "Xóa loại bài viết thành công");
+             RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+        dispatcher.forward(request, response);
 
-        request.getRequestDispatcher("WebPages/ViewWebPage/blog.jsp").forward(request, response);
-      
+        } else {
+            BlogDAO blogDAO2 = new BlogDAO();
+           List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
+            request.setAttribute("blogCategories", blogCategories);
+            request.setAttribute("messefalse", "Loại bài viết đã liên kết với bài viết, không thể xoá");
+          RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+        dispatcher.forward(request, response);
+        }
     }
 
     /**

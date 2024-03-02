@@ -55,7 +55,11 @@
 
                 <li><a class="app-menu__item" href="ManagerMaterial"><i class='app-menu__icon bx bx-run'></i><span
                             class="app-menu__label">Quản lý vật liệu
-                        </span></a></li><!--
+                        </span></a></li>
+  <li><a class="app-menu__item" href="ManagerBlog"><i class='app-menu__icon bx bx-pie-chart-alt-2'></i><span
+                            class="app-menu__label">Quản lý Blog
+                        </span></a></li>
+<!--
                                     <li><a class="app-menu__item" href="#"><i class='app-menu__icon bx bx-dollar'></i><span
                                                 class="app-menu__label">Bảng kê lương</span></a></li>
                                     <li><a class="app-menu__item" href="#"><i

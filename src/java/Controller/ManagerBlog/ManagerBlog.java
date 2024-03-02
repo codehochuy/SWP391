@@ -3,31 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.WebPage;
+package Controller.ManagerBlog;
 
-import DAO.BlogDAO;
-import DTO.BlogCategoryDTO;
-import DTO.BlogDTO;
-import Utils.DBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//import com.google.gson.Gson;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
+import DAO.BlogDAO;
+import DTO.BlogDTO;
+import Utils.DBContext;
+import java.io.IOException;
+import java.util.List;
+
 /**
  *
- * @author PC
+ * @author Admin
  */
-@WebServlet(name = "Blog", urlPatterns = {"/Blog"})
-public class Blog extends HttpServlet {
+@WebServlet(name = "ManagerBlog", urlPatterns = {"/ManagerBlog"})
+public class ManagerBlog extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -39,8 +41,15 @@ public class Blog extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
-         
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ManagerBlog</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ManagerBlog at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -54,25 +63,21 @@ public class Blog extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-             // Khởi tạo BlogDAO và lấy danh sách blog
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Khởi tạo BlogDAO và lấy danh sách blog
         BlogDAO blogDAO = new BlogDAO();
         List<BlogDTO> blogs = blogDAO.getAll();
-        
-        BlogDAO dao2 = new BlogDAO();
-        List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
-   
 
         // Đặt danh sách blog vào thuộc tính của request để hiển thị trên trang JSP
         request.setAttribute("blogs", blogs);
-         request.setAttribute("blogCategories", blogCategories);
+
+
+
         // Chuyển hướng đến trang JSP để hiển thị danh sách blog
-        request.getRequestDispatcher("WebPages/ViewWebPage/blog.jsp").forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlog.jsp");
 
-}
-
-    
+        dispatcher.forward(request, response);
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -85,20 +90,7 @@ public class Blog extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      String category = request.getParameter("category");
-   BlogDAO blogDAO = new BlogDAO();
-        List<BlogDTO> blogs = blogDAO.getAllbyCategory(category);
-
-
-        
-         BlogDAO dao2 = new BlogDAO();
-        List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
-     
-        request.setAttribute("blogs", blogs);
-         request.setAttribute("blogCategories", blogCategories);
-
-        request.getRequestDispatcher("WebPages/ViewWebPage/blog.jsp").forward(request, response);
-      
+        processRequest(request, response);
     }
 
     /**

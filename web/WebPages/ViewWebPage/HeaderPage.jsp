@@ -88,8 +88,8 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tin tức</a>
                                 <div class="dropdown-menu">
-                                    <a href="Blog" class="dropdown-item">Blog Page</a>
-                                    <a href="single.jsp" class="dropdown-item">Single Page</a>
+                                    <a href="Blog" class="dropdown-item">Trang tin tức</a>
+<!--                                    <a href="single.jsp" class="dropdown-item">Single Page</a>-->
                                 </div>
                             </div>
                             <div class="nav-item dropdown">
