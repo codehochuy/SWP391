@@ -5,6 +5,7 @@
  */
 package Controller.ManagerHouseStyle;
 
+import DAO.HouseComponentDAO;
 import DAO.HouseTypeDAO;
 import DTO.HouseType;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class UpdateHouseStyle extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateHouseStyle</title>");            
+            out.println("<title>Servlet UpdateHouseStyle</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateHouseStyle at " + request.getContextPath() + "</h1>");
@@ -76,25 +77,43 @@ public class UpdateHouseStyle extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-    String id = request.getParameter("id");
-    String name = request.getParameter("name");
-    
-    HouseTypeDAO dao = new  HouseTypeDAO();
-    boolean  result = dao.updateHouseStyleName(id, name);
-    if(result){
-        HouseTypeDAO aO = new HouseTypeDAO();
-        List<HouseType> houseTypes = aO.getAll();
-        request.setAttribute("houseTypes", houseTypes);
-        request.setAttribute("messtrue", "Cập nhật kiểu nhà công");
-        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
-    }
-    else{
-        HouseTypeDAO aO = new HouseTypeDAO();
-        List<HouseType> houseTypes = aO.getAll();
-        request.setAttribute("houseTypes", houseTypes);
-        request.setAttribute("messefalse", "Cập nhật kiểu nhà thất bại");
-        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
-    }
+        String id = request.getParameter("id");
+        String name = request.getParameter("name");
+        int housetypeid = Integer.parseInt(id);
+        String[] componentIds = request.getParameterValues("componentId");
+        if (componentIds != null) {
+            HouseComponentDAO aO2 = new HouseComponentDAO();
+            aO2.deleteHouseComponent(housetypeid);
+            for (String component : componentIds) {
+                HouseComponentDAO houseComponentDAO = new HouseComponentDAO();
+                int componentID = Integer.parseInt(component);
+                houseComponentDAO.createHouseComponent(housetypeid, componentID);
+            }
+            HouseTypeDAO dao = new HouseTypeDAO();
+            boolean result = dao.updateHouseStyleName(id, name);
+            if (result) {
+                HouseTypeDAO aO = new HouseTypeDAO();
+                List<HouseType> houseTypes = aO.getAll();
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("messtrue", "Cập nhật kiểu nhà công");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
+            } else {
+                HouseTypeDAO aO = new HouseTypeDAO();
+                List<HouseType> houseTypes = aO.getAll();
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("messefalse", "Cập nhật kiểu nhà thất bại");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
+            }
+
+        } else {
+            HouseTypeDAO aO = new HouseTypeDAO();
+            List<HouseType> houseTypes = aO.getAll();
+            request.setAttribute("houseTypes", houseTypes);
+            request.setAttribute("messefalse", "Cập nhật kiểu nhà thất bại. Vui lòng chọn ít nhất 1 thành phần");
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
+
+        }
+
     }
 
     /**

@@ -110,12 +110,42 @@ public class HouseComponentDAO {
     }
     return houseComponents;
 }
+    
+    public void deleteHouseComponent(int houseTypeID) {
+    Connection conn = null;
+    PreparedStatement stmt = null;
+    try {
+        conn = db.getConn();
+        String sql = "DELETE FROM HouseComponent WHERE HouseTypeID = ?";
+        stmt = conn.prepareStatement(sql);
+        stmt.setInt(1, houseTypeID);
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        e.printStackTrace(); // Handle exception if needed
+    } finally {
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle exception if needed
+            }
+        }
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle exception if needed
+            }
+        }
+    }
+}
 
 
     public static void main(String[] args) throws SQLException {
         HouseComponentDAO dao = new HouseComponentDAO();
 //        System.out.println(dao.createHouseComponent(4, 1));
-        System.out.println(dao.getHousecomponentbyhousetypeid(1));
+//        System.out.println(dao.getHousecomponentbyhousetypeid(1));
+dao.deleteHouseComponent(9);
     }
 
 }

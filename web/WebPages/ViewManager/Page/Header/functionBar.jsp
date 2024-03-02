@@ -25,8 +25,7 @@
             <div class="col-sm-2">
                 <a class="btn btn-delete btn-sm nhap-tu-file" href="ManagerStyle" title="Xem"><i
                         class="fas fa-file-upload"></i>Quản lý phong cách</a>
-            </div>
-            
-        </div>>
+            </div>          
+        </div>
     </body>
 </html>

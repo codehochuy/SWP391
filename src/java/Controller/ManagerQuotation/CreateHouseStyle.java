@@ -87,24 +87,29 @@ public class CreateHouseStyle extends HttpServlet {
             request.setCharacterEncoding("UTF-8");
             String houseType = request.getParameter("housetype");
             String[] components = request.getParameterValues("components");
-            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-            boolean result = houseTypeDAO.addHouseStyle(houseType);
 
-            if (result) {
-                HouseTypeDAO houseTypeDAO1 = new HouseTypeDAO();
-                int newHouseTypeID = houseTypeDAO1.getLatestHouseTypeID();
-                HouseComponentDAO aO = new HouseComponentDAO();
-                aO.createHouseComponent(newHouseTypeID, 1);
-                HouseComponentDAO aO1 = new HouseComponentDAO();
-                aO1.createHouseComponent(newHouseTypeID, 2);
-                for (String component : components) {
-                    HouseComponentDAO houseComponentDAO = new HouseComponentDAO();
-                    int componentID = Integer.parseInt(component);
-                    houseComponentDAO.createHouseComponent(newHouseTypeID, componentID);
+            if (components != null) {
+                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                boolean result = houseTypeDAO.addHouseStyle(houseType);
+
+                if (result) {
+                    HouseTypeDAO houseTypeDAO1 = new HouseTypeDAO();
+                    int newHouseTypeID = houseTypeDAO1.getLatestHouseTypeID();
+                    HouseComponentDAO aO = new HouseComponentDAO();
+                    aO.createHouseComponent(newHouseTypeID, 1);
+                    HouseComponentDAO aO1 = new HouseComponentDAO();
+                    aO1.createHouseComponent(newHouseTypeID, 2);
+                    for (String component : components) {
+                        HouseComponentDAO houseComponentDAO = new HouseComponentDAO();
+                        int componentID = Integer.parseInt(component);
+                        houseComponentDAO.createHouseComponent(newHouseTypeID, componentID);
+                    }
+                    request.setAttribute("messtrue", "Đã thêm thành công");
+                } else {
+                    request.setAttribute("messefalse", "Đã thêm thất bại");
                 }
-                request.setAttribute("messtrue", "Đã thêm thành công");
             } else {
-                request.setAttribute("messefalse", "Đã thêm thất bại");
+                request.setAttribute("messefalse", "Vui lòng chọn ít nhất một thành phần");
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateHouseStyle.class.getName()).log(Level.SEVERE, null, ex);
