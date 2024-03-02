@@ -5,27 +5,26 @@
  */
 package Controller.ManagerBlog;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
 import DAO.BlogDAO;
+import DTO.BlogCategoryDTO;
 import DTO.BlogDTO;
 import Utils.DBContext;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "ManagerBlog", urlPatterns = {"/ManagerBlog"})
-public class ManagerBlog extends HttpServlet {
+@WebServlet(name = "DeleteBlogCategory", urlPatterns = {"/DeleteBlogCategory"})
+public class DeleteBlogCategory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +43,10 @@ public class ManagerBlog extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManagerBlog</title>");
+            out.println("<title>Servlet DeleteBlogCategory</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManagerBlog at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteBlogCategory at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,20 +62,9 @@ public class ManagerBlog extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Khởi tạo BlogDAO và lấy danh sách blog
-        BlogDAO blogDAO = new BlogDAO();
-        List<BlogDTO> blogs = blogDAO.getAll();
-
-        // Đặt danh sách blog vào thuộc tính của request để hiển thị trên trang JSP
-        request.setAttribute("blogs", blogs);
-
-
-
-        // Chuyển hướng đến trang JSP để hiển thị danh sách blog
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlog.jsp");
-
-        dispatcher.forward(request, response);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -90,7 +78,29 @@ public class ManagerBlog extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         // Lấy ID của blog cần xóa từ request
+        int blogCategoryID = Integer.parseInt(request.getParameter("id"));
+
+        // Tạo BlogDAO và xóa blog từ cơ sở dữ liệu
+        BlogDAO blogDAO = new BlogDAO(new DBContext());
+
+        boolean result = blogDAO.deleteBlogCategory(blogCategoryID);
+        if (result) {
+            BlogDAO blogDAO2 = new BlogDAO();
+          List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
+            request.setAttribute("blogCategories", blogCategories);
+            request.setAttribute("messtrue", "Xóa loại bài viết thành công");
+             RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+        dispatcher.forward(request, response);
+
+        } else {
+            BlogDAO blogDAO2 = new BlogDAO();
+           List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
+            request.setAttribute("blogCategories", blogCategories);
+            request.setAttribute("messefalse", "Loại bài viết đã liên kết với bài viết, không thể xoá");
+          RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+        dispatcher.forward(request, response);
+        }
     }
 
     /**

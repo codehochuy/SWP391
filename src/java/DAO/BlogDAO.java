@@ -1,8 +1,8 @@
 package DAO;
 
+import DTO.BlogCategoryDTO;
 import DTO.BlogDTO;
-import DTO.BlogDetailDTO;
-import DTO.BlogImageDTO;
+import DTO.User;
 import Utils.DBContext;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -37,7 +37,12 @@ public class BlogDAO {
 
     public List<BlogDTO> getAll() {
         List<BlogDTO> list = new ArrayList<>();
-        String sql = "SELECT * FROM Blog";
+        String sql = "SELECT b.*, u.Name AS UserUsername, bc.BlogCategoryName "
+                + "FROM Blog b "
+                + "JOIN Users u ON b.UsersID = u.UsersID "
+                + "JOIN BlogCategory bc ON b.BlogCategoryID = bc.BlogCategoryID "
+//                + "ORDER BY b.BlogID DESC"; // Sắp xếp theo BlogID giảm dần
+                + "ORDER BY b.DateCreate DESC"; // Sắp xếp theo ngày giảm dần
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -53,10 +58,20 @@ public class BlogDAO {
                 // Set các thuộc tính của BlogDTO từ kết quả truy vấn
                 blog.setBlogID(rs.getInt("BlogID"));
                 blog.setTitle(rs.getString("Title"));
-                blog.setDate(rs.getDate("Date"));
-                blog.setUsersID(rs.getInt("UsersID"));
+                blog.setContent(rs.getString("Content"));
+                blog.setDateCreate(rs.getDate("DateCreate"));
+                blog.setDateModified(rs.getDate("DateModified"));
 
-                // Thêm BlogDTO vào danh sách
+                User user = new User();
+                user.setId(rs.getInt("UsersID"));
+                user.setName(rs.getString("UserUsername"));
+                blog.setUser(user);
+
+                BlogCategoryDTO blogCategory = new BlogCategoryDTO();
+                blogCategory.setBlogCategoryID(rs.getInt("BlogCategoryID"));
+                blogCategory.setBlogCategoryName(rs.getString("BlogCategoryName"));
+                blog.setBlogCategory(blogCategory);
+
                 list.add(blog);
             }
         } catch (SQLException e) {
@@ -81,62 +96,251 @@ public class BlogDAO {
         return list;
     }
 
-    public static byte[] decodeBase64(String base64Image) {
-        return Base64.getDecoder().decode(base64Image);
-    }
-
-    public static void createImageFile(byte[] imageData, String filePath) throws IOException {
-        try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
-            outputStream.write(imageData);
-        }
-    }
-
-    public static String extractBase64Data(String base64String) {
-        int commaIndex = base64String.indexOf(",");
-        if (commaIndex == -1 || commaIndex == base64String.length() - 1) {
-            return null;
-        }
-        return base64String.substring(commaIndex + 1);
-    }
-//    public static String extractBase64Data(String base64String) {
-//    // Tìm vị trí của dấu phẩy
-//    int commaIndex = base64String.indexOf(",");
-//    
-//    // Nếu không tìm thấy dấu phẩy hoặc không có dữ liệu sau dấu phẩy, trả về null hoặc chuỗi rỗng
-//    if (commaIndex == -1 || commaIndex == base64String.length() - 1) {
-//        return null; // hoặc return "";
-//    }
-//    
-//    // Trích xuất phần dữ liệu base64 sau dấu phẩy
-//    String base64Data = base64String.substring(commaIndex + 1);
-//    
-//    return base64Data;
-//}
-
-    public void createFiles(String base64Image, String imagePath, String imageName) {
-//    String imageName = generateRandomName() + ".jpg"; // Đặt tên ngẫu nhiên cho file
-        String filePath = imagePath + imageName; // Đường dẫn đầy đủ của file
-//    System.out.println(filePath);
-
-        String base64Data = extractBase64Data(base64Image);
-        // Giải mã base64 thành mảng byte
-        byte[] imageData = decodeBase64(base64Data);
-//        byte[] imageBytes = Base64.getDecoder().decode(base64Image);
+        public String returnblogcategoryID(String category) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String blogcategoryID = null;
 
         try {
-            // Tạo file hình ảnh từ byte array
-            createImageFile(imageData, filePath);
-//            System.out.println("File hình ảnh đã được tạo thành công.");
-        } catch (IOException e) {
-//            System.err.println("Đã xảy ra lỗi khi tạo file hình ảnh: " + e.getMessage());
+            connection = db.getConn(); // Obtain a connection to your database
+
+            String query = "SELECT BlogCategoryID FROM BlogCategory WHERE BlogCategoryName = ?";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, category);
+
+            // Execute the query
+            resultSet = preparedStatement.executeQuery();
+
+            // Check if a result exists
+            if (resultSet.next()) {
+                blogcategoryID = resultSet.getString("BlogCategoryID");
+            }
+
+        } catch (SQLException e) {
+            // Handle the exception appropriately
+            e.printStackTrace();
+        } finally {
+            // Close the resources in the reverse order of their creation
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                // Handle the exception appropriately
+                e.printStackTrace();
+            }
         }
 
-        // Tạo luồng đầu ra để ghi dữ liệu vào file
-//        FileOutputStream outputStream = new FileOutputStream(imagePath);
-        // Ghi mảng byte vào file
-//        outputStream.write(imageBytes);
-        // Đóng luồng
-//        outputStream.close();
+        return blogcategoryID;
+    }
+
+
+          public void createBlog(String title, String content, String dateCreate, String categoryID, int userId) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = db.getConn();
+            String sql = "INSERT INTO Blog (Title, Content, DateCreate, BlogCategoryID, UsersID) VALUES (?, ?, ?, ?, ?)";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, title);
+            ps.setString(2, content);
+            ps.setString(3, dateCreate);
+            ps.setString(4, categoryID);
+            ps.setInt(5, userId);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+          
+//    public BlogDTO getBlogByID(int blogID) {
+//        BlogDTO blog = null;
+//        String sql = "SELECT Title, Content, Date FROM Blog WHERE BlogID = ?";
+//        Connection conn = null;
+//        PreparedStatement ps = null;
+//        ResultSet rs = null;
+//
+//        try {
+//            conn = db.getConn();
+//            ps = conn.prepareStatement(sql);
+//            ps.setInt(1, blogID);
+//            rs = ps.executeQuery();
+//
+//            if (rs.next()) {
+//                // Tạo một đối tượng BlogDTO từ dữ liệu trong ResultSet
+//                blog = new BlogDTO();
+//                blog.setBlogID(blogID);
+//                blog.setTitle(rs.getString("Title"));
+//                blog.setContent(rs.getString("Content"));
+//                blog.setDateCreate(rs.getDate("Date"));
+//            }
+//        } catch (SQLException e) {
+//            // Xử lý ngoại lệ
+//            e.printStackTrace();
+//        } finally {
+//            // Đóng các đối tượng ResultSet, PreparedStatement và Connection
+//            try {
+//                if (rs != null) {
+//                    rs.close();
+//                }
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//        return blog;
+//    }
+          public BlogDTO getBlogByID(int blogID) {
+    BlogDTO blog = null;
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        conn = db.getConn();
+        String sql = "SELECT * FROM Blog b JOIN BlogCategory bc ON b.BlogCategoryID = bc.BlogCategoryID WHERE b.BlogID = ?";
+        ps = conn.prepareStatement(sql);
+        ps.setInt(1, blogID);
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            blog = new BlogDTO();
+
+            // Set the properties of the BlogDTO from the query result
+            blog.setBlogID(rs.getInt("BlogID"));
+            blog.setTitle(rs.getString("Title"));
+            blog.setContent(rs.getString("Content"));
+            blog.setDateCreate(rs.getDate("DateCreate"));
+
+            // Create a BlogCategoryDTO and set its properties
+            BlogCategoryDTO blogCategory = new BlogCategoryDTO();
+            blogCategory.setBlogCategoryID(rs.getInt("BlogCategoryID"));
+            blogCategory.setBlogCategoryName(rs.getString("BlogCategoryName"));
+
+            // Set the BlogCategoryDTO in the BlogDTO
+            blog.setBlogCategory(blogCategory);
+
+            // You can retrieve other properties similarly based on your database schema
+        }
+    } catch (SQLException e) {
+        // Handle any SQL exceptions
+        e.printStackTrace();
+    } finally {
+        // Close resources
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    return blog;
+}
+
+
+//    public boolean updateBlog(int blogId, String title, String content) {
+//        Connection conn = null;
+//        PreparedStatement ps = null;
+//        boolean success = false;
+//
+//        try {
+//            conn = db.getConn();
+//            String sql = "UPDATE Blog SET Title = ?, Content = ? WHERE BlogID = ?";
+//            ps = conn.prepareStatement(sql);
+//            ps.setString(1, title);
+//            ps.setString(2, content);
+//            ps.setInt(3, blogId);
+//
+//            int rowsUpdated = ps.executeUpdate();
+//            success = (rowsUpdated > 0);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            // Đóng các đối tượng PreparedStatement và Connection
+//            try {
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//        return success;
+//    }
+          
+           public void updateBlog(int blogId, String title, String content, String category, String dateModified) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = db.getConn();
+            String sql = "UPDATE Blog SET Title=?, Content=?, BlogCategoryID=?, DateModified=? WHERE BlogID=?";
+            ps = conn.prepareStatement(sql);
+
+            // Set parameters for the update query
+            ps.setString(1, title);
+            ps.setString(2, content);
+            ps.setString(3, category);
+            ps.setString(4, dateModified);
+            ps.setInt(5, blogId);
+
+            // Execute the update query
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean deleteBlog(int blogID) {
@@ -167,65 +371,194 @@ public class BlogDAO {
             }
         }
     }
-
-    public BlogDTO getBlogByID(int blogID) {
-        String sql = "SELECT b.BlogID, b.Title AS BlogTitle, b.Date, b.UsersID, "
-                + "bd.BlogDetailID, bd.Title AS BlogDetailTitle, bd.Content, "
-                + "bi.BlogImageID, bi.URL, bi.Caption "
-                + "FROM Blog b "
-                + "LEFT JOIN BlogDetail bd ON b.BlogID = bd.BlogID "
-                + "LEFT JOIN BlogImage bi ON bd.BlogDetailID = bi.BlogDetailID "
-                + "WHERE b.BlogID = ?";
-
+    
+     public boolean deleteBlogCategory(int blogCategoryID) {
+        String sql = "DELETE FROM BlogCategory WHERE BlogCategoryID = ?";
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        BlogDTO blogDTO = null;
 
         try {
             conn = db.getConn();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, blogID);
+            ps.setInt(1, blogCategoryID);
+            int rowsAffected = ps.executeUpdate();
+            // Trả về true nếu có ít nhất một dòng được ảnh hưởng (blog được xóa thành công)
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Trả về false nếu có lỗi xảy ra trong quá trình xóa blog
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+    
+    
+    public List<String> listCategory() {
+    List<String> categoryList = new ArrayList<>();
+    String sql = "SELECT [BlogCategoryName] FROM [HouseSystem].[dbo].[BlogCategory]";
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        conn = db.getConn();
+        ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            String categoryName = rs.getString("BlogCategoryName");
+            categoryList.add(categoryName);
+        }
+    } catch (SQLException e) {
+        // Handle exception (log or throw as needed)
+        e.printStackTrace();
+    } finally {
+        // Close resources in the reverse order of their creation
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    return categoryList;
+}
+    public void createBlogCategory(String newCategoryValue) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = db.getConn();
+            String sql = "INSERT INTO BlogCategory (BlogCategoryName) VALUES (?)";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, newCategoryValue);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception or log it
+        } finally {
+            // Close resources
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                // Handle the exception or log it
+            }
+        }
+    }
+//   public void createBlogCategory(String newCategoryValue) {
+//        Connection conn = null;
+//        PreparedStatement ps = null;
+//
+//        try {
+//            conn = db.getConn();
+//            String sql = "INSERT INTO BlogCategory (BlogCategoryName) VALUES (?)";
+//            ps = conn.prepareStatement(sql);
+//            ps.setString(1, newCategoryValue);
+//
+//            ps.executeUpdate();
+//        } catch (SQLException e) {
+//            // Handle exceptions appropriately
+//            e.printStackTrace();
+//        } finally {
+//            // Close resources
+//            try {
+//                if (ps != null) {
+//                    ps.close();
+//                }
+//                if (conn != null) {
+//                    conn.close();
+//                }
+//            } catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//    }
+
+    public List<BlogCategoryDTO> getAllBlogCategories() {
+    List<BlogCategoryDTO> categories = new ArrayList<>();
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+
+    try {
+        conn = db.getConn();
+       String sql = "SELECT * FROM BlogCategory ORDER BY BlogCategoryID DESC";
+        ps = conn.prepareStatement(sql);
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            BlogCategoryDTO category = new BlogCategoryDTO();
+            // Set the properties of the BlogCategoryDTO from the query result
+            category.setBlogCategoryID(rs.getInt("BlogCategoryID"));
+            category.setBlogCategoryName(rs.getString("BlogCategoryName"));
+
+            categories.add(category);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Close resources
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    return categories;
+}
+ public BlogCategoryDTO getBlogCategoryID(String id) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        BlogCategoryDTO category = null;
+
+        try {
+            conn = db.getConn();
+            String sql = "SELECT * FROM BlogCategory WHERE BlogCategoryID = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, id);
             rs = ps.executeQuery();
 
-            while (rs.next()) {
-                if (blogDTO == null) {
-                    blogDTO = new BlogDTO();
-                    blogDTO.setBlogID(rs.getInt("BlogID"));
-                    blogDTO.setTitle(rs.getString("BlogTitle"));
-                    blogDTO.setDate(rs.getDate("Date"));
-                    blogDTO.setUsersID(rs.getInt("UsersID"));
-                    blogDTO.setBlogDetails(new ArrayList<>());
-                }
-
-                int blogDetailID = rs.getInt("BlogDetailID");
-                if (blogDetailID > 0) {
-                    BlogDetailDTO blogDetailDTO = new BlogDetailDTO();
-                    blogDetailDTO.setBlogDetailID(blogDetailID);
-                    blogDetailDTO.setTitle(rs.getString("BlogDetailTitle"));
-                    blogDetailDTO.setContent(rs.getString("Content"));
-                    blogDetailDTO.setBlogID(String.valueOf(blogID));
-
-                    blogDetailDTO.setBlogImages(new ArrayList<>());
-                    blogDTO.addBlogDetail(blogDetailDTO);
-                }
-
-                int blogImageID = rs.getInt("BlogImageID");
-                if (blogImageID > 0) {
-                    BlogImageDTO blogImageDTO = new BlogImageDTO();
-                    blogImageDTO.setBlogImageID(blogImageID);
-                    blogImageDTO.setUrl(rs.getString("URL"));
-                    blogImageDTO.setCaption(rs.getString("Caption"));
-                    blogImageDTO.setBlogDetailID(String.valueOf(blogDetailID)); // Cập nhật BlogDetailID
-
-                    // Lấy index của blogDetail trong blogDTO
-                    int index = blogDTO.getBlogDetails().size() - 1;
-                    blogDTO.getBlogDetails().get(index).addBlogImage(blogImageDTO);
-                }
+            if (rs.next()) {
+                category = new BlogCategoryDTO();
+                category.setBlogCategoryID(rs.getInt("BlogCategoryID"));
+                category.setBlogCategoryName(rs.getString("BlogCategoryName"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            // Close resources
             try {
                 if (rs != null) {
                     rs.close();
@@ -240,40 +573,25 @@ public class BlogDAO {
                 ex.printStackTrace();
             }
         }
-
-        return blogDTO;
+        return category;
     }
 
-    public String createBlog(String title, String date, String userID) {
+        public void updateBlogCategory(String categoryID, String newCategoryName) {
         Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
-        String generatedID = null;
 
         try {
             conn = db.getConn();
-            String sql = "INSERT INTO Blog (Title, Date, UsersID) VALUES (?, ?, ?)";
-            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, title);
-            ps.setString(2, date);
-            ps.setString(3, userID);
-
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                // Lấy về các khóa được tạo tự động (nếu có)
-                rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    // Lấy BlogID vừa được tạo
-                    generatedID = String.valueOf(rs.getInt(1));
-                }
-            }
+            String sql = "UPDATE BlogCategory SET BlogCategoryName = ? WHERE BlogCategoryID = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, newCategoryName);
+            ps.setString(2, categoryID);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
+            // Close resources
             try {
-                if (rs != null) {
-                    rs.close();
-                }
                 if (ps != null) {
                     ps.close();
                 }
@@ -284,73 +602,75 @@ public class BlogDAO {
                 ex.printStackTrace();
             }
         }
-        return generatedID;
     }
+        
+        public List<BlogDTO> getAllbyCategory(String category) {
+    List<BlogDTO> blogs = new ArrayList<>();
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
 
-// Phương thức tạo blog detail
-    public String createBlogDetail(String title, String content, String blogID) {
-        String createdBlogDetailID = null;
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
+    try {
+        conn = db.getConn();
+//        String sql = "SELECT * FROM Blog WHERE BlogCategoryID = (SELECT BlogCategoryID FROM BlogCategory WHERE BlogCategoryName = ?)";
+String sql = "SELECT b.*, u.UserName AS UserUsername, bc.BlogCategoryName "
+                + "FROM Blog b "
+                + "JOIN Users u ON b.UsersID = u.UsersID "
+                + "JOIN BlogCategory bc ON b.BlogCategoryID = bc.BlogCategoryID "
+                + "WHERE bc.BlogCategoryName = ? "
+                + "ORDER BY b.DateCreate DESC";
 
-        try {
-            conn = db.getConn();
-            String sql = "INSERT INTO BlogDetail (Title, Content, BlogID) VALUES (?, ?, ?)";
-            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, title);
-            ps.setString(2, content);
-            ps.setString(3, blogID);
+        ps = conn.prepareStatement(sql);
+        ps.setString(1, category);
+        rs = ps.executeQuery();
 
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    createdBlogDetailID = String.valueOf(rs.getInt(1));
-                }
+           while (rs.next()) {
+                BlogDTO blog = new BlogDTO(); // Tạo một đối tượng BlogDTO mới
+
+                // Set các thuộc tính của BlogDTO từ kết quả truy vấn
+                blog.setBlogID(rs.getInt("BlogID"));
+                blog.setTitle(rs.getString("Title"));
+                blog.setContent(rs.getString("Content"));
+                blog.setDateCreate(rs.getDate("DateCreate"));
+                blog.setDateModified(rs.getDate("DateModified"));
+
+                User user = new User();
+                user.setId(rs.getInt("UsersID"));
+                user.setName(rs.getString("UserUsername"));
+                blog.setUser(user);
+
+                BlogCategoryDTO blogCategory = new BlogCategoryDTO();
+                blogCategory.setBlogCategoryID(rs.getInt("BlogCategoryID"));
+                blogCategory.setBlogCategoryName(rs.getString("BlogCategoryName"));
+                blog.setBlogCategory(blogCategory);
+
+                blogs.add(blog);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Đóng các đối tượng ResultSet, PreparedStatement và Connection
-            // ...
-        }
-        return createdBlogDetailID;
-    }
-
-    // tạo BlogImage
-    public String createBlogImage(String imageURL, String caption, String blogDetailID) {
-        String createdBlogImageID = null;
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
+    } catch (SQLException e) {
+        e.printStackTrace();
+    } finally {
+        // Close resources
         try {
-            conn = db.getConn();
-            String sql = "INSERT INTO BlogImage ([URL], Caption, BlogDetailID) VALUES (?, ?, ?)";
-            ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, imageURL);
-            ps.setString(2, caption);
-            ps.setString(3, blogDetailID);
-
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                rs = ps.getGeneratedKeys();
-                if (rs.next()) {
-                    createdBlogImageID = String.valueOf(rs.getInt(1));
-                }
+            if (rs != null) {
+                rs.close();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Đóng các đối tượng ResultSet, PreparedStatement và Connection
-            // ...
+            if (ps != null) {
+                ps.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-        return createdBlogImageID;
     }
-
+    return blogs;
+}
+        
+        
+      
     public static void main(String[] args) {
         BlogDAO dao = new BlogDAO();
-        System.out.println(dao.getBlogByID(1));
+
     }
 }

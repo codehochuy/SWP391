@@ -5,29 +5,24 @@
  */
 package Controller.ManagerBlog;
 
+import DAO.BlogDAO;
+import DTO.BlogCategoryDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import DAO.BlogDAO;
-import DTO.BlogDTO;
-import DTO.User;
-import java.io.File;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "CreateBlog", urlPatterns = {"/CreateBlog"})
-public class CreateBlog extends HttpServlet {
+@WebServlet(name = "ManagerBlogCategory", urlPatterns = {"/ManagerBlogCategory"})
+public class ManagerBlogCategory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,7 +35,19 @@ public class CreateBlog extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ManagerBlogCategory</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ManagerBlogCategory at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,12 +62,13 @@ public class CreateBlog extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+         // Call the getAllBlogCategories function
         BlogDAO dao = new BlogDAO();
-         List<String> categoryList = dao.listCategory();
-    request.setAttribute("categoryList", categoryList);
-    
-     
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/createBlog.jsp");
+        List<BlogCategoryDTO> blogCategories = dao.getAllBlogCategories();
+
+        request.setAttribute("blogCategories", blogCategories);
+
+           RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -73,29 +81,9 @@ public class CreateBlog extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-                String title = request.getParameter("title");
-        String content = request.getParameter("content");
-        String dateCreate = request.getParameter("date");
-         String category = request.getParameter("category");
-         BlogDAO dao1 = new BlogDAO();
-         String blogcategoryID= dao1.returnblogcategoryID(category);
-         
-         int userId = 1;
-         HttpSession session = request.getSession(false);
-         
-         if (session != null && session.getAttribute("USER") != null){
-             User user = (User) session.getAttribute("USER");
-             userId = user.getId();
-         }
-      
-        
-// Tạo một đối tượng BlogDTO mới
-        BlogDAO dao2 = new BlogDAO();
-       dao2.createBlog(title, content, dateCreate, blogcategoryID, userId);
-      
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**

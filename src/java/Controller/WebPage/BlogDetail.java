@@ -3,31 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.ManagerBlog;
+package Controller.WebPage;
 
+import DAO.BlogDAO;
+import DTO.BlogDTO;
 import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import DAO.BlogDAO;
-import DTO.BlogDTO;
-import DTO.User;
-import java.io.File;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "CreateBlog", urlPatterns = {"/CreateBlog"})
-public class CreateBlog extends HttpServlet {
+@WebServlet(name = "BlogDetail", urlPatterns = {"/BlogDetail"})
+public class BlogDetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,7 +34,19 @@ public class CreateBlog extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet BlogDetail</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet BlogDetail at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,13 +61,29 @@ public class CreateBlog extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        BlogDAO dao = new BlogDAO();
-         List<String> categoryList = dao.listCategory();
-    request.setAttribute("categoryList", categoryList);
-    
+         try {
+        // Lấy BlogID từ request
+      String blogId = request.getParameter("blogid");
+          
+          Integer blogIdInt = Integer.parseInt(blogId);
      
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/createBlog.jsp");
+        // Gọi DAO để lấy thông tin chi tiết của blog
+        BlogDAO blogDAO = new BlogDAO();
+        BlogDTO blog = blogDAO.getBlogByID(blogIdInt);
+
+        // Đặt đối tượng BlogDTO vào request attribute
+        request.setAttribute("blog", blog);
+
+        // Chuyển hướng request đến trang ViewBlogDetail.jsp để hiển thị thông tin blog
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewWebPage/blogdetail.jsp");
         dispatcher.forward(request, response);
+
+    } catch (Exception e) {
+        // Xử lý ngoại lệ nếu có
+        e.printStackTrace();
+        // Trả về lỗi 500 Internal Server Error
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+    }
     }
 
     /**
@@ -73,28 +95,8 @@ public class CreateBlog extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-                String title = request.getParameter("title");
-        String content = request.getParameter("content");
-        String dateCreate = request.getParameter("date");
-         String category = request.getParameter("category");
-         BlogDAO dao1 = new BlogDAO();
-         String blogcategoryID= dao1.returnblogcategoryID(category);
-         
-         int userId = 1;
-         HttpSession session = request.getSession(false);
-         
-         if (session != null && session.getAttribute("USER") != null){
-             User user = (User) session.getAttribute("USER");
-             userId = user.getId();
-         }
-      
-        
-// Tạo một đối tượng BlogDTO mới
-        BlogDAO dao2 = new BlogDAO();
-       dao2.createBlog(title, content, dateCreate, blogcategoryID, userId);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
       
     }
 
