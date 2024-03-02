@@ -15,18 +15,18 @@
         <div class="row element-button">
             <div class="col-sm-2">
                 <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addhousquotation">
-                    <i class="fas fa-plus"></i> Báo giá
+                    <i class="fas fa-plus"></i> Thêm Báo giá
                 </a>
-
-<!--            </div>
-            <div class="col-sm-2">
-                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addhousestyle"><i
-                        class="fas fa-folder-plus"></i> Thêm kiểu nhà</a>
             </div>
             <div class="col-sm-2">
-                <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
-                        class="fas fa-folder-plus"></i> Thêm phong cách</a>
-            </div>-->
-        </div>
+                <a class="btn btn-delete btn-sm nhap-tu-file" href="ManagerHouseStyle" title="Xem"><i
+                        class="fas fa-file-upload"></i>Quản lý kiểu nhà</a>
+            </div>
+            <div class="col-sm-2">
+                <a class="btn btn-delete btn-sm nhap-tu-file" href="ManagerStyle" title="Xem"><i
+                        class="fas fa-file-upload"></i>Quản lý phong cách</a>
+            </div>
+            
+        </div>>
     </body>
 </html>

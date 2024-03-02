@@ -40,7 +40,6 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="tile">
-                        <!--huycute-->
                         <div class="tile-body">
                             <jsp:include page="../../Page/Header/functionBar.jsp"/>
                             <table class="table table-hover table-bordered" id="sampleTable">

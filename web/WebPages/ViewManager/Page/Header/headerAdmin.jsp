@@ -43,10 +43,10 @@
                             class="app-menu__label">Quản lý Khách Hàng</span></a></li>
                 <li><a class="app-menu__item " href="ManagerRoof"><i class='app-menu__icon bx bx-tachometer'></i>
                         <span class="app-menu__label">Quản lý mái và móng</span></a></li>
-                <li><a class="app-menu__item " href="ManagerHouseStyle"><i class='app-menu__icon bx bx-home'></i>
+<!--                <li><a class="app-menu__item " href="ManagerHouseStyle"><i class='app-menu__icon bx bx-home'></i>
                         <span class="app-menu__label">Quản lý kiểu nhà</span></a></li>
                 <li><a class="app-menu__item " href="ManagerStyle"><i class='app-menu__icon bx bx-home'></i>
-                        <span class="app-menu__label">Quản lý phong cách</span></a></li>
+                        <span class="app-menu__label">Quản lý phong cách</span></a></li>-->
                 <li><a class="app-menu__item " href="ManagerQuotation"><i class='app-menu__icon bx bx-id-card'></i>
                         <span class="app-menu__label">Giá Thi Công Thô</span></a></li>
                 <li><a class="app-menu__item " href="ManagerQuotation2"><i class='app-menu__icon bx bx-id-card'></i>
