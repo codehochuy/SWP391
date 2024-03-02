@@ -50,7 +50,7 @@ public class LoadQuotationContent extends HttpServlet {
 
             Double length = Double.parseDouble(request.getParameter("1"));
             Double width = Double.parseDouble(request.getParameter("2"));
-
+            
             double frontYard = (request.getParameter("3") != null && !request.getParameter("3").isEmpty()) ? Double.parseDouble(request.getParameter("3")) : 0;
             double backYard = (request.getParameter("4") != null && !request.getParameter("4").isEmpty()) ? Double.parseDouble(request.getParameter("4")) : 0;
             int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
@@ -58,7 +58,7 @@ public class LoadQuotationContent extends HttpServlet {
             int floor = (request.getParameter("5") != null && !request.getParameter("5").isEmpty()) ? Integer.parseInt(request.getParameter("5")) : 0;
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
             double balcony = (request.getParameter("6") != null && !request.getParameter("6").isEmpty()) ? Double.parseDouble(request.getParameter("6")) : 0;
-
+            
             double price = 0;
             double S = length * width;
             double s = (length - frontYard - backYard) * width;
@@ -81,7 +81,7 @@ public class LoadQuotationContent extends HttpServlet {
             double sBalcony = 0;
             double sFoundation = 0;
             double sRoof = 0;
-
+            out.println("<h1>check</h1>");
             //print out result
             out.println("<h1>Kết quả tính diện tích và chi phí xây nhà</h1>");
             out.println("<h2>Bạn cần " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + " với diện tích là " + width + "m x " + length + "m:</h2>");
@@ -100,7 +100,7 @@ public class LoadQuotationContent extends HttpServlet {
                 sBalcony = (width * balcony) * floor;
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
                 String formattedsBalcony = decimalFormat.format(sBalcony);
-                out.println("<h2>Ban công: " + (width * balcony) + "m2 x " + floor + " lầu = " + formattedsBalcony + "</h2>");
+                out.println("<h2>Ban công: " + (width * balcony) + "m2 x " + floor + " lầu = " + formattedsBalcony + "m2</h2>");
                 totalArea += sBalcony;
             }
 
