@@ -128,16 +128,13 @@
                         <input type="hidden" id="service" name="service" value="${selectedService}"/>    
                         <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
                         <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
-                        <button class="btn" type="submit" id="sendMessageButton">Nhận Báo Giá</button>
                     </form>
                 </div>
             </div>
             <!--display quotation-->        
-            <div class="contact wow fadeInUp container">
-                <form action="SaveQuotationContent" id="quotationContent" method="post" name="sentMessage" novalidate="novalidate">
-
-                </form>
-            </div>        
+            <div id="quotationContent" class="contact wow fadeInUp container contact-form">
+                
+            </div>  
             <!-- Portfolio End -->
 
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
@@ -165,19 +162,18 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script>
             $(document).ready(function () {
+                // Kích hoạt sự kiện submit của biểu mẫu khi trang được tải
                 $('#formFill').submit(function (event) {
-                    event.preventDefault();
+                    event.preventDefault(); // Ngăn chặn hành vi mặc định của form
 
-
-
-                    var formData = {};
+                    var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
                     $("#formFill").find("input, select").each(function () {
-                        formData[$(this).attr("name")] = $(this).val();
+                        formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
                     });
 
                     // Gửi dữ liệu đến servlet bằng AJAX
                     $.ajax({
-                        url: 'LoadQuotationContent',
+                        url: 'LoadQuotationContentVersionDetail',
                         type: 'get',
                         data: formData,
                         success: function (data) {
@@ -189,7 +185,30 @@
                         }
                     });
                 });
+
+                // Tự động kích hoạt sự kiện submit của biểu mẫu khi trang được tải
+                $('#formFill').trigger('submit');
             });
+        </script>
+        <script>
+            function loadFormQuotation() {
+                var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
+                    $("#formFill").find("input, select").each(function () {
+                        formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
+                    });
+                $.ajax({// Sửa thành $.ajax thay vì $ajax
+                    url: "/SWP391/LoadFormChangeQuotationDetail",
+                    type: "get",
+                    data: formData,
+                    success: function (data) {
+                        var form = document.getElementById("formFill");
+                        form.innerHTML = data;
+                    },
+                    error: function (xhr) {
+                        // Xử lý lỗi nếu cần
+                    }
+                });
+            }
         </script>
 
     </body>

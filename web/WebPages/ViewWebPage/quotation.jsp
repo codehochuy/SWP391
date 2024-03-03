@@ -110,7 +110,7 @@
                         <div class="col-md-6 rawContruction">
                             <div class="contact-form">
                                 <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill" novalidate="novalidate">
-
+                                    
                                 </form>
                             </div>
                         </div>
