@@ -120,11 +120,10 @@
                 </div>
             </div>
             <!-- Quotation End -->
-            <div class="contact wow fadeInUp">
-                <div id="quotationContent" class="container">
+            <div class="contact wow fadeInUp container">
+                <form action="SaveQuotationContent" id="quotationContent" method="post" name="sentMessage" novalidate="novalidate">
 
-
-                </div>
+                </form>
             </div>
 
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
@@ -176,6 +175,35 @@
 
 
         </script>
+        <script>
+            $(document).ready(function () {
+                $('#quotationContent').submit(function (event) {
+                    event.preventDefault();
+
+
+
+                    var formData = {};
+                    $("#quotationContent").find("input").each(function () {
+                        formData[$(this).attr("name")] = $(this).val();
+                    });
+
+                    // Gửi dữ liệu đến servlet bằng AJAX
+                    $.ajax({
+                        url: 'SaveQuotationContent',
+                        type: 'get',
+                        data: formData,
+                        success: function (data) {
+                            var quotationContent = document.getElementById("quotationContent");
+                            quotationContent.innerHTML += data;
+                        },
+                        error: function (xhr) {
+                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                        }
+                    });
+                });
+            });
+        </script>
+        
         <script>
             $(document).ready(function () {
                 $('#formFill').submit(function (event) {

@@ -5,17 +5,21 @@
  */
 package DAO;
 
+import DTO.CustomerQuotation;
 import DTO.HouseComponent;
 import DTO.HouseType;
 import DTO.Quotation;
+import DTO.QuotationVersion;
 import DTO.RoofNFoundation2;
 import DTO.Service;
 import DTO.Style;
 import Utils.DBContext;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -523,26 +527,215 @@ public class QuotationDAO {
         return list;
     }
 
-    public static void main(String[] args) {
-        System.setProperty("file.encoding", "UTF-8");
-        QuotationDAO dao = new QuotationDAO();
-        List<RoofNFoundation2> list = dao.getFoundation();
-        for (RoofNFoundation2 roofNFoundation : list) {
-            System.out.println(roofNFoundation.getRoofNFoundationName() + ": " + roofNFoundation.getAreaPercent());
+    public boolean createCustomerQuotation(String cusQuoName, int quotationId, int userId) {
+        String sql = "INSERT INTO CustomerQuotation (CusQuoName, CusQuoStatus, QuotationID, UsersID)\n"
+                + "VALUES (?,1,?,?);";
+
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, cusQuoName);
+            ps.setInt(2, quotationId);
+            ps.setInt(3, userId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            // Kiểm tra xem ít nhất một dòng có được ảnh hưởng hay không
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            // Ghi log hoặc xử lý ngoại lệ theo cách cần thiết
+            e.printStackTrace();
+            return false;
         }
     }
 
-    public boolean checkFloor(int selectedHouseType) {
-        QuotationDAO dao = new QuotationDAO();
-        boolean check = false;
-        List<HouseComponent> list = dao.getHouseComponent(selectedHouseType);
-        for (HouseComponent houseComponent : list) {
-            if (houseComponent.getId() == 5){
-                check = true;
-                break;
+    public boolean createCusQuoVersion(double totalPrice, int foundationId, int roofId, int cusQuoId) {
+        String sql = "INSERT INTO CusQuoVersion ([Date], Price, FoundationID, RoofID, CusQuoID)\n"
+                + "VALUES (?,?,?,?,?);";
+
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            LocalDate currentDate = LocalDate.now();
+            Date sqlDate = Date.valueOf(currentDate);
+            ps.setDate(1, sqlDate);
+            ps.setDouble(2, totalPrice);
+            ps.setInt(3, foundationId);
+            ps.setInt(4, roofId);
+            ps.setInt(5, cusQuoId);
+
+            int rowsAffected = ps.executeUpdate();
+
+            // Kiểm tra xem ít nhất một dòng có được ảnh hưởng hay không
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            // Ghi log hoặc xử lý ngoại lệ theo cách cần thiết
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean createCustomerHouseComponent(double value, int versionID, int componentID) {
+        String sql = "INSERT INTO CustomerHouseComponent ([Value], VersionID, ComponentID)\n"
+                + "VALUES (?,?,?);";
+
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setDouble(1, value);
+            ps.setInt(2, versionID);
+            ps.setInt(3, componentID);
+
+            int rowsAffected = ps.executeUpdate();
+
+            // Kiểm tra xem ít nhất một dòng có được ảnh hưởng hay không
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            // Ghi log hoặc xử lý ngoại lệ theo cách cần thiết
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public int getCusQuoId() {
+        String sql = "SELECT COUNT(*) AS TotalCustomerQuotation\n"
+                + "FROM [HouseSystem].[dbo].[CustomerQuotation];";
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            // Đọc kết quả từ ResultSet
+            if (rs.next()) {
+                int totalCustomerQuotation = rs.getInt("TotalCustomerQuotation");
+                return totalCustomerQuotation;
+            } else {
+                // Trường hợp không có kết quả
+                return 0;
+            }
+        } catch (SQLException e) {
+            // Ghi log hoặc xử lý ngoại lệ theo cách cần thiết
+            e.printStackTrace();
+            return -1; // Trả về một giá trị không hợp lệ để biểu thị lỗi
+        }
+    }
+
+    public int getVersionId() {
+        String sql = "SELECT COUNT(*) AS TotalQuoVersion\n"
+                + "FROM [HouseSystem].[dbo].[CusQuoVersion];";
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            // Đọc kết quả từ ResultSet
+            if (rs.next()) {
+                int totalQuoVersion = rs.getInt("TotalQuoVersion");
+                return totalQuoVersion;
+            } else {
+                // Trường hợp không có kết quả
+                return 0;
+            }
+        } catch (SQLException e) {
+            // Ghi log hoặc xử lý ngoại lệ theo cách cần thiết
+            e.printStackTrace();
+            return -1; // Trả về một giá trị không hợp lệ để biểu thị lỗi
+        }
+    }
+
+    public List<CustomerQuotation> getListCustomerQuotation(int userId) {
+        List<CustomerQuotation> list = new ArrayList<>();
+        String sql = "select * from CustomerQuotation where UsersID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                CustomerQuotation c = new CustomerQuotation();
+                c.setCusQuoId(rs.getInt("CusQuoID"));
+                c.setCusQuoName(rs.getString("CusQuoName"));
+                c.setCusQuoStatus(rs.getBoolean("CusQuoStatus"));
+                c.setQuotationId(rs.getInt("QuotationID"));
+                list.add(c);
+            }
+            return list;
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
-        return check;
+        return list;
+    }
+
+    public List<QuotationVersion> getListQuotationVersion(int cusQuoId) {
+        List<QuotationVersion> list = new ArrayList<>();
+        String sql = "select * from CusQuoVersion where CusQuoID = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConn();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, cusQuoId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                QuotationVersion c = new QuotationVersion();
+                c.setVersionId(rs.getInt("VersionID"));
+                c.setDate(rs.getDate("Date"));
+                c.setPrice(rs.getDouble("Price"));
+                c.setCusQuoId(rs.getInt("CusQuoID"));
+                list.add(c);
+            }
+            return list;
+        } catch (SQLException e) {
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ServiceDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return list;
+    }
+
+    public static void main(String[] args) {
+        QuotationDAO dao = new QuotationDAO();
+        int versionId = dao.getVersionId() + 1;
+        System.out.println(versionId);
     }
 
 }

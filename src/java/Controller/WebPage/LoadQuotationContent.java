@@ -8,6 +8,7 @@ package Controller.WebPage;
 import DAO.QuotationDAO;
 import DTO.HouseComponent;
 import DTO.RoofNFoundation2;
+import DTO.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
@@ -17,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -81,7 +83,6 @@ public class LoadQuotationContent extends HttpServlet {
             double sBalcony = 0;
             double sFoundation = 0;
             double sRoof = 0;
-            out.println("<h1>check</h1>");
             //print out result
             out.println("<h1>Kết quả tính diện tích và chi phí xây nhà</h1>");
             out.println("<h2>Bạn cần " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + " với diện tích là " + width + "m x " + length + "m:</h2>");
@@ -127,6 +128,7 @@ public class LoadQuotationContent extends HttpServlet {
                 String formattedSFoundation = decimalFormat.format(sFoundation);
                 out.println("<h2>" + foundation.getRoofNFoundationName() + ": " + S + "m2 x " + foundation.getAreaPercent() + "% = " + formattedSFoundation + "m2</h2>");
                 totalArea += sFoundation;
+                out.println("<input type=\"hidden\" name=\"foundationId\" value=\""+foundationId+"\">");
             }
 
             if (roofId != 0) {
@@ -137,6 +139,7 @@ public class LoadQuotationContent extends HttpServlet {
                 String formattedSRoof = decimalFormat.format(sRoof);
                 out.println("<h2>" + roof.getRoofNFoundationName() + ": " + s + "m2 x " + roof.getAreaPercent() + "% = " + formattedSRoof + "m2</h2>");
                 totalArea += sRoof;
+                out.println("<input type=\"hidden\" name=\"roofId\" value=\""+roofId+"\">");
             }
 
             DecimalFormat decimalFormat1 = new DecimalFormat("#,###.##");
@@ -145,8 +148,10 @@ public class LoadQuotationContent extends HttpServlet {
 
                 if (packagePrice == 1) {
                     out.println("<h2>Gói xây dựng Tiết kiệm: " + formattedPrice + " VNĐ/m2</h2>");
+                    out.println("<input type=\"hidden\" name=\"packagePrice\" value=\""+packagePrice+"\">");
                 } else {
                     out.println("<h2>Gói xây dựng VIP: " + formattedPrice + " VNĐ/m2</h2>");
+                    out.println("<input type=\"hidden\" name=\"packagePrice\" value=\""+packagePrice+"\">");
                 }
 
             } else {
@@ -157,10 +162,21 @@ public class LoadQuotationContent extends HttpServlet {
             DecimalFormat decimalFormat = new DecimalFormat("#,###.##");
             String formattedTotalPrice = decimalFormat.format(totalPrice);
             DecimalFormat decimalFormat3 = new DecimalFormat("#.##");
-            String formattedTotalArea = decimalFormat3.format(sRoof);
+            String formattedTotalArea = decimalFormat3.format(totalArea);
             out.println("<h1>Tổng diện tích xây dựng: " + formattedTotalArea + "m2</h1>");
             out.println("<h1 style=\"color: red;\">Tổng chi phí xây dựng: " + formattedTotalPrice + "VNĐ</h1>");
-
+            out.println("<input type=\"hidden\" name=\"houseType\" value=\""+selectedHouseType+"\">");
+            out.println("<input type=\"hidden\" name=\"service\" value=\""+selectedService+"\">");
+            out.println("<input type=\"hidden\" name=\"style\" value=\""+selectedStyle+"\">");
+            out.println("<input type=\"hidden\" name=\"totalPrice\" value=\""+totalPrice+"\">");
+            out.println("<input type=\"hidden\" name=\"cusQuoName\" value=\""+ quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() +"\">");
+            for (int i = 0; i < listHouseComponent.size(); i++) {
+                out.println("<input type=\"hidden\" name=\""+listHouseComponent.get(i).getComponentId()+"\" value=\""+request.getParameter((i+1)+"")+"\">");
+            }
+            out.println("<div class=\"contact-form\">\n" +
+"                            <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\"  onclick=\"saveQuotationContent()\">Lưu báo giá</button>\n" +
+"                        </div>");
+            
         }
     }
 

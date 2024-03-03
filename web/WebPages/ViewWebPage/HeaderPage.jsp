@@ -120,7 +120,7 @@
                                         alt="avatar" src="./img/${sessionScope.USER.avatar}" width="50px"></a>
                                 <div class="dropdown-menu">
                                     <a href="Profile" class="dropdown-item">Hồ sơ</a>
-                                    <a href="#" class="dropdown-item">Lịch sử báo giá</a>
+                                    <a href="QuotationHistory" class="dropdown-item">Lịch sử báo giá</a>
                                     <a href="Logout" class="dropdown-item">Đăng xuất</a>
                                 </div>
                             </div>
