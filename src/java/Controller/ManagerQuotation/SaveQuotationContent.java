@@ -47,7 +47,7 @@ public class SaveQuotationContent extends HttpServlet {
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
             int foundationId = (request.getParameter("foundationId") != null && !request.getParameter("foundationId").isEmpty()) ? Integer.parseInt(request.getParameter("foundationId")) : 0;
             int roofId = (request.getParameter("roofId") != null && !request.getParameter("roofId").isEmpty()) ? Integer.parseInt(request.getParameter("roofId")) : 0;
-            double totalPrice = (request.getParameter("totalPrice") != null && !request.getParameter("totalPrice").isEmpty()) ? Double.parseDouble(request.getParameter("totalPrice")) : 0.0;
+            double price = (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) ? Double.parseDouble(request.getParameter("price")) : 0.0;
             String cusQuoName = (request.getParameter("cusQuoName") != null && !request.getParameter("cusQuoName").isEmpty()) ? request.getParameter("cusQuoName") : "0";
 
             QuotationDAO dao = new QuotationDAO();
@@ -56,20 +56,20 @@ public class SaveQuotationContent extends HttpServlet {
             
             QuotationDAO quotationDao = new QuotationDAO();
             DTO.Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
-            
+            int quotationId = quotation.getId();
             QuotationDAO dao1 = new QuotationDAO();
-            boolean createCustomerQuotation = dao1.createCustomerQuotation(cusQuoName, foundationId, userId);
+            boolean createCustomerQuotation = dao1.createCustomerQuotation(cusQuoName, quotationId, userId);
             boolean createCusQuoVersion = false;
             if (createCustomerQuotation){
                 QuotationDAO dao2 = new QuotationDAO();
                 int cusQuoId = dao2.getCusQuoId();
                 QuotationDAO dao3 = new QuotationDAO();
-                createCusQuoVersion = dao3.createCusQuoVersion(totalPrice, foundationId, roofId, cusQuoId);
+                createCusQuoVersion = dao3.createCusQuoVersion(price, foundationId, roofId, cusQuoId);
             }
             boolean createCustomerHouseComponent = false;
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 QuotationDAO dao4 = new QuotationDAO();
-                int versionId = dao4.getVersionId() + 1;
+                int versionId = dao4.getVersionId();
                 double value = Double.parseDouble(request.getParameter((i+1)+""));
                 int componentID = listHouseComponent.get(i).getComponentId();
                 QuotationDAO dao5 = new QuotationDAO();

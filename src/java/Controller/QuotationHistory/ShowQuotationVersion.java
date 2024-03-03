@@ -39,11 +39,13 @@ public class ShowQuotationVersion extends HttpServlet {
             request.setCharacterEncoding("UTF-8");
             String cusQuoName = request.getParameter("cusQuoName");
             int cusQuoId = Integer.parseInt(request.getParameter("cusQuoId"));
+            int quotationId = Integer.parseInt(request.getParameter("quotationId"));
             QuotationDAO dao = new QuotationDAO();
             List<QuotationVersion> listQuotationVersion = dao.getListQuotationVersion(cusQuoId);
             request.setAttribute("listQuotationVersion", listQuotationVersion);
             request.setAttribute("cusQuoName", cusQuoName);
             request.setAttribute("cusQuoId", cusQuoId);
+            request.setAttribute("quotationId", quotationId);
             request.getRequestDispatcher("WebPages/ViewWebPage/quotationHistoryVersion.jsp").forward(request, response);
         }
     }

@@ -4,7 +4,7 @@
     Author     : ACER
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -112,57 +112,34 @@
             <!-- Page Header End -->
 
             <div class="section-header text-center">
-                        <h2>Lịch sử báo giá</h2>
+                <h2>Báo giá chi tiết</h2>
             </div>
             <!-- Portfolio Start -->
             <div class="portfolio">
                 <div class="container single-content wow fadeInUp">
-                    <table border="1">
-                        <thead>
-                            <tr>
-                                <th>Quotation ID</th>
-                                <th>Tên</th>
-                                <th>Trạng thái</th>
-                                <th>Chức năng</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${requestScope.listCustomerQuotation}" var="cq">
-                                <tr>
-                                    <td>${cq.cusQuoId}</td>
-                                    <td>${cq.cusQuoName}</td>
-                                    <td>${cq.cusQuoStatus}</td>
-                                    <td style="display: flex; justify-content: space-left">
-                                        <form action="" method="post">
-                                            <button class="btn btn-primary btn-sm trash" style="margin-right: 5px;" type="button" title="Xóa" onclick="confirmDelete(this)"
-                                                    data-userID="${list.id}">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
+                    <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill" novalidate="novalidate">
+                        <input type="hidden" id="packagePrice" name="packagePrice" value="${packagePrice}"/>
+                        <input type="hidden" id="foundation" name="foundation" value="${foundation}"/>
+                        <input type="hidden" id="roof" name="roof" value="${roof}"/>
 
-                                        <form action="ShowQuotationVersion" method="post" accept-charset="UTF-8">
-                                            <input type="hidden" name="cusQuoId" value="${cq.cusQuoId}">
-                                            <input type="hidden" name="cusQuoName" value="${cq.cusQuoName}">
-                                            <input type="hidden" name="quotationId" value="${cq.quotationId}">
-                                            <button class="btn btn-primary btn-sm trash" id="formFill" type="submit" title="Xem chi tiết">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>        
-                            </c:forEach>
-
-                        </tbody>
-                    </table>
-
+                        <c:forEach items="${requestScope.listCustomerHouseComponent}" var="chc" varStatus="loop">
+                            <input type="hidden" name="${loop.index + 1}" value="${chc.value}"/>
+                        </c:forEach>
+                        <input type="hidden" id="service" name="service" value="${selectedService}"/>    
+                        <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
+                        <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
+                        <button class="btn" type="submit" id="sendMessageButton">Nhận Báo Giá</button>
+                    </form>
                 </div>
             </div>
-            <!-- Portfolio End -->
+            <!--display quotation-->        
             <div class="contact wow fadeInUp container">
                 <form action="SaveQuotationContent" id="quotationContent" method="post" name="sentMessage" novalidate="novalidate">
-                    
+
                 </form>
-            </div>
+            </div>        
+            <!-- Portfolio End -->
+
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
 
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
@@ -183,8 +160,8 @@
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
         <jsp:include page="../../PluginChatMess.jsp"/>
-        
-        <!--ajax-->
+
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script>
             $(document).ready(function () {
@@ -214,5 +191,6 @@
                 });
             });
         </script>
+
     </body>
 </html>

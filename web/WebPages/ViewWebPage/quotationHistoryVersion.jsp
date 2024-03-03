@@ -143,7 +143,8 @@
 
                                         <form action="ShowQuotationVersionDetail" method="post">
                                             <input type="hidden" name="versionId" value="${qv.versionId}">
-                                            <input type="hidden" name="versionId" value="${requestScope.cusQuoId}">
+                                            <input type="hidden" name="cusQuoId" value="${requestScope.cusQuoId}">
+                                            <input type="hidden" name="quotationId" value="${requestScope.quotationId}">
                                             <button class="btn btn-primary btn-sm trash" type="submit" title="Xem chi tiết">
                                                 <i class="fas fa-eye"></i>
                                             </button>
@@ -158,7 +159,7 @@
                 </div>
             </div>
             <!-- Portfolio End -->
-
+            
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
 
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>

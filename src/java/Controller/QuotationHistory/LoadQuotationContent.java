@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.WebPage;
+package Controller.QuotationHistory;
 
 import DAO.QuotationDAO;
 import DTO.HouseComponent;
@@ -168,7 +168,7 @@ public class LoadQuotationContent extends HttpServlet {
             out.println("<input type=\"hidden\" name=\"houseType\" value=\""+selectedHouseType+"\">");
             out.println("<input type=\"hidden\" name=\"service\" value=\""+selectedService+"\">");
             out.println("<input type=\"hidden\" name=\"style\" value=\""+selectedStyle+"\">");
-            out.println("<input type=\"hidden\" name=\"totalPrice\" value=\""+totalPrice+"\">");
+            out.println("<input type=\"hidden\" name=\"price\" value=\""+price+"\">");
             out.println("<input type=\"hidden\" name=\"cusQuoName\" value=\""+ quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() +"\">");
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 out.println("<input type=\"hidden\" name=\""+listHouseComponent.get(i).getComponentId()+"\" value=\""+request.getParameter((i+1)+"")+"\">");
