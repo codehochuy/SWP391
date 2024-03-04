@@ -550,8 +550,8 @@ public class QuotationDAO {
     }
     
     public boolean createCusQuoVersion(double totalPrice, int foundationId, int roofId, int cusQuoId) {
-        String sql = "INSERT INTO CusQuoVersion ([Date], Price, FoundationID, RoofID, CusQuoID)\n"
-                + "VALUES (?,?,?,?,?);";
+        String sql = "INSERT INTO CusQuoVersion ([Date], Price, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID)\n"
+                + "VALUES (?,?,?,?,1,?);";
         
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -704,6 +704,7 @@ public class QuotationDAO {
                 c.setPrice(rs.getDouble("Price"));
                 c.setRoofId(rs.getInt("RoofID"));
                 c.setFoundationId(rs.getInt("FoundationID"));
+                c.setQuotationVersionStatus(rs.getBoolean("CusQuoVersionStatus"));
                 c.setCusQuoId(rs.getInt("CusQuoID"));
                 list.add(c);
             }
@@ -801,6 +802,7 @@ public class QuotationDAO {
                 quotation.setPrice(rs.getDouble("Price"));
                 quotation.setRoofId(rs.getInt("RoofID"));
                 quotation.setFoundationId(rs.getInt("FoundationID"));
+                quotation.setQuotationVersionStatus(rs.getBoolean("CusQuoVersionStatus"));
                 quotation.setCusQuoId(rs.getInt("CusQuoID"));
             }
             return quotation;
@@ -831,12 +833,55 @@ public class QuotationDAO {
         return null;
     }
     
+    public boolean updateCustomerQuotationStatus(int cusQuoStatus ,int cusQuoId) {
+        String sql = "UPDATE CustomerQuotation SET CusQuoStatus = ? WHERE CusQuoID = ?";
+        
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            
+            ps.setInt(1, cusQuoStatus);
+            ps.setInt(2, cusQuoId);
+            
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+            
+        } catch (SQLException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
+    
+    public boolean updateCustomerQuotationVersionStatus(int versionStatus, int versionId) {
+        String sql = "UPDATE CusQuoVersion SET CusQuoVersionStatus = ? WHERE VersionID = ?";
+        
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            
+            ps.setInt(1, versionStatus);
+            ps.setInt(2, versionId);
+            
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+            
+        } catch (SQLException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
     
     public static void main(String[] args) {
         QuotationDAO dao = new QuotationDAO();
-        Quotation quotation = dao.getQuotaitonByServiveTypeStyle(1, 2, 1);
-        System.out.println(quotation.getId());
+        boolean check = dao.updateCustomerQuotationVersionStatus(1,1);
+        System.out.println(check);
     }
+
+    
+
+    
 
     
     

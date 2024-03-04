@@ -17,17 +17,19 @@ public class QuotationVersion {
     private Double price;
     private int roofId;
     private int foundationId;
+    private boolean quotationVersionStatus;
     private int cusQuoId;   
 
     public QuotationVersion() {
     }
 
-    public QuotationVersion(int versionId, Date date, Double price, int roofId, int foundationId, int cusQuoId) {
+    public QuotationVersion(int versionId, Date date, Double price, int roofId, int foundationId, boolean quotationVersionStatus, int cusQuoId) {
         this.versionId = versionId;
         this.date = date;
         this.price = price;
         this.roofId = roofId;
         this.foundationId = foundationId;
+        this.quotationVersionStatus = quotationVersionStatus;
         this.cusQuoId = cusQuoId;
     }
 
@@ -71,6 +73,14 @@ public class QuotationVersion {
         this.foundationId = foundationId;
     }
 
+    public boolean isQuotationVersionStatus() {
+        return quotationVersionStatus;
+    }
+
+    public void setQuotationVersionStatus(boolean quotationVersionStatus) {
+        this.quotationVersionStatus = quotationVersionStatus;
+    }
+
     public int getCusQuoId() {
         return cusQuoId;
     }
@@ -78,5 +88,7 @@ public class QuotationVersion {
     public void setCusQuoId(int cusQuoId) {
         this.cusQuoId = cusQuoId;
     }
+
+    
      
 }

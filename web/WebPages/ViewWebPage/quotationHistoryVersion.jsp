@@ -112,8 +112,8 @@
             <!-- Page Header End -->
 
             <div class="section-header text-center">
-                        <h2>Các phiên bản báo giá cho </h2>
-                        <p>${requestScope.cusQuoName}</p>
+                <h2>Các phiên bản báo giá cho </h2>
+                <p>${requestScope.cusQuoName}</p>
             </div>
             <!-- Portfolio Start -->
             <div class="portfolio">
@@ -129,28 +129,35 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${requestScope.listQuotationVersion}" var="qv">
-                                <tr>
-                                    <td>${qv.versionId}</td>
-                                    <td>${qv.date}</td>
-                                    <td>${qv.price}</td>
-                                    <td style="display: flex; justify-content: space-left">
-                                        <form action="" method="post">
-                                            <button class="btn btn-primary btn-sm trash" style="margin-right: 5px;" type="button" title="Xóa" onclick="confirmDelete(this)"
-                                                    data-userID="${list.id}">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
+                                <c:choose>
+                                    <c:when test="${qv.quotationVersionStatus}">
+                                        <tr>
+                                            <td>${qv.versionId}</td>
+                                            <td>${qv.date}</td>
+                                            <td>${qv.price}</td>
+                                            <td style="display: flex; justify-content: space-left">
+                                                <form action="" method="post">
+                                                    <button class="btn btn-primary btn-sm trash" style="margin-right: 5px;" type="button" title="Xóa" onclick="confirmDelete(this)"
+                                                            data-versionId="${qv.versionId}"
+                                                            data-cusQuoName="${requestScope.cusQuoName}"
+                                                            data-cusQuoId="${requestScope.cusQuoId}"
+                                                            data-quotationId="${requestScope.quotationId}">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
 
-                                        <form action="ShowQuotationVersionDetail" method="post">
-                                            <input type="hidden" name="versionId" value="${qv.versionId}">
-                                            <input type="hidden" name="cusQuoId" value="${requestScope.cusQuoId}">
-                                            <input type="hidden" name="quotationId" value="${requestScope.quotationId}">
-                                            <button class="btn btn-primary btn-sm trash" type="submit" title="Xem chi tiết">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>        
+                                                <form action="ShowQuotationVersionDetail" method="post">
+                                                    <input type="hidden"  name="versionId" value="${qv.versionId}">
+                                                    <input type="hidden"  name="cusQuoId" value="${requestScope.cusQuoId}">
+                                                    <input type="hidden"  name="quotationId" value="${requestScope.quotationId}">
+                                                    <button class="btn btn-primary btn-sm trash" type="submit" title="Xem chi tiết">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr> 
+                                    </c:when>
+                                </c:choose>
                             </c:forEach>
 
                         </tbody>
@@ -159,7 +166,7 @@
                 </div>
             </div>
             <!-- Portfolio End -->
-            
+
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
 
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
@@ -180,5 +187,26 @@
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
         <jsp:include page="../../PluginChatMess.jsp"/>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+                                                        function confirmDelete(button) {
+                                                            var versionId = button.getAttribute("data-versionId");
+                                                            var cusQuoName = button.getAttribute("data-cusQuoName");
+                                                            var cusQuoId = button.getAttribute("data-cusQuoId");
+                                                            var quotationId = button.getAttribute("data-quotationId");
+                                                            swal({
+                                                                title: "Cảnh báo",
+                                                                text: "Bạn có muốn xóa báo giá này?",
+                                                                buttons: ["Hủy bỏ", "Đồng ý"],
+                                                            }).then((willDelete) => {
+                                                                if (willDelete) {
+                                                                    var form = button.closest("form");
+                                                                    form.action = "BanCustomerQuotationVersion?versionId=" + versionId + "&cusQuoName=" + cusQuoName + "&cusQuoId=" + cusQuoId + "&quotationId=" + quotationId;
+                                                                    form.submit();
+                                                                }
+
+                                                            });
+                                                        }
+        </script>
     </body>
 </html>

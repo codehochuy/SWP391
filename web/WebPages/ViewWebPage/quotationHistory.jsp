@@ -112,7 +112,7 @@
             <!-- Page Header End -->
 
             <div class="section-header text-center">
-                        <h2>Lịch sử báo giá</h2>
+                <h2>Lịch sử báo giá</h2>
             </div>
             <!-- Portfolio Start -->
             <div class="portfolio">
@@ -122,36 +122,37 @@
                             <tr>
                                 <th>Quotation ID</th>
                                 <th>Tên</th>
-                                <th>Trạng thái</th>
                                 <th>Chức năng</th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:forEach items="${requestScope.listCustomerQuotation}" var="cq">
-                                <tr>
-                                    <td>${cq.cusQuoId}</td>
-                                    <td>${cq.cusQuoName}</td>
-                                    <td>${cq.cusQuoStatus}</td>
-                                    <td style="display: flex; justify-content: space-left">
-                                        <form action="" method="post">
-                                            <button class="btn btn-primary btn-sm trash" style="margin-right: 5px;" type="button" title="Xóa" onclick="confirmDelete(this)"
-                                                    data-userID="${list.id}">
-                                                <i class="fas fa-trash-alt"></i>
-                                            </button>
-                                        </form>
+                                <c:choose>
+                                    <c:when test="${cq.cusQuoStatus}">
+                                        <tr>
+                                            <td>${cq.cusQuoId}</td>
+                                            <td>${cq.cusQuoName}</td>
+                                            <td style="display: flex; justify-content: space-left">
+                                                <form action="" method="post">
+                                                    <button class="btn btn-primary btn-sm trash" style="margin-right: 5px;" type="button" title="Xóa" onclick="confirmDelete(this)"
+                                                            data-cusQuoId="${cq.cusQuoId}">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </form>
 
-                                        <form action="ShowQuotationVersion" method="post" accept-charset="UTF-8">
-                                            <input type="hidden" name="cusQuoId" value="${cq.cusQuoId}">
-                                            <input type="hidden" name="cusQuoName" value="${cq.cusQuoName}">
-                                            <input type="hidden" name="quotationId" value="${cq.quotationId}">
-                                            <button class="btn btn-primary btn-sm trash" id="formFill" type="submit" title="Xem chi tiết">
-                                                <i class="fas fa-eye"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>        
+                                                <form action="ShowQuotationVersion" method="post" accept-charset="UTF-8">
+                                                    <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cq.cusQuoId}">
+                                                    <input type="hidden" id="cusQuoName" name="cusQuoName" value="${cq.cusQuoName}">
+                                                    <input type="hidden" id="quotationId" name="quotationId" value="${cq.quotationId}">
+                                                    <button class="btn btn-primary btn-sm trash" id="formFill" type="submit" title="Xem chi tiết">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </c:when>
+                                </c:choose>
                             </c:forEach>
-
                         </tbody>
                     </table>
 
@@ -160,7 +161,7 @@
             <!-- Portfolio End -->
             <div class="contact wow fadeInUp container">
                 <form action="SaveQuotationContent" id="quotationContent" method="post" name="sentMessage" novalidate="novalidate">
-                    
+
                 </form>
             </div>
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
@@ -183,36 +184,55 @@
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
         <jsp:include page="../../PluginChatMess.jsp"/>
-        
+
         <!--ajax-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script>
-            $(document).ready(function () {
-                $('#formFill').submit(function (event) {
-                    event.preventDefault();
+                                                        $(document).ready(function () {
+                                                            $('#formFill').submit(function (event) {
+                                                                event.preventDefault();
 
 
 
-                    var formData = {};
-                    $("#formFill").find("input, select").each(function () {
-                        formData[$(this).attr("name")] = $(this).val();
-                    });
+                                                                var formData = {};
+                                                                $("#formFill").find("input, select").each(function () {
+                                                                    formData[$(this).attr("name")] = $(this).val();
+                                                                });
 
-                    // Gửi dữ liệu đến servlet bằng AJAX
-                    $.ajax({
-                        url: 'LoadQuotationContent',
-                        type: 'get',
-                        data: formData,
-                        success: function (data) {
-                            var quotationContent = document.getElementById("quotationContent");
-                            quotationContent.innerHTML = data;
-                        },
-                        error: function (xhr) {
-                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
-                        }
-                    });
+                                                                // Gửi dữ liệu đến servlet bằng AJAX
+                                                                $.ajax({
+                                                                    url: 'LoadQuotationContent',
+                                                                    type: 'get',
+                                                                    data: formData,
+                                                                    success: function (data) {
+                                                                        var quotationContent = document.getElementById("quotationContent");
+                                                                        quotationContent.innerHTML = data;
+                                                                    },
+                                                                    error: function (xhr) {
+                                                                        console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                                                                    }
+                                                                });
+                                                            });
+                                                        });
+        </script>
+        <script>
+            function confirmDelete(button) {
+                var cusQuoId = button.getAttribute("data-cusQuoId");
+                cusQuoName
+                swal({
+                    title: "Cảnh báo",
+                    text: "Bạn có muốn xóa báo giá này?",
+                    buttons: ["Hủy bỏ", "Đồng ý"],
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        var form = button.closest("form");
+                        form.action = "BanCustomerQuotation?cusQuoId=" + cusQuoId;
+                        form.submit();
+                    }
+
                 });
-            });
+            }
         </script>
     </body>
 </html>
