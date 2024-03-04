@@ -111,8 +111,8 @@
                             <h2>Bảng Giá Xây Nhà Trọn Gói</h2>
                         </div>
                         <div class="col-12">
-                            <a href="index.html">Trang Chủ</a>
-                            <a href="project.html">Bảng Giá Xây Nhà Trọn Gói</a>
+                            <a href="index">Trang Chủ</a>
+                            <a href="">Bảng Giá Xây Nhà Trọn Gói</a>
                         </div>
                     </div>
                 </div>

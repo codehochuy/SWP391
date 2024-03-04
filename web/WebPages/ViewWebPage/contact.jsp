@@ -47,7 +47,7 @@
                         <h2>Liên Hệ</h2>
                     </div>
                     <div class="col-12">
-                        <a href="">Trang Chủ</a>
+                        <a href="index">Trang Chủ</a>
                         <a href="">Liên Hệ</a>
                     </div>
                 </div>

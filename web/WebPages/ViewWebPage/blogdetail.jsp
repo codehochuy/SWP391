@@ -52,7 +52,7 @@
                             <h2>Blog</h2>
                         </div>
                         <div class="col-12">
-                            <a href="">Trang Chủ</a>
+                            <a href="index">Trang Chủ</a>
                             <a href="">Blog</a>
                         </div>
                     </div>

@@ -47,8 +47,8 @@
                         <h2>Đội Ngũ Nhân Sự</h2>
                     </div>
                     <div class="col-12">
-                        <a href="index.html">Trang Chủ</a>
-                        <a href="team.html">Đội Ngũ Nhân Sự</a>
+                        <a href="index">Trang Chủ</a>
+                        <a href="">Đội Ngũ Nhân Sự</a>
                     </div>
                 </div>
             </div>

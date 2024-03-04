@@ -45,7 +45,7 @@
                             <h2>Giới Thiệu</h2>
                         </div>
                         <div class="col-12">
-                            <a href="">Trang Chủ</a>
+                            <a href="index">Trang Chủ</a>
                             <a href="">Giới Thiệu</a>
                         </div>
                     </div>

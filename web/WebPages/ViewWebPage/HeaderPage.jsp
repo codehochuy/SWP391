@@ -22,7 +22,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-4 col-md-12">
                         <div class="logo">
-                            <a href="index.html">
+                            <a href="index">
                                 <h1>TITAN</h1>
                                 <!--<img src="img/Product1.jpg" alt="Logo">--> 
                             </a>

@@ -45,8 +45,8 @@
                             <h2>Dự Án Hoàn Thiện</h2>
                         </div>
                         <div class="col-12">
-                            <a href="index.html">Trang Chủ</a>
-                            <a href="Project.jsp">Dự Án</a>
+                            <a href="index">Trang Chủ</a>
+                            <a href="">Dự Án</a>
                         </div>
                     </div>
                 </div>

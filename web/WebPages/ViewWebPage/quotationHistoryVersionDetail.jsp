@@ -103,8 +103,8 @@
                             <h2>Lịch Sử Báo Giá</h2>
                         </div>
                         <div class="col-12">
-                            <a href="index.html">Trang Chủ</a>
-                            <a href="Project.jsp">Lịch Sử Báo Giá</a>
+                            <a href="index">Trang Chủ</a>
+                            <a href="">Lịch Sử Báo Giá</a>
                         </div>
                     </div>
                 </div>

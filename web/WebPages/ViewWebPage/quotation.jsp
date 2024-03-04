@@ -48,7 +48,7 @@
                             <h2>Báo Giá</h2>
                         </div>
                         <div class="col-12">
-                            <a href="index.jsp">Trang Chủ</a>
+                            <a href="index">Trang Chủ</a>
                             <a href="">Báo Giá</a>
                         </div>
                     </div>

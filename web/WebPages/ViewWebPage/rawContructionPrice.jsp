@@ -111,8 +111,8 @@
                             <h2>Bảng Giá Xây Nhà Phần Thô</h2>
                         </div>
                         <div class="col-12">
-                            <a href="index.html">Trang Chủ</a>
-                            <a href="rawContructionPrice.html">Bảng Giá Xây Nhà Phần Thô</a>
+                            <a href="index">Trang Chủ</a>
+                            <a href="">Bảng Giá Xây Nhà Phần Thô</a>
                         </div>
                     </div>
                 </div>
