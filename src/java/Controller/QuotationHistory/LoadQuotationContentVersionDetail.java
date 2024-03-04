@@ -42,23 +42,23 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
             int selectedHouseType = Integer.parseInt(request.getParameter("houseType"));
             int selectedService = Integer.parseInt(request.getParameter("service"));
             int selectedStyle = Integer.parseInt(request.getParameter("style"));
-
+            int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
+            int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
+            int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
+            
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
 
             QuotationDAO quotationDao = new QuotationDAO();
             DTO.Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
 
-            Double length = Double.parseDouble(request.getParameter("1"));
-            Double width = Double.parseDouble(request.getParameter("2"));
-            
+            Double length = (request.getParameter("1") != null && !request.getParameter("1").isEmpty()) ? Double.parseDouble(request.getParameter("1")) : 0;
+            Double width = (request.getParameter("2") != null && !request.getParameter("2").isEmpty()) ? Double.parseDouble(request.getParameter("2")) : 0;
             double frontYard = (request.getParameter("3") != null && !request.getParameter("3").isEmpty()) ? Double.parseDouble(request.getParameter("3")) : 0;
             double backYard = (request.getParameter("4") != null && !request.getParameter("4").isEmpty()) ? Double.parseDouble(request.getParameter("4")) : 0;
-            int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
-            int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
             double floor = (request.getParameter("5") != null && !request.getParameter("5").isEmpty()) ? Double.parseDouble(request.getParameter("5")) : 0;
-            int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
             double balcony = (request.getParameter("6") != null && !request.getParameter("6").isEmpty()) ? Double.parseDouble(request.getParameter("6")) : 0;
+            
             double price = 0;
             double S = length * width;
             double s = (length - frontYard - backYard) * width;
@@ -116,6 +116,17 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
                 String formattedSBackYard = decimalFormat.format(sBackYard);
                 out.println("<h2>Diện tích sân sau: " + width * backYard + "m2 x 50% = " + formattedSBackYard + "m2</h2>");
                 totalArea += sBackYard;
+            }
+            
+            for (int i = 0; i < listHouseComponent.size(); i++) {
+                HouseComponent houseComponent = listHouseComponent.get(i);
+                if ( houseComponent.getComponentId() > 6 ){
+                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                String formattedSFoundation = decimalFormat.format(sFoundation);
+                double areaBuild = Double.parseDouble(request.getParameter((i+1)+""));
+                out.println("<h2>" +houseComponent.getComponent()+ ": " +areaBuild+ "m2</h2>");
+                totalArea += areaBuild;
+                }
             }
 
             if (foundationId != 0) {

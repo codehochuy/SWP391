@@ -56,14 +56,25 @@ public class LoadFormFill extends HttpServlet {
 "                                        <p class=\"help-block text-danger\"></p>\n" +
 "                                    </div>");
             }
-            for (HouseComponent houseComponent : listHouseComponent) {
-                out.println("<div class=\"control-group\">\n"
-                        + "                                        <h5>Nhập " + houseComponent.getComponent() + "</h5>\n"
-                        + "                                        <input type=\"number\" class=\"form-control\" name=\""+houseComponent.getComponentId()+"\" id=\""+houseComponent.getComponentId()+"\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng\"\n"
+            for (int i = 0; i < listHouseComponent.size(); i++) {
+                HouseComponent houseComponent = listHouseComponent.get(i);
+                if ( houseComponent.getComponentId() <= 6 ){
+                    out.println("<div class=\"control-group\">\n"
+                        + "                                        <h5>Nhập " + houseComponent.getComponent() + " (m)</h5>\n"
+                        + "                                        <input type=\"number\" class=\"form-control\" name=\""+houseComponent.getComponentId()+"\" id=\""+houseComponent.getComponentId()+"\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m)\"\n"
                         + "                                               required=\"required\"\n"
                         + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
                         + "                                        <p class=\"help-block text-danger\"></p>\n"
                         + "                                    </div>");
+                } else {
+                    out.println("<div class=\"control-group\">\n"
+                        + "                                        <h5>Nhập " + houseComponent.getComponent() + " (m2)</h5>\n"
+                        + "                                        <input type=\"number\" class=\"form-control\" name=\""+houseComponent.getComponentId()+"\" id=\""+houseComponent.getComponentId()+"\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m2)\"\n"
+                        + "                                               required=\"required\"\n"
+                        + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
+                        + "                                        <p class=\"help-block text-danger\"></p>\n"
+                        + "                                    </div>");
+                }
             }
 
             out.println("<div class=\"control-group\">\n"

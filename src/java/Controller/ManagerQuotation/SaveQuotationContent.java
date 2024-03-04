@@ -70,12 +70,11 @@ public class SaveQuotationContent extends HttpServlet {
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 QuotationDAO dao4 = new QuotationDAO();
                 int versionId = dao4.getVersionId();
-                double value = Double.parseDouble(request.getParameter((i+1)+""));
+                double value = (request.getParameter((i+1)+"") != null && !request.getParameter((i+1)+"").isEmpty()) ? Double.parseDouble(request.getParameter((i+1)+"")) : 0.0;
                 int componentID = listHouseComponent.get(i).getComponentId();
                 QuotationDAO dao5 = new QuotationDAO();
-                createCustomerHouseComponent = dao5.createCustomerHouseComponent(value, versionId, componentID);
-                if (createCustomerHouseComponent != true){
-                    break;
+                if (!(value == 0)){
+                    createCustomerHouseComponent = dao5.createCustomerHouseComponent(value, versionId, componentID);
                 }
             }
             

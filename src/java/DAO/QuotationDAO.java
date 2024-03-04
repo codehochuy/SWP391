@@ -31,25 +31,25 @@ import java.util.logging.Logger;
  * @author ACER
  */
 public class QuotationDAO {
-    
+
     private DBContext db;
-    
+
     public QuotationDAO() {
         db = new DBContext();
     }
-    
+
     public QuotationDAO(DBContext db) {
         this.db = db;
     }
-    
+
     public DBContext getDb() {
         return db;
     }
-    
+
     public void setDb(DBContext db) {
         this.db = db;
     }
-    
+
     public List<Quotation> getAll() {
         List<Quotation> list = new ArrayList<>();
         String sql = "SELECT\n"
@@ -81,7 +81,7 @@ public class QuotationDAO {
                 c.setHouseType(new HouseType(rs.getInt("HouseTypeID"), rs.getString("HouseTypeName")));
                 c.setService(new Service(rs.getInt("ServiceID"), rs.getString("ServiceName")));
                 c.setStyle(new Style(rs.getInt("StyleID"), rs.getString("StyleName")));
-                
+
                 list.add(c);
             }
             return list;
@@ -111,7 +111,7 @@ public class QuotationDAO {
         }
         return list;
     }
-    
+
     public Quotation getQuotaitonByServiveTypeStyle(int service, int type, int style) {
         Quotation quotation = new Quotation();
         String sql = "SELECT Q.*, HT.HouseTypeName, Svc.ServiceName, S.StyleName\n"
@@ -138,7 +138,7 @@ public class QuotationDAO {
                 c.setHouseType(new HouseType(rs.getInt("HouseTypeID"), rs.getString("HouseTypeName")));
                 c.setService(new Service(rs.getInt("ServiceID"), rs.getString("ServiceName")));
                 c.setStyle(new Style(rs.getInt("StyleID"), rs.getString("StyleName")));
-                
+
                 return c;
             }
         } catch (SQLException e) {
@@ -167,22 +167,22 @@ public class QuotationDAO {
         }
         return null;
     }
-    
+
     public boolean deleteQuotation(String id) {
         try (Connection con = db.getConn();
                 PreparedStatement stm = con.prepareStatement("DELETE FROM Quotation WHERE QuotationID = ?")) {
-            
+
             stm.setString(1, id);
             int effectRow = stm.executeUpdate();
-            
+
             return effectRow > 0;
-            
+
         } catch (SQLException e) {
             e.printStackTrace(); // Handle the exception (log it, throw it, etc.)
             return false;
         }
     }
-    
+
     public Quotation getQuotationID(String id) {
         String sql = "SELECT\n"
                 + "    Q.*,\n"
@@ -199,12 +199,12 @@ public class QuotationDAO {
                 + "    [Service] Svc ON Q.ServiceID = Svc.ServiceID\n"
                 + "WHERE\n"
                 + "    QuotationID = ?;";
-        
+
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+
             ps.setString(1, id);
-            
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     Quotation quotation = new Quotation();
@@ -218,24 +218,24 @@ public class QuotationDAO {
                     return quotation;
                 }
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace(); // Handle the exception (log it, throw it, etc.)
         }
         return null;
     }
-    
+
     public RoofNFoundation2 getRoofNFoundationByID(int id) {
         String sql = "SELECT rf.RoofNFoundationID, rf.[Name] as RoofNFoundationName, rf.AreaPercent, cc.*\n"
                 + "FROM RoofNFoundation rf \n"
                 + "JOIN ComponentCategory cc ON rf.ComponentCategoryID = cc.ComponentCategoryID\n"
                 + "WHERE rf.RoofNFoundationID = ?;";
-        
+
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+
             ps.setInt(1, id);
-            
+
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     RoofNFoundation2 rf = new RoofNFoundation2();
@@ -247,7 +247,7 @@ public class QuotationDAO {
                     return rf;
                 }
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace(); // Handle the exception (log it, throw it, etc.)
         }
@@ -278,29 +278,29 @@ public class QuotationDAO {
 //    }
     public boolean updateQuotation(String id, String price1, String price2, String time) {
         String sql = "UPDATE Quotation SET Price1 = ?, Price2 = ?, [Time] = ? WHERE QuotationID = ?";
-        
+
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
-            
+
             ps.setDouble(1, Double.parseDouble(price1));
             ps.setDouble(2, Double.parseDouble(price2));
             ps.setInt(3, Integer.parseInt(time));
             ps.setInt(4, Integer.parseInt(id));
-            
+
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
-            
+
         } catch (SQLException | NumberFormatException e) {
             e.printStackTrace();
         }
-        
+
         return false;
     }
-    
+
     public boolean createQuotation(double price1, double price2, int time, int styleID, int houseTypeID, int serviceID) {
         String sql = "INSERT INTO Quotation (Price1, Price2, [Time], StyleID, HouseTypeID, ServiceID)\n"
                 + "VALUES (?, ?, ?, ?, ?, ?);";
-        
+
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setDouble(1, price1);
@@ -309,7 +309,7 @@ public class QuotationDAO {
             ps.setInt(4, styleID);
             ps.setInt(5, houseTypeID);
             ps.setInt(6, serviceID);
-            
+
             int rowsAffected = ps.executeUpdate();
 
             // Kiểm tra xem ít nhất một dòng có được ảnh hưởng hay không
@@ -384,7 +384,8 @@ public class QuotationDAO {
         List<HouseComponent> list = new ArrayList<>();
         String sql = "Select * from HouseType ht join  HouseComponent hc on ht.HouseTypeID = hc.HouseTypeID\n"
                 + "join Component c on c.ComponentID = hc.ComponentID\n"
-                + "where ht.HouseTypeID = ?";
+                + "where ht.HouseTypeID = ? \n"
+                + "ORDER BY c.ComponentID ASC";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -429,7 +430,7 @@ public class QuotationDAO {
         }
         return list;
     }
-    
+
     public List<RoofNFoundation2> getFoundation() {
         List<RoofNFoundation2> list = new ArrayList<>();
         String sql = "select rf.RoofNFoundationID, rf.Name as RoofNFoundationName, rf.AreaPercent, rf.ComponentCategoryID, cc.Name as CategoryName\n"
@@ -478,7 +479,7 @@ public class QuotationDAO {
         }
         return list;
     }
-    
+
     public List<RoofNFoundation2> getRoof() {
         List<RoofNFoundation2> list = new ArrayList<>();
         String sql = "select rf.RoofNFoundationID, rf.Name as RoofNFoundationName, rf.AreaPercent, rf.ComponentCategoryID, cc.Name as CategoryName\n"
@@ -527,17 +528,17 @@ public class QuotationDAO {
         }
         return list;
     }
-    
+
     public boolean createCustomerQuotation(String cusQuoName, int quotationId, int userId) {
         String sql = "INSERT INTO CustomerQuotation (CusQuoName, CusQuoStatus, QuotationID, UsersID)\n"
                 + "VALUES (?,1,?,?);";
-        
+
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, cusQuoName);
             ps.setInt(2, quotationId);
             ps.setInt(3, userId);
-            
+
             int rowsAffected = ps.executeUpdate();
 
             // Kiểm tra xem ít nhất một dòng có được ảnh hưởng hay không
@@ -548,11 +549,11 @@ public class QuotationDAO {
             return false;
         }
     }
-    
+
     public boolean createCusQuoVersion(double totalPrice, int foundationId, int roofId, int cusQuoId) {
         String sql = "INSERT INTO CusQuoVersion ([Date], Price, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID)\n"
                 + "VALUES (?,?,?,?,1,?);";
-        
+
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
             LocalDate currentDate = LocalDate.now();
@@ -562,7 +563,7 @@ public class QuotationDAO {
             ps.setInt(3, foundationId);
             ps.setInt(4, roofId);
             ps.setInt(5, cusQuoId);
-            
+
             int rowsAffected = ps.executeUpdate();
 
             // Kiểm tra xem ít nhất một dòng có được ảnh hưởng hay không
@@ -573,17 +574,17 @@ public class QuotationDAO {
             return false;
         }
     }
-    
+
     public boolean createCustomerHouseComponent(double value, int versionID, int componentID) {
         String sql = "INSERT INTO CustomerHouseComponent ([Value], VersionID, ComponentID)\n"
                 + "VALUES (?,?,?);";
-        
+
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setDouble(1, value);
             ps.setInt(2, versionID);
             ps.setInt(3, componentID);
-            
+
             int rowsAffected = ps.executeUpdate();
 
             // Kiểm tra xem ít nhất một dòng có được ảnh hưởng hay không
@@ -594,7 +595,7 @@ public class QuotationDAO {
             return false;
         }
     }
-    
+
     public int getCusQuoId() {
         String sql = "SELECT COUNT(*) AS TotalCustomerQuotation\n"
                 + "FROM [HouseSystem].[dbo].[CustomerQuotation];";
@@ -616,7 +617,7 @@ public class QuotationDAO {
             return -1; // Trả về một giá trị không hợp lệ để biểu thị lỗi
         }
     }
-    
+
     public int getVersionId() {
         String sql = "SELECT COUNT(*) AS TotalQuoVersion\n"
                 + "FROM [HouseSystem].[dbo].[CusQuoVersion];";
@@ -638,7 +639,7 @@ public class QuotationDAO {
             return -1; // Trả về một giá trị không hợp lệ để biểu thị lỗi
         }
     }
-    
+
     public List<CustomerQuotation> getListCustomerQuotation(int userId) {
         List<CustomerQuotation> list = new ArrayList<>();
         String sql = "select * from CustomerQuotation where UsersID = ?";
@@ -685,7 +686,7 @@ public class QuotationDAO {
         }
         return list;
     }
-    
+
     public List<QuotationVersion> getListQuotationVersion(int cusQuoId) {
         List<QuotationVersion> list = new ArrayList<>();
         String sql = "select * from CusQuoVersion where CusQuoID = ?";
@@ -735,7 +736,7 @@ public class QuotationDAO {
         }
         return list;
     }
-    
+
     public List<CustomerHouseComponent> getListCustomerHouseComponentByVersionId(int versionId) {
         List<CustomerHouseComponent> list = new ArrayList<>();
         String sql = "Select * from CustomerHouseComponent chc join Component c on chc.ComponentID = c.ComponentID\n"
@@ -784,7 +785,7 @@ public class QuotationDAO {
         }
         return list;
     }
-    
+
     public QuotationVersion getCusQuoVersionById(int versionId) {
         QuotationVersion quotation = new QuotationVersion();
         String sql = "select * from CusQuoVersion where VersionID = ?";
@@ -832,57 +833,49 @@ public class QuotationDAO {
         }
         return null;
     }
-    
-    public boolean updateCustomerQuotationStatus(int cusQuoStatus ,int cusQuoId) {
+
+    public boolean updateCustomerQuotationStatus(int cusQuoStatus, int cusQuoId) {
         String sql = "UPDATE CustomerQuotation SET CusQuoStatus = ? WHERE CusQuoID = ?";
-        
+
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
-            
-            
+
             ps.setInt(1, cusQuoStatus);
             ps.setInt(2, cusQuoId);
-            
+
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
-            
+
         } catch (SQLException | NumberFormatException e) {
             e.printStackTrace();
         }
-        
+
         return false;
     }
-    
+
     public boolean updateCustomerQuotationVersionStatus(int versionStatus, int versionId) {
         String sql = "UPDATE CusQuoVersion SET CusQuoVersionStatus = ? WHERE VersionID = ?";
-        
+
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
-            
-            
+
             ps.setInt(1, versionStatus);
             ps.setInt(2, versionId);
-            
+
             int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
-            
+
         } catch (SQLException | NumberFormatException e) {
             e.printStackTrace();
         }
-        
+
         return false;
     }
-    
+
     public static void main(String[] args) {
         QuotationDAO dao = new QuotationDAO();
-        boolean check = dao.updateCustomerQuotationVersionStatus(1,1);
+        boolean check = dao.updateCustomerQuotationVersionStatus(1, 1);
         System.out.println(check);
     }
 
-    
-
-    
-
-    
-    
 }

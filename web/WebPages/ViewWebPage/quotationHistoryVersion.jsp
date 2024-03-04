@@ -3,6 +3,8 @@
     Created on : Jan 24, 2024, 11:54:53 PM
     Author     : ACER
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -134,7 +136,7 @@
                                         <tr>
                                             <td>${qv.versionId}</td>
                                             <td>${qv.date}</td>
-                                            <td>${qv.price}</td>
+                                            <td><fmt:formatNumber type="number" value="${qv.price}" pattern="#,###.##" /> VNĐ/m2</td>
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="" method="post">
                                                     <button class="btn btn-primary btn-sm trash" style="margin-right: 5px;" type="button" title="Xóa" onclick="confirmDelete(this)"

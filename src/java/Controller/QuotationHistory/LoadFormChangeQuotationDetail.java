@@ -80,7 +80,7 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
 
                 out.println("<div class=\"control-group\">\n"
                         + "    <h5>Nhập " + houseComponent.getComponent() + "</h5>\n"
-                        + "    <input type=\"number\" class=\"form-control\"  name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng\"\n"
+                        + "    <input type=\"number\" class=\"form-control\"  name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m)\"\n"
                         + "           value=\"" + xValue + "\"\n"
                         + "           required=\"required\"\n"
                         + "           data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
