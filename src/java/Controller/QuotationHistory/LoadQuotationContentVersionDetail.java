@@ -38,6 +38,7 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            
             int selectedHouseType = Integer.parseInt(request.getParameter("houseType"));
             int selectedService = Integer.parseInt(request.getParameter("service"));
             int selectedStyle = Integer.parseInt(request.getParameter("style"));
@@ -55,10 +56,9 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
             double backYard = (request.getParameter("4") != null && !request.getParameter("4").isEmpty()) ? Double.parseDouble(request.getParameter("4")) : 0;
             int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
             int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
-            int floor = (request.getParameter("5") != null && !request.getParameter("5").isEmpty()) ? Integer.parseInt(request.getParameter("5")) : 0;
+            double floor = (request.getParameter("5") != null && !request.getParameter("5").isEmpty()) ? Double.parseDouble(request.getParameter("5")) : 0;
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
             double balcony = (request.getParameter("6") != null && !request.getParameter("6").isEmpty()) ? Double.parseDouble(request.getParameter("6")) : 0;
-            
             double price = 0;
             double S = length * width;
             double s = (length - frontYard - backYard) * width;

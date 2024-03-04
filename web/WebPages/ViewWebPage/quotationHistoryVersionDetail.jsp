@@ -115,26 +115,31 @@
                 <h2>Báo giá chi tiết</h2>
             </div>
             <!-- Portfolio Start -->
+            
+            <!--display quotation-->        
+            
             <div class="portfolio">
-                <div class="container single-content wow fadeInUp">
+                
+                <div id="quotationContent" class="contact wow fadeInUp container contact-form">
+                
+                </div>
+                
+                <div class="contact wow fadeInUp container contact-form">
                     <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill" novalidate="novalidate">
                         <input type="hidden" id="packagePrice" name="packagePrice" value="${packagePrice}"/>
                         <input type="hidden" id="foundation" name="foundation" value="${foundation}"/>
                         <input type="hidden" id="roof" name="roof" value="${roof}"/>
-
+                        
                         <c:forEach items="${requestScope.listCustomerHouseComponent}" var="chc" varStatus="loop">
                             <input type="hidden" name="${loop.index + 1}" value="${chc.value}"/>
                         </c:forEach>
                         <input type="hidden" id="service" name="service" value="${selectedService}"/>    
                         <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
                         <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
+                        <input type="hidden" id="style" name="cusQuoId" value="${cusQuoId}"/>
                     </form>
                 </div>
             </div>
-            <!--display quotation-->        
-            <div id="quotationContent" class="contact wow fadeInUp container contact-form">
-                
-            </div>  
             <!-- Portfolio End -->
 
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
@@ -193,7 +198,7 @@
         <script>
             function loadFormQuotation() {
                 var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
-                    $("#formFill").find("input, select").each(function () {
+                    $("#formFill").find("input").each(function () {
                         formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
                     });
                 $.ajax({// Sửa thành $.ajax thay vì $ajax
@@ -209,6 +214,35 @@
                     }
                 });
             }
+        </script>
+        
+        <script>
+            $(document).ready(function () {
+                $('#formFill').submit(function (event) {
+                    event.preventDefault();
+
+
+
+                    var formData = {};
+                    $("#formFill").find("input").each(function () {
+                        formData[$(this).attr("name")] = $(this).val();
+                    });
+
+                    // Gửi dữ liệu đến servlet bằng AJAX
+                    $.ajax({
+                        url: '/SWP391/NewVersionQuotationContent',
+                        type: 'get',
+                        data: formData,
+                        success: function (data) {
+                            var quotationContent = document.getElementById("formFill");
+                            quotationContent.innerHTML += data;
+                        },
+                        error: function (xhr) {
+                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                        }
+                    });
+                });
+            });
         </script>
 
     </body>

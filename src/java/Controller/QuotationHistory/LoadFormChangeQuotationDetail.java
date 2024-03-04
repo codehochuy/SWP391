@@ -40,65 +40,94 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
             int selectedHouseType = Integer.parseInt(request.getParameter("houseType"));
             int selectedService = Integer.parseInt(request.getParameter("service"));
             int selectedStyle = Integer.parseInt(request.getParameter("style"));
+            int cusQuoId = Integer.parseInt(request.getParameter("cusQuoId"));
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
             QuotationDAO dao1 = new QuotationDAO();
             List<RoofNFoundation2> listFoundation = dao1.getFoundation();
             QuotationDAO dao2 = new QuotationDAO();
             List<RoofNFoundation2> listRoof = dao2.getRoof();
-            if (selectedService == 2){
-                out.println("<div class=\"control-group\">\n" +
-"                                        <h5>Chọn gói xây dựng</h5>\n" +
-"                                        <select name=\"packagePrice\" id=\"packagePrice\">\n" +
-"                                            <option value=\"1\">Gói tiết kiệm</option>\n" +
-"                                            <option value=\"2\">Gói VIP</option>\n" +
-"                                        </select>\n" +
-"                                        <p class=\"help-block text-danger\"></p>\n" +
-"                                    </div>");
+            QuotationDAO quotationDao = new QuotationDAO();
+            DTO.Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
+
+            int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
+            int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
+            int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
+            
+            double[] xValues = new double[listHouseComponent.size()];
+
+            for (int i = 1; i <= listHouseComponent.size(); i++) {
+                String iString = i + "";
+                double x = (request.getParameter(iString) != null && !request.getParameter(iString).isEmpty()) ? Double.parseDouble(request.getParameter(iString)) : 0;
+
+                // Lưu trữ giá trị x vào mảng hoặc danh sách tương ứng
+                xValues[i - 1] = x;
             }
-            for (HouseComponent houseComponent : listHouseComponent) {
+
+            if (selectedService == 2) {
                 out.println("<div class=\"control-group\">\n"
-                        + "                                        <h5>Nhập " + houseComponent.getComponent() + "</h5>\n"
-                        + "                                        <input type=\"number\" class=\"form-control\" name=\""+houseComponent.getComponentId()+"\" id=\""+houseComponent.getComponentId()+"\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng\"\n"
-                        + "                                               required=\"required\"\n"
-                        + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
-                        + "                                        <p class=\"help-block text-danger\"></p>\n"
-                        + "                                    </div>");
+                        + "    <h5>Chọn gói xây dựng</h5>\n"
+                        + "    <select name=\"packagePrice\" id=\"packagePrice\">\n"
+                        + "        <option value=\"1\"" + (packagePrice == 1 ? " selected" : "") + ">Gói tiết kiệm</option>\n"
+                        + "        <option value=\"2\"" + (packagePrice == 2 ? " selected" : "") + ">Gói VIP</option>\n"
+                        + "    </select>\n"
+                        + "    <p class=\"help-block text-danger\"></p>\n"
+                        + "</div>");
+            }
+            for (int i = 0; i < listHouseComponent.size(); i++) {
+                HouseComponent houseComponent = listHouseComponent.get(i);
+                double xValue = xValues[i];
+
+                out.println("<div class=\"control-group\">\n"
+                        + "    <h5>Nhập " + houseComponent.getComponent() + "</h5>\n"
+                        + "    <input type=\"number\" class=\"form-control\"  name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng\"\n"
+                        + "           value=\"" + xValue + "\"\n"
+                        + "           required=\"required\"\n"
+                        + "           data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
+                        + "    <p class=\"help-block text-danger\"></p>\n"
+                        + "</div>");
             }
 
             out.println("<div class=\"control-group\">\n"
                     + "    <h5>Chọn Móng</h5>\n"
-                    + "    <select name=\"foundation\" title=\"Chọn loại móng\" id=\"foundation\">\n");
+                    + "    <select name=\"foundationId\" title=\"Chọn loại móng\" id=\"foundation\">\n");
 
             for (RoofNFoundation2 f : listFoundation) {
-                out.println("    <option value=\"" + f.getRoofNFoundationId() + "\">" + f.getRoofNFoundationName() + " (Được tính bằng "+f.getAreaPercent()+"% diện tích xây dựng tầng trệt)</option>\n");
+                String selected = "";
+                if (f.getRoofNFoundationId() == foundationId) {
+                    selected = "selected";
+                }
+                out.println("    <option value=\"" + f.getRoofNFoundationId() + "\"" + selected + ">" + f.getRoofNFoundationName() + " (Được tính bằng " + f.getAreaPercent() + "% diện tích xây dựng tầng trệt)</option>\n");
             }
 
             out.println("    </select>\n"
                     + "    <p class=\"help-block text-danger\"></p>\n"
                     + "</div>");
-            
+
             out.println("<div class=\"control-group\">\n"
                     + "    <h5>Chọn Mái</h5>\n"
-                    + "    <select name=\"roof\" title=\"Chọn loại mái\" id=\"roof\">\n");
+                    + "    <select name=\"roofId\" title=\"Chọn loại mái\" id=\"roof\">\n");
 
             for (RoofNFoundation2 r : listRoof) {
-                out.println("    <option value=\"" + r.getRoofNFoundationId() + "\">" + r.getRoofNFoundationName() + " (Được tính bằng "+r.getAreaPercent()+"% diện tích xây dựng tầng trệt)</option>\n");
+                String selected = "";
+                if (r.getRoofNFoundationId() == roofId) {
+                    selected = "selected";
+                }
+                out.println("    <option value=\"" + r.getRoofNFoundationId() + "\"" + selected + ">" + r.getRoofNFoundationName() + " (Được tính bằng " + r.getAreaPercent() + "% diện tích xây dựng tầng trệt)</option>\n");
             }
 
             out.println("    </select>\n"
                     + "    <p class=\"help-block text-danger\"></p>\n"
                     + "</div>");
-            
-            out.println("<input type=\"hidden\" id=\"service\" name=\"service\" value=\""+selectedService+"\"/>");
-            out.println("<input type=\"hidden\" id=\"houseType\" name=\"houseType\" value=\""+selectedHouseType+"\"/>");
-            out.println("<input type=\"hidden\" id=\"style\" name=\"style\" value=\""+selectedStyle+"\"/>");
-            
-            out.println("<div>\n"
-                    + "                                        <button class=\"btn\" type=\"submit\" id=\"sendMessageButton\">Nhận Báo Giá</button>\n"
-                    + "                                    </div>");
-            
-            
+
+            out.println("<input type=\"hidden\" id=\"service\" name=\"service\" value=\"" + selectedService + "\"/>");
+            out.println("<input type=\"hidden\" id=\"houseType\" name=\"houseType\" value=\"" + selectedHouseType + "\"/>");
+            out.println("<input type=\"hidden\" id=\"style\" name=\"style\" value=\"" + selectedStyle + "\"/>");
+            out.println("<input type=\"hidden\" id=\"style\" name=\"cusQuoId\" value=\"" + cusQuoId + "\"/>");
+            out.println("<div class=\"contact-form\">\n" +
+"                            <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\"  >Lưu báo giá</button>\n" +
+"                        </div>");
+
         }
     }
 
