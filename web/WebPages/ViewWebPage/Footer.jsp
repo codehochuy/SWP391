@@ -33,19 +33,20 @@
                     <div class="col-md-6 col-lg-3">
                         <div class="footer-link">
                             <h2>Dịch Vụ</h2>
-                            <a href="">Xây Nhà Trọn Gói</a>
-                            <a href="">Xây Nhà Hoàn Thiện</a>
-                            <a href="">Xây Nhà Phần Thô</a>
+                            <a href="FullContructionPrice">Xây Nhà Trọn Gói</a>
+                            <a href="RawContructionPrice">Xây Nhà Phần Thô</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="footer-link">
                             <h2>Thông Tin Hữu Ích</h2>
-                            <a href="">Giới Thiệu</a>
-                            <a href="">Bảng Giá</a>
-                            <a href="">Dự Án</a>
-                            <a href="">Tin Tức</a>
-                            <a href="">Liên Hệ</a>
+                            <a href="About">Giới Thiệu</a>
+                            <a href="Service">Dịch Vụ</a>
+                            <a href="Team">Đội Ngũ Nhân Sự</a>
+                            <a href="Project">Dự Án</a>
+                            <a href="Blog">Tin Tức</a>
+                            <a href="Contact">Liên Hệ</a>
+                            <a href="Quotation">Báo Giá</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">

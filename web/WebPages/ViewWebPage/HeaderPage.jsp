@@ -88,20 +88,12 @@
                             <a href="Service" class="nav-item nav-link">Dịch vụ</a>
                             <a href="Team" class="nav-item nav-link">Đội ngũ nhân sự</a>
                             <a href="Project" class="nav-item nav-link">Dự án</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tin tức</a>
-                                <div class="dropdown-menu">
-                                    <a href="Blog" class="dropdown-item">Trang tin tức</a>
-<!--                                    <a href="single.jsp" class="dropdown-item">Single Page</a>-->
-                                </div>
-                            </div>
+                            <a href="Blog" class="nav-link nav-link">Tin tức</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Bảng giá</a>
                                 <div class="dropdown-menu">
                                     <a href="FullContructionPrice" class="dropdown-item">Bảng Giá Xây Nhà Trọn
                                         Gói</a>
-                                    <a href="CompleteContructionPrice" class="dropdown-item">Bảng Giá Xây Nhà
-                                        Hoàn Thiện</a>
                                     <a href="RawContructionPrice" class="dropdown-item">Bảng Giá Xây Nhà Phần
                                         Thô</a>
                                 </div>
@@ -146,7 +138,11 @@
             });
         </script>
 
-
+        <script src="https://tudongchat.com/js/chatbox.js"></script>
+        <script>
+            const tudong_chatbox = new TuDongChat('78jWmMQUwETtYhrcgI9h5')
+            tudong_chatbox.initial()
+        </script>
     </body>
 
 </html>

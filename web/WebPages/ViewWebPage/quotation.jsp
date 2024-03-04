@@ -105,7 +105,7 @@
                         </div>
 
 
-
+                        
                         <!--Raw contruction-->
                         <div class="col-md-6 rawContruction">
                             <div class="contact-form">
@@ -119,6 +119,7 @@
                     </div>
                 </div>
             </div>
+            
             <!-- Quotation End -->
             <div class="contact wow fadeInUp container">
                 <form action="SaveQuotationContent" id="quotationContent" method="post" name="sentMessage" novalidate="novalidate">

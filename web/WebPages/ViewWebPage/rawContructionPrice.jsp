@@ -90,6 +90,12 @@
             #toggle-contents {
                 margin-bottom: 10px;
             }
+            .centered {
+                display: flex;
+                justify-content: center; /* căn giữa theo chiều ngang */
+                align-items: center; /* căn giữa theo chiều dọc */
+                padding: 20px;
+            }
         </style>
     </head>
     <body>
@@ -138,9 +144,12 @@
                             <section id="section-1">
                                 <div class="single-content wow fadeInUp">
                                     <h3>1. Vậy xây dựng phần thô là gì?</h3>
+                                    <div class="centered">
+                                        <img src="WebPages/ViewWebPage/img/quotation-raw-1.jpg" alt="Quptation Image">
+                                    </div>
                                     <p>Xây dựng phần thô được hiểu là việc thi công định hình phần khung sườn cho ngôi nhà bao gồm phần móng và bể ngầm; Các hệ thống kết cấu chịu lực (như cột, dầm, khung, sàn, bê tông,…); Phần cầu thang; Bản và bậc; Hệ thống tường bao che, ngăn phòng…vv.</p>
                                     <p>Đây là giai đoạn hết sức quan trọng bởi nó quyết định đến độ an toàn, chắc chắn của công trình. Phần thô càng tốt, càng chuẩn, chính xác thì những phần thi công sau này càng thuận lợi như tiết kiệm thời gian và chi phí, hạn chế tối đa những ảnh hưởng đến chất lượng công trình.</p>
-                                    <img src="WebPages/ViewWebPage/img/quotation-raw-1.jpg" alt="Quptation Image">
+                                    
                                     <p>Bảng giá xây dựng phần thô được TITAN cung cấp dưới đây sẽ giúp quý khách hàng có thể ước lượng được chi phí xây dựng phần thô, xây tổ ấm của mình một cách dễ dàng, nhanh chóng. Bảng giá được chia làm 3 hạng mục công trình cơ bản:</p>
                                     <ul>
                                         <li><strong>Công trình nhà phố hiện đại</strong>: Giá thi công phần thô giao động từ <strong>3.400.000 đ/m2</strong> đến <strong>3.600.000 đ/m2</strong>.</li>
@@ -271,6 +280,9 @@
                             <section id="section-2">
                                 <div class="single-content wow fadeInUp">
                                     <h3>2. Ưu và nhược điểm của dịch vụ xây dựng phần thô</h3>
+                                    <div class="centered">
+                                        <img src="WebPages/ViewWebPage/img/thi-cong-cot-pha.jpg" alt="Quotation Image">
+                                    </div>
                                     <p><strong>Ưu điểm: </strong></p>
                                     <ul>
                                         <li>Chủ đầu tư có thể chủ động lựa chọn loại vật liệu hoàn thiện cũng như nguồn cung cấp mà mình mong muốn mà không phụ thuộc vào nhà thầu. Việc này đòi hỏi chủ đầu tư phải biết cách lựa chọn thương hiệu, cân nhắc giá, chất lượng vật liệu và cung cấp kịp thời cho công trình (Tiêu chí này nếu không phải bạn có làm công việc liên quan về vật tư hoàn thiện thì rất khó để bạn có kinh nghiệm và nắm bắt được giá cả cũng như chất lượng vật tư).</li>
@@ -287,6 +299,9 @@
                             <section id="section-3">
                                 <div class="single-content wow fadeInUp">
                                     <h3>3. Một số hạng mục công việc kèm theo báo giá xây dựng phần thô 2024</h3>
+                                    <div class="centered">
+                                        <img src="WebPages/ViewWebPage/img/thi-cong-phan-tho-nha-pho.jpg" alt="Quotation Image">
+                                    </div>
                                     <p><strong>Phần xây dựng phần thô (TITAN cung cấp vật liệu và nhân công)</strong></p>
                                     <ul>
                                         <li>Tổ chức dọn dẹp mặt bằng công trường, làm lán trại cho công nhân (nếu mặt bằng thi công cho phép).</li>
@@ -314,20 +329,15 @@
                                 <div class="single-content wow fadeInUp">
                                     <h3>4. Cách tính diện tích xây dựng phần thô 2024</h3>
                                     <ul>
-                                        <li>Phần móng băng: Tính 50% diện tích đất.</li>
-                                        <li>Phần móng cọc: Tính 30% – 50% diện tích đất.</li>
+                                        <li>Phần móng đơn: Tính 30% diện tích đất.</li>
+                                        <li>Phần móng ép cọc: Tính 50% diện tích đất.</li>
+                                        <li>Phần móng băng: Tính 70% diện tích đất.</li>
                                         <li>Tầng trệt: Tính 100% diện tích xây dựng tầng trệt.</li>
                                         <li>Tầng, lầu 1, 2, 3…: Tính 100% diện tích tầng, lầu 1, 2, 3,…</li>
                                         <li>Tầng mái bê tông cốt thép, sân thượng: Tính 50% diện tích xây dựng diện tích mái, sân thượng.</li>
-                                        <li>Mái tôn: tính 30% diện tích xây dựng mái (Bao gồm tôn + xà gồ).</li>
-                                        <li>Mái xà gồ lợp ngói tính 50% diện tích xây dựng mái (Bao gồm ngói lợp + xà gồ).</li>
-                                        <li>Mái bê tông xà gồ lợp ngói tính 100% diện tích xây dựng mái (Bao gồm ngói lợp + xà gồ).</li>
-                                        <li>Phần diện tích có mái che: tính 100% diện tích (mặt bằng trệt, lửng, lầu, sân thượng có mái che).</li>
-                                        <li>Phần diện tích không có mái che, ngoại trừ sân trước và sân sau: tính 50% diện tích (sân thượng không mái che, sân phơi, mái BTCT, lam BTCT).</li>
-                                        <li>Tầng hầm có độ sâu từ 1.0 đến 1.3 m so với code vỉa hè: tính 150% diện tích sàn tầng trệt.</li>
-                                        <li>Tầng hầm có độ sâu từ 1.3 đến 1.7 m so với code vỉa hè: tính 170% diện tích sàn tầng trệt.</li>
-                                        <li>Tầng hầm có độ sâu từ 1.7 đến 2 m so với code vỉa hè: tính 200% diện tích sàn tầng trệt.</li>
-                                        <li>Tầng hầm có độ sâu lớn hơn 2.0 m so với code vỉa hè: tính 250% diện tích sàn tầng trệt.</li>
+                                        <li>Mái bằng, đúc : tính 30% diện tích xây dựng mái (Bao gồm tôn + xà gồ).</li>
+                                        <li>Mái kèo thép lợp ngói: tính 60% diện tích xây dựng tầng trệt</li>
+                                        <li>Mái thái: tính 80% diện tích xây dựng tầng trệt</li>
                                     </ul>
                                     <p><strong>Lưu ý:</strong></p>
                                     <ul>
@@ -359,7 +369,10 @@
                             <section id="section-6">
                                 <div class="single-content wow fadeInUp">
                                     <h3>6. Một số lưu ý về thi công, báo giá xây dựng nhà phần thô 2024</h3>
-                                    <img src="WebPages/ViewWebPage/img/quotation-raw-2.png" alt="Quotation Image">
+                                    <div class="centered">
+                                        <img src="WebPages/ViewWebPage/img/quotation-raw-2.png" alt="Quotation Image">
+                                    </div>
+                                    
                                     <p><strong>Xây nhà phần thô</strong> quyết định trực tiếp đến chất lượng công trình, cho nên việc lựa chọn một công ty xây dựng uy tín, chuyên nghiệp để <strong>đảm bảo xây dựng ngôi nhà</strong> chắc chắn và đẹp đồng thời lên dự toán chính xác chi phí xây dựng, cũng như hạn chế tối đa phát sinh chi phí, là những vấn đề quý khách hàng cần lưu ý ngoài ra những vấn đề ảnh hưởng trực tiếp đến đơn giá thi công.</p>
                                     <p><strong>Quy mô công trình nào được áp dụng đơn giá trên theo m2?</strong></p>
                                     <ul>
@@ -389,7 +402,10 @@
                             <section id="section-7">
                                 <div class="single-content wow fadeInUp">
                                     <h3>7. Quy trình thi công xây dựng phần thô TITAN</h3>
-                                    <img src="WebPages/ViewWebPage/img/quotation-raw-3.jpg" alt="Quotation Image">
+                                    <div class="centered">
+                                        <img src="WebPages/ViewWebPage/img/quotation-raw-3.jpg" alt="Quotation Image">
+                                    </div>
+                                    
                                     <p><strong>Là một trong những đơn vị thi công các công trình biệt thự, nhà phố,… TITAN xin gửi lời cảm ơn sâu sắc tới quý khách hàng đã tin tưởng hợp tác cũng như đồng hành cùng công ty trong thời gian qua. Chúng tôi luôn tuân thủ quy trình rõ ràng, chuẩn mực khi làm việc với khách hàng, cụ thể:</strong></p>
                                     <ul>
                                         <li>Tiếp nhận thông tin của khách hàng về nhu cầu xây dựng, vị trí, diện tích, chi phí đầu tư tương ứng,…</li>
