@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controller.Contact;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -14,13 +10,11 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
-/**
- *
- * @author ACER
- */
 public class Mail {
-    public static void sendMail(String recepient, String passWord) throws MessagingException {
+
+    public static void sendMail(String recepient, String emailContent) throws MessagingException, UnsupportedEncodingException {
         System.out.println("Prepare to send");
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");
@@ -39,7 +33,7 @@ public class Mail {
         });
 
         try {
-            Message message = prepareMessage(session, myAccount, recepient, passWord);
+            Message message = prepareMessage(session, myAccount, recepient, emailContent);
             Transport.send(message);
             System.out.println("Message sent successfully");
         } catch (MessagingException ex) {
@@ -49,25 +43,27 @@ public class Mail {
         }
     }
 
-    private static Message prepareMessage(Session session, String myAccount, String recepient, String passWord) throws MessagingException {
+    private static Message prepareMessage(Session session, String myAccount, String recepient, String emailContent) throws MessagingException, UnsupportedEncodingException {
         try {
             Message msg = new MimeMessage(session);
-
             msg.setFrom(new InternetAddress(myAccount));
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recepient));
-            msg.setSubject("TiTan Land");
-            String htmlBody = "<html><body>"
-                    + "<h1>Welcome to TiTan Land!</h1>"
-                    + "</body></html>";
 
-            msg.setContent(htmlBody, "text/html");
+            // Encode subject with UTF-8
+            msg.setSubject(MimeUtility.encodeText("TiTan Land", "UTF-8", "B"));
+
+            // Set content type to ensure proper UTF-8 encoding
+            msg.setContent(emailContent, "text/plain; charset=UTF-8");
+
             return msg;
-
         } catch (MessagingException ex) {
             // Handle the exception or rethrow it
             System.out.println("Error preparing message: " + ex.getMessage());
             throw ex;
+        } catch (UnsupportedEncodingException ex) {
+            // Handle the exception or rethrow it
+            System.out.println("Error encoding message: " + ex.getMessage());
+            throw ex;
         }
     }
-    
 }

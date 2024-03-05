@@ -73,11 +73,13 @@ public class SendContent extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String subject = request.getParameter("subject");
+        String message = request.getParameter("message");
         try {
-            String name = request.getParameter("name");
-            String email = request.getParameter("email");
-            String subject = request.getParameter("subject");
-            String message = request.getParameter("message");
+
             String emailContent = "Chào " + name + ",\n\n";
             emailContent += "Xin chân thành cảm ơn Anh/Chị đã liên hệ với chúng tôi tại Công ty Xây dựng. Chúng tôi rất vui được hỗ trợ Anh/Chị trong các dự án xây dựng của mình.\n\n";
             emailContent += "Thông tin chi tiết về dự án của Anh/Chị:\n";
@@ -92,7 +94,8 @@ public class SendContent extends HttpServlet {
             emailContent += "\nChúng tôi rất mong được hợp tác cùng Anh/Chị và xây dựng thành công dự án của mình.\n\n";
             emailContent += "Trân trọng,\n[Tên của bạn]\n[Công ty Xây dựng]";
             response.sendRedirect("Contact");
-            Mail.sendMail(email, emailContent); // Change recipient email address
+            Mail sendMail = new Mail();
+            sendMail.sendMail(email, emailContent); // Change recipient email address
             response.getWriter().println("Email sent successfully!");
         } catch (MessagingException e) {
             response.getWriter().println("Error sending email: " + e.getMessage());
