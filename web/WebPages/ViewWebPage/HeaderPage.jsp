@@ -103,7 +103,7 @@
                         </div>
                         <c:if test="${empty sessionScope.USER}">
                             <div class="ml-auto">
-                                <a class="btn" href="../../Login.jsp">Đăng nhập</a>
+                                <a class="btn" href="LoginServlet">Đăng nhập</a>
                             </div>
                         </c:if>
                         <c:if test="${not empty sessionScope.USER}">
@@ -137,12 +137,28 @@
                 });
             });
         </script>
+        <!-- Include trang JSP -->
 
+        <jsp:include page="../../PluginChatMess.jsp"/>
+
+
+        <!-- Script của plugin chat -->
         <script src="https://tudongchat.com/js/chatbox.js"></script>
         <script>
-            const tudong_chatbox = new TuDongChat('78jWmMQUwETtYhrcgI9h5')
-            tudong_chatbox.initial()
+            const tudong_chatbox = new TuDongChat('78jWmMQUwETtYhrcgI9h5');
+            tudong_chatbox.initial();
         </script>
-    </body>
+
+        <!-- CSS để điều chỉnh vị trí của icon -->
+        <style>
+            /* Đặt icon chat lên trên 50px so với đáy của trang */
+            .tudong-chat-icon.svelte-3x3xt4.svelte-3x3xt4 {
+                position: fixed;
+                bottom: 50px; /* Điều chỉnh khoảng cách từ đáy của trang lên icon chat */
+                right: 0;
+                z-index: 1000; /* Đảm bảo icon chat hiển thị trên các phần tử khác */
+            }
+        </style>
+
 
 </html>
