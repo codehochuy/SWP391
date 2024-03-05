@@ -57,7 +57,7 @@
                             <h2>Hồ Sơ</h2>
                         </div>
                         <div class="col-12">
-                            <a href="index.jsp">Trang Chủ</a>
+                            <a href="index">Trang Chủ</a>
                             <a href="">Hồ Sơ</a>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                                 <div class="mb-0" style="padding-left: 15px;"> 
                                     <a href="Profile" class="d-flex">Hồ sơ</a>
                                     <a href="ChangePassword" class="d-flex">Đổi mật khẩu</a>
-                                    <a href="BoughtOrder" class="d-flex">Lịch sử báo giá</a>
+                                    <a href="QuotationHistory" class="d-flex">Lịch sử báo giá</a>
                                 </div>
                             </div>
 

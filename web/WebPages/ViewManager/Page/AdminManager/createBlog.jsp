@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-
-
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
 
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://cdn.tiny.cloud/1/n0rfd22a3z32jtupppuha019duk0huf5saykqwysdh0xkz3s/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: '#mytextarea'
+            });
+        </script>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Main CSS-->
@@ -30,42 +34,166 @@
         <!-- Lightbox JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox.min.js"></script>
 
-
     </head>
+
     <body onload="time()" class="app sidebar-mini rtl">
         <jsp:include page="../../Page/Header/headerAdmin.jsp"/>
         <main class="app-content">
             <div class="app-title">
                 <ul class="app-breadcrumb breadcrumb">
-                    <li class="breadcrumb-item"><a href="ManagerProject">Quản lý Blog</a></li>
-                    <li class="breadcrumb-item"><a href="">Create Blog</a></li>
+                    <li class="breadcrumb-item"><a href="ManagerBlog">Quản lý Blog</a></li>
+                    <li class="breadcrumb-item"><a href="">Tạo Blog</a></li>
                 </ul>
             </div>
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="tile">
-                        <h1 class="tile-title">Create Blog</h1>
+                        <h1 class="tile-title">Tạo Blog</h1>
                         <div class="tile-body">
 
 
                             <div class="form-group col-md-12" style="display: none;">
-                                <label class="control-label">blogID</label>
-                                <input class="form-control" type="text" id="blogID" value ="1"  readonly="true" required ><br>
-
-                            </div>
-
-
-                            <div class="form-group col-md-12">
-                                <label class="control-label">Main Title</label>
-                                <input class="form-control" type="text" id="title" name="title" required >
-
-                            </div>
-
-                            <div class="form-group col-md-12">
-                                <label class="control-label">Date</label>
+                                <label class="control-label">Ngày tạo</label>
                                 <input class="form-control" type="date" id="date" name="date" readonly="true" required><br>
-
                             </div>
+
+
+
+
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Loại tin tức</label>
+                                <select class="form-control" id="blogCategory" name="blogCategory" required>
+                                    <option value="" disabled selected>Lựa chọn loại tin tức</option>
+<!--                                    <option value="newCategory">Thêm một loại tin tức mới</option>-->
+                                    <c:forEach var="category" items="${categoryList}">
+                                        <option value="${category}">${category}</option>
+                                    </c:forEach>
+                                </select>
+
+                                <div id="newCategoryInput" style="display: none;">
+                                    <label class="control-label">Nhập loại tin tức mới</label>
+                                    <input class="form-control" type="text" id="newCategoryValue" name="newCategoryValue">
+                                </div>
+                            </div>
+
+                            <!-- Your HTML code -->
+                            <script>
+                                document.getElementById('blogCategory').addEventListener('change', function () {
+                                    var selectedValue = this.value;
+                                    var newCategoryInput = document.getElementById('newCategoryInput');
+
+                                    if (selectedValue === 'newCategory') {
+                                        newCategoryInput.style.display = 'block';
+
+                                        // Add event listener to newCategoryValue input field
+                                        document.getElementById('newCategoryValue').addEventListener('blur', confirmCreateNewCategory);
+                                    } else {
+                                        newCategoryInput.style.display = 'none';
+                                    }
+                                });
+
+                                function confirmCreateNewCategory() {
+                                    var newCategoryValue = document.getElementById('newCategoryValue').value;
+
+                                    Swal.fire({
+                                        title: 'Bạn có muốn tạo loại tin tức mới này?',
+                                        icon: 'question',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'OK',
+                                        cancelButtonText: 'Huỷ bỏ'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // User clicked OK, send the data to the servlet using AJAX
+                                            var xhttp = new XMLHttpRequest();
+                                            xhttp.onreadystatechange = function () {
+                                                if (this.readyState == 4) {
+                                                    if (this.status == 200) {
+                                                        // Handle the response from the servlet if needed
+                                                        // For example, you can display a success message
+                                                        Swal.fire('Tạo loại tin tức mới thành công!', '', 'success');
+
+                                                        // Update the select element with the new category
+                                                        var categoryList = JSON.parse(this.responseText);
+                                                        updateCategorySelect(categoryList);
+
+                                                        // Hide the newCategoryInput div
+                                                        document.getElementById('newCategoryInput').style.display = 'none';
+
+                                                        // Reset the value in the input field
+                                                        document.getElementById('newCategoryValue').value = '';
+                                                        // Reset the selected option
+                                                        document.getElementById('blogCategory').value = '';
+                                                    } else {
+                                                        // Handle errors if the request was not successful
+                                                        Swal.fire('Lỗi khi tạo loại tin tức mới!', '', 'error');
+                                                    }
+                                                }
+                                            };
+
+                                            xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlogCategory", true);
+                                            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                            xhttp.send("blogCategory=" + encodeURIComponent(newCategoryValue));
+                                        } else {
+                                            // User clicked "Huỷ bỏ," hide the input field
+                                            document.getElementById('newCategoryInput').style.display = 'none';
+                                            // Reset the value in the input field
+                                            document.getElementById('newCategoryValue').value = '';
+                                            // Reset the selected option
+                                            document.getElementById('blogCategory').value = '';
+                                        }
+                                    });
+                                }
+
+
+                                function updateCategorySelect(categoryList) {
+                                    var selectElement = document.getElementById('blogCategory');
+
+                                    // Clear existing options
+                                    selectElement.innerHTML = '';
+
+                                    // Add default option
+                                    var defaultOption = document.createElement('option');
+                                    defaultOption.value = '';
+                                    defaultOption.disabled = true;
+                                    defaultOption.selected = true;
+                                    defaultOption.textContent = 'Lựa chọn loại tin tức';
+                                    selectElement.appendChild(defaultOption);
+
+                                    // Add new category option
+                                    var newCategoryOption = document.createElement('option');
+                                    newCategoryOption.value = newCategoryValue;
+                                    newCategoryOption.textContent = newCategoryValue;
+                                    selectElement.appendChild(newCategoryOption);
+
+                                    // Add existing categories from the response
+                                    categoryList.forEach(function (category) {
+                                        var option = document.createElement('option');
+                                        option.value = category;
+                                        option.textContent = category;
+                                        selectElement.appendChild(option);
+                                    });
+                                }
+                            </script>
+
+
+                            <!-- Rest of your HTML code -->
+
+
+
+
+
+
+
+                            <div class="form-group col-md-12">
+                                <label class="control-label">Tiêu đề</label>
+                                <input class="form-control" type="text" id="title" name="title" required><br>
+                            </div>
+
+
+
                             <script>
                                 // Lấy ngày hiện tại
                                 var today = new Date();
@@ -81,29 +209,18 @@
                                 document.getElementById('date').value = today;
                             </script>
 
-                            <div class="form-group col-md-12" style="display: none;">
-                                <label class="control-label">User ID</label>
-                                <input class="form-control" type="text" id="userID" name="userID" value="<%= request.getAttribute("USERID")%>" required><br>
-                            </div>
+                            <textarea id="mytextarea"></textarea>
 
-
-
-
-                            <div id="blogDetail">
-                                <a class="btn btn-add btn-sm"  title="Add Detail" onclick="addBlogDetail()">
-                                    <i class="fas fa-plus"></i> Add Detail
-                                </a>
-
-                            </div><br>
-                            <input class="btn btn-save" type="button" value="Create Blog" onclick="createBlog()">
-
-                            <a class="btn btn-cancel" href="ManagerBlog">Hủy bỏ</a>
                         </div>
+
                     </div>
+
                 </div>
             </div>
-        </main>
 
+            <button class="btn btn-save" onclick="createBlog()">Tạo Blog</button>
+            <a class="btn btn-cancel" href="ManagerBlog">Hủy bỏ</a>
+        </main>
 
 
 
@@ -124,347 +241,117 @@
 
 
         <script type="text/javascript">
-                                $('#sampleTable').DataTable();
-                                //Thời Gian
-                                function time() {
-                                    var today = new Date();
-                                    var weekday = new Array(7);
-                                    weekday[0] = "Chủ Nhật";
-                                    weekday[1] = "Thứ Hai";
-                                    weekday[2] = "Thứ Ba";
-                                    weekday[3] = "Thứ Tư";
-                                    weekday[4] = "Thứ Năm";
-                                    weekday[5] = "Thứ Sáu";
-                                    weekday[6] = "Thứ Bảy";
-                                    var day = weekday[today.getDay()];
-                                    var dd = today.getDate();
-                                    var mm = today.getMonth() + 1;
-                                    var yyyy = today.getFullYear();
-                                    var h = today.getHours();
-                                    var m = today.getMinutes();
-                                    var s = today.getSeconds();
-                                    m = checkTime(m);
-                                    s = checkTime(s);
-                                    nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                    if (dd < 10) {
-                                        dd = '0' + dd
-                                    }
-                                    if (mm < 10) {
-                                        mm = '0' + mm
-                                    }
-                                    today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                    tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                            '</span>';
-                                    document.getElementById("clock").innerHTML = tmp;
-                                    clocktime = setTimeout("time()", "1000", "Javascript");
-
-                                    function checkTime(i) {
-                                        if (i < 10) {
-                                            i = "0" + i;
-                                        }
-                                        return i;
-                                    }
-                                }
-        </script>
-
-        <script>
-            // Khai báo biến toàn cục để lưu trữ giá trị BlogDetailID
-            var blogDetailID_parent = 0;
-            var blogImageID_child = 0;
-
-            function addBlogDetail() {
-                var detailDiv = document.getElementById("blogDetail");
-                var div = document.createElement("div");
-
-                var inputElements = detailDiv.querySelectorAll('input[name="blog_detail_id_parent[]"]');
-                var numberOfInputs = inputElements.length;
-
-                // Tăng giá trị của blogDetailID_parent bằng số lượng input hiện có
-                blogDetailID_parent = numberOfInputs;
-
-                // Tạo phần tử input cho BlogDetailID và tăng giá trị
-                var inputBlogDetailID = document.createElement("input");
-                inputBlogDetailID.type = "text";
-                inputBlogDetailID.type = "hidden";
-                inputBlogDetailID.name = "blog_detail_id_parent[]";
-                inputBlogDetailID.value = ++blogDetailID_parent;
-                inputBlogDetailID.readOnly = true; // Ngăn người dùng chỉnh sửa giá trị
-                div.appendChild(inputBlogDetailID);
-
-                var inputTitle = document.createElement("input");
-                inputTitle.type = "text";
-                inputTitle.name = "title_detail[]";
-                inputTitle.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                inputTitle.placeholder = "Title";
-                div.appendChild(inputTitle);
-
-                var textareaContent = document.createElement("textarea");
-                textareaContent.type = "text";
-                textareaContent.name = "content_detail[]";
-                textareaContent.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                textareaContent.placeholder = "Content";
-                div.appendChild(textareaContent);
-
-
-                var inputBlogID = document.createElement("input"); // Khung chứa BlogID
-                inputBlogID.type = "text";
-                inputBlogID.type = "hidden";
-                inputBlogID.name = "blog_id[]";
-                inputBlogID.value = "1"; // Giá trị cố định là "1"
-                inputBlogID.readOnly = true; // Ngăn người dùng chỉnh sửa giá trị
-                div.appendChild(inputBlogID);
-
-
-                var addButton = document.createElement("button");
-                addButton.type = "button";
-                addButton.innerHTML = '<i class="fas fa-file-upload"></i> Add Image'; // Đặt nội dung HTML của button
-                addButton.className = "btn btn-delete btn-sm nhap-tu-file"; // Đặt lớp CSS của button   
-                addButton.onclick = function () {
-                    addBlogImage(div);
-                };
-                div.appendChild(addButton);
-
-                var deleteButton = document.createElement("button"); // Nút xóa chi tiết
-                deleteButton.type = "button";
-                deleteButton.innerText = "Delete Detail";
-//                    deleteButton.className = "btn btn-cancel"; // Đặt lớp CSS của button   
-                deleteButton.onclick = function () {
-                    detailDiv.removeChild(div); // Xóa chi tiết khi nút được nhấn
-                    reorderBlogDetailIDs(); // Sắp xếp lại thứ tự BlogDetailID
-                };
-                div.appendChild(deleteButton);
-
-                var br = document.createElement("br");
-                div.appendChild(br);
-
-                detailDiv.appendChild(div);
-            }
-
-            function reorderBlogDetailIDs() {
-                var detailDiv = document.getElementById("blogDetail");
-                var inputElements = detailDiv.querySelectorAll('input[name="blog_detail_id_parent[]"]');
-
-                // Cập nhật lại giá trị của từng inputBlogDetailID
-                inputElements.forEach(function (input, index) {
-                    input.value = index + 1;
-                });
-            }
-
-            function addBlogImage(parentDiv) {
-                var divContainer = document.createElement("div");
-
-                // Kiểm tra các inputBlogImageID đã tồn tại
-                var existingIDs = new Set();
-                var inputElements = parentDiv.querySelectorAll('input[name="blog_image_id_child[]"]');
-                inputElements.forEach(function (input) {
-                    existingIDs.add(parseInt(input.value)); // Thêm ID hiện có vào Set
-                });
-
-                // Tìm ID thấp nhất mà chưa được sử dụng
-                var newID = 1;
-                while (existingIDs.has(newID)) {
-                    newID++;
-                }
-
-                var inputBlogImageID = document.createElement("input");
-                inputBlogImageID.type = "text";
-                inputBlogImageID.type = "hidden";
-                inputBlogImageID.name = "blog_image_id_child[]";
-                inputBlogImageID.value = newID;
-                inputBlogImageID.readOnly = true;
-                divContainer.appendChild(inputBlogImageID);
-
-                var input = document.createElement("input");
-                input.type = "file";
-                input.name = "image_url[]";
-                input.accept = "image/jpeg";
-                divContainer.appendChild(input);
-
-                var Base64Input = document.createElement("input");
-                Base64Input.type = "text";
-                Base64Input.name = "base64_image[]";
-                Base64Input.value = "";
-                Base64Input.style.display = "none"; // Ẩn trường input
-                divContainer.appendChild(Base64Input);
-
-
-                var imgPreview = document.createElement("img");
-                imgPreview.style.maxWidth = "200px";
-                divContainer.appendChild(imgPreview);
-
-                parentDiv.appendChild(divContainer);
-
-                input.addEventListener('change', function () {
-                    var file = this.files[0];
-                    if (file) {
-                        var reader = new FileReader();
-                        reader.onload = function (event) {
-                            imgPreview.src = event.target.result;
-                            // Xử lý hình ảnh thành chuỗi base64
-                            var base64Image = event.target.result;
-                            Base64Input.value = base64Image;
-
-                        };
-                        reader.readAsDataURL(file);
+                $('#sampleTable').DataTable();
+                //Thời Gian
+                function time() {
+                    var today = new Date();
+                    var weekday = new Array(7);
+                    weekday[0] = "Chủ Nhật";
+                    weekday[1] = "Thứ Hai";
+                    weekday[2] = "Thứ Ba";
+                    weekday[3] = "Thứ Tư";
+                    weekday[4] = "Thứ Năm";
+                    weekday[5] = "Thứ Sáu";
+                    weekday[6] = "Thứ Bảy";
+                    var day = weekday[today.getDay()];
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1;
+                    var yyyy = today.getFullYear();
+                    var h = today.getHours();
+                    var m = today.getMinutes();
+                    var s = today.getSeconds();
+                    m = checkTime(m);
+                    s = checkTime(s);
+                    nowTime = h + " giờ " + m + " phút " + s + " giây";
+                    if (dd < 10) {
+                        dd = '0' + dd
                     }
-                });
+                    if (mm < 10) {
+                        mm = '0' + mm
+                    }
+                    today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                    tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                            '</span>';
+                    document.getElementById("clock").innerHTML = tmp;
+                    clocktime = setTimeout("time()", "1000", "Javascript");
 
-                var inputCaption = document.createElement("input");
-                inputCaption.type = "text";
-                inputCaption.name = "image_caption[]";
-                inputCaption.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                inputCaption.placeholder = "Caption";
-                divContainer.appendChild(inputCaption);
-                var inputDetailID = document.createElement("input");
-                inputDetailID.type = "text";
-                inputDetailID.type = "hidden";
-                inputDetailID.name = "blog_detail_id_child[]";
-                inputDetailID.value = parentDiv.querySelector('input[name="blog_detail_id_parent[]"]').value;
-                inputDetailID.readOnly = true;
-                divContainer.appendChild(inputDetailID);
-                var deleteImageButton = document.createElement("button");
-                deleteImageButton.type = "button";
-                deleteImageButton.innerText = "Delete Image";
-//                    deleteImageButton.className = "btn btn-delete btn-sm nhap-tu-file"; // Đặt lớp CSS của button   
-                deleteImageButton.onclick = function () {
-                    parentDiv.removeChild(divContainer);
-                    reorderBlogImageIDs(parentDiv);
-                };
-                divContainer.appendChild(deleteImageButton);
-            }
-
-            function reorderBlogImageIDs(parentDiv) {
-                var inputElements = parentDiv.querySelectorAll('input[name="blog_image_id_child[]"]');
-
-                var newID = 1;
-                inputElements.forEach(function (input) {
-                    input.value = newID++;
-                });
-            }
-
+                    function checkTime(i) {
+                        if (i < 10) {
+                            i = "0" + i;
+                        }
+                        return i;
+                    }
+                }
         </script>
 
         <script>
             function createBlog() {
-                // Blog
-                var blogID = document.getElementById("blogID").value;
-                var title = document.getElementById("title").value;
+                var title = encodeURIComponent(document.getElementById("title").value); // Mã hóa tiêu đề
+                var content = encodeURIComponent(tinymce.activeEditor.getContent()); // Mã hóa nội dung
                 var date = document.getElementById("date").value;
-                var userID = document.getElementById("userID").value;
+                var selectedCategory = document.getElementById("blogCategory").value;
 
-                // BlogDetail
-                var blogDetailIDParentInputs = document.getElementsByName("blog_detail_id_parent[]");
-                var titleDetailInputs = document.getElementsByName("title_detail[]");
-                var contentDetailInputs = document.getElementsByName("content_detail[]");
-
-                // Khởi tạo mảng để lưu trữ các giá trị từ các trường input
-                var blogDetailIDParents = [];
-                var titleDetails = [];
-                var contentDetails = [];
-
-                // Lặp qua tất cả các trường input để lấy giá trị từ chúng và thêm vào mảng
-                for (var i = 0; i < blogDetailIDParentInputs.length; i++) {
-                    blogDetailIDParents.push(blogDetailIDParentInputs[i].value);
-                    titleDetails.push(titleDetailInputs[i].value);
-                    contentDetails.push(contentDetailInputs[i].value);
+                if (selectedCategory === 'newCategory') {
+                    // If a new category is selected, use the value from the additional input field
+                    var newCategory = encodeURIComponent(document.getElementById("newCategoryValue").value);
+                    selectedCategory = newCategory;
                 }
 
-                //  ImageDetail
-                var blogImageIDChildInputs = document.getElementsByName("blog_image_id_child[]");
-                var base64ImageInputs = document.getElementsByName("base64_image[]");
-                var imageCaptionInputs = document.getElementsByName("image_caption[]");
-                var blogDetailIDChildInputs = document.getElementsByName("blog_detail_id_child[]");
-
-                // Khởi tạo mảng để lưu trữ các giá trị từ các trường input
-                var blog_image_id_child = [];
-                var base64_image = [];
-                var image_caption = [];
-                var blog_detail_id_child = [];
-
-                // Lặp qua tất cả các trường input để lấy giá trị từ chúng và thêm vào mảng
-                for (var i = 0; i < blogImageIDChildInputs.length; i++) {
-                    blog_image_id_child.push(blogImageIDChildInputs[i].value);
-                    base64_image.push(base64ImageInputs[i].value);
-                    image_caption.push(imageCaptionInputs[i].value);
-                    blog_detail_id_child.push(blogDetailIDChildInputs[i].value);
-                }
-
-
-                // Tạo một đối tượng XMLHttpRequest
                 var xhttp = new XMLHttpRequest();
-
-                // Xác định phương thức HTTP và URL của servlet
-                xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlog", true);
-
-                // Thiết lập header của yêu cầu
-                xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-
-
-                // Xử lý sự kiện khi nhận được phản hồi từ servlet
-//                xhttp.onreadystatechange = function () {
-//                    if (this.readyState == 4 && this.status == 200) {
-//                        // Xử lý phản hồi từ servlet nếu cần
-//                        console.log(this.responseText);
-//                    }
-//                };
-
-                // Gửi yêu cầu AJAX với các dữ liệu đã lấy được
-                var data = "blogID=" + blogID + "&title=" + title + "&date=" + date + "&userID=" + userID;
-                // Thêm các giá trị từ các mảng vào chuỗi dữ liệu
-                for (var i = 0; i < blogDetailIDParents.length; i++) {
-                    data += "&blog_detail_id_parent[]=" + blogDetailIDParents[i];
-                    data += "&title_detail[]=" + titleDetails[i];
-                    data += "&content_detail[]=" + contentDetails[i];
-                }
-
-                // Thêm các giá trị từ các mảng vào chuỗi dữ liệu
-                for (var i = 0; i < blog_image_id_child.length; i++) {
-                    data += "&blog_image_id_child[]=" + blog_image_id_child[i];
-                    data += "&base64_image[]=" + base64ImageInputs[i].value;
-                    data += "&image_caption[]=" + image_caption[i];
-                    data += "&blog_detail_id_child[]=" + blog_detail_id_child[i];
-                }
-
-                // Gửi yêu cầu AJAX với các dữ liệu đã lấy được
-                xhttp.send(data);
-                // Xử lý sự kiện khi nhận được phản hồi từ servlet
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         if (this.status == 200) {
-                            // Xử lý phản hồi từ servlet nếu cần
-                            console.log(this.responseText);
-                            // Hiển thị thông báo create thành công
-                            swal("Success!", "Create Blog success", "success")
-                                    // Sau khi thông báo hiển thị, tải lại trang
-                                    .then(() => {
-                                        window.location.reload(); // Tải lại trang
-                                    });
+                            // Sử dụng SweetAlert để hiển thị thông báo
+                            swal({
+                                title: "Tạo blog thành công",
+//                text: "Blog created successfully!",
+                                icon: "success",
+                                button: "OK",
+                            }).then((value) => {
+                                // Tải lại trang sau khi người dùng nhấp vào nút OK
+                                if (value) {
+                                    window.location.reload();
+                                }
+                            });
                         } else {
-                            // Xử lý khi có lỗi trong quá trình gửi yêu cầu AJAX
-                            // Hiển thị thông báo lỗi nếu cần
-                            swal("Error!", "Create Blog fail", "error");
+                            // Xử lý trường hợp lỗi
+                            swal({
+                                title: "Tạo blog thất bại",
+//                text: "Failed to create blog!",
+                                icon: "error",
+                                button: "OK",
+                            });
                         }
                     }
                 };
 
+                xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlog", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("content=" + content + "&title=" + title + "&date=" + date + "&category=" + selectedCategory);
             }
 
-
         </script>
 
-        <script>
-            <% if (request.getAttribute("messtrue") != null) {%>
-            swal("<%= request.getAttribute("messtrue")%>", "", "success");
+      <script>
+    <% if (request.getAttribute("messtrue") != null) {%>
+        swal({
+            title: "<%= request.getAttribute("messtrue")%>",
+            icon: "success",
+        }).then((value) => {
             <% request.removeAttribute("messtrue"); %>
-            <% } %>
-        </script>
-        <script>
-            <% if (request.getAttribute("messefalse") != null) {%>
-            swal("<%= request.getAttribute("messefalse")%>", "", "error");
+        });
+    <% } %>
+</script>
+      <script>
+    <% if (request.getAttribute("messefalse") != null) {%>
+        swal({
+            title: "<%= request.getAttribute("messefalse")%>",
+            icon: "error",
+        }).then((value) => {
             <% request.removeAttribute("messefalse"); %>
-            <% }%>
-        </script>
+        });
+    <% } %>
+</script>
 
     </body>
-
 </html>

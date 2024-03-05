@@ -22,7 +22,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-4 col-md-12">
                         <div class="logo">
-                            <a href="index.html">
+                            <a href="index">
                                 <h1>TITAN</h1>
                                 <!--<img src="img/Product1.jpg" alt="Logo">--> 
                             </a>
@@ -88,20 +88,12 @@
                             <a href="Service" class="nav-item nav-link">Dịch vụ</a>
                             <a href="Team" class="nav-item nav-link">Đội ngũ nhân sự</a>
                             <a href="Project" class="nav-item nav-link">Dự án</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tin tức</a>
-                                <div class="dropdown-menu">
-                                    <a href="Blog" class="dropdown-item">Blog Page</a>
-                                    <a href="single.jsp" class="dropdown-item">Single Page</a>
-                                </div>
-                            </div>
+                            <a href="Blog" class="nav-link nav-link">Tin tức</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Bảng giá</a>
                                 <div class="dropdown-menu">
                                     <a href="FullContructionPrice" class="dropdown-item">Bảng Giá Xây Nhà Trọn
                                         Gói</a>
-                                    <a href="CompleteContructionPrice" class="dropdown-item">Bảng Giá Xây Nhà
-                                        Hoàn Thiện</a>
                                     <a href="RawContructionPrice" class="dropdown-item">Bảng Giá Xây Nhà Phần
                                         Thô</a>
                                 </div>
@@ -120,7 +112,7 @@
                                         alt="avatar" src="./img/${sessionScope.USER.avatar}" width="50px"></a>
                                 <div class="dropdown-menu">
                                     <a href="Profile" class="dropdown-item">Hồ sơ</a>
-                                    <a href="#" class="dropdown-item">Lịch sử báo giá</a>
+                                    <a href="QuotationHistory" class="dropdown-item">Lịch sử báo giá</a>
                                     <a href="Logout" class="dropdown-item">Đăng xuất</a>
                                 </div>
                             </div>
@@ -146,7 +138,11 @@
             });
         </script>
 
-
+        <script src="https://tudongchat.com/js/chatbox.js"></script>
+        <script>
+            const tudong_chatbox = new TuDongChat('78jWmMQUwETtYhrcgI9h5')
+            tudong_chatbox.initial()
+        </script>
     </body>
 
 </html>

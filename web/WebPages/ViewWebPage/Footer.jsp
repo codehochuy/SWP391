@@ -8,31 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>TITAN - Dự Án Đã Thi Công</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="Construction Company Website Template" name="keywords">
-        <meta content="Construction Company Website Template" name="description">
-
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
-
-        <!-- Google Font -->
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
-              rel="stylesheet">
-
-        <!-- CSS Libraries -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
-        <link href="lib/animate/animate.min.css" rel="stylesheet">
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
-        <link href="lib/slick/slick.css" rel="stylesheet">
-        <link href="lib/slick/slick-theme.css" rel="stylesheet">
-
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
+        
     </head>
     <body>
         <!-- Footer Start -->
@@ -57,19 +33,20 @@
                     <div class="col-md-6 col-lg-3">
                         <div class="footer-link">
                             <h2>Dịch Vụ</h2>
-                            <a href="">Xây Nhà Trọn Gói</a>
-                            <a href="">Xây Nhà Hoàn Thiện</a>
-                            <a href="">Xây Nhà Phần Thô</a>
+                            <a href="FullContructionPrice">Xây Nhà Trọn Gói</a>
+                            <a href="RawContructionPrice">Xây Nhà Phần Thô</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">
                         <div class="footer-link">
                             <h2>Thông Tin Hữu Ích</h2>
-                            <a href="">Giới Thiệu</a>
-                            <a href="">Bảng Giá</a>
-                            <a href="">Dự Án</a>
-                            <a href="">Tin Tức</a>
-                            <a href="">Liên Hệ</a>
+                            <a href="About">Giới Thiệu</a>
+                            <a href="Service">Dịch Vụ</a>
+                            <a href="Team">Đội Ngũ Nhân Sự</a>
+                            <a href="Project">Dự Án</a>
+                            <a href="Blog">Tin Tức</a>
+                            <a href="Contact">Liên Hệ</a>
+                            <a href="Quotation">Báo Giá</a>
                         </div>
                     </div>
                     <div class="col-md-6 col-lg-3">

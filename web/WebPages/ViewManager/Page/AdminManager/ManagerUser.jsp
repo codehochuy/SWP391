@@ -42,7 +42,7 @@
                     <div class="tile">
                         <!--huycute-->
                         <div class="tile-body">
-                            <!--                            <div class="row element-button">
+<!--                                                        <div class="row element-button">
                                                             <div class="col-sm-2">
                             
                                                                 <a class="btn btn-add btn-sm" href="createProduct" title="Thêm"><i class="fas fa-plus"></i>

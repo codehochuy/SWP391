@@ -47,8 +47,8 @@
                         <h2>Dịch Vụ</h2>
                     </div>
                     <div class="col-12">
-                        <a href="index.html">Trang Chủ</a>
-                        <a href="service.html">Dịch Vụ</a>
+                        <a href="index">Trang Chủ</a>
+                        <a href="">Dịch Vụ</a>
                     </div>
                 </div>
             </div>

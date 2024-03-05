@@ -45,12 +45,17 @@
                             <div class="row element-button">
 
                                 <div class="col-sm-2">
-
                                     <a class="btn btn-add btn-sm" href="CreateBlog" title="Thêm">
                                         <i class="fas fa-plus"></i> Tạo Blog
                                     </a>
-
                                 </div>
+                                
+                                   <div class="col-sm-2">
+                                    <a class="btn btn-add btn-sm" href="ManagerBlogCategory" title="Các loại tin tức">
+                                        <i class="fas fa-plus"></i> Quản lý các loại tin tức
+                                    </a>
+                                </div>
+                                 
 
 
 
@@ -58,9 +63,12 @@
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Title</th>
-                                        <th>Date</th>
+                                        <th>ID bài viết</th>
+                                        <th>Tiêu đề</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Ngày sửa đổi</th>
+                                        <th>Loại tin tức</th>
+                                        <th>Người tạo</th>
                                         <th>Chức năng</th>
 
                                     </tr>
@@ -70,7 +78,11 @@
                                         <tr>
                                             <td>${blog.blogID}</td>
                                             <td>${blog.title}</td>
-                                            <td>${blog.date}</td>
+                                            <td>${blog.dateCreate}</td>
+                                            <td>${blog.dateModified}</td>
+                                          
+                                              <td>${blog.blogCategory.blogCategoryName}</td>
+                                                <td>${blog.user.name}</td>
                                             <td style="display: flex; justify-content: space-left">
 
                                                 <form action="DeleteBlog" method="Post">
@@ -179,18 +191,26 @@
         </script>
 
 
-        <script>
-            <% if (request.getAttribute("messtrue") != null) {%>
-            swal("<%= request.getAttribute("messtrue")%>", "", "success");
+      <script>
+    <% if (request.getAttribute("messtrue") != null) {%>
+        swal({
+            title: "<%= request.getAttribute("messtrue")%>",
+            icon: "success",
+        }).then((value) => {
             <% request.removeAttribute("messtrue"); %>
-            <% } %>
-        </script>
-        <script>
-            <% if (request.getAttribute("messefalse") != null) {%>
-            swal("<%= request.getAttribute("messefalse")%>", "", "error");
+        });
+    <% } %>
+</script>
+      <script>
+    <% if (request.getAttribute("messefalse") != null) {%>
+        swal({
+            title: "<%= request.getAttribute("messefalse")%>",
+            icon: "error",
+        }).then((value) => {
             <% request.removeAttribute("messefalse"); %>
-            <% }%>
-        </script>
+        });
+    <% } %>
+</script>
 
     </body>
 

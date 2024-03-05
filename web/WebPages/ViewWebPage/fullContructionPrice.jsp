@@ -61,10 +61,10 @@
                 background-color: #ecf0f1;
             }
             img {
-/*                display: block;
-                margin: 15px auto;
-                width: 80%;
-                height: auto;*/
+                /*                display: block;
+                                margin: 15px auto;
+                                width: 80%;
+                                height: auto;*/
             }
             /* styles.css */
             #table-of-contents {
@@ -92,6 +92,12 @@
             #toggle-contents {
                 margin-bottom: 10px;
             }
+            .centered {
+                display: flex;
+                justify-content: center; /* căn giữa theo chiều ngang */
+                align-items: center; /* căn giữa theo chiều dọc */
+                padding: 20px;
+            }
         </style>
     </head>
     <body>
@@ -107,8 +113,8 @@
                             <h2>Bảng Giá Xây Nhà Trọn Gói</h2>
                         </div>
                         <div class="col-12">
-                            <a href="index.html">Trang Chủ</a>
-                            <a href="project.html">Bảng Giá Xây Nhà Trọn Gói</a>
+                            <a href="index">Trang Chủ</a>
+                            <a href="">Bảng Giá Xây Nhà Trọn Gói</a>
                         </div>
                     </div>
                 </div>
@@ -138,6 +144,10 @@
                             <section id="section-1">
                                 <div class="single-content wow fadeInUp">
                                     <h3>1. Bảng báo giá xây nhà trọn gói tại TITAN [Mới Nhất 2024] </h3>
+                                    <div class="centered">
+                                        <img src="WebPages/ViewWebPage/img/quotation-full-3.jpg" alt="Quotation Image">
+                                    </div>
+
                                     <p><strong>Tùy thuộc vào từng loại nhà thi công mà gia chủ lựa chọn, đơn giá xây nhà trọn gói tại TITAN được chia thành 3 nhóm chính như sau (chưa bao gồm vật tư hoàn thiện):</strong></p>
                                     <ul>
                                         <c:forEach items="${requestScope.list}" var="i">
@@ -291,6 +301,10 @@
                             <section id="section-2">
                                 <div class="single-content wow fadeInUp">
                                     <h3>2. Vậy dịch vụ xây nhà trọn gói là gì?</h3>
+                                    <div class="centered">
+                                        <img src="WebPages/ViewWebPage/img/quotation-full-1.jpg" alt="Quotation Image">
+                                    </div>
+
                                     <p><strong>Xây nhà trọn gói </strong>(hay còn gọi là chìa khóa trao tay) là một loại dịch vụ xây dựng nhà mà chủ đầu tư sẽ giao toàn bộ công việc cho nhà thầu. Từ việc lên ý tưởng sơ bộ, thiết kế hồ sơ chi tiết thi công, xin giấy phép xây dựng, thi công phần thô, thi công phần hoàn thiện, bàn giao cho khách hàng, bảo hành sau thi công.</p>
 
                                     <p>Chính vì tiện ích của <strong>dịch vụ xây nhà trọn gói</strong> này, mà chủ đầu tư không phải quá khó khăn trong công việc tìm kiếm ý tưởng thiết kế dành cho ngôi nhà của mình, hay mất nhiều thời gian cho các tờ giấy, thủ tục liên quan, cũng như giám sát đội ngũ thi công và không thiếu hụt nguyên vật liệu … vv.</p>
@@ -300,6 +314,10 @@
                             <section id="section-3">
                                 <div class="single-content wow fadeInUp">
                                     <h3>3. Ưu điểm của dịch vụ xây nhà trọn gói</h3>
+                                    <div class="centered">
+                                        <img src="WebPages/ViewWebPage/img/Xay-nha-tron-goi-tai-My-Loc.jpeg" alt="Quotation Image">
+                                    </div>
+
                                     <p>Đây là một loại hình xây dựng được hầu hết mọi người đang áp dụng hiện nay. Dịch vụ này có rất nhiều ưu điểm, cũng như phù hợp với nhịp sống nhanh, hiện đại ngày nay như thời gian xây dựng nhà nhanh, tiết kiệm công sức hiệu quả, đảm bảo kỹ thuật và tính thẩm mỹ cao, hạn chế được các chi phí phát sinh trong quá trình xây nhà trọn gói, vật tư đúng chất lượng cam kết từ nhà thầu, và cụ thể chi tiết từng ưu điểm của dịch vụ xây nhà trọn gói xem ngay bên dưới:</p>
                                     <ul>
                                         <li><strong>Rút ngắn thời gian xây dựng công trình: </strong>Đây là một trong những lợi ích dễ có thể nhận thấy nhất. Bởi khi chúng ta đã giao cho công ty xây dựng nhà trọn gói uy tín thì tất cả các hạng mục đều được triển khai nhịp nhàng, theo tuần tự hợp lý, từ việc thiết kế bản vẽ thi công, xin phép xây dựng, cho đến khi ngôi nhà hoàn thiện. Dĩ nhiên, điều này có được là nhờ vào những kinh nghiệm thi công từ nhiều công trình đúc kết được của đơn vị xây dựng. Vì thế, thời gian xây dựng sẽ được rút ngắn.</li>
@@ -315,20 +333,15 @@
                                 <div class="single-content wow fadeInUp">
                                     <h3>4. Cách tính diện tích xây dựng trọn gói 2024</h3>
                                     <ul>
-                                        <li>Phần móng băng: Tính 50% diện tích đất.</li>
-                                        <li>Phần móng cọc: Tính 30% – 50% diện tích đất.</li>
+                                        <li>Phần móng đơn: Tính 30% diện tích đất.</li>
+                                        <li>Phần móng ép cọc: Tính 50% diện tích đất.</li>
+                                        <li>Phần móng băng: Tính 70% diện tích đất.</li>
                                         <li>Tầng trệt: Tính 100% diện tích xây dựng tầng trệt.</li>
                                         <li>Tầng, lầu 1, 2, 3…: Tính 100% diện tích tầng, lầu 1, 2, 3,…</li>
                                         <li>Tầng mái bê tông cốt thép, sân thượng: Tính 50% diện tích xây dựng diện tích mái, sân thượng.</li>
-                                        <li>Mái tôn: tính 30% diện tích xây dựng mái (Bao gồm tôn + xà gồ).</li>
-                                        <li>Mái xà gồ lợp ngói tính 50% diện tích xây dựng mái (Bao gồm ngói lợp + xà gồ).</li>
-                                        <li>Mái bê tông xà gồ lợp ngói tính 100% diện tích xây dựng mái (Bao gồm ngói lợp + xà gồ).</li>
-                                        <li>Phần diện tích có mái che: tính 100% diện tích (mặt bằng trệt, lửng, lầu, sân thượng có mái che).</li>
-                                        <li>Phần diện tích không có mái che, ngoại trừ sân trước và sân sau: tính 50% diện tích (sân thượng không mái che, sân phơi, mái BTCT, lam BTCT).</li>
-                                        <li>Tầng hầm có độ sâu từ 1.0 đến 1.3 m so với code vỉa hè: tính 150% diện tích sàn tầng trệt.</li>
-                                        <li>Tầng hầm có độ sâu từ 1.3 đến 1.7 m so với code vỉa hè: tính 170% diện tích sàn tầng trệt.</li>
-                                        <li>Tầng hầm có độ sâu từ 1.7 đến 2 m so với code vỉa hè: tính 200% diện tích sàn tầng trệt.</li>
-                                        <li>Tầng hầm có độ sâu lớn hơn 2.0 m so với code vỉa hè: tính 250% diện tích sàn tầng trệt.</li>
+                                        <li>Mái bằng, đúc : tính 30% diện tích xây dựng mái (Bao gồm tôn + xà gồ).</li>
+                                        <li>Mái kèo thép lợp ngói: tính 60% diện tích xây dựng tầng trệt</li>
+                                        <li>Mái thái: tính 80% diện tích xây dựng tầng trệt</li>
                                     </ul>
                                     <p><strong>Lưu ý:</strong></p>
                                     <ul>
@@ -342,6 +355,10 @@
                             <section id="section-5">
                                 <div class="single-content wow fadeInUp">
                                     <h3>5. Tiêu chí khi chọn đơn vị báo giá xây nhà trọn gói năm 2024</h3>
+                                    <div class="centered">
+                                        <img src="WebPages/ViewWebPage/img/cach-tinh-chi-phi-xay-biet-thu-tron-goi.jpg" alt="Quotation Image">
+                                    </div>
+
                                     <p><strong>Làm cách nào để có thể lựa chọn được một công ty xây nhà uy tín? Hay có những tiêu chí nào trong việc lựa chọn cho mình một đơn vị có dịch vụ xây nhà chuyên nghiệp? Bạn có thể tham khảo một số tiêu chí dưới đây:</strong></p>
                                     <ul>
                                         <li><strong>Chọn công ty có kinh nghiệm lâu năm:</strong> Việc xây dựng nhà là một quá trình chuẩn bị khoản đầu tư không hề nhỏ. Ngôi nhà sẽ theo ta đi đến hết cuộc đời. Chính vì thế mà trong việc lựa chọn một đơn vị đồng hành kiến tạo nên ngôi nhà, chủ đầu tư cần lựa chọn nhà thầu uy tín, có nhiều kinh nghiệm.</li>
@@ -357,6 +374,10 @@
                             <section id="section-6">
                                 <div class="single-content wow fadeInUp">
                                     <h3>6. Một số hạng mục thi công xây nhà trọn gói 2024</h3>
+                                    <div class="centered">
+                                        <img src="WebPages/ViewWebPage/img/quotation-full-2.jpg" alt="Quotation Image">
+                                    </div>
+
                                     <p><strong>Phần xây dựng Phần thô</strong></p>
                                     <ul>
                                         <li>Tổ chức dọn dẹp mặt bằng công trường, làm lán trại cho công nhân (nếu mặt bằng thi công cho phép).</li>

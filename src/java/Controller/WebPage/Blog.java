@@ -5,14 +5,20 @@
  */
 package Controller.WebPage;
 
+import DAO.BlogDAO;
+import DTO.BlogCategoryDTO;
+import DTO.BlogDTO;
+import Utils.DBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+//import com.google.gson.Gson;
 /**
  *
  * @author PC
@@ -33,7 +39,8 @@ public class Blog extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            request.getRequestDispatcher("WebPages/ViewWebPage/blog.jsp").forward(request, response);
+            
+         
         }
     }
 
@@ -49,8 +56,23 @@ public class Blog extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
+             // Khởi tạo BlogDAO và lấy danh sách blog
+        BlogDAO blogDAO = new BlogDAO();
+        List<BlogDTO> blogs = blogDAO.getAll();
+        
+        BlogDAO dao2 = new BlogDAO();
+        List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
+   
+
+        // Đặt danh sách blog vào thuộc tính của request để hiển thị trên trang JSP
+        request.setAttribute("blogs", blogs);
+         request.setAttribute("blogCategories", blogCategories);
+        // Chuyển hướng đến trang JSP để hiển thị danh sách blog
+        request.getRequestDispatcher("WebPages/ViewWebPage/blog.jsp").forward(request, response);
+
+}
+
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -63,7 +85,20 @@ public class Blog extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+      String category = request.getParameter("category");
+   BlogDAO blogDAO = new BlogDAO();
+        List<BlogDTO> blogs = blogDAO.getAllbyCategory(category);
+
+
+        
+         BlogDAO dao2 = new BlogDAO();
+        List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
+     
+        request.setAttribute("blogs", blogs);
+         request.setAttribute("blogCategories", blogCategories);
+
+        request.getRequestDispatcher("WebPages/ViewWebPage/blog.jsp").forward(request, response);
+      
     }
 
     /**

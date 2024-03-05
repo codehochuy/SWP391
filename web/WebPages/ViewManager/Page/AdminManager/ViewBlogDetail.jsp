@@ -1,252 +1,130 @@
-<!DOCTYPE html>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Blog Management</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="https://cdn.tiny.cloud/1/n0rfd22a3z32jtupppuha019duk0huf5saykqwysdh0xkz3s/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: '#blogContent'
+            });
+        </script>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Main CSS-->
         <link rel="stylesheet" type="text/css" href="css\admin.css">
+
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+        <!-- or -->
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+
+        <!-- Font-icon css-->
         <link rel="stylesheet" type="text/css"
               href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/css/lightbox.min.css">
+        <!-- Lightbox JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox.min.js"></script>
+
     </head>
+
     <body onload="time()" class="app sidebar-mini rtl">
         <jsp:include page="../../Page/Header/headerAdmin.jsp"/>
         <main class="app-content">
             <div class="app-title">
                 <ul class="app-breadcrumb breadcrumb">
-                    <li class="breadcrumb-item"><a href="ManagerProject">Quản lý Blog</a></li>
-                    <li class="breadcrumb-item"><a href="">Blog Detail</a></li>
+                    <li class="breadcrumb-item"><a href="ManagerBlog">Quản lý Blog</a></li>
+                    <li class="breadcrumb-item"><a href=""> Xem chi tiết Blog</a></li>
                 </ul>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="tile">
-                        <h1 class="tile-title">Blog Detail</h1>
+                        <h1 class="tile-title">Chỉnh sửa bài viết</h1>
                         <div class="tile-body">
-                            <div class="row">
-                                <div class="form-group col-md-6">
-                                    <label class="control-label">BlogID</label>
-                                    <input class="form-control" id="blogIDInput" readonly>
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label class="control-label">Date</label>
-                                    <input class="form-control" id="dateInput" readonly>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-12">
-                                    <label class="control-label">Title</label>
-                                    <input class="form-control" id="titleInput" readonly>
-                                </div></div>
-                            <div class="form-group col-md-6" style="display: none;">
-                                <label class="control-label">UserID</label>
-                                <input class="form-control" id="userIDInput" readonly>
-                            </div>
 
                             <div id="blogDetail">
-                                <!-- Blog details will be displayed here -->
+                                <%-- Hiển thị dữ liệu --%>
+                                <c:set var="blog" value="${blog}" />
+
+                                <!-- Thêm một trường ẩn để lưu ID của bài viết -->
+                              
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">ID bài viết</label>
+                                    <input class="form-control" type="text" id="blogId" name="blogId" readonly="true" required value="<c:out value='${blog.blogID}' />"><br>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Ngày tạo</label>
+                                    <input class="form-control" type="date" id="date" name="date" readonly="true" required value="<c:out value='${blog.dateCreate}' />"><br>
+                                </div>
+                                
+                                 <div class="form-group col-md-12">
+                                    <label class="control-label">Ngày sửa đổi</label>
+                                    <input class="form-control" type="date" id="dateModified" name="date" readonly="true" required value=""><br>
+                                </div>
+                                <script>
+    function setCurrentDate() {
+        // Get the current date
+        var currentDate = new Date();
+
+        // Format the date as "YYYY-MM-DD" (required by the input type="date")
+        var formattedDate = currentDate.toISOString().split('T')[0];
+
+        // Set the formatted date to the input field
+        document.getElementById("dateModified").value = formattedDate;
+    }
+
+    // Call the function to set the current date on page load
+    setCurrentDate();
+</script>
+
+                                
+                                
+
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Loại tin tức</label>
+                                    <select class="form-control" id="categorySelect">
+                                        <option value="" disabled selected>Lựa chọn loại tin tức</option>
+                                        <c:forEach var="category" items="${categoryList}">
+                                            <option value="${category}" <c:if test="${category eq blog.blogCategory.blogCategoryName}">selected</c:if>>${category}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Tiêu đề</label>
+                                    <input class="form-control" type="text" id="title" value="<c:out value='${blog.title}' />">
+                                </div>
+
+
+
+
+
+
+                                <!-- Textarea for TinyMCE -->
+                                <textarea id="blogContent"><c:out value="${blog.content}" /></textarea>
+
+                                <!-- Button to update the blog post -->
+
+
                             </div>
                         </div>
 
                     </div>
+
                 </div>
             </div>
-
-            <script>
-                var blogJSON = <%= request.getAttribute("json")%>;
-
-                // Lấy giá trị từ biến blogJSON
-                var blogID = blogJSON.blogID;
-                var title = blogJSON.title;
-                var date = blogJSON.date;
-                var usersID = blogJSON.usersID;
-
-                // Gán giá trị vào các ô input tương ứng
-                document.getElementById("blogIDInput").value = blogID;
-                document.getElementById("titleInput").value = title;
-                document.getElementById("dateInput").value = date;
-                document.getElementById("userIDInput").value = usersID;
-
-                var blogDetails = blogJSON.blogDetails;
-
-                for (var i = 0; i < blogDetails.length; i++) {
-                    var blogDetail = blogDetails[i];
-                    var detailDiv = document.getElementById("blogDetail");
-                    var div = document.createElement("div");
-
-                    // Tạo và gán giá trị cho inputBlogDetailID
-                    var inputBlogDetailID = document.createElement("input");
-                    inputBlogDetailID.type = "hidden";
-                    inputBlogDetailID.name = "blog_detail_id_parent[]";
-                    inputBlogDetailID.value = blogDetail.blogDetailID;
-                    inputBlogDetailID.readOnly = true;
-                    inputBlogDetailID.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                    div.appendChild(inputBlogDetailID);
-
-                    // Tạo và gán giá trị cho inputTitle
-                    var inputTitle = document.createElement("input");
-                    inputTitle.type = "text";
-                    inputTitle.name = "title_detail[]";
-                    inputTitle.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                    inputTitle.value = blogDetail.title;
-                    div.appendChild(inputTitle);
-
-                    // Tạo và gán giá trị cho textareaContent
-                    var textareaContent = document.createElement("textarea");
-                    textareaContent.name = "content_detail[]";
-                    textareaContent.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                    textareaContent.textContent = blogDetail.content;
-                    div.appendChild(textareaContent);
-
-                    // Hiển thị BlogID
-                    var inputBlogID_BlogDetailID = document.createElement("input");
-                    inputBlogID_BlogDetailID.type = "hidden";
-                    inputBlogID_BlogDetailID.name = "blog_id[]";
-                    inputBlogID_BlogDetailID.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                    inputBlogID_BlogDetailID.value = blogDetail.blogID; // Giả sử giá trị blogID được lưu trong biến blogDetail.blogID
-                    inputBlogID_BlogDetailID.readOnly = true;
-                    div.appendChild(inputBlogID_BlogDetailID);
-
-
-// Thêm một dòng trống
-                    var lineBreak = document.createElement("br");
-                    div.appendChild(lineBreak);
-// Thêm một dòng trống
-                    var lineBreak = document.createElement("br");
-                    div.appendChild(lineBreak);
-
-
-
-
-                    // Thêm chi tiết hình ảnh của blog (nếu có)
-                    var blogImages = blogDetail.blogImages;
-                    for (var j = 0; j < blogImages.length; j++) {
-                        var blogImage = blogImages[j];
-
-                        // Hiển thị hình ảnh
-                        var img = document.createElement("img");
-                        img.src = "img/" + blogImage.url; // Thiết lập đường dẫn tương đối đến hình ảnh
-                        img.alt = blogImage.caption;
-                        img.style.width = "500px"; // Đặt chiều rộng của hình ảnh là 500px
-                        div.appendChild(img);
-
-                        // Tạo và gán giá trị cho các input của blogImage
-                        var inputBlogImageID = document.createElement("input");
-                        inputBlogImageID.type = "hidden";
-                        inputBlogImageID.name = "blog_image_id_child[]";
-                        inputBlogImageID.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                        inputBlogImageID.value = blogImage.blogImageID;
-                        inputBlogImageID.readOnly = true;
-                        div.appendChild(inputBlogImageID);
-
-
-
-                        // Tạo input cho url của hình ảnh
-                        var inputImageUrl = document.createElement("input");
-                        inputImageUrl.type = "hidden";
-                        inputImageUrl.name = "image_url[]";
-                        inputImageUrl.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                        inputImageUrl.value = blogImage.url;
-                        div.appendChild(inputImageUrl);
-
-                        // Tạo input cho caption của hình ảnh
-                        var inputCaption = document.createElement("input");
-                        inputCaption.type = "text";
-                        inputCaption.name = "image_caption[]";
-                        inputCaption.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                        inputCaption.value = blogImage.caption;
-                        div.appendChild(inputCaption);
-
-                        // Tạo input cho BlogDetailID của hình ảnh
-                        var inputBlogDetailID_BlogImageID = document.createElement("input");
-                        inputBlogDetailID_BlogImageID.type = "hidden";
-                        inputBlogDetailID_BlogImageID.name = "blog_detail_id_child[]";
-                        inputBlogDetailID_BlogImageID.className = "form-control col-md-12"; // Thêm class cho inputBlogDetailID
-                        inputBlogDetailID_BlogImageID.value = blogDetail.blogDetailID; // Giả sử giá trị BlogDetailID lưu trong biến blogDetail.blogDetailID
-                        inputBlogDetailID_BlogImageID.readOnly = true;
-                        div.appendChild(inputBlogDetailID_BlogImageID);
-
-
-
-// Tạo nút xóa cho mỗi hình ảnh
-                        var deleteImageButton = document.createElement("button");
-                        deleteImageButton.type = "button";
-                        deleteImageButton.innerText = "Delete Image";
-                        deleteImageButton.onclick = function () {
-                            // Xác định ID của hình ảnh để xóa dựa trên giá trị của inputBlogImageID
-                            var blogImageID = inputBlogImageID.value;
-
-                            // Xác định div chứa hình ảnh (cha của nút xóa)
-                            var imageDiv = this.parentElement;
-
-                            // Xác định div chứa chi tiết blog (cha của div chứa hình ảnh)
-                            var detailDiv = imageDiv.parentElement;
-
-                            // Xác định vị trí của div chứa hình ảnh trong chi tiết blog
-                            var imageIndex = Array.prototype.indexOf.call(detailDiv.children, imageDiv);
-
-                            // Tìm và xóa hình ảnh có ID tương ứng
-                            var imageElements = detailDiv.querySelectorAll('div');
-                            var imageElement = imageElements[imageIndex];
-                            if (imageElement) {
-                                detailDiv.removeChild(imageElement);
-                            }
-                        };
-                        deleteImageButton.style.display = "none"; // Ẩn nút xóa hình ảnh
-                        div.appendChild(deleteImageButton);
-                    }
-
-// Thêm một dòng trống
-                    var lineBreak = document.createElement("br");
-                    div.appendChild(lineBreak);
-
-// Thêm một dòng trống
-                    var lineBreak = document.createElement("br");
-                    div.appendChild(lineBreak);
-
-// Tạo nút xóa cho BlogDetail
-                    var deleteButton = document.createElement("button");
-                    deleteButton.type = "button";
-                    deleteButton.innerText = "Delete Detail";
-                    deleteButton.onclick = function () {
-                        // Xác định chi tiết blog để xóa dựa trên giá trị của inputBlogDetailID_BlogImageID
-                        var blogDetailID = inputBlogDetailID_BlogImageID.value;
-                        var detailDiv = document.getElementById("blogDetail");
-
-                        // Tìm và xóa chi tiết blog có ID tương ứng
-                        var detailElements = detailDiv.querySelectorAll('div');
-                        for (var i = 0; i < detailElements.length; i++) {
-                            var detailElement = detailElements[i];
-                            var inputDetailID = detailElement.querySelector('input[name="blog_detail_id_parent[]"]');
-                            if (inputDetailID && inputDetailID.value === blogDetailID) {
-                                detailDiv.removeChild(detailElement);
-                                break; // Kết thúc sau khi xóa
-                            }
-                        }
-
-                        // Sau khi xóa, bạn cũng có thể cần cập nhật lại các ID
-                        reorderBlogDetailIDs();
-                    };
-                    deleteButton.style.display = "none"; // Ẩn nút xóa hình ảnh
-                    div.appendChild(deleteButton);
-
-                    var br = document.createElement("br");
-                    div.appendChild(br);
-
-                    detailDiv.appendChild(div);
-
-                }
-            </script>
-
+            <button class="btn btn-save" onclick="updateBlog()">Cập nhật bài viết</button>
+            <a class="btn btn-cancel" href="ManagerBlog">Hủy bỏ</a>
         </main>
         <!-- Essential javascripts for application to work-->
         <script src="./js/jquery-3.2.1.min.js"></script>
@@ -255,10 +133,15 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="src/jquery.table2excel.js"></script>
         <script src="./js/main.js"></script>
+        <!-- The javascript plugin to display page loading on top-->
         <script src="js/plugins/pace.min.js"></script>
+        <!-- Page specific javascripts-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+        <!-- Data table plugin-->
         <script type="text/javascript" src="./js/plugins/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="./js/plugins/dataTables.bootstrap.min.js"></script>
+
+
         <script type="text/javascript">
                 $('#sampleTable').DataTable();
                 //Thời Gian
@@ -302,5 +185,50 @@
                     }
                 }
         </script>
+
+
+        <script>
+            function updateBlog() {
+                var blogId = document.getElementById("blogId").value; // Lấy ID của bài viết
+                var title = encodeURIComponent(document.getElementById("title").value); // Mã hóa tiêu đề
+                var content = encodeURIComponent(tinymce.activeEditor.getContent());
+                 var categorySelect = document.getElementById("categorySelect");
+        var selectedCategory = categorySelect.options[categorySelect.selectedIndex].value;
+        var dateModified= document.getElementById("dateModified").value;
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        if (this.status == 200) {
+                            // Sử dụng SweetAlert để hiển thị thông báo
+                            swal({
+                                title: "Cập nhật blog thành công",
+//                text: "Blog created successfully!",
+                                icon: "success",
+                                button: "OK",
+                            }).then((value) => {
+                                // Tải lại trang sau khi người dùng nhấp vào nút OK
+                                if (value) {
+                                    window.location.reload();
+                                }
+                            });
+                        } else {
+                            // Xử lý trường hợp lỗi
+                            swal({
+                                title: "Cập nhật blog thất bại",
+//                text: "Failed to create blog!",
+                                icon: "error",
+                                button: "OK",
+                            });
+                        }
+                    }
+                };
+
+                xhttp.open("POST", "http://localhost:8084/SWP391/UpdateBlog", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+               xhttp.send("blogId=" + blogId + "&title=" + title + "&content=" + content + "&category=" + selectedCategory + "&dateModified=" + dateModified);
+            }
+        </script>
+
     </body>
 </html>

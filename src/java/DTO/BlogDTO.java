@@ -7,24 +7,27 @@ import java.util.List;
 public class BlogDTO {
 
     private int blogID;
-    private String title;
-    private Date date;
-    private int usersID;
-    private List<BlogDetailDTO> blogDetails;
+     private String title;
+    private String content;
+    private Date dateCreate;
+    private Date dateModified;
+    private User user;
+    private BlogCategoryDTO blogCategory;
 
-    public BlogDTO(int blogID, String title, Date date, int usersID, List<BlogDetailDTO> blogDetails) {
-        this.blogID = blogID;
-        this.title = title;
-        this.date = date;
-        this.usersID = usersID;
-        this.blogDetails = blogDetails;
-    }
 
     public BlogDTO() {
-        blogDetails = new ArrayList<>();
     }
 
-    // Getters and Setters
+    public BlogDTO(int blogID, String title, String content, Date dateCreate, Date dateModified, User user, BlogCategoryDTO blogCategory) {
+        this.blogID = blogID;
+        this.title = title;
+        this.content = content;
+        this.dateCreate = dateCreate;
+        this.dateModified = dateModified;
+        this.user = user;
+        this.blogCategory = blogCategory;
+    }
+
     public int getBlogID() {
         return blogID;
     }
@@ -41,37 +44,52 @@ public class BlogDTO {
         this.title = title;
     }
 
-    public Date getDate() {
-        return date;
+    public String getContent() {
+        return content;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public int getUsersID() {
-        return usersID;
+    public Date getDateCreate() {
+        return dateCreate;
     }
 
-    public void setUsersID(int usersID) {
-        this.usersID = usersID;
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
     }
 
-    public List<BlogDetailDTO> getBlogDetails() {
-        return blogDetails;
+    public Date getDateModified() {
+        return dateModified;
     }
 
-    public void setBlogDetails(List<BlogDetailDTO> blogDetails) {
-        this.blogDetails = blogDetails;
+    public void setDateModified(Date dateModified) {
+        this.dateModified = dateModified;
     }
 
-    public void addBlogDetail(BlogDetailDTO blogDetail) {
-        this.blogDetails.add(blogDetail);
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public BlogCategoryDTO getBlogCategory() {
+        return blogCategory;
+    }
+
+    public void setBlogCategory(BlogCategoryDTO blogCategory) {
+        this.blogCategory = blogCategory;
     }
 
     @Override
     public String toString() {
-        return "BlogDTO{" + "blogID=" + blogID + ", title=" + title + ", date=" + date + ", usersID=" + usersID + ", blogDetails=" + blogDetails + '}';
+        return "BlogDTO{" + "blogID=" + blogID + ", title=" + title + ", content=" + content + ", dateCreate=" + dateCreate + ", dateModified=" + dateModified + ", user=" + user + ", blogCategory=" + blogCategory + '}';
     }
+
+  
+   
 
 }

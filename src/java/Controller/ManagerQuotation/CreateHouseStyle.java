@@ -5,9 +5,12 @@
  */
 package Controller.ManagerQuotation;
 
+import DAO.ComponentDAO;
+import DAO.HouseComponentDAO;
 import DAO.HouseTypeDAO;
 import DAO.QuotationDAO;
 import DAO.StyleDAO;
+import DTO.Component;
 import DTO.HouseType;
 import DTO.Quotation;
 import DTO.Style;
@@ -44,15 +47,13 @@ public class CreateHouseStyle extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateHouseStyle</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CreateHouseStyle at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+            List<HouseType> houseTypes = houseTypeDAO.getAll();
+            request.setAttribute("houseTypes", houseTypes);
+            ComponentDAO aO = new ComponentDAO();
+            List<Component> component = aO.getAll();
+            request.setAttribute("component", component);
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/CreateHouseStyle.jsp").forward(request, response);
         }
     }
 
@@ -84,57 +85,39 @@ public class CreateHouseStyle extends HttpServlet {
             throws ServletException, IOException {
         try {
             request.setCharacterEncoding("UTF-8");
-            String houseversion = request.getParameter("houseversion");
-            HouseTypeDAO aO = new HouseTypeDAO();
-            String name = request.getParameter("housestyle");
-            boolean result = aO.addHouseStyle(name);
-            if (result) {
-                QuotationDAO dAO = new QuotationDAO();
-                List<Quotation> list = dAO.getAll();
-                
-                StyleDAO styleDAO = new StyleDAO();
-                List<Style> styles = styleDAO.getAll();
+            String houseType = request.getParameter("housetype");
+            String[] components = request.getParameterValues("components");
 
+            if (components != null) {
                 HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-                List<HouseType> houseTypes = houseTypeDAO.getAll();
-                
-                request.setAttribute("styles", styles);
-                request.setAttribute("houseTypes", houseTypes);
-                request.setAttribute("list", list);
+                boolean result = houseTypeDAO.addHouseStyle(houseType);
 
-                request.setAttribute("messtrue", "Đã thêm thành công");
-                if(houseversion.equalsIgnoreCase("1")){
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);                    
+                if (result) {
+                    HouseTypeDAO houseTypeDAO1 = new HouseTypeDAO();
+                    int newHouseTypeID = houseTypeDAO1.getLatestHouseTypeID();
+                    HouseComponentDAO aO = new HouseComponentDAO();
+                    aO.createHouseComponent(newHouseTypeID, 1);
+                    HouseComponentDAO aO1 = new HouseComponentDAO();
+                    aO1.createHouseComponent(newHouseTypeID, 2);
+                    for (String component : components) {
+                        HouseComponentDAO houseComponentDAO = new HouseComponentDAO();
+                        int componentID = Integer.parseInt(component);
+                        houseComponentDAO.createHouseComponent(newHouseTypeID, componentID);
+                    }
+                    request.setAttribute("messtrue", "Đã thêm thành công");
+                } else {
+                    request.setAttribute("messefalse", "Đã thêm thất bại");
                 }
-                else{
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
-                }
-
             } else {
-                QuotationDAO dAO = new QuotationDAO();
-                List<Quotation> list = dAO.getAll();
-                
-                StyleDAO styleDAO = new StyleDAO();
-                List<Style> styles = styleDAO.getAll();
-
-                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-                List<HouseType> houseTypes = houseTypeDAO.getAll();
-                
-                request.setAttribute("styles", styles);
-                request.setAttribute("houseTypes", houseTypes);
-                request.setAttribute("list", list);
-
-                request.setAttribute("messefalse", "Đã thêm thất bại");
-                if(houseversion.equalsIgnoreCase("1")){
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);                    
-                }
-                else{
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
-                }
+                request.setAttribute("messefalse", "Vui lòng chọn ít nhất một thành phần");
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateHouseStyle.class.getName()).log(Level.SEVERE, null, ex);
+            request.setAttribute("message", "Đã xảy ra lỗi khi thêm");
         }
+
+        // Gửi dữ liệu lấy từ database tới trang JSP
+        processRequest(request, response);
     }
 
     /**

@@ -38,6 +38,7 @@
                     <li class="breadcrumb-item"><a href="ManagerProject">Dự án đã hoàn thành</a></li>
                     <li class="breadcrumb-item"><a href="">Thêm dự án</a></li>
                 </ul>
+                <div id="clock"></div>
             </div>
             <div class="row">
                 <div class="col-md-12">
