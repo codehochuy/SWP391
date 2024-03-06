@@ -77,6 +77,7 @@ public class CreateBlog extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
                 String title = request.getParameter("title");
+                 String tags = request.getParameter("tags");
         String content = request.getParameter("content");
         String dateCreate = request.getParameter("date");
          String category = request.getParameter("category");
@@ -94,7 +95,7 @@ public class CreateBlog extends HttpServlet {
         
 // Tạo một đối tượng BlogDTO mới
         BlogDAO dao2 = new BlogDAO();
-       dao2.createBlog(title, content, dateCreate, blogcategoryID, userId);
+       dao2.createBlog(title, tags, content, dateCreate, blogcategoryID, userId);
       
     }
 

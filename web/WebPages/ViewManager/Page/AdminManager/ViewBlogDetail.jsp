@@ -11,7 +11,7 @@
         <script src="https://cdn.tiny.cloud/1/n0rfd22a3z32jtupppuha019duk0huf5saykqwysdh0xkz3s/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
             tinymce.init({
-                selector: '#blogContent'
+                selector: '#mytextarea'
             });
         </script>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -57,7 +57,7 @@
                                 <c:set var="blog" value="${blog}" />
 
                                 <!-- Thêm một trường ẩn để lưu ID của bài viết -->
-                              
+
                                 <div class="form-group col-md-12">
                                     <label class="control-label">ID bài viết</label>
                                     <input class="form-control" type="text" id="blogId" name="blogId" readonly="true" required value="<c:out value='${blog.blogID}' />"><br>
@@ -66,29 +66,29 @@
                                     <label class="control-label">Ngày tạo</label>
                                     <input class="form-control" type="date" id="date" name="date" readonly="true" required value="<c:out value='${blog.dateCreate}' />"><br>
                                 </div>
-                                
-                                 <div class="form-group col-md-12">
+
+                                <div class="form-group col-md-12">
                                     <label class="control-label">Ngày sửa đổi</label>
                                     <input class="form-control" type="date" id="dateModified" name="date" readonly="true" required value=""><br>
                                 </div>
                                 <script>
-    function setCurrentDate() {
-        // Get the current date
-        var currentDate = new Date();
+                                    function setCurrentDate() {
+                                        // Get the current date
+                                        var currentDate = new Date();
 
-        // Format the date as "YYYY-MM-DD" (required by the input type="date")
-        var formattedDate = currentDate.toISOString().split('T')[0];
+                                        // Format the date as "YYYY-MM-DD" (required by the input type="date")
+                                        var formattedDate = currentDate.toISOString().split('T')[0];
 
-        // Set the formatted date to the input field
-        document.getElementById("dateModified").value = formattedDate;
-    }
+                                        // Set the formatted date to the input field
+                                        document.getElementById("dateModified").value = formattedDate;
+                                    }
 
-    // Call the function to set the current date on page load
-    setCurrentDate();
-</script>
+                                    // Call the function to set the current date on page load
+                                    setCurrentDate();
+                                </script>
 
-                                
-                                
+
+
 
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Loại tin tức</label>
@@ -105,13 +105,19 @@
                                     <input class="form-control" type="text" id="title" value="<c:out value='${blog.title}' />">
                                 </div>
 
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Tags</label>
+                                    <input class="form-control" type="text" id="tags" value="<c:out value='${blog.tags}' />">
+                                </div>
+
 
 
 
 
 
                                 <!-- Textarea for TinyMCE -->
-                                <textarea id="blogContent"><c:out value="${blog.content}" /></textarea>
+                                <%-- <textarea id="mytextarea"><c:out value="${blog.content}" /></textarea>--%>
+                                <textarea id="mytextarea">${blog.content}</textarea>
 
                                 <!-- Button to update the blog post -->
 
@@ -191,10 +197,52 @@
             function updateBlog() {
                 var blogId = document.getElementById("blogId").value; // Lấy ID của bài viết
                 var title = encodeURIComponent(document.getElementById("title").value); // Mã hóa tiêu đề
+                var tags = encodeURIComponent(document.getElementById("tags").value); // Mã hóa tags
                 var content = encodeURIComponent(tinymce.activeEditor.getContent());
-                 var categorySelect = document.getElementById("categorySelect");
-        var selectedCategory = categorySelect.options[categorySelect.selectedIndex].value;
-        var dateModified= document.getElementById("dateModified").value;
+                var categorySelect = document.getElementById("categorySelect");
+                var selectedCategory = categorySelect.options[categorySelect.selectedIndex].value;
+                var dateModified = document.getElementById("dateModified").value;
+
+//check validate
+                var decodedTitle = decodeURIComponent(title);
+                var decodedTags = decodeURIComponent(tags);
+                var decodedContent = decodeURIComponent(content);
+
+                if (!title.trim() || !tags.trim() || !content.trim() || !selectedCategory.trim()) {
+                    swal({
+                        title: "Vui lòng điền đầy đủ thông tin",
+                        icon: "error",
+                        button: "OK",
+                    });
+                    return;
+                }
+                if (decodedTitle.length < 30 || !/^[0-9a-zA-Z][a-zA-Z0-9',: \p{L}]+$/u.test(decodedTitle) ) {
+                    swal({
+                        title: "Tiêu đề cần ít nhất 30 kí tự (0-9 a-z A-Z ',: )",
+                        icon: "error",
+                        button: "OK",
+                    });
+                    return;
+                }
+
+
+                if (!/^[a-zA-Z0-9 \p{L}]{2,}$/u.test(decodedTags)) {
+                    swal({
+                        title: "Tags chứa ít nhất 2 kí tự (0-9 a-z A-Z, dấu cách, tiếng việt có dấu)",
+                        icon: "error",
+                        button: "OK",
+                    });
+                    return;
+                }
+                if (!/^[\s\S]*(<img [^>]+>)[\s\S]{300,}$/u.test(decodedContent) && /\p{L}/u.test(decodedContent)) {
+                    swal({
+                        title: "Nội dung chứa ít nhất 300 kí tự và hình ảnh",
+                        icon: "error",
+                        button: "OK",
+                    });
+                    return;
+                }
+
 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
@@ -226,7 +274,7 @@
 
                 xhttp.open("POST", "http://localhost:8084/SWP391/UpdateBlog", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-               xhttp.send("blogId=" + blogId + "&title=" + title + "&content=" + content + "&category=" + selectedCategory + "&dateModified=" + dateModified);
+                xhttp.send("blogId=" + blogId + "&title=" + title + "&tags=" + tags + "&content=" + content + "&category=" + selectedCategory + "&dateModified=" + dateModified);
             }
         </script>
 

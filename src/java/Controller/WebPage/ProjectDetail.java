@@ -5,8 +5,19 @@
  */
 package Controller.WebPage;
 
+import DAO.HouseTypeDAO;
+import DAO.ProjectDAO;
+import DAO.ProjectImageDAO;
+import DAO.ServiceDAO;
+import DAO.StyleDAO;
+import DTO.HouseType;
+import DTO.Project;
+import DTO.ProjectImage;
+import DTO.Style;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,13 +26,14 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author PC
+ * @author Admin
  */
-@WebServlet(name = "Project", urlPatterns = {"/Project"})
-public class Project extends HttpServlet {
+@WebServlet(name = "ProjectDetail", urlPatterns = {"/ProjectDetail"})
+public class ProjectDetail extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -33,7 +45,15 @@ public class Project extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            request.getRequestDispatcher("WebPages/ViewWebPage/project.jsp").forward(request, response);
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProjectDetail</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ProjectDetail at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
@@ -49,7 +69,22 @@ public class Project extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+     String id = request.getParameter("id");
+     
+        ProjectDAO dao = new ProjectDAO();
+        Project project = dao.getProjectbyID(id);
+        
+        
+        ProjectImageDAO imageDAO = new ProjectImageDAO();
+        List<ProjectImage> images = imageDAO.getProjectImagesByProjectID(id);
+        
+        request.setAttribute("images", images);
+        request.setAttribute("project", project);
+ 
+
+        // Chuyển hướng request đến trang ViewBlogDetail.jsp để hiển thị thông tin blog
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewWebPage/projectdetail.jsp");
+        dispatcher.forward(request, response);
     }
 
     /**

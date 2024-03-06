@@ -10,6 +10,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+        /* CSS styles */
+        .error {
+            color: red;
+            font-style: italic;
+        }
+        </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <title>TITAN - Báo Giá</title>
@@ -109,7 +116,7 @@
                         <!--Raw contruction-->
                         <div class="col-md-6 rawContruction">
                             <div class="contact-form">
-                                <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill" novalidate="novalidate">
+                                <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill">
                                     
                                 </form>
                             </div>
@@ -123,7 +130,7 @@
             <!-- Quotation End -->
             <div class="contact wow fadeInUp container">
                 <form action="SaveQuotationContent" id="quotationContent" method="post" name="sentMessage" novalidate="novalidate">
-
+                    
                 </form>
             </div>
 
@@ -233,6 +240,77 @@
                 });
             });
         </script>
+        
+        <script>
+        // JavaScript code for form validation
+        const form = document.getElementById('formFill');
 
+        form.addEventListener('click', function(event) {
+            let isValid = true;
+            const _1 = document.getElementById('_1');
+            const _2 = document.getElementById('_2');
+            const _3 = document.getElementById('_3');
+            const _4 = document.getElementById('_4');
+            const _5 = document.getElementById('_5');
+            const _6 = document.getElementById('_6');
+            
+            const error_1 = document.getElementById('error_1');
+            const error_2 = document.getElementById('error_2');
+            const error_3 = document.getElementById('error_3');
+            const error_4 = document.getElementById('error_4');
+            const error_5 = document.getElementById('error_5');
+            const error_6 = document.getElementById('error_6');
+
+            // Reset error messages
+            error_1.textContent = '';
+            error_2.textContent = '';
+            error_3.textContent = '';
+            error_4.textContent = '';
+            if (error_5) error_5.textContent = '';
+            if (error_6) error_6.textContent = '';
+
+            if (parseInt(_1.value) > 10000 || parseInt(_1.value) <= 0) {
+                isValid = false;
+                error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
+            }
+            
+            if (parseInt(_2.value) > 10000 || parseInt(_2.value) <= 0) {
+                isValid = false;
+                error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
+            }
+            
+            if ((parseInt(_3.value) >= parseInt(_1.value)) || parseInt(_3.value) < 0) {
+                isValid = false;
+                error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
+            } else
+            if ((parseInt(_4.value) >= (parseInt(_1.value)-parseInt(_3.value))) || parseInt(_4.value) < 0) {
+                isValid = false;
+                error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
+            }
+        
+            if (parseInt(_4.value) < 0) {
+                isValid = false;
+                error_4.textContent = 'Sân sau phải lớn hơn hoặc bằng 0.';
+            }
+        
+            if (_5) {
+                if (parseInt(_5.value) > 24 || parseInt(_5.value) < 0) {
+                isValid = false;
+                error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
+                }
+            }
+            
+            if (_6) {
+                if (parseInt(_6.value) >= (parseInt(_1.value) - parseInt(_3.value) - parseInt(_4.value)) || parseInt(_6.value) < 0) {
+                isValid = false;
+                error_6.textContent = 'Chiều dài ban công phải nhỏ hơn chiều dài của lầu và lớn hơn hoặc bằng 0.';
+                }
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
     </body>
 </html>

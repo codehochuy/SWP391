@@ -59,18 +59,14 @@
                             </div>
 
 
-
-
                             <div class="form-group col-md-12">
                                 <label class="control-label">Loại tin tức</label>
                                 <select class="form-control" id="blogCategory" name="blogCategory" required>
                                     <option value="" disabled selected>Lựa chọn loại tin tức</option>
-<!--                                    <option value="newCategory">Thêm một loại tin tức mới</option>-->
                                     <c:forEach var="category" items="${categoryList}">
                                         <option value="${category}">${category}</option>
                                     </c:forEach>
                                 </select>
-
                                 <div id="newCategoryInput" style="display: none;">
                                     <label class="control-label">Nhập loại tin tức mới</label>
                                     <input class="form-control" type="text" id="newCategoryValue" name="newCategoryValue">
@@ -177,125 +173,157 @@
                                     });
                                 }
                             </script>
-
-
-                            <!-- Rest of your HTML code -->
-
-
-
-
-
-
-
-                            <div class="form-group col-md-12">
-                                <label class="control-label">Tiêu đề</label>
-                                <input class="form-control" type="text" id="title" name="title" required><br>
-                            </div>
-
-
-
-                            <script>
-                                // Lấy ngày hiện tại
-                                var today = new Date();
-
-                                // Định dạng ngày thành yyyy-mm-dd
-                                var dd = String(today.getDate()).padStart(2, '0');
-                                var mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
-                                var yyyy = today.getFullYear();
-
-                                today = yyyy + '-' + mm + '-' + dd;
-
-                                // Đặt giá trị của trường ngày thành ngày hôm nay
-                                document.getElementById('date').value = today;
-                            </script>
-
-                            <textarea id="mytextarea"></textarea>
-
                         </div>
 
-                    </div>
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Tiêu đề</label>
+                            <input class="form-control" type="text" id="title" name="title" required><br>
+                        </div>
 
+                        <div class="form-group col-md-12">
+                            <label class="control-label">Tags</label>
+                            <input class="form-control" type="text" id="tags" name="tags" required><br>
+                        </div>
+
+                        <script>
+                            // Lấy ngày hiện tại
+                            var today = new Date();
+
+                            // Định dạng ngày thành yyyy-mm-dd
+                            var dd = String(today.getDate()).padStart(2, '0');
+                            var mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+                            var yyyy = today.getFullYear();
+
+                            today = yyyy + '-' + mm + '-' + dd;
+
+                            // Đặt giá trị của trường ngày thành ngày hôm nay
+                            document.getElementById('date').value = today;
+                        </script>
+                        <textarea id="mytextarea"></textarea>
+                    </div>
                 </div>
             </div>
-
-            <button class="btn btn-save" onclick="createBlog()">Tạo Blog</button>
-            <a class="btn btn-cancel" href="ManagerBlog">Hủy bỏ</a>
-        </main>
-
-
-
-        <!-- Essential javascripts for application to work-->
-        <script src="./js/jquery-3.2.1.min.js"></script>
-        <script src="./js/popper.min.js"></script>
-        <script src="./js/bootstrap.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="src/jquery.table2excel.js"></script>
-        <script src="./js/main.js"></script>
-        <!-- The javascript plugin to display page loading on top-->
-        <script src="js/plugins/pace.min.js"></script>
-        <!-- Page specific javascripts-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-        <!-- Data table plugin-->
-        <script type="text/javascript" src="./js/plugins/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="./js/plugins/dataTables.bootstrap.min.js"></script>
+        </div>
+        <button class="btn btn-save" onclick="createBlog()">Tạo Blog</button>
+        <a class="btn btn-cancel" href="ManagerBlog">Hủy bỏ</a>
+    </main>
 
 
-        <script type="text/javascript">
-                $('#sampleTable').DataTable();
-                //Thời Gian
-                function time() {
-                    var today = new Date();
-                    var weekday = new Array(7);
-                    weekday[0] = "Chủ Nhật";
-                    weekday[1] = "Thứ Hai";
-                    weekday[2] = "Thứ Ba";
-                    weekday[3] = "Thứ Tư";
-                    weekday[4] = "Thứ Năm";
-                    weekday[5] = "Thứ Sáu";
-                    weekday[6] = "Thứ Bảy";
-                    var day = weekday[today.getDay()];
-                    var dd = today.getDate();
-                    var mm = today.getMonth() + 1;
-                    var yyyy = today.getFullYear();
-                    var h = today.getHours();
-                    var m = today.getMinutes();
-                    var s = today.getSeconds();
-                    m = checkTime(m);
-                    s = checkTime(s);
-                    nowTime = h + " giờ " + m + " phút " + s + " giây";
-                    if (dd < 10) {
-                        dd = '0' + dd
-                    }
-                    if (mm < 10) {
-                        mm = '0' + mm
-                    }
-                    today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                    tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                            '</span>';
-                    document.getElementById("clock").innerHTML = tmp;
-                    clocktime = setTimeout("time()", "1000", "Javascript");
+    <!-- Essential javascripts for application to work-->
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="src/jquery.table2excel.js"></script>
+    <script src="./js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <!-- Data table plugin-->
+    <script type="text/javascript" src="./js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/plugins/dataTables.bootstrap.min.js"></script>
 
-                    function checkTime(i) {
-                        if (i < 10) {
-                            i = "0" + i;
-                        }
-                        return i;
-                    }
+
+    <script type="text/javascript">
+            $('#sampleTable').DataTable();
+            //Thời Gian
+            function time() {
+                var today = new Date();
+                var weekday = new Array(7);
+                weekday[0] = "Chủ Nhật";
+                weekday[1] = "Thứ Hai";
+                weekday[2] = "Thứ Ba";
+                weekday[3] = "Thứ Tư";
+                weekday[4] = "Thứ Năm";
+                weekday[5] = "Thứ Sáu";
+                weekday[6] = "Thứ Bảy";
+                var day = weekday[today.getDay()];
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+                var yyyy = today.getFullYear();
+                var h = today.getHours();
+                var m = today.getMinutes();
+                var s = today.getSeconds();
+                m = checkTime(m);
+                s = checkTime(s);
+                nowTime = h + " giờ " + m + " phút " + s + " giây";
+                if (dd < 10) {
+                    dd = '0' + dd
                 }
-        </script>
-
-        <script>
-            function createBlog() {
-                var title = encodeURIComponent(document.getElementById("title").value); // Mã hóa tiêu đề
-                var content = encodeURIComponent(tinymce.activeEditor.getContent()); // Mã hóa nội dung
-                var date = document.getElementById("date").value;
-                var selectedCategory = document.getElementById("blogCategory").value;
-
-                if (selectedCategory === 'newCategory') {
-                    // If a new category is selected, use the value from the additional input field
-                    var newCategory = encodeURIComponent(document.getElementById("newCategoryValue").value);
-                    selectedCategory = newCategory;
+                if (mm < 10) {
+                    mm = '0' + mm
                 }
+                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                        '</span>';
+                document.getElementById("clock").innerHTML = tmp;
+                clocktime = setTimeout("time()", "1000", "Javascript");
+
+                function checkTime(i) {
+                    if (i < 10) {
+                        i = "0" + i;
+                    }
+                    return i;
+                }
+            }
+    </script>
+
+    <script>
+        function createBlog() {
+            var title = encodeURIComponent(document.getElementById("title").value); // Mã hóa tiêu đề
+            var tags = encodeURIComponent(document.getElementById("tags").value); // Mã hóa tiêu đề
+            var content = encodeURIComponent(tinymce.activeEditor.getContent()); // Mã hóa nội dung
+            var date = document.getElementById("date").value;
+            var selectedCategory = document.getElementById("blogCategory").value;
+            if (selectedCategory === 'newCategory') {
+                // If a new category is selected, use the value from the additional input field
+                var newCategory = encodeURIComponent(document.getElementById("newCategoryValue").value);
+                selectedCategory = newCategory;
+            }
+
+//check validate
+            var decodedTitle = decodeURIComponent(title);
+            var decodedTags = decodeURIComponent(tags);
+            var decodedContent = decodeURIComponent(content);
+        
+
+  if (!title.trim() || !tags.trim() || !content.trim() || !selectedCategory.trim()) {
+                    swal({
+                        title: "Vui lòng điền đầy đủ thông tin",
+                        icon: "error",
+                        button: "OK",
+                    });
+                    return;
+                }
+                if (decodedTitle.length < 30 || !/^[0-9a-zA-Z][a-zA-Z0-9',: \p{L}]+$/u.test(decodedTitle) ) {
+                    swal({
+                        title: "Tiêu đề cần ít nhất 30 kí tự (0-9 a-z A-Z ',: )",
+                        icon: "error",
+                        button: "OK",
+                    });
+                    return;
+                }
+
+
+                if (!/^[a-zA-Z0-9 \p{L}]{2,}$/u.test(decodedTags)) {
+                    swal({
+                        title: "Tags chứa ít nhất 2 kí tự (0-9 a-z A-Z, dấu cách, tiếng việt có dấu)",
+                        icon: "error",
+                        button: "OK",
+                    });
+                    return;
+                }
+                if (!/^[\s\S]*(<img [^>]+>)[\s\S]{300,}$/u.test(decodedContent) && /\p{L}/u.test(decodedContent)) {
+                    swal({
+                        title: "Nội dung chứa ít nhất 300 kí tự và hình ảnh",
+                        icon: "error",
+                        button: "OK",
+                    });
+                    return;
+                }
+
+
 
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
@@ -327,31 +355,32 @@
 
                 xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlog", true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("content=" + content + "&title=" + title + "&date=" + date + "&category=" + selectedCategory);
+                xhttp.send("content=" + content + "&title=" + title + "&tags=" + tags + "&date=" + date + "&category=" + selectedCategory);
             }
 
-        </script>
+    </script>
 
-      <script>
-    <% if (request.getAttribute("messtrue") != null) {%>
-        swal({
-            title: "<%= request.getAttribute("messtrue")%>",
-            icon: "success",
-        }).then((value) => {
-            <% request.removeAttribute("messtrue"); %>
-        });
-    <% } %>
-</script>
-      <script>
-    <% if (request.getAttribute("messefalse") != null) {%>
-        swal({
-            title: "<%= request.getAttribute("messefalse")%>",
-            icon: "error",
-        }).then((value) => {
-            <% request.removeAttribute("messefalse"); %>
-        });
-    <% } %>
-</script>
+    <script>
+        <% if (request.getAttribute("messtrue") != null) {%>
+            swal({
+                title: "<%= request.getAttribute("messtrue")%>",
+                icon: "success",
+            }).then((value) => {
+        <% request.removeAttribute("messtrue"); %>
+            });
+        <% } %>
+    </script>
+    <script>
+        <% if (request.getAttribute("messefalse") != null) {%>
+            swal({
+                title: "<%= request.getAttribute("messefalse")%>",
+                icon: "error",
+            }).then((value) => {
+        <% request.removeAttribute("messefalse"); %>
+            }
+            );
+        <% }%>
+    </script>
 
-    </body>
+</body>
 </html>

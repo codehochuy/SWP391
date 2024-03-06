@@ -68,7 +68,8 @@
                                     function checkAndConfirm() {
                                         var newCategoryValue = document.getElementById('newCategoryValue').value;
 
-                                        if (newCategoryValue.trim() !== '') {
+                                        var pattern = /^[0-9a-zA-Z\p{L}][0-9a-zA-Z\p{L}\s]*$/u;
+                                        if (pattern.test(newCategoryValue) && newCategoryValue.length >= 2 && newCategoryValue.length <= 50) {
                                             swal({
                                                 title: "Xác nhận",
                                                 text: "Bạn có muốn tạo loại bài viết mới này?",
