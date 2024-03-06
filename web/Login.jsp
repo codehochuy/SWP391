@@ -15,9 +15,9 @@
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-        
-        
-        
+
+
+
     </head>
     <body>
         <div class="limiter">
@@ -52,6 +52,16 @@
                             <div class="container-login100-form-btn">
                                 <input type="submit" value="Đăng nhập" />
                             </div>
+                            <div class="text-right p-t-12">
+                                <a class="txt2" href="index">
+                                    Quay về trang chủ
+                                </a>
+                            </div>
+                            <div class="text-right p-t-12">
+                                <a class="txt2" href="register.jsp">
+                                    Đăng ký tài khoản mới
+                                </a>
+                            </div>
                             <!--=====LINK TÌM MẬT KHẨU======-->
                             <div class="text-right p-t-12">
                                 <a class="txt2" href="forgot.jsp">
@@ -61,6 +71,7 @@
                         </form>
 
                         <p style="color: red">${mess}</p>
+
                         <!--=====FOOTER======-->
                         <!--                        <div class="text-center p-t-70 txt2">
                                                     Phần mềm quản lý bán hàng <i class="far fa-copyright" aria-hidden="true"></i>
@@ -72,5 +83,5 @@
         </div>
 
 
-</body>
+    </body>
 </html>
