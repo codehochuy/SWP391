@@ -75,15 +75,11 @@ public class LoadQuotationByID extends HttpServlet {
                     + "                                </div>\n"
                     + "                                <div class=\"form-group col-md-6\">\n"
                     + "                                    <label class=\"control-label\">Giá giao động</label>\n"
-                    + "                                    <input class=\"form-control\" type=\"number\"required name=\"price1\" value=\"" + quo.getPrice1() + "\" min=\"0\">\n"
+                    + "                                    <input class=\"form-control\" type=\"number\" required name=\"price1\" value=\"" + quo.getPrice1() + "\" min=\"1000000\" max=\"100000000\">\n"
                     + "                                </div>\n"
                     + "                                <div class=\"form-group col-md-6\">\n"
                     + "                                    <label class=\"control-label\">Giá giao động</label>\n"
-                    + "                                    <input class=\"form-control\" type=\"number\"required name=\"price2\" value=\"" + quo.getPrice2() + "\" min=\"0\">\n"
-                    + "                                </div>\n"
-                    + "                                <div class=\"form-group col-md-6\">\n"
-                    + "                                    <label class=\"control-label\">Thời gian thi công(tháng)</label>\n"
-                    + "                                    <input class=\"form-control\" type=\"number\"required name=\"time\" value=\"" + quo.getTime() + "\" min=\"0\">\n"
+                    + "                                    <input class=\"form-control\" type=\"number\" required name=\"price2\" value=\"" + quo.getPrice2() + "\" min=\"1000000\" max=\"100000000\">\n"
                     + "                                </div>\n"
                     + "                            </div>\n"
                     + "                            <BR>\n"
@@ -91,6 +87,7 @@ public class LoadQuotationByID extends HttpServlet {
                     + "                            <a class=\"btn btn-cancel\" data-dismiss=\"modal\" href=\"#\">Hủy bỏ</a>\n"
                     + "                            <BR>\n"
                     + "                        </form>");
+
         }
     }
 

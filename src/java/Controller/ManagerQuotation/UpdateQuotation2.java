@@ -85,10 +85,9 @@ public class UpdateQuotation2 extends HttpServlet {
         String service = request.getParameter("service");
         String price1 = request.getParameter("price1");
         String price2 = request.getParameter("price2");
-        String time = request.getParameter("time");
 
         QuotationDAO dao = new QuotationDAO();
-        boolean result = dao.updateQuotation(id, price1, price2, time);
+        boolean result = dao.updateQuotation(id, price1, price2, "0");
         if (result) {
             QuotationDAO dAO = new QuotationDAO();
             List<Quotation> list = dAO.getAll();
