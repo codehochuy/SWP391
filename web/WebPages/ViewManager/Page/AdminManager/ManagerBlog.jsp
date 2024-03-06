@@ -68,6 +68,7 @@
                                         <th>Ngày tạo</th>
                                         <th>Ngày sửa đổi</th>
                                         <th>Loại tin tức</th>
+                                        <th>Tags</th>
                                         <th>Người tạo</th>
                                         <th>Chức năng</th>
 
@@ -82,6 +83,7 @@
                                             <td>${blog.dateModified}</td>
                                           
                                               <td>${blog.blogCategory.blogCategoryName}</td>
+                                              <td>${blog.tags}</td>
                                                 <td>${blog.user.name}</td>
                                             <td style="display: flex; justify-content: space-left">
 

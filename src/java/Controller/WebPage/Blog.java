@@ -11,6 +11,7 @@ import DTO.BlogDTO;
 import Utils.DBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -85,10 +86,13 @@ public class Blog extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+          request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+       
       String category = request.getParameter("category");
    BlogDAO blogDAO = new BlogDAO();
         List<BlogDTO> blogs = blogDAO.getAllbyCategory(category);
-
+      
 
         
          BlogDAO dao2 = new BlogDAO();
