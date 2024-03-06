@@ -6,8 +6,7 @@
 package Controller.WebPage;
 
 import DAO.ProjectDAO;
-import DTO.Project;
-import DTO.ProjectImage;
+import DTO.Project_containsImage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -57,8 +56,8 @@ public class ListProject extends HttpServlet {
          request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         ProjectDAO dao = new ProjectDAO();
-         List<Project> project = dao.getAll();
-        request.setAttribute("project", project);
+         List<Project_containsImage> Project_containsImage = dao.getAll_containsImage();
+        request.setAttribute("project", Project_containsImage);
         
                 
 

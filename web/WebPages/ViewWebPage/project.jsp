@@ -74,8 +74,8 @@
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
                                 <div class="blog-item">
                                     <div class="image-gallery">
-                                            <a href="img/${image.link}" data-lightbox="project-gallery" data-title="${image.caption}">
-                                                <img src="img/${image.link}" alt="${image.caption}" class="thumbnail" />
+                                            <a href="img/${project.imageLink}" data-lightbox="project-gallery" >
+                                                <img src="img/${project.imageLink}"  class="thumbnail" style="width: 350px; height: 200px;"/>
                                             </a>
                                     </div>  
                                     <div class="blog-title">
