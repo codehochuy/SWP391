@@ -108,8 +108,16 @@
                         </c:if>
                         <c:if test="${not empty sessionScope.USER}">
                             <div class="nav-item dropdown avatar">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><img
-                                        alt="avatar" src="./img/${sessionScope.USER.avatar}" width="50px"></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                    <c:choose>
+                                        <c:when test="${empty sessionScope.USER.password}">
+                                            <img alt="avatar" src="${sessionScope.USER.avatar}" width="50px">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img alt="avatar" src="./img/${sessionScope.USER.avatar}" width="50px">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </a>
                                 <div class="dropdown-menu">
                                     <a href="Profile" class="dropdown-item">Hồ sơ</a>
                                     <a href="QuotationHistory" class="dropdown-item">Lịch sử báo giá</a>
