@@ -246,13 +246,19 @@
         const form = document.getElementById('formFill');
 
         form.addEventListener('click', function(event) {
+            let i = 0;
             let isValid = true;
-            const _1 = document.getElementById('_1');
-            const _2 = document.getElementById('_2');
-            const _3 = document.getElementById('_3');
-            const _4 = document.getElementById('_4');
-            const _5 = document.getElementById('_5');
-            const _6 = document.getElementById('_6');
+//            const errorIds = ['error_7', 'error_8', 'error_9', 'error_10', 'error_11', 'error_12'];
+//            const errorGots = [];
+//            const valueIds = ['7', '8', '9', '10', '11', '12'];
+//            const valueGots = [];
+            
+            const _1 = document.getElementById('1');
+            const _2 = document.getElementById('2');
+            const _3 = document.getElementById('3');
+            const _4 = document.getElementById('4');
+            const _5 = document.getElementById('5');
+            const _6 = document.getElementById('6');
             
             const error_1 = document.getElementById('error_1');
             const error_2 = document.getElementById('error_2');
@@ -260,6 +266,7 @@
             const error_4 = document.getElementById('error_4');
             const error_5 = document.getElementById('error_5');
             const error_6 = document.getElementById('error_6');
+//            errorGots[i] = document.getElementById(errorIds[i]);
 
             // Reset error messages
             error_1.textContent = '';
@@ -268,6 +275,18 @@
             error_4.textContent = '';
             if (error_5) error_5.textContent = '';
             if (error_6) error_6.textContent = '';
+            
+//            while (!errorGots[0]) {
+//                valueGots[0] = document.getElementById(valueIds[0]);
+//                errorGots[0].textContent = '';
+//                if (parseInt(valueGots[0].value) > 10000 || parseInt(valueGots[0].value) <= 0) {
+//                    isValid = false;
+//                    errorGots[0].textContent = 'Diện tích phải lớn hơn 0 và nhỏ hơn 10000 m2.';
+//                }
+//                break;
+//                i++;
+//                errorGots[i] = document.getElementById(errorIds[i]);
+//            }
 
             if (parseInt(_1.value) > 10000 || parseInt(_1.value) <= 0) {
                 isValid = false;
