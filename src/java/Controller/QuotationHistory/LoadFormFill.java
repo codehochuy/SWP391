@@ -65,6 +65,7 @@ public class LoadFormFill extends HttpServlet {
                         + "                                               required=\"required\"\n"
                         + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
                         + "                                        <p class=\"help-block text-danger\"></p>\n"
+                                + "<span id=\"error_"+(i+1)+"\" class=\"error\"></span>"
                         + "                                    </div>");
                 } else {
                     out.println("<div class=\"control-group\">\n"
@@ -73,6 +74,7 @@ public class LoadFormFill extends HttpServlet {
                         + "                                               required=\"required\"\n"
                         + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
                         + "                                        <p class=\"help-block text-danger\"></p>\n"
+                                + "<span id=\"error_"+(i+1)+"\" class=\"error\"></span>"
                         + "                                    </div>");
                 }
             }

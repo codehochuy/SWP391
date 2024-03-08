@@ -5,8 +5,10 @@
  */
 package Controller.WebPage;
 
+import DAO.QuotationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +34,9 @@ public class FullContructionPrice extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            QuotationDAO dao = new QuotationDAO();
+            List<DTO.Quotation> list = dao.getAll();
+            request.setAttribute("list", list);
             request.getRequestDispatcher("WebPages/ViewWebPage/fullContructionPrice.jsp").forward(request, response);
         }
     }
