@@ -190,6 +190,36 @@
             <% request.removeAttribute("messefalse"); %>
             <% }%>
         </script>
+        <script>
+            // Thêm sự kiện 'submit' vào biểu mẫu
+            document.getElementById("createPro").onsubmit = function (event) {
+                // Lấy giá trị nhập vào trường housetype
+                var housetypeValue = document.getElementsByName("housetype")[0].value.trim();
+
+                // Kiểm tra xem trường housetype có rỗng hay không
+                if (housetypeValue === "") {
+                    // Nếu trống, hiển thị thông báo và ngăn chặn việc gửi biểu mẫu
+                    alert("Vui lòng nhập tên kiểu nhà!");
+                    event.preventDefault(); // Ngăn chặn việc gửi biểu mẫu
+                }
+            };
+
+            // Thêm sự kiện 'blur' vào trường housetype để kiểm tra khi mất focus
+            document.getElementsByName("housetype")[0].onblur = function () {
+                // Lấy giá trị nhập vào trường housetype
+                var housetypeValue = this.value.trim();
+
+                // Kiểm tra xem trường housetype có rỗng hay không
+                if (housetypeValue === "") {
+                    // Nếu trống, hiển thị thông báo
+                    document.getElementById("tensp-error").innerHTML = "Vui lòng nhập tên kiểu nhà!";
+                } else {
+                    // Nếu không trống, xóa thông báo nếu có
+                    document.getElementById("tensp-error").innerHTML = "";
+                }
+            };
+        </script>
+
 
     </body>
 
