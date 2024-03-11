@@ -333,6 +333,7 @@
 
     <script>
         function createBlog() {
+//             String regex = "^[0-9a-zA-Z\\p{L}\\p{P}][0-9a-zA-Z\\p{L}\\p{P}\\s]*[0-9a-zA-Z\\p{L}\\p{P}]$";
             var title = encodeURIComponent(document.getElementById("title").value); // Mã hóa tiêu đề
             var tags = encodeURIComponent(document.getElementById("tags").value); // Mã hóa tiêu đề
             var content = encodeURIComponent(tinymce.activeEditor.getContent()); // Mã hóa nội dung

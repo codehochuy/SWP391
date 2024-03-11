@@ -45,7 +45,7 @@ public class CreateFoundation extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateFoundation</title>");            
+            out.println("<title>Servlet CreateFoundation</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CreateFoundation at " + request.getContextPath() + "</h1>");
@@ -80,28 +80,39 @@ public class CreateFoundation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            request.setCharacterEncoding("UTF-8");
-            RoofNFoundationDAO aO = new RoofNFoundationDAO();
-            String name = request.getParameter("name");
-            String area = request.getParameter("area");
-            boolean result = aO.addFoundation(name,area);
-            if (result) {
-                RoofNFoundationDAO dao = new RoofNFoundationDAO();
-                List<RoofNFoundation> foundations = dao.getAll();
-                request.setAttribute("foundations", foundations);
-                request.setAttribute("messtrue", "Đã thêm thành công");
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
 
-            } else {
-                RoofNFoundationDAO dao = new RoofNFoundationDAO();
-                List<RoofNFoundation> foundations = dao.getAll();
-                request.setAttribute("foundations", foundations);
-                request.setAttribute("messefalse", "Đã thêm thất bại");
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
+        request.setCharacterEncoding("UTF-8");
+
+        String name = request.getParameter("name");
+        String area = request.getParameter("area");
+        String regex = "^[0-9a-zA-Z\\p{L}\\p{P}][0-9a-zA-Z\\p{L}\\p{P}\\s]*[0-9a-zA-Z\\p{L}\\p{P}]$";
+        if (!name.matches(regex)) {
+            RoofNFoundationDAO dao = new RoofNFoundationDAO();
+            List<RoofNFoundation> foundations = dao.getAll();
+            request.setAttribute("foundations", foundations);
+            request.setAttribute("messefalse", "Kiểm tra tên hoặc % diện tích");
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
+        } else {
+            try {
+                RoofNFoundationDAO aO = new RoofNFoundationDAO();
+                boolean result = aO.addFoundation(name, area);
+                if (result) {
+                    RoofNFoundationDAO dao = new RoofNFoundationDAO();
+                    List<RoofNFoundation> foundations = dao.getAll();
+                    request.setAttribute("foundations", foundations);
+                    request.setAttribute("messtrue", "Đã thêm thành công");
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
+
+                } else {
+                    RoofNFoundationDAO dao = new RoofNFoundationDAO();
+                    List<RoofNFoundation> foundations = dao.getAll();
+                    request.setAttribute("foundations", foundations);
+                    request.setAttribute("messefalse", "Đã thêm thất bại");
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CreateComponent.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(CreateComponent.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

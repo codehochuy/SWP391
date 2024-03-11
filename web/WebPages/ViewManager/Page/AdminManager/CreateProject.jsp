@@ -51,16 +51,72 @@
                                     <input class="form-control" type="text" name="projectname" required>
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var projectNameInput = document.getElementsByName('projectname')[0];
+                                        var regex = /^[0-9a-zA-Z\p{L}\p{P}][0-9a-zA-Z\p{L}\p{P}\s]*[0-9a-zA-Z\p{L}\p{P}]$/u;
+                                        projectNameInput.addEventListener('blur', function () {
+                                            var projectNameValue = projectNameInput.value.trim();
+
+                                            if (!projectNameValue.match(regex)) {
+                                                // Sử dụng SweetAlert để hiển thị thông báo
+                                                swal({
+                                                    title: 'Lỗi',
+                                                    text: 'Tên dự án không hợp lệ',
+                                                    icon: 'error',
+                                                    buttons: 'OK',
+                                                    dangerMode: true,
+                                                }).then(function () {
+                                                    projectNameInput.focus();
+                                                });
+                                            } else {
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
+
+
+
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Ngày hoàn thành</label>
                                     <input class="form-control" type="date" name="date" required>
                                     <div class="error-message" id="price-error"></div>
                                 </div>
+
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Thời gian hoàn thành/ngày</label>
                                     <input class="form-control" type="number" min="0" name="time" required>
                                     <div class="error-message" id="quantity-error"></div>
                                 </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var projectNameInput = document.getElementsByName('time')[0];
+                                        var regex = /^[1-9][0-9]*$/;
+
+                                        projectNameInput.addEventListener('blur', function () {
+                                            var projectNameValue = projectNameInput.value.trim();
+
+                                            if (!projectNameValue.match(regex)) {
+                                                // Sử dụng SweetAlert để hiển thị thông báo
+                                                swal({
+                                                    title: 'Lỗi',
+                                                    text: 'Số không hợp lệ',
+                                                    icon: 'error',
+                                                    buttons: 'OK',
+                                                    dangerMode: true,
+                                                }).then(function () {
+                                                    projectNameInput.focus();
+                                                });
+                                            } else {
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
                                 <div class="form-group col-md-4">
                                     <label for="exampleSelect1" class="control-label">Dịch vụ</label>
                                     <select class="form-control" id="exampleSelect1" name="service">
@@ -103,19 +159,71 @@
                                     <textarea  required="" class="form-control" name="description" id="description" rows="5"></textarea>
                                     <div class="error-message" id="description-error"></div>
                                 </div>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var projectNameInput = document.getElementsByName('description')[0];
+                                        var regex = /^[0-9a-zA-Z\p{L}\p{P}][0-9a-zA-Z\p{L}\p{P}\s]*[0-9a-zA-Z\p{L}\p{P}]$/u;
+                                        projectNameInput.addEventListener('blur', function () {
+                                            var projectNameValue = projectNameInput.value.trim();
+
+                                            if (!projectNameValue.match(regex)) {
+                                                // Sử dụng SweetAlert để hiển thị thông báo
+                                                swal({
+                                                    title: 'Lỗi',
+                                                    text: 'Tên dự án không hợp lệ',
+                                                    icon: 'error',
+                                                    buttons: 'OK',
+                                                    dangerMode: true,
+                                                }).then(function () {
+                                                    projectNameInput.focus();
+                                                });
+                                            } else {
+                                            }
+                                        });
+                                    });
+                                </script>
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Ảnh dự án</label>
                                     <div id="myfileupload">
                                         <input type="file" id="uploadfile" name="ImageUpload" onchange="readURL(this);" multiple>
                                     </div>
                                     <div id="thumbbox">
-                                         Các ảnh đã chọn 
+                                        Các ảnh đã chọn 
                                         <div id="thumbimages"></div>
                                         <a class="removeimg" href="javascript:"></a>
                                     </div>                     
                                     <span id="imageError" class="error"></span>
                                 </div>
+
                                 <button class="btn btn-save" type="submit" >Lưu lại</button>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var saveButton = document.querySelector('.btn-save');
+                                        var imageInput = document.getElementById('uploadfile');
+                                        var imageError = document.getElementById('imageError');
+
+                                        saveButton.addEventListener('click', function (event) {
+                                            var selectedFiles = imageInput.files;
+
+                                            if (selectedFiles.length === 0) {
+                                                // Sử dụng SweetAlert để hiển thị thông báo
+                                                swal({
+                                                    title: 'Lỗi',
+                                                    text: 'Vui lòng chọn ít nhất một ảnh',
+                                                    icon: 'error',
+                                                    buttons: 'OK',
+                                                    dangerMode: true,
+                                                });
+
+                                                // Ngăn chặn sự kiện mặc định của nút "Lưu lại" (ngăn form được submit)
+                                                event.preventDefault();
+                                            } else {
+                                                imageError.innerHTML = ''; // Xóa thông báo lỗi nếu có
+                                            }
+                                        });
+                                    });
+                                </script>
+
                                 <a class="btn btn-cancel" href="ManagerProject">Hủy bỏ</a>
 
                             </form>
@@ -149,47 +257,47 @@
 
 
         <script type="text/javascript">
-                                            $('#sampleTable').DataTable();
-                                            //Thời Gian
-                                            function time() {
-                                                var today = new Date();
-                                                var weekday = new Array(7);
-                                                weekday[0] = "Chủ Nhật";
-                                                weekday[1] = "Thứ Hai";
-                                                weekday[2] = "Thứ Ba";
-                                                weekday[3] = "Thứ Tư";
-                                                weekday[4] = "Thứ Năm";
-                                                weekday[5] = "Thứ Sáu";
-                                                weekday[6] = "Thứ Bảy";
-                                                var day = weekday[today.getDay()];
-                                                var dd = today.getDate();
-                                                var mm = today.getMonth() + 1;
-                                                var yyyy = today.getFullYear();
-                                                var h = today.getHours();
-                                                var m = today.getMinutes();
-                                                var s = today.getSeconds();
-                                                m = checkTime(m);
-                                                s = checkTime(s);
-                                                nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                                if (dd < 10) {
-                                                    dd = '0' + dd
-                                                }
-                                                if (mm < 10) {
-                                                    mm = '0' + mm
-                                                }
-                                                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                                        '</span>';
-                                                document.getElementById("clock").innerHTML = tmp;
-                                                clocktime = setTimeout("time()", "1000", "Javascript");
+                                    $('#sampleTable').DataTable();
+                                    //Thời Gian
+                                    function time() {
+                                        var today = new Date();
+                                        var weekday = new Array(7);
+                                        weekday[0] = "Chủ Nhật";
+                                        weekday[1] = "Thứ Hai";
+                                        weekday[2] = "Thứ Ba";
+                                        weekday[3] = "Thứ Tư";
+                                        weekday[4] = "Thứ Năm";
+                                        weekday[5] = "Thứ Sáu";
+                                        weekday[6] = "Thứ Bảy";
+                                        var day = weekday[today.getDay()];
+                                        var dd = today.getDate();
+                                        var mm = today.getMonth() + 1;
+                                        var yyyy = today.getFullYear();
+                                        var h = today.getHours();
+                                        var m = today.getMinutes();
+                                        var s = today.getSeconds();
+                                        m = checkTime(m);
+                                        s = checkTime(s);
+                                        nowTime = h + " giờ " + m + " phút " + s + " giây";
+                                        if (dd < 10) {
+                                            dd = '0' + dd
+                                        }
+                                        if (mm < 10) {
+                                            mm = '0' + mm
+                                        }
+                                        today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                                        tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                                                '</span>';
+                                        document.getElementById("clock").innerHTML = tmp;
+                                        clocktime = setTimeout("time()", "1000", "Javascript");
 
-                                                function checkTime(i) {
-                                                    if (i < 10) {
-                                                        i = "0" + i;
-                                                    }
-                                                    return i;
-                                                }
+                                        function checkTime(i) {
+                                            if (i < 10) {
+                                                i = "0" + i;
                                             }
+                                            return i;
+                                        }
+                                    }
         </script>
         <script>
             function readURL(input) {
@@ -214,7 +322,7 @@
             }
 
         </script>
-        
+
         <script>
             <% if (request.getAttribute("messtrue") != null) {%>
             swal("<%= request.getAttribute("messtrue")%>", "", "success");

@@ -62,7 +62,7 @@ public class LoadRoofByID extends HttpServlet {
                     + "                                    <input class=\"form-control\" type=\"text\" required name=\"name\" value=\"" + s.getCategoryname() + "\" >\n"
                     + "                                </div>\n"
                     + "                                <div class=\"form-group col-md-6\">\n"
-                    + "                                    <label class=\"control-label\">$ Diện tích</label>\n"
+                    + "                                    <label class=\"control-label\">% Diện tích</label>\n"
                     + "                                    <input class=\"form-control\" type=\"number\" required name=\"areapercent\" value=\"" + s.getAreaPercent()+ "\" >\n"
                     + "                                </div>\n"
                     + "                                <div class=\"form-group col-md-6\">\n"
