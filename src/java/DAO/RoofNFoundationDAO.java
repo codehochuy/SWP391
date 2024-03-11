@@ -191,7 +191,7 @@ public class RoofNFoundationDAO {
         try {
             con = db.getConn();
             if (con != null) {
-                String sqlRoof = "INSERT INTO [RoofNFoundation] (Name, AreaPercent, ComponentCategoryID) VALUES (?, ?, 1)";
+                String sqlRoof = "INSERT INTO [RoofNFoundation] (Name, AreaPercent, ComponentCategoryID) VALUES (?, ?, 2)";
                 stm = con.prepareStatement(sqlRoof);
                 stm.setString(1, name);
                 stm.setString(2, area);
@@ -219,7 +219,7 @@ public class RoofNFoundationDAO {
         try {
             con = db.getConn();
             if (con != null) {
-                String sqlRoof = "INSERT INTO [RoofNFoundation] (Name, AreaPercent, ComponentCategoryID) VALUES (?, ?, 2)";
+                String sqlRoof = "INSERT INTO [RoofNFoundation] (Name, AreaPercent, ComponentCategoryID) VALUES (?, ?, 1)";
                 stm = con.prepareStatement(sqlRoof);
                 stm.setString(1, name);
                 stm.setString(2, area);

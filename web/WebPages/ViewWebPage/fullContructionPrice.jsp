@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -148,26 +150,24 @@
 
                                     <p><strong>Tùy thuộc vào từng loại nhà thi công mà gia chủ lựa chọn, đơn giá xây nhà trọn gói tại TITAN được chia thành 3 nhóm chính như sau (chưa bao gồm vật tư hoàn thiện):</strong></p>
                                     <ul>
-                                        <li><strong>Công trình nhà phố hiện đại</strong>: Giá thi công trọn gói giao động từ <strong>5.000.000 đ/m2</strong> đến <strong>5.500.000 đ/m2</strong>.</li>
-                                        <li><strong>Công trình biệt thự hiện đại</strong>: Giá thi công trọn gói giao động từ <strong>5.500.000 đ/m2</strong> đến <strong>6.500.000 đ/m2</strong>.</li>
-                                        <li><strong>Công trình biệt thự cổ điển</strong>: Giá thi công trọn gói giao động từ <strong>6.500.000 đ/m2</strong> đến <strong>8.000.000 đ/m2</strong>.</li>
+                                        <c:forEach items="${requestScope.list}" var="i">
+                                            <c:if test="${i.service.id eq 2}"><li><strong>Công trình ${i.houseType.name} ${i.style.name}</strong>: Giá thi công trọn gói giao động từ <strong><fmt:formatNumber value="${i.price1}" pattern="###,###,###" /></strong> đến <strong><fmt:formatNumber value="${i.price2}" pattern="###,###,###" /> đ/m²</strong>.</li></th></c:if>
+                                            </c:forEach>
                                     </ul>
                                     <h4>Bảng giá xây nhà trọn gói</h4>
                                     <table border="1">
                                         <thead>
                                             <tr>
-                                                <th>Hạng công trình</th>
-                                                <th>Nhà phố hiện đại</th>
-                                                <th>Biệt thự hiện đại</th>
-                                                <th>Biệt thự cổ điển</th>
+                                                <c:forEach items="${requestScope.list}" var="i">
+                                                    <c:if test="${i.service.id eq 2}"><th>${i.houseType.name} ${i.style.name}</th></c:if>
+                                                    </c:forEach>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>Bảng giá xây nhà trọn gói</td>
-                                                <td>5,000,000 đ/m2 đến 5,500,000 đ/m2</td>
-                                                <td>5,500,000 đ/m2 đến 6,500,000 đ/m2</td>
-                                                <td>6,500,000 đ/m2 đến 8,000,000 đ/m2</td>
+                                                <c:forEach items="${requestScope.list}" var="i">
+                                                    <c:if test="${i.service.id eq 2}"><td>Từ <fmt:formatNumber value="${i.price1}" pattern="###,###,###" /> đến <fmt:formatNumber value="${i.price2}" pattern="###,###,###" /> đ/m²</td></c:if>
+                                                </c:forEach>
                                             </tr>
                                         </tbody>
                                     </table>

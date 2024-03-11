@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.ManagerQuotation;
+package Controller;
 
-import DAO.HouseTypeDAO;
-import DAO.QuotationDAO;
-import DAO.StyleDAO;
-import DTO.HouseType;
-import DTO.Quotation;
-import DTO.Style;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "UpdateQuotation2", urlPatterns = {"/UpdateQuotation2"})
-public class UpdateQuotation2 extends HttpServlet {
+@WebServlet(name = "Register", urlPatterns = {"/Register"})
+public class Register extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +41,10 @@ public class UpdateQuotation2 extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateQuotation2</title>");            
+            out.println("<title>Servlet Register</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateQuotation2 at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Register at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -79,49 +76,40 @@ public class UpdateQuotation2 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("quotationid");
-        String housetype = request.getParameter("housetype");
-        String style = request.getParameter("style");
-        String service = request.getParameter("service");
-        String price1 = request.getParameter("price1");
-        String price2 = request.getParameter("price2");
+        try {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String email = request.getParameter("email");
+            String name = request.getParameter("name");
+            
+            UserDAO dao = new UserDAO();
+            boolean isUsernameExists = dao.isUsernameExists(username);
+            boolean isEmailExists = dao.isEmailExists(email);
+            
+            if (isUsernameExists) {
+                // Username already exists, display an error message
+                request.setAttribute("errorMessage", "Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            } else if (isEmailExists) {
+                // Email already exists, display an error message
+                request.setAttribute("errorMessage", "Email đã tồn tại. Vui lòng chọn tên khác.");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            } else {
+                UserDAO dao2 = new UserDAO();
+                boolean result = dao2.registerUser(username, name, email, password);
+                if (result) {
+                    request.setAttribute("messtrue", "Đăng kí tài khoản thành công");
+                    request.getRequestDispatcher("register.jsp").forward(request, response); 
+                } else {
+                    request.setAttribute("messefalse", "Đăng kí tài khoản thất bại");
+                    request.getRequestDispatcher("register.jsp").forward(request, response); 
+                }
+            }
 
-        QuotationDAO dao = new QuotationDAO();
-        boolean result = dao.updateQuotation(id, price1, price2, "0");
-        if (result) {
-            QuotationDAO dAO = new QuotationDAO();
-            List<Quotation> list = dAO.getAll();
-
-            StyleDAO styleDAO = new StyleDAO();
-            List<Style> styles = styleDAO.getAll();
-
-            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-            List<HouseType> houseTypes = houseTypeDAO.getAll();
-
-            request.setAttribute("styles", styles);
-            request.setAttribute("houseTypes", houseTypes);
-            request.setAttribute("list", list);
-            request.setAttribute("messtrue", "Cập nhật bảng giá thành công");
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
-
-        } else {
-            QuotationDAO dAO = new QuotationDAO();
-            List<Quotation> list = dAO.getAll();
-
-            StyleDAO styleDAO = new StyleDAO();
-            List<Style> styles = styleDAO.getAll();
-
-            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-            List<HouseType> houseTypes = houseTypeDAO.getAll();
-
-            request.setAttribute("styles", styles);
-            request.setAttribute("houseTypes", houseTypes);
-            request.setAttribute("list", list);
-            request.setAttribute("messefalse", "Cập nhật bảng giá thất bại");
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
-
+        } catch (SQLException ex) {
+            ex.printStackTrace(); // Log the exception for debugging
         }
-    }
+    }   
 
     /**
      * Returns a short description of the servlet.
