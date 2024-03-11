@@ -89,7 +89,7 @@ public class DeleteBlogCategory extends HttpServlet {
             BlogDAO blogDAO2 = new BlogDAO();
           List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
             request.setAttribute("blogCategories", blogCategories);
-            request.setAttribute("messtrue", "Xóa loại bài viết thành công");
+            request.setAttribute("messtrue", "Xóa danh mục bài viết thành công");
              RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
         dispatcher.forward(request, response);
 
@@ -97,7 +97,7 @@ public class DeleteBlogCategory extends HttpServlet {
             BlogDAO blogDAO2 = new BlogDAO();
            List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
             request.setAttribute("blogCategories", blogCategories);
-            request.setAttribute("messefalse", "Loại bài viết đã liên kết với bài viết, không thể xoá");
+            request.setAttribute("messefalse", "Danh mục bài viết đã liên kết với bài viết, không thể xoá");
           RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
         dispatcher.forward(request, response);
         }

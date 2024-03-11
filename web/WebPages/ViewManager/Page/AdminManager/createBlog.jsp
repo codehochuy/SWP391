@@ -40,16 +40,16 @@
         <jsp:include page="../../Page/Header/headerAdmin.jsp"/>
         <main class="app-content">
             <div class="app-title">
-                <ul class="app-breadcrumb breadcrumb">
-                    <li class="breadcrumb-item"><a href="ManagerBlog">Quản lý Blog</a></li>
-                    <li class="breadcrumb-item"><a href="">Tạo Blog</a></li>
+                <ul class="app-breadcrumb breadcrumb side">
+                    <li class="breadcrumb-item active"><a href="ManagerBlog"><b>Bài viết</b></a></li>
+                         <li class="breadcrumb-item active"><a href="ManagerBlog"><b>Loại bài viết</b></a></li>
                 </ul>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
                     <div class="tile">
-                        <h1 class="tile-title">Tạo Blog</h1>
+                        <h1 class="tile-title">Tạo Bài Viết</h1>
                         <div class="tile-body">
 
 
@@ -60,9 +60,9 @@
 
 
                             <div class="form-group col-md-12">
-                                <label class="control-label">Loại tin tức</label>
+                                <label class="control-label">Loại bài viết</label>
                                 <select class="form-control" id="blogCategory" name="blogCategory" required>
-                                    <option value="" disabled selected>Lựa chọn loại tin tức</option>
+                                    <option value="" disabled selected>Chọn loại bài viết</option>
                                     <c:forEach var="category" items="${categoryList}">
                                         <option value="${category}">${category}</option>
                                     </c:forEach>
@@ -72,118 +72,179 @@
                                     <input class="form-control" type="text" id="newCategoryValue" name="newCategoryValue">
                                 </div>
                             </div>
-
-                            <!-- Your HTML code -->
-                            <script>
-                                document.getElementById('blogCategory').addEventListener('change', function () {
-                                    var selectedValue = this.value;
-                                    var newCategoryInput = document.getElementById('newCategoryInput');
-
-                                    if (selectedValue === 'newCategory') {
-                                        newCategoryInput.style.display = 'block';
-
-                                        // Add event listener to newCategoryValue input field
-                                        document.getElementById('newCategoryValue').addEventListener('blur', confirmCreateNewCategory);
-                                    } else {
-                                        newCategoryInput.style.display = 'none';
-                                    }
-                                });
-
-                                function confirmCreateNewCategory() {
-                                    var newCategoryValue = document.getElementById('newCategoryValue').value;
-
-                                    Swal.fire({
-                                        title: 'Bạn có muốn tạo loại tin tức mới này?',
-                                        icon: 'question',
-                                        showCancelButton: true,
-                                        confirmButtonColor: '#3085d6',
-                                        cancelButtonColor: '#d33',
-                                        confirmButtonText: 'OK',
-                                        cancelButtonText: 'Huỷ bỏ'
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            // User clicked OK, send the data to the servlet using AJAX
-                                            var xhttp = new XMLHttpRequest();
-                                            xhttp.onreadystatechange = function () {
-                                                if (this.readyState == 4) {
-                                                    if (this.status == 200) {
-                                                        // Handle the response from the servlet if needed
-                                                        // For example, you can display a success message
-                                                        Swal.fire('Tạo loại tin tức mới thành công!', '', 'success');
-
-                                                        // Update the select element with the new category
-                                                        var categoryList = JSON.parse(this.responseText);
-                                                        updateCategorySelect(categoryList);
-
-                                                        // Hide the newCategoryInput div
-                                                        document.getElementById('newCategoryInput').style.display = 'none';
-
-                                                        // Reset the value in the input field
-                                                        document.getElementById('newCategoryValue').value = '';
-                                                        // Reset the selected option
-                                                        document.getElementById('blogCategory').value = '';
-                                                    } else {
-                                                        // Handle errors if the request was not successful
-                                                        Swal.fire('Lỗi khi tạo loại tin tức mới!', '', 'error');
-                                                    }
-                                                }
-                                            };
-
-                                            xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlogCategory", true);
-                                            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                                            xhttp.send("blogCategory=" + encodeURIComponent(newCategoryValue));
-                                        } else {
-                                            // User clicked "Huỷ bỏ," hide the input field
-                                            document.getElementById('newCategoryInput').style.display = 'none';
-                                            // Reset the value in the input field
-                                            document.getElementById('newCategoryValue').value = '';
-                                            // Reset the selected option
-                                            document.getElementById('blogCategory').value = '';
-                                        }
-                                    });
-                                }
-
-
-                                function updateCategorySelect(categoryList) {
-                                    var selectElement = document.getElementById('blogCategory');
-
-                                    // Clear existing options
-                                    selectElement.innerHTML = '';
-
-                                    // Add default option
-                                    var defaultOption = document.createElement('option');
-                                    defaultOption.value = '';
-                                    defaultOption.disabled = true;
-                                    defaultOption.selected = true;
-                                    defaultOption.textContent = 'Lựa chọn loại tin tức';
-                                    selectElement.appendChild(defaultOption);
-
-                                    // Add new category option
-                                    var newCategoryOption = document.createElement('option');
-                                    newCategoryOption.value = newCategoryValue;
-                                    newCategoryOption.textContent = newCategoryValue;
-                                    selectElement.appendChild(newCategoryOption);
-
-                                    // Add existing categories from the response
-                                    categoryList.forEach(function (category) {
-                                        var option = document.createElement('option');
-                                        option.value = category;
-                                        option.textContent = category;
-                                        selectElement.appendChild(option);
-                                    });
-                                }
-                            </script>
                         </div>
-
                         <div class="form-group col-md-12">
                             <label class="control-label">Tiêu đề</label>
-                            <input class="form-control" type="text" id="title" name="title" required><br>
+                            <input class="form-control" type="text" id="title" name="title" required onblur="checkDuplicateTitle()" placeholder="Chấp nhận các kí tự đặc biệt , . % ' - : "><br>
                         </div>
+                        <script>
+                            function checkDuplicateTitle() {
+                                var title = document.getElementById('title').value;
+
+                                // Send AJAX request to the server to check for duplicate title
+                                var xhttp = new XMLHttpRequest();
+                                xhttp.onreadystatechange = function () {
+                                    if (this.readyState == 4) {
+                                        if (this.status == 200) {
+                                            var response = this.responseText;
+                                            if (response === "DUPLICATE_TITLE") {
+                                                // Display SweetAlert for duplicate title
+                                                swal({
+                                                    title: "Tiêu đề đã tồn tại",
+                                                    text: "Vui lòng chọn một tiêu đề khác",
+                                                    icon: "error",
+                                                    button: "OK",
+                                                }).then(function () {
+                                                    // Clear the input field after displaying the alert
+                                                    document.getElementById('title').value = "";
+                                                });
+                                            } else {
+                                                // Clear the error message if no duplicate title
+                                                document.getElementById('titleErrorMessage').innerText = "";
+                                            }
+                                        }
+                                    }
+                                };
+
+                                xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlog", true);
+                                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                xhttp.send("title=" + encodeURIComponent(title));
+                            }
+                        </script>
+
+                        <script>
+                            //  All Special   `~!@#$%^&*()-_=+[{]}\|;:'",<.>/?
+                            //   title="Chấp nhận các kí tự đặc biệt , . % ' - : ">
+                            document.getElementById('title').addEventListener('blur', function () {
+                                trimInput('title');
+                            });
+
+                            function trimInput(inputId) {
+                                var inputElement = document.getElementById(inputId);
+                                if (inputElement) {
+                                    var sanitizedValue = inputElement.value;
+                                    //caplock
+                                    sanitizedValue = sanitizedValue.charAt(0).toUpperCase() + sanitizedValue.slice(1);
+                                    // Loại bỏ một số kí tự đặc biệt
+                                    sanitizedValue = sanitizedValue.replace(/[~`!@#$^&*()\_=+{}\[\]\\|;"<>\/?]/g, '');
+
+                                    // Loại bỏ các ký tự đặc biệt liên tiếp 
+                                    sanitizedValue = sanitizedValue.replace(/([`~!@#$%^&*()-_=+\[{\]}\\|;:'",<.>/?])\1+/g, '');
+
+                                    // Kiểm tra xem kí tự đầu tiên có phải là một trong các kí tự đặc biệt không
+                                    if (/^[~`!@#$%^&*()\-_=+{}\[\]\\|;:'",<.>\/?]/.test(sanitizedValue)) {
+                                        sanitizedValue = sanitizedValue.substring(1);
+                                    }
+                                    // Xoá khoảng trắng đầu và cuối và loại bỏ khoảng trắng liên tiếp
+                                    sanitizedValue = sanitizedValue.replace(/^\s+|\s+$/g, '').replace(/\s{2,}/g, ' ');
+                                    if (sanitizedValue.length < 20 || sanitizedValue.length > 70) {
+                                        // Display a SweetAlert2 pop-up
+                                        Swal.fire({
+                                            icon: 'warning',
+                                            title: 'Tiêu đề ít nhất 20 kí tự, nhiều nhất 70 kí tự',
+//                    text: 'Please enter at least 20 characters.',
+                                            confirmButtonText: 'OK',
+                                            onClose: function () {
+                                                // Optionally, focus back on the input field or perform other actions
+                                                inputElement.focus();
+                                            }
+                                        });
+                                    }
+                                    // Gán giá trị đã được xử lý lại cho inputElement
+                                    inputElement.value = sanitizedValue;
+                                }
+                            }
+                        </script>
+
+
 
                         <div class="form-group col-md-12">
                             <label class="control-label">Tags</label>
-                            <input class="form-control" type="text" id="tags" name="tags" required><br>
+                            <input class="form-control" type="text" id="tags" name="tags" placeholder = "Tối đa 20 tags" oninput="checkTags(this)" required><br>
                         </div>
+                        <script>
+                            function checkTags(inputField) {
+                                // Get the current value of the input field
+                                var currentValue = inputField.value;
+
+                                // Remove all invalid characters
+                                currentValue = currentValue.replace(/[^0-9a-zA-Z\u00C0-\u024F ]/g, '');
+
+                                // Remove extra spaces between words
+                                var cleanedValue = currentValue.replace(/\s+/g, ' ');
+
+                                // Split the cleaned input into words
+                                let words = cleanedValue.split(' ');
+
+                                // Variable to count '#' signs
+                                let hashCount = 0;
+
+                                // Process each word to ensure it starts with '#' and only contains valid characters
+                                for (let i = 0; i < words.length; i++) {
+                                    // Add '#' before each word, but limit to 20 '#' signs
+                                    if (words[i].length > 0 && words[i][0] !== '#' && hashCount < 20) {
+                                        words[i] = '#' + words[i];
+                                        hashCount++;
+                                    }
+
+                                    // Remove invalid characters after '#' sign
+                                    words[i] = words[i].replace(/#([^0-9a-zA-Z\u00C0-\u024F])/g, '#');
+
+                                    // Check if the word starts with '#' and only contains valid characters after '#'
+                                    if (words[i].startsWith('#') && !/^[0-9a-zA-Z\u00C0-\u024F]/.test(words[i].charAt(1))) {
+                                        // Remove the invalid characters after '#'
+                                        words[i] = '#' + words[i].slice(1).replace(/[^0-9a-zA-Z\u00C0-\u024F]/g, '');
+                                    }
+                                }
+
+                                // Join the words back together with spaces
+                                inputField.value = words.join(' ');
+                            }
+                        </script>
+
+
+                        <script>
+                            function checkDuplicates() {
+                                // Get the current value of the input field
+                                let inputField = document.getElementById('tags');
+                                let currentValue = inputField.value;
+
+                                // Remove extra spaces between words and trim leading/trailing spaces
+                                let cleanedValue = currentValue.replace(/\s+/g, ' ').trim();
+
+                                // Split the cleaned input into words
+                                let words = cleanedValue.split(' ');
+
+                                // Check for duplicate words
+                                let uniqueWords = [...new Set(words)];
+
+                                // Remove '#' signs followed by an empty string
+                                let cleanedUniqueWords = uniqueWords.filter(word => word !== '#');
+
+                                // Remove all characters that don't have '#' signs before them
+                                let cleanedString = cleanedUniqueWords.map(word => {
+                                    // Check if the word starts with '#' and only contains valid characters after '#'
+                                    if (word.startsWith('#') && /^[0-9a-zA-Z\u00C0-\u024F]/.test(word.charAt(1))) {
+                                        return word;
+                                    } else {
+                                        return '';
+                                    }
+                                }).join(' ');
+
+                                // Set the cleaned string back to the input field
+                                inputField.value = cleanedString.trim();
+                            }
+
+                            // Add click event listener to the document body
+                            document.body.addEventListener('click', function (event) {
+                                // Check if the clicked element is not the Tags input
+                                if (event.target.id !== 'tags') {
+                                    // Call the checkDuplicates function
+                                    checkDuplicates();
+                                }
+                            });
+                        </script>
+
 
                         <script>
                             // Lấy ngày hiện tại
@@ -199,7 +260,8 @@
                             // Đặt giá trị của trường ngày thành ngày hôm nay
                             document.getElementById('date').value = today;
                         </script>
-                        <textarea id="mytextarea"></textarea>
+                  <textarea id="mytextarea" placeholder="Nhập nội dung"></textarea>
+
                     </div>
                 </div>
             </div>
@@ -286,99 +348,81 @@
             var decodedTitle = decodeURIComponent(title);
             var decodedTags = decodeURIComponent(tags);
             var decodedContent = decodeURIComponent(content);
-        
-
-  if (!title.trim() || !tags.trim() || !content.trim() || !selectedCategory.trim()) {
-                    swal({
-                        title: "Vui lòng điền đầy đủ thông tin",
-                        icon: "error",
-                        button: "OK",
-                    });
-                    return;
-                }
-                if (decodedTitle.length < 30 || !/^[0-9a-zA-Z][a-zA-Z0-9',: \p{L}]+$/u.test(decodedTitle) ) {
-                    swal({
-                        title: "Tiêu đề cần ít nhất 30 kí tự (0-9 a-z A-Z ',: )",
-                        icon: "error",
-                        button: "OK",
-                    });
-                    return;
-                }
 
 
-                if (!/^[a-zA-Z0-9 \p{L}]{2,}$/u.test(decodedTags)) {
-                    swal({
-                        title: "Tags chứa ít nhất 2 kí tự (0-9 a-z A-Z, dấu cách, tiếng việt có dấu)",
-                        icon: "error",
-                        button: "OK",
-                    });
-                    return;
-                }
-                if (!/^[\s\S]*(<img [^>]+>)[\s\S]{300,}$/u.test(decodedContent) && /\p{L}/u.test(decodedContent)) {
-                    swal({
-                        title: "Nội dung chứa ít nhất 300 kí tự và hình ảnh",
-                        icon: "error",
-                        button: "OK",
-                    });
-                    return;
-                }
-
-
-
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function () {
-                    if (this.readyState == 4) {
-                        if (this.status == 200) {
-                            // Sử dụng SweetAlert để hiển thị thông báo
-                            swal({
-                                title: "Tạo blog thành công",
-//                text: "Blog created successfully!",
-                                icon: "success",
-                                button: "OK",
-                            }).then((value) => {
-                                // Tải lại trang sau khi người dùng nhấp vào nút OK
-                                if (value) {
-                                    window.location.reload();
-                                }
-                            });
-                        } else {
-                            // Xử lý trường hợp lỗi
-                            swal({
-                                title: "Tạo blog thất bại",
-//                text: "Failed to create blog!",
-                                icon: "error",
-                                button: "OK",
-                            });
-                        }
-                    }
-                };
-
-                xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlog", true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("content=" + content + "&title=" + title + "&tags=" + tags + "&date=" + date + "&category=" + selectedCategory);
+            if (!title.trim() || !tags.trim() || !content.trim() || !selectedCategory.trim()) {
+                Swal.fire({
+                    title: "Vui lòng điền đầy đủ thông tin",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+                return;
             }
+            if (!/^[\s\S]*(<img [^>]+>)[\s\S]{300,}$/u.test(decodedContent) && /\p{L}/u.test(decodedContent)) {
+                Swal.fire({
+                    title: "Nội dung chứa ít nhất 300 kí tự và hình ảnh",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                });
+                return;
+            }
+
+
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        // Sử dụng SweetAlert để hiển thị thông báo
+                        swal({
+                            title: "Tạo blog thành công",
+//                text: "Blog created successfully!",
+                            icon: "success",
+                            button: "OK",
+                        }).then((value) => {
+                            // Tải lại trang sau khi người dùng nhấp vào nút OK
+                            if (value) {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        // Xử lý trường hợp lỗi
+                        swal({
+                            title: "Tạo blog thất bại",
+//                text: "Failed to create blog!",
+                            icon: "error",
+                            button: "OK",
+                        });
+                    }
+                }
+            };
+
+            xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlog", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("content=" + content + "&title=" + title + "&tags=" + tags + "&date=" + date + "&category=" + selectedCategory);
+        }
 
     </script>
 
     <script>
         <% if (request.getAttribute("messtrue") != null) {%>
-            swal({
-                title: "<%= request.getAttribute("messtrue")%>",
-                icon: "success",
-            }).then((value) => {
+        swal({
+            title: "<%= request.getAttribute("messtrue")%>",
+            icon: "success",
+        }).then((value) => {
         <% request.removeAttribute("messtrue"); %>
-            });
+        });
         <% } %>
     </script>
     <script>
         <% if (request.getAttribute("messefalse") != null) {%>
-            swal({
-                title: "<%= request.getAttribute("messefalse")%>",
-                icon: "error",
-            }).then((value) => {
+        swal({
+            title: "<%= request.getAttribute("messefalse")%>",
+            icon: "error",
+        }).then((value) => {
         <% request.removeAttribute("messefalse"); %>
-            }
-            );
+        }
+        );
         <% }%>
     </script>
 

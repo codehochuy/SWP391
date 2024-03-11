@@ -67,7 +67,11 @@
                   <!-- Check if the blog object is not null -->
              
                     <div>
-            <h2><strong>Tên dự án: ${project.name}</strong></h2> <!-- Make the title bold -->
+                    <div style="text-align: center;">
+    <h2><strong>Tên dự án: ${project.name}</strong></h2>
+    <!-- Other content goes here -->
+</div>
+
              <p>Ngày hoàn thành: ${project.date}</p>
               <p>Thời gian hoàn thành/ngày: ${project.time}</p>
                  <p>Tên dịch vụ: ${project.service.name}</p>

@@ -58,6 +58,7 @@ public class ListProject extends HttpServlet {
         ProjectDAO dao = new ProjectDAO();
          List<Project_containsImage> Project_containsImage = dao.getAll_containsImage();
         request.setAttribute("project", Project_containsImage);
+         request.setAttribute("blogSize", Project_containsImage.size());
         
                 
 

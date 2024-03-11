@@ -34,11 +34,11 @@
         <link href="WebPages/ViewWebPage/lib/slick/slick-theme.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="WebPages/ViewWebPage/css/style.css" rel="stylesheet">
-<style>
-    .blog-content img {
-        max-width: 970px;
-    }
-</style>
+        <style>
+            .blog-content img {
+                max-width: 970px;
+            }
+        </style>
 
     </head>
     <body>
@@ -52,8 +52,8 @@
                             <h2>Blog</h2>
                         </div>
                         <div class="col-12">
-                            <a href="">Trang Chủ</a>
-                            <a href="">Blog</a>
+                            <a href="index">Trang Chủ</a>
+                            <a href="Blog">Bài viết</a>
                         </div>
                     </div>
                 </div>
@@ -61,27 +61,35 @@
 
 
             <div style="margin-left: 200px; margin-right: 200px;">
-                  <!-- Retrieve the BlogDTO object from the request attribute -->
-                  <c:set var="blog" value="${requestScope.blog}" />
+                <!-- Retrieve the BlogDTO object from the request attribute -->
+                <c:set var="blog" value="${requestScope.blog}" />
 
-                  <!-- Check if the blog object is not null -->
-                  <c:if test="${not empty blog}">
+                <!-- Check if the blog object is not null -->
+                <c:if test="${not empty blog}">
                     <div>
-            <h2><strong>${blog.title}</strong></h2> <!-- Make the title bold -->
-           <div class="blog-content">
-                <p>${blog.content}</p>
+                        <div style="text-align: center;">
+                            <h2><strong>${blog.title}</strong></h2><br> <!-- Make the title bold -->
+                        </div>
+                        <div class="blog-content">
+                            <p>${blog.content}</p><br><br>
+                        </div>
+                        <p>Tags: ${blog.tags}</p><br>
+
+                    </div>
+                    <div class="blog-meta">
+                        <p>Ngày tạo ${blog.dateCreate} <br>
+                        <p>Ngày sửa đổi ${blog.dateModified} <br>
+                        <p>   Tạo bởi ${blog.user.name}</p>
+                    </div>
+                </c:if>
+                <!-- If the blog object is null -->
+                <c:if test="${empty blog}">
+                    <p>Blog not found</p>
+                </c:if>
             </div>
-             <p>Tags: ${blog.tags}</p>
-        </div>
-                  </c:if>
-                  <!-- If the blog object is null -->
-                  <c:if test="${empty blog}">
-                      <p>Blog not found</p>
-                  </c:if>
-              </div>
-                
-                
-                
+
+
+
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>

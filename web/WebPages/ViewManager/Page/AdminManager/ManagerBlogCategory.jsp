@@ -33,7 +33,8 @@
         <main class="app-content">
             <div class="app-title"> 
                 <ul class="app-breadcrumb breadcrumb side">
-                    <li class="breadcrumb-item active"><a href="#"><b>Quản lý Blog</b></a></li>
+                    <li class="breadcrumb-item active"><a href="ManagerBlog"><b>Bài viết</b></a></li>
+                         <li class="breadcrumb-item active"><a href="ManagerBlog"><b>Danh mục bài viết</b></a></li>
                 </ul>
                 <div id="clock"></div>
             </div>
@@ -50,13 +51,13 @@
                                 <div class="col-md-12">
                                     <div class="col-sm-2">
                                         <a class="btn btn-add btn-sm" href="#" title="Thêm" onclick="toggleNewCategoryInput()">
-                                            <i class="fas fa-plus"></i> Tạo loại bài viết
+                                            <i class="fas fa-plus"></i> Tạo danh mục bài viết
                                         </a>
                                     </div>
 
                                     <div id="newCategoryInput" style="display: none;">
-                                        <label class="control-label">Nhập loại bài viết mới</label>
-                                        <input class="form-control" type="text" id="newCategoryValue" name="newCategoryValue" onblur="checkAndConfirm()">
+                                        <label class="control-label">Nhập danh mục bài viết mới</label>
+                                        <input class="form-control" type="text" id="newCategoryValue" name="newCategoryValue" placeholder = "Tối thiểu 2 kí tự, tối đa 50, không chấp nhận kí tự đặc biệt" onblur="checkAndConfirm()">
                                     </div>
                                 </div>
                                 <script>
@@ -68,11 +69,11 @@
                                     function checkAndConfirm() {
                                         var newCategoryValue = document.getElementById('newCategoryValue').value;
 
-                                        var pattern = /^[0-9a-zA-Z\p{L}][0-9a-zA-Z\p{L}\s]*$/u;
+                                    var pattern = /^[0-9a-zA-Z\p{L}][0-9a-zA-Z\p{L}\s]*[0-9a-zA-Z\p{L}]$/u;
                                         if (pattern.test(newCategoryValue) && newCategoryValue.length >= 2 && newCategoryValue.length <= 50) {
                                             swal({
                                                 title: "Xác nhận",
-                                                text: "Bạn có muốn tạo loại bài viết mới này?",
+                                                text: "Bạn có muốn tạo danh mục bài viết mới này?",
                                                 icon: "info",
                                                 buttons: ["Hủy bỏ", "Đồng ý"],
                                             }).then((willCreate) => {
@@ -82,9 +83,18 @@
                                                     var xhttp = new XMLHttpRequest();
                                                     xhttp.onreadystatechange = function () {
                                                         if (this.readyState == 4) {
-                                                            if (this.status == 200) {
+                                                            if (this.responseText.trim() === "DUPLICATE") {
+                                                                // Handle duplicate category error
                                                                 swal({
-                                                                    title: "Tạo loại bài viết thành công",
+                                                                    title: "Lỗi",
+                                                                    text: "Danh mục bài viết đã tồn tại.",
+                                                                    icon: "error",
+                                                                    button: "OK",
+                                                                });
+                                                            } else if (this.responseText.trim() === "SUCCESS") {
+                                                                // Handle success
+                                                                swal({
+                                                                    title: "Tạo danh mục bài viết thành công",
                                                                     icon: "success",
                                                                     button: "OK",
                                                                 }).then((value) => {
@@ -93,14 +103,12 @@
                                                                     }
                                                                 });
                                                             } else {
+                                                                // Handle other errors
                                                                 swal({
-                                                                    title: "Tạo loại bài viết thất bại",
+                                                                    title: "Lỗi",
+                                                                    text: "Đã xảy ra lỗi khi tạo danh mục bài viết.",
                                                                     icon: "error",
                                                                     button: "OK",
-                                                                }).then((value) => {
-                                                                    if (value) {
-                                                                        window.location.href = 'ManagerBlogCategory';
-                                                                    }
                                                                 });
                                                             }
                                                         }
@@ -109,9 +117,6 @@
                                                     xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlogCategory", true);
                                                     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                                     xhttp.send("newCategoryValue=" + encodeURIComponent(newCategoryValue));
-
-                                                    // For now, just show success message without actual AJAX request
-                                                    swal("Tạo loại bài viết mới thành công!", "", "success");
 
                                                     // Hide the input field after successful creation
                                                     toggleNewCategoryInput();
@@ -131,8 +136,8 @@
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
-                                        <th>ID loại bài viết</th>
-                                        <th>Tên loại</th>
+                                        <th>ID</th>
+                                        <th>Danh mục bài viết</th>
                                         <th>Chức năng</th>
 
                                     </tr>
@@ -275,7 +280,7 @@
 
                 swal({
                     title: "Cảnh báo",
-                    text: "Bạn có muốn xóa blog này?",
+                    text: "Bạn có muốn xóa danh mục bài viết này?",
                     buttons: ["Hủy bỏ", "Đồng ý"],
                 }).then((willDelete) => {
                     if (willDelete) {

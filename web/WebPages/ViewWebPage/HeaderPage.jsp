@@ -88,7 +88,7 @@
                             <a href="Service" class="nav-item nav-link">Dịch vụ</a>
                             <a href="Team" class="nav-item nav-link">Đội ngũ nhân sự</a>
                             <a href="ListProject" class="nav-item nav-link">Dự án</a>
-                            <a href="Blog" class="nav-item nav-link">Trang tin tức</a>
+                             <a href="Blog" class="nav-item nav-link">Bài viết</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Bảng giá</a>
                                 <div class="dropdown-menu">

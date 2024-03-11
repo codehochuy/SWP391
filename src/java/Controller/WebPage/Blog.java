@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 //import com.google.gson.Gson;
+
 /**
  *
  * @author PC
@@ -28,7 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 public class Blog extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -40,8 +42,7 @@ public class Blog extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
-         
+
         }
     }
 
@@ -57,23 +58,23 @@ public class Blog extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-             // Khởi tạo BlogDAO và lấy danh sách blog
+        // Khởi tạo BlogDAO và lấy danh sách blog
         BlogDAO blogDAO = new BlogDAO();
         List<BlogDTO> blogs = blogDAO.getAll();
-        
+
         BlogDAO dao2 = new BlogDAO();
         List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
-   
 
         // Đặt danh sách blog vào thuộc tính của request để hiển thị trên trang JSP
         request.setAttribute("blogs", blogs);
-         request.setAttribute("blogCategories", blogCategories);
+        request.setAttribute("blogCategories", blogCategories);
+        request.setAttribute("blogCategoriesSize", blogCategories.size());
+        request.setAttribute("blogSize", blogs.size());
+
         // Chuyển hướng đến trang JSP để hiển thị danh sách blog
         request.getRequestDispatcher("WebPages/ViewWebPage/blog.jsp").forward(request, response);
 
-}
-
-    
+    }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -86,23 +87,21 @@ public class Blog extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-       
-      String category = request.getParameter("category");
-   BlogDAO blogDAO = new BlogDAO();
-        List<BlogDTO> blogs = blogDAO.getAllbyCategory(category);
-      
 
-        
-         BlogDAO dao2 = new BlogDAO();
+        String category = request.getParameter("category");
+        BlogDAO blogDAO = new BlogDAO();
+        List<BlogDTO> blogs = blogDAO.getAllbyCategory(category);
+
+        BlogDAO dao2 = new BlogDAO();
         List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
-     
+
         request.setAttribute("blogs", blogs);
-         request.setAttribute("blogCategories", blogCategories);
+        request.setAttribute("blogCategories", blogCategories);
 
         request.getRequestDispatcher("WebPages/ViewWebPage/blog.jsp").forward(request, response);
-      
+
     }
 
     /**
