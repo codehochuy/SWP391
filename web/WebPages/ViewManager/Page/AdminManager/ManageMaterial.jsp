@@ -155,16 +155,16 @@
 
         <script>
             function confirmDelete(button) {
-                var projectid = button.getAttribute("data-userID");
+                var materialid = button.getAttribute("data-userID");
 
                 swal({
                     title: "Cảnh báo",
-                    text: "Bạn có muốn xóa dự án này?",
+                    text: "Bạn có muốn xóa vật liệu này?",
                     buttons: ["Hủy bỏ", "Đồng ý"],
                 }).then((willDelete) => {
                     if (willDelete) {
                         var form = button.closest("form");
-                        form.action = "DeleteProject?id=" + projectid;
+                        form.action = "DeleteMaterial?id=" + materialid;
                         form.submit();
                     }
 
