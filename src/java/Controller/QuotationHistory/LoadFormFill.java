@@ -62,7 +62,7 @@ public class LoadFormFill extends HttpServlet {
                     if (houseComponent.getComponentId() == 5){
                         out.println("<div class=\"control-group\">\n"
                             + "                                        <h5>Nhập " + houseComponent.getComponent() + " (số tầng)</h5>\n"
-                            + "                                        <input type=\"number\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m)\"\n"
+                            + "                                        <input type=\"text\" oninput=\"this.value = this.value.replace(/[^\\d.]/g, '').replace(/(\\..*)\\./g, '$1');\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng\"\n"
                             + "                                               required=\"required\"\n"
                             + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
                             + "                                        <p class=\"help-block text-danger\"></p>\n"
@@ -71,7 +71,7 @@ public class LoadFormFill extends HttpServlet {
                     } else {
                         out.println("<div class=\"control-group\">\n"
                             + "                                        <h5>Nhập " + houseComponent.getComponent() + " (m)</h5>\n"
-                            + "                                        <input type=\"number\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m)\"\n"
+                            + "                                        <input type=\"text\" oninput=\"this.value = this.value.replace(/[^\\d.]/g, '').replace(/(\\..*)\\./g, '$1');\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m)\"\n"
                             + "                                               required=\"required\"\n"
                             + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
                             + "                                        <p class=\"help-block text-danger\"></p>\n"
@@ -82,7 +82,7 @@ public class LoadFormFill extends HttpServlet {
                 } else {
                     out.println("<div class=\"control-group\">\n"
                             + "                                        <h5>Nhập " + houseComponent.getComponent() + " (m2)</h5>\n"
-                            + "                                        <input type=\"number\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m2)\"\n"
+                            + "                                        <input type=\"text\" oninput=\"this.value = this.value.replace(/[^\\d.]/g, '').replace(/(\\..*)\\./g, '$1');\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m2)\"\n"
                             + "                                               required=\"required\"\n"
                             + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
                             + "                                        <p class=\"help-block text-danger\"></p>\n"

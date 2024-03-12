@@ -70,6 +70,7 @@ public class ShowQuotationVersionDetail extends HttpServlet {
             
 
             request.setAttribute("listCustomerHouseComponent", listCustomerHouseComponent);
+            request.setAttribute("listHouseComponent", listHouseComponent);
             request.setAttribute("cusQuoVersion", cusQuoVersion);
             request.setAttribute("cusQuoId", cusQuoId);
             request.setAttribute("selectedHouseType", selectedHouseType);

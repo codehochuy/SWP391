@@ -45,21 +45,13 @@ public class NewVersionQuotationContent extends HttpServlet {
             int selectedService = Integer.parseInt(request.getParameter("service"));
             int selectedStyle = Integer.parseInt(request.getParameter("style"));
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
-            int foundationId = (request.getParameter("foundationId") != null && !request.getParameter("foundationId").isEmpty()) ? Integer.parseInt(request.getParameter("foundationId")) : 0;
-            int roofId = (request.getParameter("roofId") != null && !request.getParameter("roofId").isEmpty()) ? Integer.parseInt(request.getParameter("roofId")) : 0;
+            int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
+            int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
             double price = (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) ? Double.parseDouble(request.getParameter("price")) : 0.0;
 
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
-            double[] xValues = new double[listHouseComponent.size()];
-
-            for (int i = 1; i <= listHouseComponent.size(); i++) {
-                String iString = i + "";
-                double x = (request.getParameter(iString) != null && !request.getParameter(iString).isEmpty()) ? Double.parseDouble(request.getParameter(iString)) : 0;
-
-                // Lưu trữ giá trị x vào mảng hoặc danh sách tương ứng
-                xValues[i - 1] = x;
-            }
+            
 
             QuotationDAO quotationDao = new QuotationDAO();
             DTO.Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
@@ -73,14 +65,13 @@ public class NewVersionQuotationContent extends HttpServlet {
             if (createCusQuoVersion) {
                 for (int i = 0; i < listHouseComponent.size(); i++) {
                 HouseComponent houseComponent = listHouseComponent.get(i);
-                double xValue = xValues[i];
                 QuotationDAO dao4 = new QuotationDAO();
                 int versionId = dao4.getVersionId();
+                double value = (request.getParameter(houseComponent.getComponentId()+"") != null && !request.getParameter(houseComponent.getComponentId()+"").isEmpty()) ? Double.parseDouble(request.getParameter(houseComponent.getComponentId()+"")) : 0.0;
                 int componentID = houseComponent.getComponentId();
                 QuotationDAO dao5 = new QuotationDAO();
-                createCustomerHouseComponent = dao5.createCustomerHouseComponent(xValue, versionId, componentID);
-                if (createCustomerHouseComponent != true) {
-                    break;
+                if (!(value == 0)){
+                    createCustomerHouseComponent = dao5.createCustomerHouseComponent(value, versionId, componentID);
                 }
             }
             }

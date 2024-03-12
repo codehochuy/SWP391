@@ -53,16 +53,6 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
             int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
             int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
-            
-            double[] xValues = new double[listHouseComponent.size()];
-
-            for (int i = 1; i <= listHouseComponent.size(); i++) {
-                String iString = i + "";
-                double x = (request.getParameter(iString) != null && !request.getParameter(iString).isEmpty()) ? Double.parseDouble(request.getParameter(iString)) : 0;
-
-                // Lưu trữ giá trị x vào mảng hoặc danh sách tương ứng
-                xValues[i - 1] = x;
-            }
 
             if (selectedService == 2) {
                 out.println("<div class=\"control-group\">\n"
@@ -76,28 +66,52 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
             }
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 HouseComponent houseComponent = listHouseComponent.get(i);
-                double xValue = xValues[i];
-
-                out.println("<div class=\"control-group\">\n"
-                        + "    <h5>Nhập " + houseComponent.getComponent() + "</h5>\n"
-                        + "    <input type=\"number\" class=\"form-control\"  name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m)\"\n"
-                        + "           value=\"" + xValue + "\"\n"
-                        + "           required=\"required\"\n"
-                        + "           data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
-                        + "    <p class=\"help-block text-danger\"></p>\n"
-                        + "</div>");
+                double value = (request.getParameter(houseComponent.getComponentId() + "") != null && !request.getParameter(houseComponent.getComponentId() + "").isEmpty()) ? Double.parseDouble(request.getParameter(houseComponent.getComponentId() + "")) : 0;
+                if (houseComponent.getComponentId() <= 6) {
+                    if (houseComponent.getComponentId() == 5) {
+                        out.println("<div class=\"control-group\">\n"
+                                + "                                        <h5>Nhập " + houseComponent.getComponent() + " (số tầng)</h5>\n"
+                                + "                                        <input type=\"text\" oninput=\"this.value = this.value.replace(/[^\\d.]/g, '').replace(/(\\..*)\\./g, '$1');\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng\"\n"
+                                + "                                                 value=\"" + value + "\"\n"
+                                + "                                               required=\"required\"\n"
+                                + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
+                                + "                                        <p class=\"help-block text-danger\"></p>\n"
+                                + "<span id=\"error_" + houseComponent.getComponentId() + "\" class=\"error\"></span>"
+                                + "                                    </div>");
+                    } else {
+                        out.println("<div class=\"control-group\">\n"
+                                + "                                        <h5>Nhập " + houseComponent.getComponent() + " (m)</h5>\n"
+                                + "                                        <input type=\"text\" oninput=\"this.value = this.value.replace(/[^\\d.]/g, '').replace(/(\\..*)\\./g, '$1');\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m)\"\n"
+                                + "                                               value=\"" + value + "\"\n"
+                                + "                                               required=\"required\"\n"
+                                + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
+                                + "                                        <p class=\"help-block text-danger\"></p>\n"
+                                + "<span id=\"error_" + houseComponent.getComponentId() + "\" class=\"error\"></span>"
+                                + "                                    </div>");
+                    }
+                } else {
+                    out.println("<div class=\"control-group\">\n"
+                            + "                                        <h5>Nhập " + houseComponent.getComponent() + " (m2)</h5>\n"
+                            + "                                        <input type=\"text\" oninput=\"this.value = this.value.replace(/[^\\d.]/g, '').replace(/(\\..*)\\./g, '$1');\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m2)\"\n"
+                            + "                                                 value=\"" + value + "\"\n"
+                            + "                                               required=\"required\"\n"
+                            + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
+                            + "                                        <p class=\"help-block text-danger\"></p>\n"
+                            + "<span id=\"error_" + houseComponent.getComponentId() + "\" class=\"error\"></span>"
+                            + "                                    </div>");
+                }
             }
 
             out.println("<div class=\"control-group\">\n"
                     + "    <h5>Chọn Móng</h5>\n"
-                    + "    <select name=\"foundationId\" title=\"Chọn loại móng\" id=\"foundation\">\n");
+                    + "    <select name=\"foundation\" title=\"Chọn loại móng\" id=\"foundation\">\n");
 
             for (RoofNFoundation2 f : listFoundation) {
                 String selected = "";
                 if (f.getRoofNFoundationId() == foundationId) {
                     selected = "selected";
                 }
-                out.println("    <option value=\"" + f.getRoofNFoundationId() + "\"" + selected + ">" + f.getRoofNFoundationName() + " (Được tính bằng " + f.getAreaPercent() + "% diện tích xây dựng tầng trệt)</option>\n");
+                out.println("    <option value=\"" + f.getRoofNFoundationId() + "\"" + selected + ">" + f.getRoofNFoundationName() + "</option>\n");
             }
 
             out.println("    </select>\n"
@@ -106,14 +120,14 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
 
             out.println("<div class=\"control-group\">\n"
                     + "    <h5>Chọn Mái</h5>\n"
-                    + "    <select name=\"roofId\" title=\"Chọn loại mái\" id=\"roof\">\n");
+                    + "    <select name=\"roof\" title=\"Chọn loại mái\" id=\"roof\">\n");
 
             for (RoofNFoundation2 r : listRoof) {
                 String selected = "";
                 if (r.getRoofNFoundationId() == roofId) {
                     selected = "selected";
                 }
-                out.println("    <option value=\"" + r.getRoofNFoundationId() + "\"" + selected + ">" + r.getRoofNFoundationName() + " (Được tính bằng " + r.getAreaPercent() + "% diện tích xây dựng tầng trệt)</option>\n");
+                out.println("    <option value=\"" + r.getRoofNFoundationId() + "\"" + selected + ">" + r.getRoofNFoundationName() + "</option>\n");
             }
 
             out.println("    </select>\n"
@@ -124,9 +138,10 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
             out.println("<input type=\"hidden\" id=\"houseType\" name=\"houseType\" value=\"" + selectedHouseType + "\"/>");
             out.println("<input type=\"hidden\" id=\"style\" name=\"style\" value=\"" + selectedStyle + "\"/>");
             out.println("<input type=\"hidden\" id=\"style\" name=\"cusQuoId\" value=\"" + cusQuoId + "\"/>");
-            out.println("<div class=\"contact-form\">\n" +
-"                            <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\"  >Lưu báo giá</button>\n" +
-"                        </div>");
+
+            out.println("<div>\n"
+                    + "                                        <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\" onclick=\"loadQuotationContentVersionDetail2()\">Nhận Báo Giá</button>\n"
+                    + "                                    </div>");
 
         }
     }

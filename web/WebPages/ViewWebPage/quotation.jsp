@@ -11,11 +11,11 @@
 <html>
     <head>
         <style>
-        /* CSS styles */
-        .error {
-            color: red;
-            font-style: italic;
-        }
+            /* CSS styles */
+            .error {
+                color: red;
+                font-style: italic;
+            }
         </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -116,12 +116,12 @@
                         </div>
 
 
-                        
+
                         <!--Raw contruction-->
                         <div class="col-md-6 rawContruction">
                             <div class="contact-form">
                                 <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill">
-                                    
+
                                 </form>
                             </div>
                         </div>
@@ -130,11 +130,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Quotation End -->
             <div class="contact wow fadeInUp container">
                 <form action="SaveQuotationContent" id="quotationContent" method="post" name="sentMessage" novalidate="novalidate">
-                    
+
                 </form>
             </div>
 
@@ -215,7 +215,7 @@
                 });
             });
         </script>
-        
+
         <script>
             $(document).ready(function () {
                 $('#formFill').submit(function (event) {
@@ -252,10 +252,6 @@
         form.addEventListener('click', function(event) {
             let i = 0;
             let isValid = true;
-//            const errorIds = ['error_7', 'error_8', 'error_9', 'error_10', 'error_11', 'error_12'];
-//            const errorGots = [];
-//            const valueIds = ['7', '8', '9', '10', '11', '12'];
-//            const valueGots = [];
             
             const _1 = document.getElementById('1');
             const _2 = document.getElementById('2');
@@ -270,7 +266,6 @@
             const error_4 = document.getElementById('error_4');
             const error_5 = document.getElementById('error_5');
             const error_6 = document.getElementById('error_6');
-//            errorGots[i] = document.getElementById(errorIds[i]);
 
             // Reset error messages
             error_1.textContent = '';
@@ -280,60 +275,47 @@
             if (error_5) error_5.textContent = '';
             if (error_6) error_6.textContent = '';
             
-//            while (!errorGots[0]) {
-//                valueGots[0] = document.getElementById(valueIds[0]);
-//                errorGots[0].textContent = '';
-//                if (parseInt(valueGots[0].value) > 10000 || parseInt(valueGots[0].value) <= 0) {
-//                    isValid = false;
-//                    errorGots[0].textContent = 'Diện tích phải lớn hơn 0 và nhỏ hơn 10000 m2.';
-//                }
-//                break;
-//                i++;
-//                errorGots[i] = document.getElementById(errorIds[i]);
-//            }
+//           
 
             if (parseInt(_1.value) > 10000 || parseInt(_1.value) <= 0) {
-                isValid = false;
-                error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
-            }
-            
-            if (parseInt(_2.value) > 10000 || parseInt(_2.value) <= 0) {
-                isValid = false;
-                error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
-            }
-            
-            if ((parseInt(_3.value) >= parseInt(_1.value)) || parseInt(_3.value) < 0) {
-                isValid = false;
-                error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
-            } else
-            if ((parseInt(_4.value) >= (parseInt(_1.value)-parseInt(_3.value))) || parseInt(_4.value) < 0) {
-                isValid = false;
-                error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
-            }
-        
-            if (parseInt(_4.value) < 0) {
-                isValid = false;
-                error_4.textContent = 'Sân sau phải lớn hơn hoặc bằng 0.';
-            }
-        
-            if (_5) {
-                if (parseInt(_5.value) > 24 || parseInt(_5.value) < 0) {
-                isValid = false;
-                error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
-                }
-            }
-            
-            if (_6) {
-                if (parseInt(_6.value) >= (parseInt(_1.value) - parseInt(_3.value) - parseInt(_4.value)) || parseInt(_6.value) < 0) {
-                isValid = false;
-                error_6.textContent = 'Chiều dài ban công phải nhỏ hơn chiều dài của lầu và lớn hơn hoặc bằng 0.';
-                }
-            }
+                        isValid = false;
+                        error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
+                    }
+
+                    if (parseInt(_2.value) > 10000 || parseInt(_2.value) <= 0) {
+                        isValid = false;
+                        error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
+                    }
+
+                    if ((parseInt(_3.value) >= parseInt(_1.value)) || parseInt(_3.value) < 0) {
+                        isValid = false;
+                        error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
+                    }
+                    if ((parseInt(_4.value) >= (parseInt(_1.value) - parseInt(_3.value))) || parseInt(_4.value) < 0) {
+                        isValid = false;
+                        error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
+                    }
+
+                    if (_5.value !== '') {
+                        if (parseInt(_5.value) > 24 || parseInt(_5.value) < 0) {
+                            isValid = false;
+                            error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
+                        }
+                    }
+
+                    if (_6.value !== '') {
+                        if (parseInt(_6.value) <= 0 || parseInt(_6.value) > 2) {
+                            isValid = false;
+                            error_6.textContent = 'Chiều dài rộng ban công phải lớn hơn hoặc bằng 0 và nhỏ hơn 2m.';
+                        }
+                    }
 
             if (!isValid) {
                 event.preventDefault();
             }
         });
     </script>
+
+
     </body>
 </html>

@@ -33,64 +33,7 @@
         <link href="WebPages/ViewWebPage/lib/slick/slick-theme.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="WebPages/ViewWebPage/css/style.css" rel="stylesheet">
-        <style>
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                border-radius: 8px;
-                overflow: hidden;
-                margin: 20px 0;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            }
-            thead {
-                background-color: #fdbe33;
-                color: #fff;
-                text-align: center;
-            }
-            th, td {
-                padding: 15px;
-                text-align: left;
-                border-bottom: 1px solid #ddd;
-            }
-            tbody tr:nth-child(even) {
-                background-color: #f9f9f9;
-            }
-            tbody tr:hover {
-                background-color: #ecf0f1;
-            }
-            img {
-                /*                display: block;
-                                margin: 15px auto;
-                                width: 80%;
-                                height: auto;*/
-            }
-            /* styles.css */
-            #table-of-contents {
-                display: none; /* Mục lục mặc định ẩn đi */
-                background-color: #f0f0f0;
-                padding: 10px;
-                border-radius: 5px;
-                list-style: none;
-            }
 
-            #table-of-contents li {
-                margin-bottom: 5px;
-                list-style: none;
-            }
-
-            #table-of-contents a {
-                text-decoration: none;
-                color: #333;
-            }
-
-            #table-of-contents a:hover {
-                color: #fdbe33;
-            }
-
-            #toggle-contents {
-                margin-bottom: 10px;
-            }
-        </style>
     </head>
     <body>
         <div class="wrapper">      
@@ -111,37 +54,51 @@
             </div>
             <!-- Page Header End -->
 
-            <div class="section-header text-center">
-                <h2>Báo giá chi tiết</h2>
-            </div>
-            <!-- Portfolio Start -->
-            
-            <!--display quotation-->        
-            
-            <div class="portfolio">
-                
-                <div id="quotationContent" class="contact wow fadeInUp container contact-form">
-                    
-                </div>
-                
-                <div class="contact wow fadeInUp container contact-form">
-                    <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill" novalidate="novalidate">
-                        <input type="hidden" id="packagePrice" name="packagePrice" value="${packagePrice}"/>
-                        <input type="hidden" id="foundation" name="foundation" value="${foundation}"/>
-                        <input type="hidden" id="roof" name="roof" value="${roof}"/>
-                        
-                        <c:forEach items="${requestScope.listCustomerHouseComponent}" var="chc" varStatus="loop">
-                            <input type="hidden" name="${loop.index + 1}" value="${chc.value}"/>
-                        </c:forEach>
-                        <input type="hidden" id="service" name="service" value="${selectedService}"/>    
-                        <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
-                        <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
-                        <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cusQuoId}"/>
-                    </form>
-                </div>
-            </div>
-            <!-- Portfolio End -->
+            <div class="section-header">
 
+                <div class="section-header text-center">
+                    <h2>Báo giá chi tiết</h2>
+                </div>
+                <div class="contact wow fadeInUp">
+                    <div class="container">
+                        <div class="row">
+                            <div id="quotationContent" class="col-md-6">
+
+                            </div>
+                            <!--Raw contruction-->
+                            <div class="col-md-6 rawContruction">
+                                <div class="contact-form">
+                                    <div class="contact wow fadeInUp container contact-form">
+                                        <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill" novalidate="novalidate">
+                                            <input type="hidden" id="packagePrice" name="packagePrice" value="${packagePrice}"/>
+                                            <input type="hidden" id="foundation" name="foundation" value="${foundation}"/>
+                                            <input type="hidden" id="roof" name="roof" value="${roof}"/>
+
+                                            <c:forEach items="${requestScope.listCustomerHouseComponent}" var="chc" varStatus="loop">
+                                                <input type="hidden" name="${chc.componentId}" value="${chc.value}"/>
+                                            </c:forEach>
+                                            <input type="hidden" id="service" name="service" value="${selectedService}"/>    
+                                            <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
+                                            <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
+                                            <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cusQuoId}"/>
+                                        </form>
+                                        <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill2" novalidate="novalidate">
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact wow fadeInUp container">
+                <form action="SaveQuotationContent" id="quotationContent2" method="post" name="sentMessage" novalidate="novalidate">
+
+                </form>
+            </div>
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
 
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
@@ -165,6 +122,7 @@
 
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!--1-->
         <script>
             $(document).ready(function () {
                 // Kích hoạt sự kiện submit của biểu mẫu khi trang được tải
@@ -183,7 +141,7 @@
                         data: formData,
                         success: function (data) {
                             var quotationContent = document.getElementById("quotationContent");
-                            quotationContent.innerHTML = data ;
+                            quotationContent.innerHTML = data;
                         },
                         error: function (xhr) {
                             console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
@@ -195,19 +153,20 @@
                 $('#formFill').trigger('submit');
             });
         </script>
+        <!--2-->
         <script>
-            function loadFormQuotation() {
+            function loadFormChangeQuotationDetail() {
                 var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
-                    $("#formFill").find("input").each(function () {
-                        formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
-                    });
+                $("#formFill").find("input").each(function () {
+                    formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
+                });
                 $.ajax({// Sửa thành $.ajax thay vì $ajax
                     url: "/SWP391/LoadFormChangeQuotationDetail",
                     type: "get",
                     data: formData,
                     success: function (data) {
-                        var form = document.getElementById("formFill");
-                        form.innerHTML = data;
+                        var formFill = document.getElementById("formFill2");
+                        formFill.innerHTML = data;
                     },
                     error: function (xhr) {
                         // Xử lý lỗi nếu cần
@@ -215,16 +174,45 @@
                 });
             }
         </script>
-        
+        <!--3-->
         <script>
             $(document).ready(function () {
-                $('#formFill').submit(function (event) {
+                $('#formFill2').submit(function (event) {
                     event.preventDefault();
 
 
 
                     var formData = {};
-                    $("#formFill").find("input").each(function () {
+                    $("#formFill2").find("input, select").each(function () {
+                        formData[$(this).attr("name")] = $(this).val();
+                    });
+
+                    // Gửi dữ liệu đến servlet bằng AJAX
+                    $.ajax({
+                        url: 'LoadQuotationContentVersionDetail2',
+                        type: 'get',
+                        data: formData,
+                        success: function (data) {
+                            var quotationContent = document.getElementById("quotationContent2");
+                            quotationContent.innerHTML = data;
+                        },
+                        error: function (xhr) {
+                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('#quotationContent2').submit(function (event) {
+                    event.preventDefault();
+
+
+
+                    var formData = {};
+                    $("#quotationContent2").find("input").each(function () {
                         formData[$(this).attr("name")] = $(this).val();
                     });
 
@@ -234,7 +222,7 @@
                         type: 'get',
                         data: formData,
                         success: function (data) {
-                            var quotationContent = document.getElementById("formFill");
+                            var quotationContent = document.getElementById("quotationContent2");
                             quotationContent.innerHTML += data;
                         },
                         error: function (xhr) {
@@ -245,5 +233,79 @@
             });
         </script>
 
+
+
+        <script>
+            // JavaScript code for form validation
+            const form = document.getElementById('formFill2');
+
+            form.addEventListener('click', function (event) {
+                let i = 0;
+                let isValid = true;
+
+                const _1 = document.getElementById('1');
+                const _2 = document.getElementById('2');
+                const _3 = document.getElementById('3');
+                const _4 = document.getElementById('4');
+                const _5 = document.getElementById('5');
+                const _6 = document.getElementById('6');
+
+                const error_1 = document.getElementById('error_1');
+                const error_2 = document.getElementById('error_2');
+                const error_3 = document.getElementById('error_3');
+                const error_4 = document.getElementById('error_4');
+                const error_5 = document.getElementById('error_5');
+                const error_6 = document.getElementById('error_6');
+
+                // Reset error messages
+                error_1.textContent = '';
+                error_2.textContent = '';
+                error_3.textContent = '';
+                error_4.textContent = '';
+                if (error_5)
+                    error_5.textContent = '';
+                if (error_6)
+                    error_6.textContent = '';
+
+//           
+
+                if (parseInt(_1.value) > 10000 || parseInt(_1.value) <= 0) {
+                    isValid = false;
+                    error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
+                }
+
+                if (parseInt(_2.value) > 10000 || parseInt(_2.value) <= 0) {
+                    isValid = false;
+                    error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
+                }
+
+                if ((parseInt(_3.value) >= parseInt(_1.value)) || parseInt(_3.value) < 0) {
+                    isValid = false;
+                    error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
+                }
+                if ((parseInt(_4.value) >= (parseInt(_1.value) - parseInt(_3.value))) || parseInt(_4.value) < 0) {
+                    isValid = false;
+                    error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
+                }
+
+                if (_5.value !== '') {
+                    if (parseInt(_5.value) > 24 || parseInt(_5.value) < 0) {
+                        isValid = false;
+                        error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
+                    }
+                }
+
+                if (_6.value !== '') {
+                    if (parseInt(_6.value) <= 0 || parseInt(_6.value) > 2) {
+                        isValid = false;
+                        error_6.textContent = 'Chiều dài rộng ban công phải lớn hơn hoặc bằng 0 và nhỏ hơn 2m.';
+                    }
+                }
+
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        </script>
     </body>
 </html>

@@ -81,15 +81,15 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
             double sFoundation = 0;
             double sRoof = 0;
             //print out result
-            out.println("<h1>Kết quả tính diện tích và chi phí xây nhà</h1>");
-            out.println("<h2>Bạn cần " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + " với diện tích là " + width + "m x " + length + "m:</h2>");
+            out.println("<p>Kết quả tính diện tích và chi phí xây nhà</p>");
+            out.println("<p>Bạn cần " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + " với diện tích là " + width + "m x " + length + "m:</p>");
             DecimalFormat decimalFormat2 = new DecimalFormat("#.##");
             String formatteds = decimalFormat2.format(s);
-            out.println("<h2>Diện tích tầng trệt: " + s + "m2 x 100% = " + formatteds + "m2</h2>");
+            out.println("<p>Diện tích tầng trệt: " + s + "m2 x 100% = " + formatteds + "m2</p>");
             totalArea += s;
             if (floor != 0) {
                 for (int i = 1; i <= floor; i++) {
-                    out.println("<h2>Lầu " + i + ": " + s + "m2 x 100% = " + formatteds + "m2</h2>");
+                    out.println("<p>Lầu " + i + ": " + s + "m2 x 100% = " + formatteds + "m2</p>");
                 }
                 totalArea += s * floor;
             }
@@ -98,13 +98,13 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
                 sBalcony = (width * balcony) * floor;
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
                 String formattedsBalcony = decimalFormat.format(sBalcony);
-                out.println("<h2>Ban công: " + (width * balcony) + "m2 x " + floor + " lầu = " + formattedsBalcony + "m2</h2>");
+                out.println("<p>Ban công: " + (width * balcony) + "m2 x " + floor + " lầu = " + formattedsBalcony + "m2</p>");
                 totalArea += sBalcony;
             } else if (balcony != 0) {
                 sBalcony = (width * balcony);
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
                 String formattedsBalcony = decimalFormat.format(sBalcony);
-                out.println("<h2>Ban công: " + formattedsBalcony + "m2</h2>");
+                out.println("<p>Ban công: " + formattedsBalcony + "m2</p>");
                 totalArea += sBalcony;
             }
 
@@ -112,39 +112,36 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
                 sFrontYard = (width * frontYard) * 0.5;
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
                 String formattedSFrontYard = decimalFormat.format(sFrontYard);
-                out.println("<h2>Diện tích sân trước: " + width * frontYard + "m2 x 50% = " + formattedSFrontYard + "m2</h2>");
+                out.println("<p>Diện tích sân trước: " + width * frontYard + "m2 x 50% = " + formattedSFrontYard + "m2</p>");
                 totalArea += sFrontYard;
             }
             if (backYard != 0) {
                 sBackYard = (width * backYard) * 0.5;
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
                 String formattedSBackYard = decimalFormat.format(sBackYard);
-                out.println("<h2>Diện tích sân sau: " + width * backYard + "m2 x 50% = " + formattedSBackYard + "m2</h2>");
+                out.println("<p>Diện tích sân sau: " + width * backYard + "m2 x 50% = " + formattedSBackYard + "m2</p>");
                 totalArea += sBackYard;
             }
-            out.println("<h2>Check 1</h2>");
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 HouseComponent houseComponent = listHouseComponent.get(i);
                 if (houseComponent.getComponentId() > 6) {
-                    out.println("<h2>Check 2</h2>");
                     double areaBuild = Double.parseDouble(request.getParameter(houseComponent.getComponentId() + ""));
-                    out.println("<h2>Check 3</h2>");
                     DecimalFormat decimalFormat = new DecimalFormat("#.##");
                     String formattedSFoundation = decimalFormat.format(areaBuild);
-                    out.println("<h2>" + houseComponent.getComponent() + ": " + formattedSFoundation + "m2</h2>");
+                    out.println("<p>" + houseComponent.getComponent() + ": " + formattedSFoundation + "m2</p>");
                     totalArea += areaBuild;
                 }
             }
-            
+
             if (foundationId != 0) {
                 QuotationDAO foundationDao = new QuotationDAO();
                 RoofNFoundation2 foundation = foundationDao.getRoofNFoundationByID(foundationId);
                 sFoundation = S * (foundation.getAreaPercent() / 100.0);
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
                 String formattedSFoundation = decimalFormat.format(sFoundation);
-                out.println("<h2>" + foundation.getRoofNFoundationName() + ": " + S + "m2 x " + foundation.getAreaPercent() + "% = " + formattedSFoundation + "m2</h2>");
+                out.println("<p>" + foundation.getRoofNFoundationName() + ": " + S + "m2 x " + foundation.getAreaPercent() + "% = " + formattedSFoundation + "m2</p>");
                 totalArea += sFoundation;
-                out.println("<input type=\"hidden\" name=\"foundationId\" value=\"" + foundationId + "\">");
+                out.println("<input type=\"hidden\" name=\"foundation\" value=\"" + foundationId + "\">");
             }
 
             if (roofId != 0) {
@@ -153,9 +150,9 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
                 sRoof = s * (roof.getAreaPercent() / 100.0);
                 DecimalFormat decimalFormat = new DecimalFormat("#.##");
                 String formattedSRoof = decimalFormat.format(sRoof);
-                out.println("<h2>" + roof.getRoofNFoundationName() + ": " + s + "m2 x " + roof.getAreaPercent() + "% = " + formattedSRoof + "m2</h2>");
+                out.println("<p>" + roof.getRoofNFoundationName() + ": " + s + "m2 x " + roof.getAreaPercent() + "% = " + formattedSRoof + "m2</p>");
                 totalArea += sRoof;
-                out.println("<input type=\"hidden\" name=\"roofId\" value=\"" + roofId + "\">");
+                out.println("<input type=\"hidden\" name=\"roof\" value=\"" + roofId + "\">");
             }
 
             DecimalFormat decimalFormat1 = new DecimalFormat("#,###.##");
@@ -163,15 +160,15 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
             if (selectedService == 2 && packagePrice != 0) {
 
                 if (packagePrice == 1) {
-                    out.println("<h2>Gói xây dựng Tiết kiệm: " + formattedPrice + " VNĐ/m2</h2>");
+                    out.println("<p>Gói xây dựng Tiết kiệm: " + formattedPrice + " VNĐ/m2</p>");
                     out.println("<input type=\"hidden\" name=\"packagePrice\" value=\"" + packagePrice + "\">");
                 } else {
-                    out.println("<h2>Gói xây dựng VIP: " + formattedPrice + " VNĐ/m2</h2>");
+                    out.println("<p>Gói xây dựng VIP: " + formattedPrice + " VNĐ/m2</p>");
                     out.println("<input type=\"hidden\" name=\"packagePrice\" value=\"" + packagePrice + "\">");
                 }
 
             } else {
-                out.println("<h2>Đơn giá " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + ": " + formattedPrice + " VNĐ/m2</h2>");
+                out.println("<p>Đơn giá " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + ": " + formattedPrice + " VNĐ/m2</p>");
             }
 
             double totalPrice = totalArea * price;
@@ -179,23 +176,19 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
             String formattedTotalPrice = decimalFormat.format(totalPrice);
             DecimalFormat decimalFormat3 = new DecimalFormat("#.##");
             String formattedTotalArea = decimalFormat3.format(totalArea);
-            out.println("<h1>Tổng diện tích xây dựng: " + formattedTotalArea + "m2</h1>");
-            out.println("<h1 style=\"color: red;\">Tổng chi phí xây dựng: " + formattedTotalPrice + "VNĐ</h1>");
+            out.println("<p>Tổng diện tích xây dựng: " + formattedTotalArea + "m2</p>");
+            out.println("<p style=\"color: red;\">Tổng chi phí xây dựng: " + formattedTotalPrice + "VNĐ</p>");
             out.println("<input type=\"hidden\" name=\"houseType\" value=\"" + selectedHouseType + "\">");
             out.println("<input type=\"hidden\" name=\"service\" value=\"" + selectedService + "\">");
             out.println("<input type=\"hidden\" name=\"style\" value=\"" + selectedStyle + "\">");
             out.println("<input type=\"hidden\" name=\"price\" value=\"" + price + "\">");
             out.println("<input type=\"hidden\" name=\"cusQuoName\" value=\"" + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + "\">");
             for (int i = 0; i < listHouseComponent.size(); i++) {
-                out.println("<input type=\"hidden\" name=\"" + listHouseComponent.get(i).getComponentId() + "\" value=\"" + request.getParameter((i + 1) + "") + "\">");
+                out.println("<input type=\"hidden\" name=\"" + listHouseComponent.get(i).getComponentId() + "\" value=\"" + request.getParameter(listHouseComponent.get(i).getComponentId() + "") + "\">");
             }
             out.println("<div class=\"contact-form\">\n"
-                    + "                            <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\"  onclick=\"saveQuotationContent()\">Xem báo giá mới</button>\n"
+                    + "                            <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\"  onclick=\"loadFormChangeQuotationDetail()\">Thay đổi báo giá</button>\n"
                     + "                        </div>");
-            out.println("<div class=\"contact-form\">\n"
-                    + "                            <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\"  onclick=\"saveQuotationContent()\">Lưu báo giá mới</button>\n"
-                    + "                        </div>");
-
         }
     }
 
@@ -225,7 +218,6 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**
