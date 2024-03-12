@@ -68,16 +68,17 @@
                                                 <td>${component.name}</td>
 
                                                 <td style="display: flex; justify-content: space-left">
-                                                    <form action="DeleteStyle" method="Post" id="deleteForm">
-                                                        <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
-                                                                data-userID="${component.id}">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
-                                                    <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
-                                                            data-target="#ModalUP" onclick="getData('${component.id}')"><i class="fas fa-edit"></i></button>
+                                                    <c:if test="${component.id >6}">
+                                                        <form action="DeleteStyle" method="Post" id="deleteForm">
+                                                            <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
+                                                                    data-userID="${component.id}">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                        </form>
+                                                        <button class="btn btn-primary btn-sm edit" type="button" title="Sửa" id="show-emp" data-toggle="modal"
+                                                                data-target="#ModalUP" onclick="getData('${component.id}')"><i class="fas fa-edit"></i></button>
 
-
+                                                    </c:if>
                                                 </td>
                                             </tr>
                                         </c:if>
@@ -277,6 +278,8 @@
                 padding-left: 20px;
             }
         </style>
+
+
 
     </body>
 
