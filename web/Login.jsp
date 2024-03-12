@@ -52,7 +52,7 @@
                             <div class="container-login100-form-btn">
                                 <input type="submit" value="Đăng nhập" />
                             </div>
-                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile&redirect_uri=http://localhost:8084/SWP391/LoginGoogleHandler&response_type=code
+                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile&redirect_uri=https://ab64-113-161-74-165.ngrok-free.app/SWP391/LoginGoogleHandler&response_type=code
                                &client_id=763130706443-1ag9h8eptq9s3m17v09t55ifiklh9fi7.apps.googleusercontent.com&approval_prompt=force">Login With Google</a>
                             <div class="text-right p-t-12">
                                 <a class="txt2" href="index">

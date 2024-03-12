@@ -41,7 +41,7 @@ public class LoginGoogleHandler extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         HttpSession session = request.getSession(true);
-
+        System.out.println("HUYYYYYY");
         String code = request.getParameter("code");
         String accessToken = getToken(code);
         UserGoogleDto user = getUserInfo(accessToken);
