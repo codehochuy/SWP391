@@ -121,7 +121,7 @@
             <div class="portfolio">
                 
                 <div id="quotationContent" class="contact wow fadeInUp container contact-form">
-                
+                    
                 </div>
                 
                 <div class="contact wow fadeInUp container contact-form">
@@ -136,7 +136,7 @@
                         <input type="hidden" id="service" name="service" value="${selectedService}"/>    
                         <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
                         <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
-                        <input type="hidden" id="style" name="cusQuoId" value="${cusQuoId}"/>
+                        <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cusQuoId}"/>
                     </form>
                 </div>
             </div>
@@ -183,7 +183,7 @@
                         data: formData,
                         success: function (data) {
                             var quotationContent = document.getElementById("quotationContent");
-                            quotationContent.innerHTML = data;
+                            quotationContent.innerHTML = data ;
                         },
                         error: function (xhr) {
                             console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');

@@ -133,10 +133,10 @@ public class LoadQuotationContent extends HttpServlet {
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 HouseComponent houseComponent = listHouseComponent.get(i);
                 if ( houseComponent.getComponentId() > 6 ){
-                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
-                String formattedSFoundation = decimalFormat.format(sFoundation);
-                double areaBuild = Double.parseDouble(request.getParameter((i+1)+""));
-                out.println("<h2>" +houseComponent.getComponent()+ ": " +areaBuild+ "m2</h2>");
+                double areaBuild = Double.parseDouble(request.getParameter(houseComponent.getComponentId()+""));
+                DecimalFormat decimalFormat = new DecimalFormat("#.##");
+                String formattedSFoundation = decimalFormat.format(areaBuild);
+                out.println("<h2>" +houseComponent.getComponent()+ ": " +formattedSFoundation+ "m2</h2>");
                 totalArea += areaBuild;
                 }
             }

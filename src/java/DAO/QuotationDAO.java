@@ -874,8 +874,10 @@ public class QuotationDAO {
 
     public static void main(String[] args) {
         QuotationDAO dao = new QuotationDAO();
-        boolean check = dao.updateCustomerQuotationVersionStatus(1, 1);
-        System.out.println(check);
+        List<CustomerHouseComponent> list = dao.getListCustomerHouseComponentByVersionId(5);
+        for (CustomerHouseComponent customerHouseComponent : list) {
+            System.out.println(customerHouseComponent.getComponentId() +": "+customerHouseComponent.getComponentName());
+        }
     }
 
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.ManagerQuotation;
+package Controller.QuotationHistory;
 
 import DAO.QuotationDAO;
 import DTO.HouseComponent;
@@ -59,23 +59,26 @@ public class SaveQuotationContent extends HttpServlet {
             int quotationId = quotation.getId();
             QuotationDAO dao1 = new QuotationDAO();
             boolean createCustomerQuotation = dao1.createCustomerQuotation(cusQuoName, quotationId, userId);
-            boolean createCusQuoVersion = false;
-            if (createCustomerQuotation){
-                QuotationDAO dao2 = new QuotationDAO();
-                int cusQuoId = dao2.getCusQuoId();
-                QuotationDAO dao3 = new QuotationDAO();
-                createCusQuoVersion = dao3.createCusQuoVersion(price, foundationId, roofId, cusQuoId);
-            }
+//            boolean createCusQuoVersion = false;
+//            if (createCustomerQuotation){
+//                QuotationDAO dao2 = new QuotationDAO();
+//                int cusQuoId = dao2.getCusQuoId();
+//                QuotationDAO dao3 = new QuotationDAO();
+//                createCusQuoVersion = dao3.createCusQuoVersion(price, foundationId, roofId, cusQuoId);
+//            }
             boolean createCustomerHouseComponent = false;
             for (int i = 0; i < listHouseComponent.size(); i++) {
-                QuotationDAO dao4 = new QuotationDAO();
-                int versionId = dao4.getVersionId();
-                double value = (request.getParameter((i+1)+"") != null && !request.getParameter((i+1)+"").isEmpty()) ? Double.parseDouble(request.getParameter((i+1)+"")) : 0.0;
-                int componentID = listHouseComponent.get(i).getComponentId();
-                QuotationDAO dao5 = new QuotationDAO();
-                if (!(value == 0)){
-                    createCustomerHouseComponent = dao5.createCustomerHouseComponent(value, versionId, componentID);
-                }
+                HouseComponent houseComponent = listHouseComponent.get(i);
+//                QuotationDAO dao4 = new QuotationDAO();
+//                int versionId = dao4.getVersionId();
+                double value = (request.getParameter(houseComponent.getComponentId()+"") != null && !request.getParameter(houseComponent.getComponentId()+"").isEmpty()) ? Double.parseDouble(request.getParameter(houseComponent.getComponentId()+"")) : 0.0;
+//                int componentID = houseComponent.getComponentId();
+//                QuotationDAO dao5 = new QuotationDAO();
+//                if (!(value == 0)){
+//                    createCustomerHouseComponent = dao5.createCustomerHouseComponent(value, versionId, componentID);
+//                }
+               
+               out.println("<h1 style=\"color: red;\">"+houseComponent.getComponentId()+": "+ houseComponent.getComponent() +": " +value+"</h1>"); 
             }
             
             if (createCustomerHouseComponent){

@@ -46,34 +46,48 @@ public class LoadFormFill extends HttpServlet {
             List<RoofNFoundation2> listFoundation = dao1.getFoundation();
             QuotationDAO dao2 = new QuotationDAO();
             List<RoofNFoundation2> listRoof = dao2.getRoof();
-            if (selectedService == 2){
-                out.println("<div class=\"control-group\">\n" +
-"                                        <h5>Chọn gói xây dựng</h5>\n" +
-"                                        <select name=\"packagePrice\" id=\"packagePrice\">\n" +
-"                                            <option value=\"1\">Gói tiết kiệm</option>\n" +
-"                                            <option value=\"2\">Gói VIP</option>\n" +
-"                                        </select>\n" +
-"                                        <p class=\"help-block text-danger\"></p>\n" +
-"                                    </div>");
+            if (selectedService == 2) {
+                out.println("<div class=\"control-group\">\n"
+                        + "                                        <h5>Chọn gói xây dựng</h5>\n"
+                        + "                                        <select name=\"packagePrice\" id=\"packagePrice\">\n"
+                        + "                                            <option value=\"1\">Gói tiết kiệm</option>\n"
+                        + "                                            <option value=\"2\">Gói VIP</option>\n"
+                        + "                                        </select>\n"
+                        + "                                        <p class=\"help-block text-danger\"></p>\n"
+                        + "                                    </div>");
             }
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 HouseComponent houseComponent = listHouseComponent.get(i);
-                if ( houseComponent.getComponentId() <= 6 ){
-                    out.println("<div class=\"control-group\">\n"
-                        + "                                        <h5>Nhập " + houseComponent.getComponent() + " (m)</h5>\n"
-                        + "                                        <input type=\"number\" class=\"form-control\" name=\""+houseComponent.getComponentId()+"\" id=\""+houseComponent.getComponentId()+"\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m)\"\n"
-                        + "                                               required=\"required\"\n"
-                        + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
-                        + "                                        <p class=\"help-block text-danger\"></p>\n"
-                        + "                                    </div>");
+                if (houseComponent.getComponentId() <= 6) {
+                    if (houseComponent.getComponentId() == 5){
+                        out.println("<div class=\"control-group\">\n"
+                            + "                                        <h5>Nhập " + houseComponent.getComponent() + " (số tầng)</h5>\n"
+                            + "                                        <input type=\"number\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m)\"\n"
+                            + "                                               required=\"required\"\n"
+                            + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
+                            + "                                        <p class=\"help-block text-danger\"></p>\n"
+                            + "<span id=\"error_" + houseComponent.getComponentId() + "\" class=\"error\"></span>"
+                            + "                                    </div>");
+                    } else {
+                        out.println("<div class=\"control-group\">\n"
+                            + "                                        <h5>Nhập " + houseComponent.getComponent() + " (m)</h5>\n"
+                            + "                                        <input type=\"number\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m)\"\n"
+                            + "                                               required=\"required\"\n"
+                            + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
+                            + "                                        <p class=\"help-block text-danger\"></p>\n"
+                            + "<span id=\"error_" + houseComponent.getComponentId() + "\" class=\"error\"></span>"
+                            + "                                    </div>");
+                    }
+                    
                 } else {
                     out.println("<div class=\"control-group\">\n"
-                        + "                                        <h5>Nhập " + houseComponent.getComponent() + " (m2)</h5>\n"
-                        + "                                        <input type=\"number\" class=\"form-control\" name=\""+houseComponent.getComponentId()+"\" id=\""+houseComponent.getComponentId()+"\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m2)\"\n"
-                        + "                                               required=\"required\"\n"
-                        + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
-                        + "                                        <p class=\"help-block text-danger\"></p>\n"
-                        + "                                    </div>");
+                            + "                                        <h5>Nhập " + houseComponent.getComponent() + " (m2)</h5>\n"
+                            + "                                        <input type=\"number\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng (m2)\"\n"
+                            + "                                               required=\"required\"\n"
+                            + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
+                            + "                                        <p class=\"help-block text-danger\"></p>\n"
+                            + "<span id=\"error_" + houseComponent.getComponentId() + "\" class=\"error\"></span>"
+                            + "                                    </div>");
                 }
             }
 
@@ -82,34 +96,33 @@ public class LoadFormFill extends HttpServlet {
                     + "    <select name=\"foundation\" title=\"Chọn loại móng\" id=\"foundation\">\n");
 
             for (RoofNFoundation2 f : listFoundation) {
-                out.println("    <option value=\"" + f.getRoofNFoundationId() + "\">" + f.getRoofNFoundationName() + " (Được tính bằng "+f.getAreaPercent()+"% diện tích xây dựng tầng trệt)</option>\n");
+                out.println("    <option value=\"" + f.getRoofNFoundationId() + "\">" + f.getRoofNFoundationName() + " (Được tính bằng " + f.getAreaPercent() + "% diện tích xây dựng tầng trệt)</option>\n");
             }
 
             out.println("    </select>\n"
                     + "    <p class=\"help-block text-danger\"></p>\n"
                     + "</div>");
-            
+
             out.println("<div class=\"control-group\">\n"
                     + "    <h5>Chọn Mái</h5>\n"
                     + "    <select name=\"roof\" title=\"Chọn loại mái\" id=\"roof\">\n");
 
             for (RoofNFoundation2 r : listRoof) {
-                out.println("    <option value=\"" + r.getRoofNFoundationId() + "\">" + r.getRoofNFoundationName() + " (Được tính bằng "+r.getAreaPercent()+"% diện tích xây dựng tầng trệt)</option>\n");
+                out.println("    <option value=\"" + r.getRoofNFoundationId() + "\">" + r.getRoofNFoundationName() + " (Được tính bằng " + r.getAreaPercent() + "% diện tích xây dựng tầng trệt)</option>\n");
             }
 
             out.println("    </select>\n"
                     + "    <p class=\"help-block text-danger\"></p>\n"
                     + "</div>");
-            
-            out.println("<input type=\"hidden\" id=\"service\" name=\"service\" value=\""+selectedService+"\"/>");
-            out.println("<input type=\"hidden\" id=\"houseType\" name=\"houseType\" value=\""+selectedHouseType+"\"/>");
-            out.println("<input type=\"hidden\" id=\"style\" name=\"style\" value=\""+selectedStyle+"\"/>");
-            
+
+            out.println("<input type=\"hidden\" id=\"service\" name=\"service\" value=\"" + selectedService + "\"/>");
+            out.println("<input type=\"hidden\" id=\"houseType\" name=\"houseType\" value=\"" + selectedHouseType + "\"/>");
+            out.println("<input type=\"hidden\" id=\"style\" name=\"style\" value=\"" + selectedStyle + "\"/>");
+
             out.println("<div>\n"
                     + "                                        <button class=\"btn\" type=\"submit\" id=\"sendMessageButton\">Nhận Báo Giá</button>\n"
                     + "                                    </div>");
-            
-            
+
         }
     }
 
