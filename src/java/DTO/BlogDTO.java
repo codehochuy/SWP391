@@ -9,6 +9,7 @@ public class BlogDTO {
     private int blogID;
      private String title;
     private String content;
+        private String tags;
     private Date dateCreate;
     private Date dateModified;
     private User user;
@@ -18,10 +19,11 @@ public class BlogDTO {
     public BlogDTO() {
     }
 
-    public BlogDTO(int blogID, String title, String content, Date dateCreate, Date dateModified, User user, BlogCategoryDTO blogCategory) {
+    public BlogDTO(int blogID, String title, String content, String tags, Date dateCreate, Date dateModified, User user, BlogCategoryDTO blogCategory) {
         this.blogID = blogID;
         this.title = title;
         this.content = content;
+        this.tags = tags;
         this.dateCreate = dateCreate;
         this.dateModified = dateModified;
         this.user = user;
@@ -50,6 +52,14 @@ public class BlogDTO {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public Date getDateCreate() {
@@ -86,10 +96,6 @@ public class BlogDTO {
 
     @Override
     public String toString() {
-        return "BlogDTO{" + "blogID=" + blogID + ", title=" + title + ", content=" + content + ", dateCreate=" + dateCreate + ", dateModified=" + dateModified + ", user=" + user + ", blogCategory=" + blogCategory + '}';
+        return "BlogDTO{" + "blogID=" + blogID + ", title=" + title + ", content=" + content + ", tags=" + tags + ", dateCreate=" + dateCreate + ", dateModified=" + dateModified + ", user=" + user + ", blogCategory=" + blogCategory + '}';
     }
-
-  
-   
-
 }

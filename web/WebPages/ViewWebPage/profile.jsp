@@ -72,7 +72,14 @@
                             <div class="col-md-12">
                                 <h2 class="h3 mb-3 text-black">Hồ sơ của tôi</h2>
                                 <div class="p-3 p-lg-5 border display">
-                                    <img src="./img/${sessionScope.USER.avatar}" style="padding-bottom: 10px" alt="Image" class="img-fluid">
+                                    <c:choose>
+                                        <c:when test="${empty sessionScope.USER.password}">
+                                            <img src="${sessionScope.USER.avatar}" style="padding-bottom: 10px" alt="Image" class="img-fluid">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="./img/${sessionScope.USER.avatar}" style="padding-bottom: 10px" alt="Image" class="img-fluid">
+                                        </c:otherwise>
+                                    </c:choose>
                                     <h3 for="c_code" class="text-black mb-3">Tên: ${user.name}</h3>
                                     <p for="c_code" class="text-black mb-3">Số điện thoại: ${user.phone}</p>
                                     <p for="c_code" class="text-black mb-3">Địa chỉ: ${user.address}</p>
@@ -98,10 +105,16 @@
 
                                                             <form action="UpdateProfile" method="post" class="form-horizontal">
                                                                 <div class="change">
-
-                                                                    <div><img src="./img/${sessionScope.USER.avatar}" class="avatar img-thumbnail" alt="avatar"></div>
-                                                                    <label class="control-label">Thay ảnh đại diện</label>
-                                                                    <input type="file" name="avatar" class="form-control">
+                                                                    <c:choose>
+                                                                        <c:when test="${empty sessionScope.USER.password}">
+                                                                            <img src="${sessionScope.USER.avatar}" class="avatar img-thumbnail" alt="avatar">
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <img src="./img/${sessionScope.USER.avatar}" class="avatar img-thumbnail" alt="avatar">
+                                                                            <label class="control-label">Thay ảnh đại diện</label>
+                                                                            <input type="file" name="avatar" class="form-control">
+                                                                        </c:otherwise>
+                                                                    </c:choose>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Tên người dùng:</label>
@@ -158,7 +171,14 @@
                                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Tài khoản của tôi</h3>
                                 <div class="mb-0" style="padding-left: 15px;"> 
                                     <a href="Profile" class="d-flex">Hồ sơ</a>
-                                    <a href="ChangePassword" class="d-flex">Đổi mật khẩu</a>
+                                    <c:choose>
+                                        <c:when test="${empty sessionScope.USER.password}">
+                                            <!--                                            <a href="#" class="d-flex"style="display: none;">Đổi mật khẩu</a>-->
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="ChangePassword" class="d-flex">Đổi mật khẩu</a>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <a href="QuotationHistory" class="d-flex">Lịch sử báo giá</a>
                                 </div>
                             </div>

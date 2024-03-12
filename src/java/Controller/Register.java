@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.Component;
+package Controller;
 
-import DAO.ComponentDAO;
-import DAO.RoofNFoundationDAO;
-import DTO.Component;
-import DTO.RoofNFoundation;
+import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -25,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "CreateFoundation", urlPatterns = {"/CreateFoundation"})
-public class CreateFoundation extends HttpServlet {
+@WebServlet(name = "Register", urlPatterns = {"/Register"})
+public class Register extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +41,10 @@ public class CreateFoundation extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateFoundation</title>");
+            out.println("<title>Servlet Register</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateFoundation at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Register at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -80,41 +76,40 @@ public class CreateFoundation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.setCharacterEncoding("UTF-8");
-
-        String name = request.getParameter("name");
-        String area = request.getParameter("area");
-        String regex = "^[0-9a-zA-Z\\p{L}\\p{P}][0-9a-zA-Z\\p{L}\\p{P}\\s]*[0-9a-zA-Z\\p{L}\\p{P}]$";
-        if (!name.matches(regex)) {
-            RoofNFoundationDAO dao = new RoofNFoundationDAO();
-            List<RoofNFoundation> foundations = dao.getAll();
-            request.setAttribute("foundations", foundations);
-            request.setAttribute("messefalse", "Kiểm tra tên hoặc % diện tích");
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
-        } else {
-            try {
-                RoofNFoundationDAO aO = new RoofNFoundationDAO();
-                boolean result = aO.addFoundation(name, area);
+        try {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String email = request.getParameter("email");
+            String name = request.getParameter("name");
+            
+            UserDAO dao = new UserDAO();
+            boolean isUsernameExists = dao.isUsernameExists(username);
+            boolean isEmailExists = dao.isEmailExists(email);
+            
+            if (isUsernameExists) {
+                // Username already exists, display an error message
+                request.setAttribute("errorMessage", "Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác.");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            } else if (isEmailExists) {
+                // Email already exists, display an error message
+                request.setAttribute("errorMessage", "Email đã tồn tại. Vui lòng chọn tên khác.");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            } else {
+                UserDAO dao2 = new UserDAO();
+                boolean result = dao2.registerUser(username, name, email, password);
                 if (result) {
-                    RoofNFoundationDAO dao = new RoofNFoundationDAO();
-                    List<RoofNFoundation> foundations = dao.getAll();
-                    request.setAttribute("foundations", foundations);
-                    request.setAttribute("messtrue", "Đã thêm thành công");
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
-
+                    request.setAttribute("messtrue", "Đăng kí tài khoản thành công");
+                    request.getRequestDispatcher("register.jsp").forward(request, response); 
                 } else {
-                    RoofNFoundationDAO dao = new RoofNFoundationDAO();
-                    List<RoofNFoundation> foundations = dao.getAll();
-                    request.setAttribute("foundations", foundations);
-                    request.setAttribute("messefalse", "Đã thêm thất bại");
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
+                    request.setAttribute("messefalse", "Đăng kí tài khoản thất bại");
+                    request.getRequestDispatcher("register.jsp").forward(request, response); 
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(CreateComponent.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace(); // Log the exception for debugging
         }
-    }
+    }   
 
     /**
      * Returns a short description of the servlet.

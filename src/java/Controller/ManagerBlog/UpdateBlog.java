@@ -67,21 +67,31 @@ public class UpdateBlog extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-                 request.setCharacterEncoding("UTF-8");
-    response.setCharacterEncoding("UTF-8");
-     // Lấy thông tin từ request
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        // Lấy thông tin từ request
         int blogId = Integer.parseInt(request.getParameter("blogId"));
         String title = request.getParameter("title");
+        String tags = request.getParameter("tags");
         String content = request.getParameter("content");
-         String category = request.getParameter("category");
-         String dateModified = request.getParameter("dateModified");
-        
-        BlogDAO dao1 = new BlogDAO();
-         String blogcategoryID= dao1.returnblogcategoryID(category);
-        // Gọi DAO để cập nhật bài viết
-       BlogDAO dao2 = new BlogDAO();
-       dao2.updateBlog(blogId,title,content,blogcategoryID,dateModified);
-        
+        String category = request.getParameter("category");
+        String dateModified = request.getParameter("dateModified");
+
+        BlogDAO dao = new BlogDAO();
+        List<BlogDTO> existingBlogs = dao.getAll();
+        boolean titleExists = existingBlogs.stream()
+                .anyMatch(blog -> blog.getTitle().equalsIgnoreCase(title) && blog.getBlogID() != blogId);
+
+        if (titleExists) {
+            // Title already exists, send a response indicating duplication
+            response.getWriter().write("DUPLICATE_TITLE");
+        } else {
+            BlogDAO dao1 = new BlogDAO();
+            String blogcategoryID = dao1.returnblogcategoryID(category);
+            // Gọi DAO để cập nhật bài viết
+            BlogDAO dao2 = new BlogDAO();
+            dao2.updateBlog(blogId, title, tags, content, blogcategoryID, dateModified);
+        }
 
     }
 

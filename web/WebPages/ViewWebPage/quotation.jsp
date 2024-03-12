@@ -10,6 +10,13 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+        /* CSS styles */
+        .error {
+            color: red;
+            font-style: italic;
+        }
+        </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <title>TITAN - Báo Giá</title>
@@ -113,7 +120,7 @@
                         <!--Raw contruction-->
                         <div class="col-md-6 rawContruction">
                             <div class="contact-form">
-                                <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill" novalidate="novalidate">
+                                <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill">
                                     
                                 </form>
                             </div>
@@ -127,7 +134,7 @@
             <!-- Quotation End -->
             <div class="contact wow fadeInUp container">
                 <form action="SaveQuotationContent" id="quotationContent" method="post" name="sentMessage" novalidate="novalidate">
-
+                    
                 </form>
             </div>
 
@@ -238,111 +245,95 @@
             });
         </script>
         
-        <!--validation-->
         <script>
-            // JavaScript code for form validation
-            const form = document.getElementById('formFill');
+        // JavaScript code for form validation
+        const form = document.getElementById('formFill');
 
-            form.addEventListener('click', function (event) {
-                let i = 0;
-                let isValid = true;
+        form.addEventListener('click', function(event) {
+            let i = 0;
+            let isValid = true;
 //            const errorIds = ['error_7', 'error_8', 'error_9', 'error_10', 'error_11', 'error_12'];
 //            const errorGots = [];
 //            const valueIds = ['7', '8', '9', '10', '11', '12'];
 //            const valueGots = [];
-
-                const _1 = document.getElementById('1');
-                const _2 = document.getElementById('2');
-                const _3 = document.getElementById('3');
-                const _4 = document.getElementById('4');
-                const _5 = document.getElementById('5');
-                const _6 = document.getElementById('6');
-                const error_1 = document.getElementById('error_1');
-                const error_2 = document.getElementById('error_2');
-                const error_3 = document.getElementById('error_3');
-                const error_4 = document.getElementById('error_4');
-                const error_5 = document.getElementById('error_5');
-                const error_6 = document.getElementById('error_6');
+            
+            const _1 = document.getElementById('1');
+            const _2 = document.getElementById('2');
+            const _3 = document.getElementById('3');
+            const _4 = document.getElementById('4');
+            const _5 = document.getElementById('5');
+            const _6 = document.getElementById('6');
+            
+            const error_1 = document.getElementById('error_1');
+            const error_2 = document.getElementById('error_2');
+            const error_3 = document.getElementById('error_3');
+            const error_4 = document.getElementById('error_4');
+            const error_5 = document.getElementById('error_5');
+            const error_6 = document.getElementById('error_6');
 //            errorGots[i] = document.getElementById(errorIds[i]);
 
-                // Reset error messages
-                error_1.textContent = '';
-                error_2.textContent = '';
-                error_3.textContent = '';
-                error_4.textContent = '';
-                if (error_5)
-                    error_5.textContent = '';
-                if (error_6)
-                    error_6.textContent = '';
-
-                var formData = {};
-                $("#formFill").find("input").each(function () {
-                    formData[$(this).attr("name")] = $(this).val();
-                });
-                // Duyệt qua mỗi cặp key-value trong formData
-                for (var key in formData) {
-                    if (formData.hasOwnProperty(key)) {
-                        var value = formData[key];
-                        // Kiểm tra các trường hợp cố định
-                        if (key === "1" && parseInt(value) <= 0) {
-                            error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
-                            isValid = false;
-                        } else if (key === "2" && parseInt(value) <= 0) {
-                            error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
-                            isValid = false;
-                        } else if (key === "3" && parseInt(value) <= 0) {
-                            error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
-                            isValid = false;
-                        } else if (key === "4" && parseInt(value) <= 0) {
-                            error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
-                            isValid = false;
-                        } else if (key === "5" && parseInt(value) <= 0) {
-                            error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
-                            isValid = false;
-                        } else if (key === "6" && parseInt(value) <= 0) {
-                            error_6.textContent = 'Chiều dài ban công phải nhỏ hơn chiều dài của lầu và lớn hơn hoặc bằng 0.';
-                            isValid = false;
-                        } else {
-                            // Kiểm tra các trường hợp có key lớn hơn hoặc bằng 7
-                            var intKey = parseInt(key);
-                            if (intKey >= 7 && parseInt(value) <= 0) {
-                                var errorId = "error_" + key;
-                                const errorIdcontent = document.getElementById(errorId);
-                                errorIdcontent.textContent = "Diện tích không được nhỏ hơn 1 và lớn hơn 10,000.";
-                                isValid = false;
-                            }
-                        }
-                    }
-                }
-
-
-
-
-//            var formData = {};
-//            $("#formFill").find("input").each(function () {
-//            var inputName = $(this).attr("name");
-//            var inputValue = $(this).val();
-//            if (/^[0-9]+$/.test(inputName) && parseInt(inputName) >= 7) {
-//                formData[inputName] = inputValue;
-//
-//                var errorId = "error_" + inputName;
-//                var errorMessage = "";
-//
-//                if (inputValue !== "") {
-//                if (inputValue <= 0 || inputValue > 10000) {
-//                    errorMessage = "Diện tích không được nhỏ hơn 1 và lớn hơn 10,000. Hihi.";
+            // Reset error messages
+            error_1.textContent = '';
+            error_2.textContent = '';
+            error_3.textContent = '';
+            error_4.textContent = '';
+            if (error_5) error_5.textContent = '';
+            if (error_6) error_6.textContent = '';
+            
+//            while (!errorGots[0]) {
+//                valueGots[0] = document.getElementById(valueIds[0]);
+//                errorGots[0].textContent = '';
+//                if (parseInt(valueGots[0].value) > 10000 || parseInt(valueGots[0].value) <= 0) {
+//                    isValid = false;
+//                    errorGots[0].textContent = 'Diện tích phải lớn hơn 0 và nhỏ hơn 10000 m2.';
 //                }
-//                }
-//
-//                $("#" + errorId).text(errorMessage);
+//                break;
+//                i++;
+//                errorGots[i] = document.getElementById(errorIds[i]);
 //            }
-//            });
 
-                if (!isValid) {
-                    event.preventDefault();
+            if (parseInt(_1.value) > 10000 || parseInt(_1.value) <= 0) {
+                isValid = false;
+                error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
+            }
+            
+            if (parseInt(_2.value) > 10000 || parseInt(_2.value) <= 0) {
+                isValid = false;
+                error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
+            }
+            
+            if ((parseInt(_3.value) >= parseInt(_1.value)) || parseInt(_3.value) < 0) {
+                isValid = false;
+                error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
+            } else
+            if ((parseInt(_4.value) >= (parseInt(_1.value)-parseInt(_3.value))) || parseInt(_4.value) < 0) {
+                isValid = false;
+                error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
+            }
+        
+            if (parseInt(_4.value) < 0) {
+                isValid = false;
+                error_4.textContent = 'Sân sau phải lớn hơn hoặc bằng 0.';
+            }
+        
+            if (_5) {
+                if (parseInt(_5.value) > 24 || parseInt(_5.value) < 0) {
+                isValid = false;
+                error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
                 }
-            });
-        </script>
+            }
+            
+            if (_6) {
+                if (parseInt(_6.value) >= (parseInt(_1.value) - parseInt(_3.value) - parseInt(_4.value)) || parseInt(_6.value) < 0) {
+                isValid = false;
+                error_6.textContent = 'Chiều dài ban công phải nhỏ hơn chiều dài của lầu và lớn hơn hoặc bằng 0.';
+                }
+            }
 
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
     </body>
 </html>

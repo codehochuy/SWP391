@@ -5,7 +5,8 @@
  */
 package Controller.WebPage;
 
-import DAO.QuotationDAO;
+import DAO.ProjectDAO;
+import DTO.Project_containsImage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -19,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author PC
  */
-@WebServlet(name = "FullContructionPrice", urlPatterns = {"/FullContructionPrice"})
-public class FullContructionPrice extends HttpServlet {
+@WebServlet(name = "ListProject", urlPatterns = {"/ListProject"})
+public class ListProject extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,10 +35,8 @@ public class FullContructionPrice extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            QuotationDAO dao = new QuotationDAO();
-            List<DTO.Quotation> list = dao.getAll();
-            request.setAttribute("list", list);
-            request.getRequestDispatcher("WebPages/ViewWebPage/fullContructionPrice.jsp").forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+         
         }
     }
 
@@ -50,10 +49,20 @@ public class FullContructionPrice extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        ProjectDAO dao = new ProjectDAO();
+         List<Project_containsImage> Project_containsImage = dao.getAll_containsImage();
+        request.setAttribute("project", Project_containsImage);
+         request.setAttribute("blogSize", Project_containsImage.size());
+        
+                
+
+       request.getRequestDispatcher("WebPages/ViewWebPage/project.jsp").forward(request, response);
     }
 
     /**

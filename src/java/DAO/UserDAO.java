@@ -90,8 +90,7 @@ public class UserDAO {
 
             while (rs.next()) {
                 User p = new User();
-               
-                
+
                 p.setId(rs.getInt("UsersID"));
                 p.setUsername(rs.getString("UserName"));
                 p.setPassword(rs.getString("Password"));
@@ -103,7 +102,6 @@ public class UserDAO {
                 p.setUserstatus(rs.getBoolean("UserStatus"));
 
                 p.setUserrole(new Role(rs.getInt("RoleID"), rs.getString("RoleName")));
-              
 
                 if (!p.getAvatar().contains("http")) {
                     p.setAvatar("./img/" + p.getAvatar());
@@ -198,13 +196,146 @@ public class UserDAO {
 
     }
 
+    public boolean registerUser(String username, String name, String email, String password) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        boolean result = false;
+        String avatar = "avatar.jpg";
+        String address = "";
+        String phone = "";
+
+        try {
+            //1. Connect to the database
+            con = db.getConn();
+            if (con != null) {
+                String sql = "INSERT INTO Users (UserName, [Name], Email, [Password], RoleID, UserStatus, Avatar, [Address], Phone) VALUES (?, ?, ?, ?, 3, 1, ?, ?, ?)";
+                //3. Create PreparedStatement object
+                stm = con.prepareStatement(sql);
+                stm.setString(1, username);
+                stm.setString(2, name);
+                stm.setString(3, email);
+                stm.setString(4, password);
+                stm.setString(5, avatar);
+                stm.setString(6, address);
+                stm.setString(7, phone);
+
+                //4. Execute PreparedStatement to get the result
+                int effectRow = stm.executeUpdate();
+
+                //5. Process the result
+                result = (effectRow > 0);
+            }
+        } catch (SQLException e) {
+            // Handle any SQL exceptions
+            e.printStackTrace();
+            throw e; // Rethrow the exception to the caller
+        } finally {
+            //6. Close the resources properly
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        System.out.println(result);
+        return result;
+    }
+
+    public boolean isUsernameExists(String username) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet resultSet = null;
+        boolean result = false;
+        try {
+            //1. Connect DB
+            con = db.getConn();
+            if (con != null) {
+                String sql = "SELECT COUNT(*) FROM Users WHERE UserName = ?";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql); //Nạp tham số 1 lần cho Statement
+                stm.setString(1, username);
+
+                // Execute the query
+                resultSet = stm.executeQuery();
+
+                // Check if the username exists
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+
+            } //end connection has existed
+        } catch (SQLException e) {
+        } finally {
+
+            if (stm != null) {
+                stm.close();  // tạo sau nên đóng trước
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return false;
+    }
+    
+    public boolean isEmailExists(String mail) throws SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet resultSet = null;
+        boolean result = false;
+        try {
+            //1. Connect DB
+            con = db.getConn();
+            if (con != null) {
+                String sql = "SELECT COUNT(*) FROM Users WHERE Email = ?";
+                //3. Create Statement Object
+                stm = con.prepareStatement(sql); //Nạp tham số 1 lần cho Statement
+                stm.setString(1, mail);
+
+                // Execute the query
+                resultSet = stm.executeQuery();
+
+                // Check if the username exists
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);
+                    return count > 0;
+                }
+
+            } //end connection has existed
+        } catch (SQLException e) {
+        } finally {
+
+            if (stm != null) {
+                stm.close();  // tạo sau nên đóng trước
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return false;
+    }
+
     public static void main(String[] args) throws SQLException {
         UserDAO dao = new UserDAO();
-        System.out.println(dao.getAll());
-        
+//        System.out.println(dao.getAll());
+
 //        System.out.println(dao.detailUser("Admin", "123"));
 //        System.out.println(dao.listShop());
 //        dao.deleteuser("2");
+        dao.registerUser("huyyy", "Phạm Huy", "hailuatamquan@gmail.com", "123");
+//        System.out.println(dao.isUsernameExists("Hieu"));
     }
 
 }

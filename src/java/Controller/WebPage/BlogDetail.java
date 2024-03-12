@@ -40,7 +40,7 @@ public class BlogDetail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BlogDetail</title>");            
+            out.println("<title>Servlet BlogDetail</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet BlogDetail at " + request.getContextPath() + "</h1>");
@@ -61,29 +61,29 @@ public class BlogDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         try {
-        // Lấy BlogID từ request
-      String blogId = request.getParameter("blogid");
-          
-          Integer blogIdInt = Integer.parseInt(blogId);
-     
-        // Gọi DAO để lấy thông tin chi tiết của blog
-        BlogDAO blogDAO = new BlogDAO();
-        BlogDTO blog = blogDAO.getBlogByID(blogIdInt);
+        try {
+            // Lấy BlogID từ request
+            String blogId = request.getParameter("blogid");
 
-        // Đặt đối tượng BlogDTO vào request attribute
-        request.setAttribute("blog", blog);
+            Integer blogIdInt = Integer.parseInt(blogId);
 
-        // Chuyển hướng request đến trang ViewBlogDetail.jsp để hiển thị thông tin blog
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewWebPage/blogdetail.jsp");
-        dispatcher.forward(request, response);
+            // Gọi DAO để lấy thông tin chi tiết của blog
+            BlogDAO blogDAO = new BlogDAO();
+            BlogDTO blog = blogDAO.getBlogByID(blogIdInt);
 
-    } catch (Exception e) {
-        // Xử lý ngoại lệ nếu có
-        e.printStackTrace();
-        // Trả về lỗi 500 Internal Server Error
-        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-    }
+            // Đặt đối tượng BlogDTO vào request attribute
+            request.setAttribute("blog", blog);
+
+            // Chuyển hướng request đến trang ViewBlogDetail.jsp để hiển thị thông tin blog
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewWebPage/blogdetail.jsp");
+            dispatcher.forward(request, response);
+
+        } catch (Exception e) {
+            // Xử lý ngoại lệ nếu có
+            e.printStackTrace();
+            // Trả về lỗi 500 Internal Server Error
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
@@ -97,7 +97,7 @@ public class BlogDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
+
     }
 
     /**

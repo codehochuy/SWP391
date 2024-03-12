@@ -82,20 +82,31 @@ public class UpdateComponentCate extends HttpServlet {
         String name = request.getParameter("name");
         String category = request.getParameter("category");
         String areapercent = request.getParameter("areapercent");
-        RoofNFoundationDAO dao = new RoofNFoundationDAO();
-        boolean result = dao.updateComponentCateName(id, name, category, areapercent);
-        if (result) {
+        String regex = "^[0-9a-zA-Z\\p{L}\\p{P}][0-9a-zA-Z\\p{L}\\p{P}\\s]*[0-9a-zA-Z\\p{L}\\p{P}]$";
+        int areapercentValue = Integer.parseInt(areapercent);
+        if (!name.matches(regex) || areapercentValue < 1 || areapercentValue > 100) {
             RoofNFoundationDAO dao1 = new RoofNFoundationDAO();
             List<RoofNFoundation> foundations = dao1.getAll();
             request.setAttribute("foundations", foundations);
-            request.setAttribute("messtrue", "Cập nhật thành phần thành công");
+            request.setAttribute("messefalse", "Sai tên hoặc % diện tích");
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
         } else {
-            RoofNFoundationDAO dao1 = new RoofNFoundationDAO();
-            List<RoofNFoundation> foundations = dao1.getAll();
-            request.setAttribute("foundations", foundations);
-            request.setAttribute("messefalse", "Cập nhật thành phần thất bại");
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
+
+            RoofNFoundationDAO dao = new RoofNFoundationDAO();
+            boolean result = dao.updateComponentCateName(id, name, category, areapercent);
+            if (result) {
+                RoofNFoundationDAO dao1 = new RoofNFoundationDAO();
+                List<RoofNFoundation> foundations = dao1.getAll();
+                request.setAttribute("foundations", foundations);
+                request.setAttribute("messtrue", "Cập nhật thành phần thành công");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
+            } else {
+                RoofNFoundationDAO dao1 = new RoofNFoundationDAO();
+                List<RoofNFoundation> foundations = dao1.getAll();
+                request.setAttribute("foundations", foundations);
+                request.setAttribute("messefalse", "Cập nhật thành phần thất bại");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
+            }
         }
     }
 

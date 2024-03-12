@@ -41,7 +41,7 @@ public class UpdateBlogCategory extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateBlogCategory</title>");            
+            out.println("<title>Servlet UpdateBlogCategory</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateBlogCategory at " + request.getContextPath() + "</h1>");
@@ -76,20 +76,39 @@ public class UpdateBlogCategory extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-         String categoryid = request.getParameter("categoryid");
+        String categoryid = request.getParameter("categoryid");
         String blogcategoryname = request.getParameter("blogcategoryname");
+        String regex = "^[0-9a-zA-Z\\p{L}][0-9a-zA-Z\\p{L}\\s]*[0-9a-zA-Z\\p{L}]$";
+        if (!blogcategoryname.matches(regex)) {
+            request.setAttribute("messefalse", "Đặt tên không đúng");
+            BlogDAO dao5 = new BlogDAO();
+            List<BlogCategoryDTO> blogCategories = dao5.getAllBlogCategories();
+            request.setAttribute("blogCategories", blogCategories);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+            dispatcher.forward(request, response);
+        }else{
         BlogDAO dao = new BlogDAO();
-        dao.updateBlogCategory(categoryid, blogcategoryname);
-        
-           BlogDAO dao2 = new BlogDAO();
-        List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
-
-        request.setAttribute("blogCategories", blogCategories);
-  request.setAttribute("messtrue", "Cập nhật tên thành công");
-           RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
-        dispatcher.forward(request, response);
+        List<BlogCategoryDTO> existingCategories = dao.getAllBlogCategories();
+        if (existingCategories.stream().anyMatch(category -> category.getBlogCategoryName().equalsIgnoreCase(blogcategoryname))) {
+            request.setAttribute("messefalse", "Danh mục đã tồn tại trong cơ sở dữ liệu");
+            BlogDAO dao5 = new BlogDAO();
+            List<BlogCategoryDTO> blogCategories = dao5.getAllBlogCategories();
+            request.setAttribute("blogCategories", blogCategories);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            BlogDAO dao1 = new BlogDAO();
+            dao1.updateBlogCategory(categoryid, blogcategoryname);
+            BlogDAO dao2 = new BlogDAO();
+            List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
+            request.setAttribute("blogCategories", blogCategories);
+            request.setAttribute("messtrue", "Cập nhật danh mục thành công");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+            dispatcher.forward(request, response);
+        }
+}
     }
 
     /**

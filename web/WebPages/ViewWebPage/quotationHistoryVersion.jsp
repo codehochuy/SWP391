@@ -125,7 +125,7 @@
                             <tr>
                                 <th>Phiên bản</th>
                                 <th>Ngày</th>
-                                <th>Giá</th>
+<!--                                <th>Giá</th>-->
                                 <th>Chức năng</th>
                             </tr>
                         </thead>
@@ -136,7 +136,7 @@
                                         <tr>
                                             <td>${qv.versionId}</td>
                                             <td>${qv.date}</td>
-                                            <td><fmt:formatNumber type="number" value="${qv.price}" pattern="#,###.##" /> VNĐ/m2</td>
+<!--                                            <td><fmt:formatNumber type="number" value="${qv.price}" pattern="#,###.##" /> VNĐ/m2</td>-->
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="" method="post">
                                                     <button class="btn btn-primary btn-sm trash" style="margin-right: 5px;" type="button" title="Xóa" onclick="confirmDelete(this)"

@@ -7,6 +7,7 @@ package DAO;
 
 import DTO.HouseType;
 import DTO.Project;
+import DTO.Project_containsImage;
 import DTO.Role;
 import DTO.Service;
 import DTO.Style;
@@ -113,6 +114,127 @@ public class ProjectDAO {
         return user;
     }
 
+    public List<Project_containsImage> getAll_containsImage() {
+        List<Project_containsImage> list = new ArrayList<>();
+
+        String sql = "WITH ProjectImages AS (\n" +
+"    SELECT \n" +
+"        p.ProjectID,\n" +
+"        p.ProjectName,\n" +
+"        p.[Description],\n" +
+"        p.[Date],\n" +
+"        p.[Time],\n" +
+"        s.ServiceID,\n" +
+"        s.ServiceName,\n" +
+"        ht.HouseTypeID,\n" +
+"        ht.HouseTypeName,\n" +
+"        u.*,\n" +
+"        sty.StyleID,\n" +
+"        sty.StyleName,\n" +
+"        i.ImageID,\n" +
+"        i.ImageLink,\n" +
+"        i.ImageCaption,\n" +
+"        r.RoleID AS UserRoleID,\n" +
+"        r.RoleName AS UserRoleName,\n" +
+"        ROW_NUMBER() OVER (PARTITION BY p.ProjectID ORDER BY i.ImageID) AS RowNum\n" +
+"    FROM \n" +
+"        Projects p\n" +
+"    LEFT JOIN \n" +
+"        [Image] i ON p.ProjectID = i.ProjectID\n" +
+"    LEFT JOIN\n" +
+"        [Service] s ON p.ServiceID = s.ServiceID\n" +
+"    LEFT JOIN\n" +
+"        [HouseType] ht ON p.HouseTypeID = ht.HouseTypeID\n" +
+"    LEFT JOIN\n" +
+"        [Style] sty ON p.StyleID = sty.StyleID\n" +
+"    LEFT JOIN\n" +
+"        Users u ON p.UsersID = u.UsersID\n" +
+"    LEFT JOIN\n" +
+"        Roles r ON u.RoleID = r.RoleID\n" +
+")\n" +
+"SELECT \n" +
+"    ProjectID,\n" +
+"    ProjectName,\n" +
+"    [Description],\n" +
+"    [Date],\n" +
+"    [Time],\n" +
+"    ServiceID,\n" +
+"    ServiceName,\n" +
+"    HouseTypeID,\n" +
+"    HouseTypeName,\n" +
+"    UsersID,\n" +
+"    UserName,\n" +
+"    Password,\n" +
+"    Name,\n" +
+"    Avatar,\n" +
+"    Email,\n" +
+"    Address,\n" +
+"    Phone,\n" +
+"    UserStatus,\n" +
+"    UserRoleID,\n" +
+"    UserRoleName,\n" +
+"    StyleID,\n" +
+"    StyleName,\n" +
+"    ImageID,\n" +
+"    ImageLink,\n" +
+"    ImageCaption\n" +
+"FROM \n" +
+"    ProjectImages\n" +
+"WHERE \n" +
+"    RowNum = 1;";
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Project_containsImage project_containsImage = extractProjectFromResultSet_containsImage(rs);
+                project_containsImage.setUser(extractUserFromResultSet_containsImage(rs));
+                project_containsImage.setImageLink(rs.getString("ImageLink"));
+                list.add(project_containsImage);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log or handle the exception as needed
+        }
+
+        return list;
+    }
+
+    private Project_containsImage extractProjectFromResultSet_containsImage(ResultSet rs) throws SQLException {
+        Project_containsImage Project_containsImage = new Project_containsImage();
+        Project_containsImage.setId(rs.getInt("ProjectID"));
+        Project_containsImage.setName(rs.getString("ProjectName"));
+        Project_containsImage.setDescription(rs.getString("Description"));
+        Project_containsImage.setDate(rs.getDate("Date"));
+        Project_containsImage.setTime(rs.getInt("Time"));
+        Project_containsImage.setHouseType(new HouseType(rs.getInt("HouseTypeID"), rs.getString("HouseTypeName")));
+        Project_containsImage.setService(new Service(rs.getInt("ServiceID"), rs.getString("ServiceName")));
+        Project_containsImage.setStyle(new Style(rs.getInt("StyleID"), rs.getString("StyleName")));
+
+        return Project_containsImage;
+    }
+
+    private User extractUserFromResultSet_containsImage(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setId(rs.getInt("UsersID"));
+        user.setUsername(rs.getString("UserName"));
+        user.setPassword(rs.getString("Password"));
+        user.setName(rs.getString("Name"));
+        user.setEmail(rs.getString("Email"));
+        user.setAvatar(rs.getString("Avatar"));
+        user.setAddress(rs.getString("Address"));
+        user.setPhone(rs.getString("Phone"));
+        user.setUserstatus(rs.getBoolean("UserStatus"));
+        user.setUserrole(new Role(rs.getInt("UserRoleID"), rs.getString("UserRoleName")));
+
+        // Adjust avatar path if needed
+        if (!user.getAvatar().contains("http")) {
+            user.setAvatar("./img/" + user.getAvatar());
+        }
+
+        return user;
+    }
+
     public boolean deleteProject(String id) {
         try (Connection con = db.getConn();
                 PreparedStatement stm = con.prepareStatement("DELETE FROM Projects WHERE ProjectID = ?")) {
@@ -205,7 +327,7 @@ public class ProjectDAO {
         }
     }
 
-     public int getProjectId() {
+    public int getProjectId() {
         int projectID = 0;
 
         try {
@@ -222,10 +344,11 @@ public class ProjectDAO {
 
         return projectID;
     }
+
     public static void main(String[] args) {
         ProjectDAO dao = new ProjectDAO();
 //        System.out.println(dao.createProject("huy", "huy", "2022-01-02", 100, 1, 2, 1, 2));
-System.out.println(dao.getProjectId());
+        System.out.println(dao.getAll_containsImage());
 
     }
 

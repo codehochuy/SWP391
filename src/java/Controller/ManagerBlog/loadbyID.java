@@ -40,35 +40,23 @@ public class loadbyID extends HttpServlet {
           BlogDAO dao = new BlogDAO();
             BlogCategoryDTO dto = dao.getBlogCategoryID(id);
 
-             BlogDAO dao2 = new BlogDAO();
-            List<BlogCategoryDTO> dto2 = dao2.getAllBlogCategories();
-
-         
-
-
-out.println("<form action=\"UpdateQuotation\" method=\"POST\" id=\"updateblogcate\">\n"
-    + "    <div class=\"row\">\n"
-    + "        <div class=\"form-group col-md-6\">\n"
-    + "            <label class=\"control-label\">Mã bảng giá </label>\n"
-    + "            <input readonly=\"true\" class=\"form-control\" type=\"text\" name=\"categoryid\" value=\"" + dto.getBlogCategoryID() + "\" >\n"
-    + "        </div>\n"
-    + "        <div class=\"form-group col-md-6\">\n"
-    + "            <label class=\"control-label\">Dịch vụ</label>\n"
-    + "            <select class=\"form-control\" name=\"blogcategoryname\" required>\n");
-
-// Loop through the list of categories and generate option elements
-for (BlogCategoryDTO category : dto2) {
-    out.println("                <option value=\"" + category.getBlogCategoryName() + "\" " + (category.getBlogCategoryName().equals(dto.getBlogCategoryName()) ? "selected" : "") + ">" + category.getBlogCategoryName() + "</option>\n");
-}
-
-out.println("            </select>\n"
-    + "        </div>\n"
-    + "    </div>\n"
-    + "    <BR>\n"
-    + "    <button class=\"btn btn-save\" type=\"submit\">Lưu lại</button>\n"
-    + "    <a class=\"btn btn-cancel\" data-dismiss=\"modal\" href=\"#\">Hủy bỏ</a>\n"
-    + "    <BR>\n"
-    + "</form>");
+      
+   out.println("<form action=\"UpdateQuotation\" method=\"POST\" id=\"updateblogcate\">\n"
+                    + "    <div class=\"row\">\n"
+                    + "        <div class=\"form-group col-md-6\">\n"
+                    + "            <label class=\"control-label\">ID </label>\n"
+                    + "            <input readonly=\"true\" class=\"form-control\" type=\"text\" name=\"categoryid\" value=\"" + dto.getBlogCategoryID() + "\" >\n"
+                    + "        </div>\n"
+                    + "        <div class=\"form-group col-md-6\">\n"
+                    + "            <label class=\"control-label\">Tên danh mục bài viết</label>\n"
+               + "            <input class=\"form-control\" type=\"text\" name=\"blogcategoryname\" value=\"" + dto.getBlogCategoryName() + "\" placeholder=\"Không chấp nhận kí tự đặc biệt\" required>\n"
+                    + "        </div>\n"
+                    + "    </div>\n"
+                    + "    <BR>\n"
+                    + "    <button class=\"btn btn-save\" type=\"submit\">Lưu lại</button>\n"
+                    + "    <a class=\"btn btn-cancel\" data-dismiss=\"modal\" href=\"#\">Hủy bỏ</a>\n"
+                    + "    <BR>\n"
+                    + "</form>");
 
         }
     }

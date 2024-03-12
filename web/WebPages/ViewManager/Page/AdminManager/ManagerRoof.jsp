@@ -34,8 +34,8 @@
             <div class="app-title"> 
                 <ul class="app-breadcrumb breadcrumb">
                     <li class="breadcrumb-item"><a href="ManagerRoof">Quản lý phần Mái và Móng</a></li>
-<!--                    <li class="breadcrumb-item"><a href="CreateHouseStyle">Thêm kiểu nhà</a></li>
-                    <li class="breadcrumb-item"><a href="#"></a></li>-->
+                    <!--                    <li class="breadcrumb-item"><a href="CreateHouseStyle">Thêm kiểu nhà</a></li>
+                                        <li class="breadcrumb-item"><a href="#"></a></li>-->
                 </ul>
                 <div id="clock"></div>
             </div>
@@ -44,22 +44,21 @@
                     <div class="tile">
                         <!--huycute-->
                         <div class="tile-body">
-                            <div class="row element-button">       
-                                <div class="col-sm-2">
-                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle2"><i
-                                            class="fas fa-folder-plus"></i> Thêm Mái</a>
-                                </div>
+                            <div class="row element-button">                                      
                                 <div class="col-sm-2">
                                     <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle"><i
                                             class="fas fa-folder-plus"></i> Thêm Móng</a>
                                 </div>
-                                
+                                <div class="col-sm-2">
+                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#addstyle2"><i
+                                            class="fas fa-folder-plus"></i> Thêm Mái</a>
+                                </div>
                             </div>
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
                                         <th width="10"><input type="checkbox" id="all"></th>
-<!--                                        <th>ID</th>-->
+                                        <!--                                        <th>ID</th>-->
                                         <th>Tên</th>
                                         <th>% Diện tích </th>
                                         <th>Phân loại</th>
@@ -132,7 +131,7 @@
                 <div class="modal-content">
 
                     <div class="modal-body">
-                        <form action="CreateFoundation" method="post">
+                        <form action="CreateFoundation" method="post" >
                             <div class="row">
                                 <div class="form-group  col-md-12">
                                     <span class="thong-tin-thanh-toan">
@@ -140,16 +139,16 @@
                                     </span>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="control-label">Nhập tên loại móng mới</label>
-                                    <input class="form-control" type="text" required name="name">
+                                    <label class="control-label">Nhập tên loại mái mới</label>
+                                    <input class="form-control" type="text" required name="name" >
                                     <label class="control-label">% Diện tích</label>
-                                    <input class="form-control" type="number" required name="area">
+                                    <input class="form-control" type="number" required name="area" min="1" max="100">
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="control-label">Danh sách các loại móng hiện có</label>
+                                    <label class="control-label">Danh sách các loại mái hiện có</label>
                                     <ul class="compact-list">
                                         <c:forEach items="${requestScope.foundations}" var="i" varStatus="status">
-                                            <c:if test="${i.category.id == 2}">
+                                            <c:if test="${i.category.id == 1}">
                                                 <div>${i.categoryname}</div>
                                             </c:if>
                                         </c:forEach>
@@ -181,7 +180,7 @@
                             <div class="row">
                                 <div class="form-group  col-md-12">
                                     <span class="thong-tin-thanh-toan">
-                                        <h5>Thêm mới loại mái mới </h5>
+                                        <h5>Thêm mới loại móng mới </h5>
                                     </span>
                                 </div>
                                 <div class="form-group col-md-12">
@@ -191,10 +190,10 @@
                                     <input class="form-control" type="number" required name="area">
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <label class="control-label">Danh sách các loại mái hiện có</label>
+                                    <label class="control-label">Danh sách các loại móng hiện có</label>
                                     <ul class="compact-list">
                                         <c:forEach items="${requestScope.foundations}" var="i" varStatus="status">
-                                            <c:if test="${i.category.id == 1}">
+                                            <c:if test="${i.category.id == 2}">
                                                 <div>${i.categoryname}</div>
                                             </c:if>
                                         </c:forEach>
@@ -236,53 +235,52 @@
 
 
         <script type="text/javascript">
-                                                            $('#sampleTable').DataTable();
-                                                            //Thời Gian
-                                                            function time() {
-                                                                var today = new Date();
-                                                                var weekday = new Array(7);
-                                                                weekday[0] = "Chủ Nhật";
-                                                                weekday[1] = "Thứ Hai";
-                                                                weekday[2] = "Thứ Ba";
-                                                                weekday[3] = "Thứ Tư";
-                                                                weekday[4] = "Thứ Năm";
-                                                                weekday[5] = "Thứ Sáu";
-                                                                weekday[6] = "Thứ Bảy";
-                                                                var day = weekday[today.getDay()];
-                                                                var dd = today.getDate();
-                                                                var mm = today.getMonth() + 1;
-                                                                var yyyy = today.getFullYear();
-                                                                var h = today.getHours();
-                                                                var m = today.getMinutes();
-                                                                var s = today.getSeconds();
-                                                                m = checkTime(m);
-                                                                s = checkTime(s);
-                                                                nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                                                if (dd < 10) {
-                                                                    dd = '0' + dd
-                                                                }
-                                                                if (mm < 10) {
-                                                                    mm = '0' + mm
-                                                                }
-                                                                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                                                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                                                        '</span>';
-                                                                document.getElementById("clock").innerHTML = tmp;
-                                                                clocktime = setTimeout("time()", "1000", "Javascript");
+                                                    $('#sampleTable').DataTable();
+                                                    //Thời Gian
+                                                    function time() {
+                                                        var today = new Date();
+                                                        var weekday = new Array(7);
+                                                        weekday[0] = "Chủ Nhật";
+                                                        weekday[1] = "Thứ Hai";
+                                                        weekday[2] = "Thứ Ba";
+                                                        weekday[3] = "Thứ Tư";
+                                                        weekday[4] = "Thứ Năm";
+                                                        weekday[5] = "Thứ Sáu";
+                                                        weekday[6] = "Thứ Bảy";
+                                                        var day = weekday[today.getDay()];
+                                                        var dd = today.getDate();
+                                                        var mm = today.getMonth() + 1;
+                                                        var yyyy = today.getFullYear();
+                                                        var h = today.getHours();
+                                                        var m = today.getMinutes();
+                                                        var s = today.getSeconds();
+                                                        m = checkTime(m);
+                                                        s = checkTime(s);
+                                                        nowTime = h + " giờ " + m + " phút " + s + " giây";
+                                                        if (dd < 10) {
+                                                            dd = '0' + dd
+                                                        }
+                                                        if (mm < 10) {
+                                                            mm = '0' + mm
+                                                        }
+                                                        today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                                                        tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                                                                '</span>';
+                                                        document.getElementById("clock").innerHTML = tmp;
+                                                        clocktime = setTimeout("time()", "1000", "Javascript");
 
-                                                                function checkTime(i) {
-                                                                    if (i < 10) {
-                                                                        i = "0" + i;
-                                                                    }
-                                                                    return i;
-                                                                }
+                                                        function checkTime(i) {
+                                                            if (i < 10) {
+                                                                i = "0" + i;
                                                             }
+                                                            return i;
+                                                        }
+                                                    }
         </script>
 
         <script>
             function confirmDelete(button) {
                 var userID = button.getAttribute("data-userID");
-
                 swal({
                     title: "Cảnh báo",
                     text: "Bạn có muốn xóa thành phần này?",
@@ -316,13 +314,13 @@
 
         <script>
             <% if (request.getAttribute("messtrue") != null) {%>
-            swal("<%= request.getAttribute("messtrue")%>", "", "success");
+                swal("<%= request.getAttribute("messtrue")%>", "", "success");
             <% request.removeAttribute("messtrue"); %>
             <% } %>
         </script>
         <script>
             <% if (request.getAttribute("messefalse") != null) {%>
-            swal("<%= request.getAttribute("messefalse")%>", "", "error");
+                swal("<%= request.getAttribute("messefalse")%>", "", "error");
             <% request.removeAttribute("messefalse"); %>
             <% }%>
         </script>
@@ -333,6 +331,9 @@
                 padding-left: 20px;
             }
         </style>
+        <script>
+
+        </script>
 
     </body>
 

@@ -87,8 +87,8 @@
                             <a href="About" class="nav-item nav-link">Giới thiệu</a>
                             <a href="Service" class="nav-item nav-link">Dịch vụ</a>
                             <a href="Team" class="nav-item nav-link">Đội ngũ nhân sự</a>
-                            <a href="Project" class="nav-item nav-link">Dự án</a>
-                            <a href="Blog" class="nav-link nav-link">Tin tức</a>
+                            <a href="ListProject" class="nav-item nav-link">Dự án</a>
+                             <a href="Blog" class="nav-item nav-link">Bài viết</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Bảng giá</a>
                                 <div class="dropdown-menu">
@@ -103,13 +103,21 @@
                         </div>
                         <c:if test="${empty sessionScope.USER}">
                             <div class="ml-auto">
-                                <a class="btn" href="../../Login.jsp">Đăng nhập</a>
+                                <a class="btn" href="LoginServlet">Đăng nhập</a>
                             </div>
                         </c:if>
                         <c:if test="${not empty sessionScope.USER}">
                             <div class="nav-item dropdown avatar">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><img
-                                        alt="avatar" src="./img/${sessionScope.USER.avatar}" width="50px"></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                                    <c:choose>
+                                        <c:when test="${empty sessionScope.USER.password}">
+                                            <img alt="avatar" src="${sessionScope.USER.avatar}" width="50px">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img alt="avatar" src="./img/${sessionScope.USER.avatar}" width="50px">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </a>
                                 <div class="dropdown-menu">
                                     <a href="Profile" class="dropdown-item">Hồ sơ</a>
                                     <a href="QuotationHistory" class="dropdown-item">Lịch sử báo giá</a>
@@ -137,12 +145,28 @@
                 });
             });
         </script>
+        <!-- Include trang JSP -->
 
+        <jsp:include page="../../PluginChatMess.jsp"/>
+
+
+        <!-- Script của plugin chat -->
         <script src="https://tudongchat.com/js/chatbox.js"></script>
         <script>
-            const tudong_chatbox = new TuDongChat('78jWmMQUwETtYhrcgI9h5')
-            tudong_chatbox.initial()
+            const tudong_chatbox = new TuDongChat('78jWmMQUwETtYhrcgI9h5');
+            tudong_chatbox.initial();
         </script>
-    </body>
+
+        <!-- CSS để điều chỉnh vị trí của icon -->
+        <style>
+            /* Đặt icon chat lên trên 50px so với đáy của trang */
+            .tudong-chat-icon.svelte-3x3xt4.svelte-3x3xt4 {
+                position: fixed;
+                bottom: 50px; /* Điều chỉnh khoảng cách từ đáy của trang lên icon chat */
+                right: 0;
+                z-index: 1000; /* Đảm bảo icon chat hiển thị trên các phần tử khác */
+            }
+        </style>
+
 
 </html>

@@ -3,18 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.Component;
+package Controller.Contact;
 
-import DAO.ComponentDAO;
-import DAO.RoofNFoundationDAO;
-import DTO.Component;
-import DTO.RoofNFoundation;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "CreateFoundation", urlPatterns = {"/CreateFoundation"})
-public class CreateFoundation extends HttpServlet {
+@WebServlet(name = "SendContent", urlPatterns = {"/SendContent"})
+public class SendContent extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +38,10 @@ public class CreateFoundation extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateFoundation</title>");
+            out.println("<title>Servlet SendContent</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateFoundation at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SendContent at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -80,39 +73,32 @@ public class CreateFoundation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         request.setCharacterEncoding("UTF-8");
-
         String name = request.getParameter("name");
-        String area = request.getParameter("area");
-        String regex = "^[0-9a-zA-Z\\p{L}\\p{P}][0-9a-zA-Z\\p{L}\\p{P}\\s]*[0-9a-zA-Z\\p{L}\\p{P}]$";
-        if (!name.matches(regex)) {
-            RoofNFoundationDAO dao = new RoofNFoundationDAO();
-            List<RoofNFoundation> foundations = dao.getAll();
-            request.setAttribute("foundations", foundations);
-            request.setAttribute("messefalse", "Kiểm tra tên hoặc % diện tích");
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
-        } else {
-            try {
-                RoofNFoundationDAO aO = new RoofNFoundationDAO();
-                boolean result = aO.addFoundation(name, area);
-                if (result) {
-                    RoofNFoundationDAO dao = new RoofNFoundationDAO();
-                    List<RoofNFoundation> foundations = dao.getAll();
-                    request.setAttribute("foundations", foundations);
-                    request.setAttribute("messtrue", "Đã thêm thành công");
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
+        String email = request.getParameter("email");
+        String subject = request.getParameter("subject");
+        String message = request.getParameter("message");
+        try {
 
-                } else {
-                    RoofNFoundationDAO dao = new RoofNFoundationDAO();
-                    List<RoofNFoundation> foundations = dao.getAll();
-                    request.setAttribute("foundations", foundations);
-                    request.setAttribute("messefalse", "Đã thêm thất bại");
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(CreateComponent.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            String emailContent = "Chào " + name + ",\n\n";
+            emailContent += "Xin chân thành cảm ơn Anh/Chị đã liên hệ với chúng tôi tại Công ty Xây dựng. Chúng tôi rất vui được hỗ trợ Anh/Chị trong các dự án xây dựng của mình.\n\n";
+            emailContent += "Thông tin chi tiết về dự án của Anh/Chị:\n";
+            emailContent += "1. Loại công trình: " + subject + "\n";
+            emailContent += "2. Quy mô dự án: " + message + "\n";
+// Thêm các thông tin khác tùy ý
+
+            emailContent += "\nKhi chúng tôi đã nhận được thông tin này, chúng tôi sẽ tiến hành xem xét và phản hồi lại Anh/Chị với các thông tin chi tiết về phương án thiết kế, dự toán chi phí và thời gian thực hiện.\n\n";
+            emailContent += "Nếu Anh/Chị có bất kỳ câu hỏi hoặc yêu cầu nào khác, xin vui lòng liên hệ với chúng tôi qua số điện thoại hoặc email dưới đây:\n";
+// Thêm thông tin liên hệ
+
+            emailContent += "\nChúng tôi rất mong được hợp tác cùng Anh/Chị và xây dựng thành công dự án của mình.\n\n";
+            emailContent += "Trân trọng,\n[Tên của bạn]\n[Công ty Xây dựng]";
+            response.sendRedirect("Contact");
+            Mail sendMail = new Mail();
+            sendMail.sendMail(email, emailContent); // Change recipient email address
+            response.getWriter().println("Email sent successfully!");
+        } catch (MessagingException e) {
+            response.getWriter().println("Error sending email: " + e.getMessage());
         }
     }
 

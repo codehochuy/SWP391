@@ -35,104 +35,99 @@
         <link href="WebPages/ViewWebPage/css/style.css" rel="stylesheet">
     </head>
     <body>
-    <div class="wrapper">
-        <jsp:include page="../../WebPages/ViewWebPage/HeaderPage.jsp"/>
+        <div class="wrapper">
+            <jsp:include page="../../WebPages/ViewWebPage/HeaderPage.jsp"/>
 
 
-        <!-- Page Header Start -->
-        <div class="page-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2>Liên Hệ</h2>
-                    </div>
-                    <div class="col-12">
-                        <a href="index">Trang Chủ</a>
-                        <a href="">Liên Hệ</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Page Header End -->
-
-
-        <!-- Contact Start -->
-        <div class="contact wow fadeInUp">
-            <div class="container">
-                <div class="section-header text-center">
-                    <p>Thông Tin Liên Hệ</p>
-                    <h2>Đối với bất kỳ truy vấn nào</h2>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="contact-info">
-                            <div class="contact-item">
-                                <i class="flaticon-address"></i>
-                                <div class="contact-text">
-                                    <h2>Địa Chỉ</h2>
-                                    <p>123 Đường Lê Văn Việt, Quận 9, HCM</p>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <i class="flaticon-call"></i>
-                                <div class="contact-text">
-                                    <h2>Điện Thoại</h2>
-                                    <p>+84 123 456 789</p>
-                                </div>
-                            </div>
-                            <div class="contact-item">
-                                <i class="flaticon-send-mail"></i>
-                                <div class="contact-text">
-                                    <h2>Email</h2>
-                                    <p>titan@gmail.com</p>
-                                </div>
-                            </div>
+            <!-- Page Header Start -->
+            <div class="page-header">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Liên Hệ</h2>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="contact-form">
-                            <div id="success"></div>
-                            <form name="sentMessage" id="contactForm" novalidate="novalidate">
-                                <div class="control-group">
-                                    <input type="text" class="form-control" id="name" placeholder="Họ Và Tên"
-                                        required="required"
-                                        data-validation-required-message="Vui lòng nhập họ và tên" />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    <input type="email" class="form-control" id="email" placeholder="Email"
-                                        required="required" data-validation-required-message="Vui lòng nhập email" />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    <input type="text" class="form-control" id="subject" placeholder="Tiêu Đề"
-                                        required="required" data-validation-required-message="Vui lòng nhập tiêu đề" />
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div class="control-group">
-                                    <textarea class="form-control" id="message" placeholder="Nội dung"
-                                        required="required"
-                                        data-validation-required-message="Vui lòng nhập nội dung"></textarea>
-                                    <p class="help-block text-danger"></p>
-                                </div>
-                                <div>
-                                    <button class="btn" type="submit" id="sendMessageButton">Gửi Thư Ngay</button>
-                                </div>
-                            </form>
+                        <div class="col-12">
+                            <a href="index">Trang Chủ</a>
+                            <a href="">Liên Hệ</a>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Page Header End -->
+
+
+            <!-- Contact Start -->
+            <div class="contact wow fadeInUp">
+                <div class="container">
+                    <div class="section-header text-center">
+                        <p>Thông Tin Liên Hệ</p>
+                        <h2>Đối với bất kỳ truy vấn nào</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <i class="flaticon-address"></i>
+                                    <div class="contact-text">
+                                        <h2>Địa Chỉ</h2>
+                                        <p>123 Đường Lê Văn Việt, Quận 9, HCM</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="flaticon-call"></i>
+                                    <div class="contact-text">
+                                        <h2>Điện Thoại</h2>
+                                        <p>+84 123 456 789</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="flaticon-send-mail"></i>
+                                    <div class="contact-text">
+                                        <h2>Email</h2>
+                                        <p>titan@gmail.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="contact-form">
+                                <div id="success"></div>
+                                <form name="SendContent" method="post" action="SendContent">
+                                    <div class="control-group">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Họ Và Tên" required="required" data-validation-required-message="Vui lòng nhập họ và tên" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required="required" data-validation-required-message="Vui lòng nhập email" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group">
+                                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Tiêu Đề" required="required" data-validation-required-message="Vui lòng nhập tiêu đề" />
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div class="control-group">
+                                        <textarea class="form-control" id="message" name="message" placeholder="Nội dung" required="required" data-validation-required-message="Vui lòng nhập nội dung"></textarea>
+                                        <p class="help-block text-danger"></p>
+                                    </div>
+                                    <div>
+                                        <button class="btn" type="submit">Gửi Thư Ngay</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact End -->
+
+
+            <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
+
+            <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
-        <!-- Contact End -->
 
-
-        <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
-
-        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-    </div>
-
-    <!-- JavaScript Libraries -->
+        <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/easing/easing.min.js"></script>
@@ -146,5 +141,5 @@
 
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
-</body>
+    </body>
 </html>

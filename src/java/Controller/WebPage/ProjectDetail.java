@@ -3,18 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.Component;
+package Controller.WebPage;
 
-import DAO.ComponentDAO;
-import DAO.RoofNFoundationDAO;
-import DTO.Component;
-import DTO.RoofNFoundation;
+import DAO.HouseTypeDAO;
+import DAO.ProjectDAO;
+import DAO.ProjectImageDAO;
+import DAO.ServiceDAO;
+import DAO.StyleDAO;
+import DTO.HouseType;
+import DTO.Project;
+import DTO.ProjectImage;
+import DTO.Style;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,10 +26,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ACER
+ * @author Admin
  */
-@WebServlet(name = "CreateFoundation", urlPatterns = {"/CreateFoundation"})
-public class CreateFoundation extends HttpServlet {
+@WebServlet(name = "ProjectDetail", urlPatterns = {"/ProjectDetail"})
+public class ProjectDetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +48,10 @@ public class CreateFoundation extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateFoundation</title>");
+            out.println("<title>Servlet ProjectDetail</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateFoundation at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProjectDetail at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,7 +69,22 @@ public class CreateFoundation extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+     String id = request.getParameter("id");
+     
+        ProjectDAO dao = new ProjectDAO();
+        Project project = dao.getProjectbyID(id);
+        
+        
+        ProjectImageDAO imageDAO = new ProjectImageDAO();
+        List<ProjectImage> images = imageDAO.getProjectImagesByProjectID(id);
+        
+        request.setAttribute("images", images);
+        request.setAttribute("project", project);
+ 
+
+        // Chuyển hướng request đến trang ViewBlogDetail.jsp để hiển thị thông tin blog
+        RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewWebPage/projectdetail.jsp");
+        dispatcher.forward(request, response);
     }
 
     /**
@@ -80,40 +98,7 @@ public class CreateFoundation extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        request.setCharacterEncoding("UTF-8");
-
-        String name = request.getParameter("name");
-        String area = request.getParameter("area");
-        String regex = "^[0-9a-zA-Z\\p{L}\\p{P}][0-9a-zA-Z\\p{L}\\p{P}\\s]*[0-9a-zA-Z\\p{L}\\p{P}]$";
-        if (!name.matches(regex)) {
-            RoofNFoundationDAO dao = new RoofNFoundationDAO();
-            List<RoofNFoundation> foundations = dao.getAll();
-            request.setAttribute("foundations", foundations);
-            request.setAttribute("messefalse", "Kiểm tra tên hoặc % diện tích");
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
-        } else {
-            try {
-                RoofNFoundationDAO aO = new RoofNFoundationDAO();
-                boolean result = aO.addFoundation(name, area);
-                if (result) {
-                    RoofNFoundationDAO dao = new RoofNFoundationDAO();
-                    List<RoofNFoundation> foundations = dao.getAll();
-                    request.setAttribute("foundations", foundations);
-                    request.setAttribute("messtrue", "Đã thêm thành công");
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
-
-                } else {
-                    RoofNFoundationDAO dao = new RoofNFoundationDAO();
-                    List<RoofNFoundation> foundations = dao.getAll();
-                    request.setAttribute("foundations", foundations);
-                    request.setAttribute("messefalse", "Đã thêm thất bại");
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(CreateComponent.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        processRequest(request, response);
     }
 
     /**

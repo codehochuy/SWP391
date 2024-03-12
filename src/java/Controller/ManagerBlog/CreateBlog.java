@@ -56,10 +56,9 @@ public class CreateBlog extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BlogDAO dao = new BlogDAO();
-         List<String> categoryList = dao.listCategory();
-    request.setAttribute("categoryList", categoryList);
-    
-     
+        List<String> categoryList = dao.listCategory();
+        request.setAttribute("categoryList", categoryList);
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/createBlog.jsp");
         dispatcher.forward(request, response);
     }
@@ -76,26 +75,38 @@ public class CreateBlog extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-                String title = request.getParameter("title");
+        String title = request.getParameter("title");
+        String tags = request.getParameter("tags");
         String content = request.getParameter("content");
         String dateCreate = request.getParameter("date");
-         String category = request.getParameter("category");
-         BlogDAO dao1 = new BlogDAO();
-         String blogcategoryID= dao1.returnblogcategoryID(category);
-         
-         int userId = 1;
-         HttpSession session = request.getSession(false);
-         
-         if (session != null && session.getAttribute("USER") != null){
-             User user = (User) session.getAttribute("USER");
-             userId = user.getId();
-         }
-      
-        
+        String category = request.getParameter("category");
+
+        BlogDAO dao = new BlogDAO();
+        List<BlogDTO> existingBlogs = dao.getAll();
+        boolean titleExists = existingBlogs.stream()
+                .anyMatch(blog -> blog.getTitle().equalsIgnoreCase(title));
+
+        if (titleExists) {
+            // Title already exists, send a response indicating duplication
+            response.getWriter().write("DUPLICATE_TITLE");
+        } else {
+
+            BlogDAO dao1 = new BlogDAO();
+            String blogcategoryID = dao1.returnblogcategoryID(category);
+
+            int userId = 1;
+            HttpSession session = request.getSession(false);
+
+            if (session != null && session.getAttribute("USER") != null) {
+                User user = (User) session.getAttribute("USER");
+                userId = user.getId();
+            }
+
 // Tạo một đối tượng BlogDTO mới
-        BlogDAO dao2 = new BlogDAO();
-       dao2.createBlog(title, content, dateCreate, blogcategoryID, userId);
-      
+            BlogDAO dao2 = new BlogDAO();
+            dao2.createBlog(title, tags, content, dateCreate, blogcategoryID, userId);
+
+        }
     }
 
     /**
