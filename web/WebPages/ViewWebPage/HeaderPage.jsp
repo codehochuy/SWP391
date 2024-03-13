@@ -30,7 +30,7 @@
                         <div class="logo">
                             <a href="index">
 <!--                                <h1>TITAN</h1>-->
-                                <img src="img/team.jpg" alt="Logo"> 
+                                <img src="img/team_4.jpg" alt="Logo"> 
                             </a>
                         </div>
                     </div>
