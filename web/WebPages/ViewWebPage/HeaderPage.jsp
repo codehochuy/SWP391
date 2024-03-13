@@ -12,6 +12,12 @@
                 height: 40px;
                 object-fit: cover;
             }
+            .logo img{
+                margin-left: 25px;
+                width: 100px;
+                height:100px;
+                object-fit: cover;
+            }
         </style>
     </head>
 
@@ -23,8 +29,8 @@
                     <div class="col-lg-4 col-md-12">
                         <div class="logo">
                             <a href="index">
-                                <h1>TITAN</h1>
-                                <!--<img src="img/Product1.jpg" alt="Logo">--> 
+<!--                                <h1>TITAN</h1>-->
+                                <img src="img/team.jpg" alt="Logo"> 
                             </a>
                         </div>
                     </div>
