@@ -6,6 +6,7 @@
 package DTO;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -13,7 +14,7 @@ import java.sql.Date;
  */
 public class QuotationVersion {
     private int versionId;
-    private Date date;
+    private LocalDateTime date;
     private Double price;
     private int roofId;
     private int foundationId;
@@ -23,7 +24,7 @@ public class QuotationVersion {
     public QuotationVersion() {
     }
 
-    public QuotationVersion(int versionId, Date date, Double price, int roofId, int foundationId, boolean quotationVersionStatus, int cusQuoId) {
+    public QuotationVersion(int versionId, LocalDateTime date, Double price, int roofId, int foundationId, boolean quotationVersionStatus, int cusQuoId) {
         this.versionId = versionId;
         this.date = date;
         this.price = price;
@@ -41,11 +42,11 @@ public class QuotationVersion {
         this.versionId = versionId;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -90,5 +91,4 @@ public class QuotationVersion {
     }
 
     
-     
 }

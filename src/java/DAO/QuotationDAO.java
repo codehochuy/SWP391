@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -552,17 +553,14 @@ public class QuotationDAO {
 
     public boolean createCusQuoVersion(double totalPrice, int foundationId, int roofId, int cusQuoId) {
         String sql = "INSERT INTO CusQuoVersion ([Date], Price, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID)\n"
-                + "VALUES (?,?,?,?,1,?);";
+                + "VALUES (GETDATE(),?,?,?,1,?);";
 
         try (Connection conn = db.getConn();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-            LocalDate currentDate = LocalDate.now();
-            Date sqlDate = Date.valueOf(currentDate);
-            ps.setDate(1, sqlDate);
-            ps.setDouble(2, totalPrice);
-            ps.setInt(3, foundationId);
-            ps.setInt(4, roofId);
-            ps.setInt(5, cusQuoId);
+                PreparedStatement ps = conn.prepareStatement(sql)) {            
+            ps.setDouble(1, totalPrice);
+            ps.setInt(2, foundationId);
+            ps.setInt(3, roofId);
+            ps.setInt(4, cusQuoId);
 
             int rowsAffected = ps.executeUpdate();
 
@@ -701,7 +699,7 @@ public class QuotationDAO {
             while (rs.next()) {
                 QuotationVersion c = new QuotationVersion();
                 c.setVersionId(rs.getInt("VersionID"));
-                c.setDate(rs.getDate("Date"));
+                c.setDate(rs.getTimestamp("Date").toLocalDateTime());
                 c.setPrice(rs.getDouble("Price"));
                 c.setRoofId(rs.getInt("RoofID"));
                 c.setFoundationId(rs.getInt("FoundationID"));
@@ -799,7 +797,7 @@ public class QuotationDAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 quotation.setVersionId(rs.getInt("VersionID"));
-                quotation.setDate(rs.getDate("Date"));
+                quotation.setDate(rs.getTimestamp("Date").toLocalDateTime());
                 quotation.setPrice(rs.getDouble("Price"));
                 quotation.setRoofId(rs.getInt("RoofID"));
                 quotation.setFoundationId(rs.getInt("FoundationID"));
@@ -873,11 +871,9 @@ public class QuotationDAO {
     }
 
     public static void main(String[] args) {
-        QuotationDAO dao = new QuotationDAO();
-        List<CustomerHouseComponent> list = dao.getListCustomerHouseComponentByVersionId(5);
-        for (CustomerHouseComponent customerHouseComponent : list) {
-            System.out.println(customerHouseComponent.getComponentId() +": "+customerHouseComponent.getComponentName());
-        }
+        LocalDateTime currentDate = LocalDateTime.now();
+        Date sqlDate = Date.valueOf(currentDate.toLocalDate());
+        System.out.println("SQL Date: " + currentDate);
     }
 
 }
