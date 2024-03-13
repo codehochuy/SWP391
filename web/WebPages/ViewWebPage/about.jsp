@@ -14,7 +14,7 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Construction Company Website Template" name="keywords">
         <meta content="Construction Company Website Template" name="description">
-
+        <link rel="icon" href="img/logo.jpg" type="image/x-icon">
         <!-- Favicon -->
         <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
 
@@ -36,7 +36,7 @@
     </head>
     <body>
         <div class="wrapper">
-        <jsp:include page="../../WebPages/ViewWebPage/HeaderPage.jsp"/>
+            <jsp:include page="../../WebPages/ViewWebPage/HeaderPage.jsp"/>
             <!-- Page Header Start -->
             <div class="page-header">
                 <div class="container">

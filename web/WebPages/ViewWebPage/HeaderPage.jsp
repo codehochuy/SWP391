@@ -19,6 +19,7 @@
                 object-fit: cover;
             }
         </style>
+        <link rel="icon" href="img/team_4.jpg" type="image/x-icon">
     </head>
 
     <body>

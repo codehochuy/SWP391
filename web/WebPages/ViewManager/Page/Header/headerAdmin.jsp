@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" href="img/logo.jpg" type="image/x-icon">
         <title>JSP Page</title>
         <style>
             html{

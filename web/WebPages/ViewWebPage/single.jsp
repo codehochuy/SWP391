@@ -8,6 +8,7 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <meta charset="utf-8">
             <title>TITAN - Tin Tức</title>
+            <link rel="icon" href="img/logo.jpg" type="image/x-icon">
             <meta content="width=device-width, initial-scale=1.0" name="viewport">
             <meta content="Construction Company Website Template" name="keywords">
             <meta content="Construction Company Website Template" name="description">
