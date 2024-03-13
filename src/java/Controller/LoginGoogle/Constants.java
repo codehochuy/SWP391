@@ -15,7 +15,7 @@ public class Constants {
 
     public static String GOOGLE_CLIENT_SECRET = "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";
 
-    public static String GOOGLE_REDIRECT_URI = "https://ab64-113-161-74-165.ngrok-free.app/SWP391/LoginGoogleHandler";
+    public static String GOOGLE_REDIRECT_URI = "https://8dda-118-69-182-144.ngrok-free.app/SWP391/LoginGoogleHandler";
 
     public static String GOOGLE_LINK_GET_TOKEN = "https://accounts.google.com/o/oauth2/token";
 
