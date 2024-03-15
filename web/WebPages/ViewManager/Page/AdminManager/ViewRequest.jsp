@@ -27,7 +27,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-        
+
 
     </head>
 
@@ -47,19 +47,31 @@
                         <!--huycute-->
                         <div class="tile-body">
                             <div class="row element-button">
-                                <div class="col-sm-2">
-                                    <a class="btn btn-save btn-sm" href="AdminQuotation" title="Thêm"><i class="fas fa-edit"></i>
-                                        Yêu cầu báo giá của người dùng</a>
-                                </div>
-                                <div class="col-sm-2">
-                                    <a class="btn btn-save btn-sm" href="createProduct" title="Thêm"><i class="fas fa-edit"></i>
-                                        Báo giá đã gửi</a>
-                                </div>
+                                <h2>Báo giá chi tiết</h2>
                             </div>
-                            <div class="section-header">
-
-                                <div class="section-header text-center">
-                                    <h2>Báo giá chi tiết</h2>
+                            <div class="section-header">                             
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Tên khách hàng</label>
+                                            <input class="form-control" type="text" name="projectname" value="${customer}">
+                                            <div class="error-message" id="tensp-error"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Tên báo giá</label>
+                                            <input class="form-control" type="text" name="date" value="${quotationname}" max="">
+                                            <div class="error-message" id="price-error"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="control-label">Giá</label>
+                                            <input class="form-control" type="number" min="0" name="time" value="${price}">
+                                            <div class="error-message" id="quantity-error"></div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="contact wow fadeInUp">
                                     <div class="container">
@@ -281,7 +293,7 @@
                 position: relative;
                 width: 100%;
                 padding: 45px 0;
-         
+
             }
 
             .contact .col-md-6 {
@@ -291,7 +303,7 @@
 
             .contact .col-md-6:first-child {
                 background: rgb(0, 28, 64);
-                       color: white;
+                color: white;
             }
 
             .contact .col-md-6:last-child {

@@ -82,6 +82,9 @@
                                                     <input type="hidden" name="versionId" value="${user.versionid}">
                                                     <input type="hidden" name="cusQuoId" value="${user.cusQuoId}">
                                                     <input type="hidden" name="quotationId" value="${user.quotationId}">
+                                                    <input type="hidden" name="customer" value="${user.customer}">
+                                                    <input type="hidden" name="quotationname" value="${user.quotationname}">
+                                                    <input type="hidden" name="price" value="${user.price}">
                                                     <button class="btn btn-primary btn-sm trash" type="submit" title="Xem chi tiết">
                                                         <i class="fas fa-eye"></i>
                                                     </button>

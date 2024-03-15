@@ -39,9 +39,14 @@ public class View extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            request.setCharacterEncoding("UTF-8");
             int cusQuoId = Integer.parseInt(request.getParameter("cusQuoId"));
             int versionId = Integer.parseInt(request.getParameter("versionId"));
             int quotationId = Integer.parseInt(request.getParameter("quotationId"));
+            String customer = request.getParameter("customer");
+            String quotationname = request.getParameter("quotationname");
+            double price = Double.parseDouble(request.getParameter("price"));
+           
             QuotationDAO dao = new QuotationDAO();
             List<CustomerHouseComponent> listCustomerHouseComponent = dao.getListCustomerHouseComponentByVersionId(versionId);
             QuotationDAO dao1 = new QuotationDAO();
@@ -69,6 +74,9 @@ public class View extends HttpServlet {
             }
             
 
+            request.setAttribute("customer", customer);
+            request.setAttribute("quotationname", quotationname);
+            request.setAttribute("price", price);
             request.setAttribute("listCustomerHouseComponent", listCustomerHouseComponent);
             request.setAttribute("listHouseComponent", listHouseComponent);
             request.setAttribute("cusQuoVersion", cusQuoVersion);
