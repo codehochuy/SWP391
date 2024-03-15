@@ -94,6 +94,7 @@
                                                             <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
                                                             <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
                                                             <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cusQuoId}"/>
+                                                            <input type="hidden" id="note" name="note" value=""/>
                                                         </form>
                                                         <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill2" novalidate="novalidate">
 
@@ -194,7 +195,7 @@
 
                     // Gửi dữ liệu đến servlet bằng AJAX
                     $.ajax({
-                        url: 'LoadQuotationContentVersionDetail',
+                        url: 'LoadAdminQuotaionDetail',
                         type: 'get',
                         data: formData,
                         success: function (data) {
@@ -218,7 +219,7 @@
                     formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
                 });
                 $.ajax({// Sửa thành $.ajax thay vì $ajax
-                    url: "/SWP391/LoadFormChangeQuotationDetail",
+                    url: "/SWP391/LoadFormChangeAdminQuotationDetail",
                     type: "get",
                     data: formData,
                     success: function (data) {
@@ -274,7 +275,7 @@
 
                     // Gửi dữ liệu đến servlet bằng AJAX
                     $.ajax({
-                        url: '/SWP391/NewVersionQuotationContent',
+                        url: '/SWP391/saveadminquotation',
                         type: 'get',
                         data: formData,
                         success: function (data) {

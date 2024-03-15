@@ -61,7 +61,7 @@ public class View extends HttpServlet {
             int foundation = cusQuoVersion.getFoundationId();
             int roof = cusQuoVersion.getRoofId();
             int packagePrice = 0;
-            
+            String note = cusQuoVersion.getNote();
             QuotationDAO dao3 = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao3.getHouseComponent(selectedHouseType);
 
@@ -87,6 +87,7 @@ public class View extends HttpServlet {
             request.setAttribute("foundation", foundation);
             request.setAttribute("roof", roof);
             request.setAttribute("packagePrice", packagePrice);
+            request.setAttribute("note", note);
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ViewRequest.jsp").forward(request, response);
         }
     }
