@@ -62,7 +62,7 @@ public class LoadFormFill extends HttpServlet {
                     if (houseComponent.getComponentId() == 5){
                         out.println("<div class=\"control-group\">\n"
                             + "                                        <h5>Nhập " + houseComponent.getComponent() + " (số tầng)</h5>\n"
-                            + "                                        <input type=\"text\" oninput=\"this.value = this.value.replace(/[^\\d.]/g, '').replace(/(\\..*)\\./g, '$1');\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng\"\n"
+                            + "                                        <input type=\"number\" oninput=\"this.value = this.value.replace(/[^\\d.]/g, '').replace(/(\\..*)\\./g, '$1');\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng\"\n"
                             + "                                               required=\"required\"\n"
                             + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
                             + "                                        <p class=\"help-block text-danger\"></p>\n"
@@ -114,7 +114,10 @@ public class LoadFormFill extends HttpServlet {
             out.println("    </select>\n"
                     + "    <p class=\"help-block text-danger\"></p>\n"
                     + "</div>");
-
+            out.println("<div class=\"control-group note\">\n"
+                            + "                                        <h5>Ghi chú</h5>\n"
+                            + "                                        <textarea class=\"form-control\" id=\"note\" name=\"note\" placeholder=\"Nội dung ghi chú\"></textarea>\n"
+                            + "                                    </div>");
             out.println("<input type=\"hidden\" id=\"service\" name=\"service\" value=\"" + selectedService + "\"/>");
             out.println("<input type=\"hidden\" id=\"houseType\" name=\"houseType\" value=\"" + selectedHouseType + "\"/>");
             out.println("<input type=\"hidden\" id=\"style\" name=\"style\" value=\"" + selectedStyle + "\"/>");

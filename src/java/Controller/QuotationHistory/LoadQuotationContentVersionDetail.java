@@ -44,7 +44,8 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
             int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
             int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
-
+            String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
+            
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
 
@@ -178,6 +179,10 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
             String formattedTotalArea = decimalFormat3.format(totalArea);
             out.println("<p>Tổng diện tích xây dựng: " + formattedTotalArea + "m2</p>");
             out.println("<p style=\"color: red;\">Tổng chi phí xây dựng: " + formattedTotalPrice + "VNĐ</p>");
+            if (note != ""){
+                out.println("<p class=\"text-note\">Ghi chú: " + note + "</p>");
+            }
+            out.println("<input type=\"hidden\" name=\"note\" value=\""+ note + "\">");
             out.println("<input type=\"hidden\" name=\"houseType\" value=\"" + selectedHouseType + "\">");
             out.println("<input type=\"hidden\" name=\"service\" value=\"" + selectedService + "\">");
             out.println("<input type=\"hidden\" name=\"style\" value=\"" + selectedStyle + "\">");

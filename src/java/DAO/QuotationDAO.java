@@ -551,9 +551,9 @@ public class QuotationDAO {
         }
     }
 
-    public boolean createCusQuoVersion(double totalPrice, int foundationId, int roofId, int cusQuoId) {
-        String sql = "INSERT INTO CusQuoVersion ([Date], Price, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID, CusRequest)\n"
-                + "VALUES (GETDATE(),?,?,?,1,?,0);";
+    public boolean createCusQuoVersion(double totalPrice, int foundationId, int roofId, int cusQuoId, String note) {
+        String sql = "INSERT INTO CusQuoVersion ([Date], Price, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID, CusRequest, Note)\n"
+                + "VALUES (GETDATE(),?,?,?,1,?,0,?);";
 
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {            
@@ -561,6 +561,7 @@ public class QuotationDAO {
             ps.setInt(2, foundationId);
             ps.setInt(3, roofId);
             ps.setInt(4, cusQuoId);
+            ps.setString(5, note);
 
             int rowsAffected = ps.executeUpdate();
 
@@ -803,6 +804,8 @@ public class QuotationDAO {
                 quotation.setFoundationId(rs.getInt("FoundationID"));
                 quotation.setQuotationVersionStatus(rs.getBoolean("CusQuoVersionStatus"));
                 quotation.setCusQuoId(rs.getInt("CusQuoID"));
+                quotation.setCusRequest(rs.getBoolean("CusRequest"));
+                quotation.setNote(rs.getString("Note"));
             }
             return quotation;
         } catch (SQLException e) {

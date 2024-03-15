@@ -93,6 +93,16 @@
             #toggle-contents {
                 margin-bottom: 10px;
             }
+            
+            /* CSS styles */
+            .error {
+                color: red;
+                font-style: italic;
+            }
+            .text-note{
+                font-style: italic; 
+                opacity: 0.6; 
+            }
         </style>
     </head>
     <body>

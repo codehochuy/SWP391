@@ -34,7 +34,17 @@
         <link href="WebPages/ViewWebPage/lib/slick/slick-theme.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="WebPages/ViewWebPage/css/style.css" rel="stylesheet">
-
+        <style>
+            .note textarea{
+                padding: 10px;
+                margin: 10px 0;
+                
+            }
+            .text-note {
+                font-style: italic; 
+                opacity: 0.6;
+            }
+        </style>
     </head>
     <body>
         <div class="wrapper">      
@@ -60,7 +70,7 @@
                 <div class="section-header text-center">
                     <h2>Báo giá chi tiết</h2>
                 </div>
-                <div class="contact wow fadeInUp">
+                <div class="contact wow">
                     <div class="container">
                         <div class="row">
                             <div id="quotationContent" class="col-md-6">
@@ -82,6 +92,7 @@
                                             <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
                                             <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
                                             <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cusQuoId}"/>
+                                            <input type="hidden" id="note" name="note" value="${note}"/>
                                         </form>
                                         <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill2" novalidate="novalidate">
 
@@ -184,7 +195,7 @@
 
 
                     var formData = {};
-                    $("#formFill2").find("input, select").each(function () {
+                    $("#formFill2").find("input, select, textarea").each(function () {
                         formData[$(this).attr("name")] = $(this).val();
                     });
 
@@ -270,36 +281,36 @@
 
 //           
 
-                if (parseInt(_1.value) > 10000 || parseInt(_1.value) <= 0) {
+                if (parseDouble(_1.value) > 10000 || parseDouble(_1.value) <= 0) {
                     isValid = false;
                     error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
                 }
 
-                if (parseInt(_2.value) > 10000 || parseInt(_2.value) <= 0) {
+                if (parseDouble(_2.value) > 10000 || parseDouble(_2.value) <= 0) {
                     isValid = false;
                     error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
                 }
 
-                if ((parseInt(_3.value) >= parseInt(_1.value)) || parseInt(_3.value) < 0) {
+                if ((parseDouble(_3.value) >= parseDouble(_1.value)) || parseDouble(_3.value) < 0) {
                     isValid = false;
                     error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
                 }
-                if ((parseInt(_4.value) >= (parseInt(_1.value) - parseInt(_3.value))) || parseInt(_4.value) < 0) {
+                if ((parseDouble(_4.value) >= (parseDouble(_1.value) - parseDouble(_3.value))) || parseDouble(_4.value) < 0) {
                     isValid = false;
                     error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
                 }
 
                 if (_5.value !== '') {
-                    if (parseInt(_5.value) > 24 || parseInt(_5.value) < 0) {
+                    if (parseDouble(_5.value) > 24 || parseDouble(_5.value) < 0) {
                         isValid = false;
                         error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
                     }
                 }
 
                 if (_6.value !== '') {
-                    if (parseInt(_6.value) <= 0 || parseInt(_6.value) > 2) {
+                    if (parseDouble(_6.value) < 0 || parseDouble(_6.value) > 2) {
                         isValid = false;
-                        error_6.textContent = 'Chiều dài rộng ban công phải lớn hơn hoặc bằng 0 và nhỏ hơn 2m.';
+                        error_6.textContent = 'Chiều dài rộng ban công từ 0-2m.';
                     }
                 }
 
