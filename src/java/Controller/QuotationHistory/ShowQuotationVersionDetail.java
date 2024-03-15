@@ -68,7 +68,7 @@ public class ShowQuotationVersionDetail extends HttpServlet {
                 packagePrice = 2;
             }
             
-
+            request.setAttribute("versionId", versionId);
             request.setAttribute("listCustomerHouseComponent", listCustomerHouseComponent);
             request.setAttribute("listHouseComponent", listHouseComponent);
             request.setAttribute("cusQuoVersion", cusQuoVersion);

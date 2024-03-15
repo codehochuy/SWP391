@@ -38,7 +38,7 @@
             .note textarea{
                 padding: 10px;
                 margin: 10px 0;
-                
+
             }
             .text-note {
                 font-style: italic; 
@@ -73,9 +73,9 @@
                 <div class="contact wow">
                     <div class="container">
                         <div class="row">
-                            <div id="quotationContent" class="col-md-6">
+                            <form id="quotationContent" class="col-md-6">
 
-                            </div>
+                            </form>
                             <!--Raw contruction-->
                             <div class="col-md-6 rawContruction">
                                 <div class="contact-form">
@@ -88,6 +88,7 @@
                                             <c:forEach items="${requestScope.listCustomerHouseComponent}" var="chc" varStatus="loop">
                                                 <input type="hidden" name="${chc.componentId}" value="${chc.value}"/>
                                             </c:forEach>
+                                            <input type="hidden" id="versionId" name="versionId" value="${versionId}"/>     
                                             <input type="hidden" id="service" name="service" value="${selectedService}"/>    
                                             <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
                                             <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
@@ -186,6 +187,56 @@
                 });
             }
         </script>
+
+        <script>
+            document.getElementById("quotationContent").addEventListener("submit", function (event) {
+                event.preventDefault(); // Ngăn chặn việc gửi form mặc định
+
+                // Lấy ra giá trị của nút được nhấn
+                var action = event.submitter.value;
+                var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
+                $("#formFill").find("input").each(function () {
+                    formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
+                });
+
+                // Xác định hành động dựa trên giá trị của nút được nhấn
+                switch (action) {
+                    case "changeQuotationContent":
+                        // Xử lý chức năng 1
+                        $.ajax({// Sửa thành $.ajax thay vì $ajax
+                            url: "/SWP391/LoadFormChangeQuotationDetail",
+                            type: "get",
+                            data: formData,
+                            success: function (data) {
+                                var formFill = document.getElementById("formFill2");
+                                formFill.innerHTML = data;
+                            },
+                            error: function (xhr) {
+                                // Xử lý lỗi nếu cần
+                            }
+                        });
+                        break;
+                    case "sendRequestQuotation":
+                        $.ajax({
+                            url: 'SendRequestQuotation',
+                            type: 'get',
+                            data: formData,
+                            success: function (data) {
+                                var quotationContent = document.getElementById("quotationContent");
+                                quotationContent.innerHTML += data;
+                            },
+                            error: function (xhr) {
+                                console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                            }
+                        });
+                        break;
+                    default:
+                        // Xử lý mặc định nếu cần
+                        console.log("Không xác định hành động");
+                }
+            });
+        </script>
+
         <!--3-->
         <script>
             $(document).ready(function () {
@@ -216,7 +267,7 @@
             });
         </script>
 
-        <script>
+<!--        <script>
             $(document).ready(function () {
                 $('#quotationContent2').submit(function (event) {
                     event.preventDefault();
@@ -243,9 +294,57 @@
                     });
                 });
             });
+        </script>-->
+
+        <script>
+            document.getElementById("quotationContent2").addEventListener("submit", function (event) {
+                event.preventDefault(); // Ngăn chặn việc gửi form mặc định
+
+                // Lấy ra giá trị của nút được nhấn
+                var action = event.submitter.value;
+
+                var formData = {};
+                $("#quotationContent2").find("input").each(function () {
+                    formData[$(this).attr("name")] = $(this).val();
+                });
+
+                // Xác định hành động dựa trên giá trị của nút được nhấn
+                switch (action) {
+                    case "saveQuotationContent":
+                        // Xử lý chức năng 1
+                        $.ajax({
+                            url: '/SWP391/NewVersionQuotationContent',
+                            type: 'get',
+                            data: formData,
+                            success: function (data) {
+                                var quotationContent = document.getElementById("quotationContent2");
+                                quotationContent.innerHTML += data;
+                            },
+                            error: function (xhr) {
+                                console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                            }
+                        });
+                        break;
+                    case "saveAndSendRequestQuotation":
+                        $.ajax({
+                            url: 'NewVersionQuotationContent',
+                            type: 'post',
+                            data: formData,
+                            success: function (data) {
+                                var quotationContent = document.getElementById("quotationContent2");
+                                quotationContent.innerHTML += data;
+                            },
+                            error: function (xhr) {
+                                console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                            }
+                        });
+                        break;
+                    default:
+                        // Xử lý mặc định nếu cần
+                        console.log("Không xác định hành động");
+                }
+            });
         </script>
-
-
 
         <script>
             // JavaScript code for form validation

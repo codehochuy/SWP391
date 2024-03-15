@@ -194,6 +194,7 @@ public class LoadQuotationContent extends HttpServlet {
             out.println("<input type=\"hidden\" name=\"service\" value=\""+selectedService+"\">");
             out.println("<input type=\"hidden\" name=\"style\" value=\""+selectedStyle+"\">");
             out.println("<input type=\"hidden\" name=\"price\" value=\""+price+"\">");
+            out.println("<input type=\"hidden\" name=\"totalPrice\" value=\""+totalPrice+"\">");
             out.println("<input type=\"hidden\" name=\"cusQuoName\" value=\""+ quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() +"\">");
             out.println("<input type=\"hidden\" name=\"note\" value=\""+ note + "\">");
             for (int i = 0; i < listHouseComponent.size(); i++) {
@@ -203,7 +204,7 @@ public class LoadQuotationContent extends HttpServlet {
 "                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"saveQuotationContent\">Lưu báo giá</button>\n" +
 "                        </div>");
             out.println("<div class=\"contact-form\">\n" +
-"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"sendRequestQuotation\">Lưu và Gửi báo giá</button>\n" +
+"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"saveAndSendRequestQuotation\">Lưu và Gửi báo giá</button>\n" +
 "                        </div>");
            
             

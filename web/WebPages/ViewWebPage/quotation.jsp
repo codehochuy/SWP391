@@ -252,9 +252,19 @@
                                 }
                             });
                         break;
-                    case "sendRequestQuotation":
-                        // Xử lý chức năng 2
-                        alert("hi")
+                    case "saveAndSendRequestQuotation":
+                        $.ajax({
+                                url: 'SaveQuotationContent',
+                                type: 'post',
+                                data: formData,
+                                success: function (data) {
+                                    var quotationContent = document.getElementById("quotationContent");
+                                    quotationContent.innerHTML += data;
+                                },
+                                error: function (xhr) {
+                                    console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                                }
+                            });
                         break;
                     default:
                         // Xử lý mặc định nếu cần

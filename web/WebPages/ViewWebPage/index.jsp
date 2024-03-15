@@ -53,7 +53,7 @@
                     <div class="carousel-caption">
                         <p class="animated fadeInRight">Thiết Kế Xây Nhà Chắc</p>
                         <h1 class="animated fadeInLeft">Vững Bước Thành Công</h1>
-                        <a class="btn animated fadeInUp" href="#">Nhận Báo Giá</a>
+                        <a class="btn animated fadeInUp" href="Quotation">Nhận Báo Giá</a>
                     </div>
                 </div>
 
@@ -62,7 +62,7 @@
                     <div class="carousel-caption">
                         <p class="animated fadeInRight">Xây Vững Niềm Tin</p>
                         <h1 class="animated fadeInLeft">Dựng Uy Tín Vàng</h1>
-                        <a class="btn animated fadeInUp" href="#">Nhận Báo Giá</a>
+                        <a class="btn animated fadeInUp" href="Quotation">Nhận Báo Giá</a>
                     </div>
                 </div>
 
@@ -71,7 +71,7 @@
                     <div class="carousel-caption">
                         <p class="animated fadeInRight">Thiết Kế Nhà Chất Lượng Là Sứ Mệnh</p>
                         <h1 class="animated fadeInLeft">Thành Công Là Điểm Đến</h1>
-                        <a class="btn animated fadeInUp" href="#">Nhận Báo Giá</a>
+                        <a class="btn animated fadeInUp" href="Quotation">Nhận Báo Giá</a>
                     </div>
                 </div>
             </div>

@@ -6,11 +6,8 @@
 package Controller.QuotationHistory;
 
 import DAO.QuotationDAO;
-import DTO.QuotationVersion;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author PC
  */
-@WebServlet(name = "ShowQuotationVersion", urlPatterns = {"/ShowQuotationVersion"})
-public class ShowQuotationVersion extends HttpServlet {
+@WebServlet(name = "SendRequestQuotation", urlPatterns = {"/SendRequestQuotation"})
+public class SendRequestQuotation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,18 +34,14 @@ public class ShowQuotationVersion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            request.setCharacterEncoding("UTF-8");
-            String cusQuoName = request.getParameter("cusQuoName");
-            int cusQuoId = Integer.parseInt(request.getParameter("cusQuoId"));
-            int quotationId = Integer.parseInt(request.getParameter("quotationId"));
+            int versionId = (request.getParameter("versionId") != null && !request.getParameter("versionId").isEmpty()) ? Integer.parseInt(request.getParameter("versionId")) : 0;
             QuotationDAO dao = new QuotationDAO();
-            List<QuotationVersion> listQuotationVersion = dao.getListQuotationVersion(cusQuoId);
-            
-            request.setAttribute("listQuotationVersion", listQuotationVersion);
-            request.setAttribute("cusQuoName", cusQuoName);
-            request.setAttribute("cusQuoId", cusQuoId);
-            request.setAttribute("quotationId", quotationId);
-            request.getRequestDispatcher("WebPages/ViewWebPage/quotationHistoryVersion.jsp").forward(request, response);
+            boolean check = dao.updateCusRequest(1, versionId);
+            if (check) {
+                out.println("<h1 style=\"color: red;\">Gửi báo giá thành công!</h1>");
+            } else {
+                out.println("<h1 style=\"color: red;\">Gửi báo giá thất bại!</h1>");
+            }
         }
     }
 

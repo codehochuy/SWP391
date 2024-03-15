@@ -93,7 +93,7 @@
             #toggle-contents {
                 margin-bottom: 10px;
             }
-            
+
             /* CSS styles */
             .error {
                 color: red;
@@ -136,7 +136,8 @@
                             <tr>
                                 <th>Phiên bản</th>
                                 <th>Ngày</th>
-<!--                                <th>Giá</th>-->
+                                <th>Giá</th>
+                                <th>Trạng thái</th>
                                 <th>Chức năng</th>
                             </tr>
                         </thead>
@@ -147,7 +148,12 @@
                                         <tr>
                                             <td>${qv.versionId}</td>
                                             <td>${qv.date}</td>
-<!--                                            <td><fmt:formatNumber type="number" value="${qv.price}" pattern="#,###.##" /> VNĐ/m2</td>-->
+                                            <td>
+                                                <fmt:formatNumber value="${qv.totalPrice}" pattern="#,###.##"/>
+                                                VNĐ
+                                            </td>
+                                            <td>${qv.cusRequest ? 'Đã gửi báo giá' : 'Chưa gửi báo giá'}</td>
+                                                                                        <!--                                            <td><fmt:formatNumber type="number" value="${qv.price}" pattern="#,###.##" /> VNĐ/m2</td>-->
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="" method="post">
                                                     <button class="btn btn-primary btn-sm trash" style="margin-right: 5px;" type="button" title="Xóa" onclick="confirmDelete(this)"

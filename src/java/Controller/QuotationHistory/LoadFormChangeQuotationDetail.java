@@ -142,7 +142,7 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
             out.println("<input type=\"hidden\" id=\"service\" name=\"service\" value=\"" + selectedService + "\"/>");
             out.println("<input type=\"hidden\" id=\"houseType\" name=\"houseType\" value=\"" + selectedHouseType + "\"/>");
             out.println("<input type=\"hidden\" id=\"style\" name=\"style\" value=\"" + selectedStyle + "\"/>");
-            out.println("<input type=\"hidden\" id=\"style\" name=\"cusQuoId\" value=\"" + cusQuoId + "\"/>");
+            out.println("<input type=\"hidden\" id=\"cusQuoId\" name=\"cusQuoId\" value=\"" + cusQuoId + "\"/>");
 
             out.println("<div>\n"
                     + "                                        <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\" onclick=\"loadQuotationContentVersionDetail2()\">Nhận Báo Giá</button>\n"
