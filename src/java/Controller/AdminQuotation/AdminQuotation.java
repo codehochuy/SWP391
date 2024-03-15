@@ -3,26 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller;
+package Controller.AdminQuotation;
 
-import DAO.UserDAO;
-import DTO.User;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author PC
+ * @author ACER
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "AdminQuotation", urlPatterns = {"/AdminQuotation"})
+public class AdminQuotation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/AdminQuotation.jsp").forward(request, response);
         }
     }
 
@@ -68,40 +64,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(true);
-
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        UserDAO dao = new UserDAO();
- 
-        User user = (User) dao.detailUser(username, password);
-        if (user != null) {
-            if (user.isUserstatus() == true) {
-                if (user.getUserrole().getId() == 1) {
-                    System.out.println(user.getUserrole().getId());
-                    session.setAttribute("USER", user);
-                    response.sendRedirect("AdminQuotation");
-                } else if (user.getUserrole().getId() == 2) {
-                    session.setAttribute("USER", user);
-                    int userid = user.getId();
-                    session.setAttribute("UserID", userid);
-                    response.sendRedirect("Staff");
-                } else {
-                    session.setAttribute("USER", user);
-                    response.sendRedirect("index");
-
-                }
-
-            } else {
-                request.setAttribute("mess", "Tài khoản của bạn đã bị cấm");
-                request.getRequestDispatcher("Login.jsp").forward(request, response);
-
-            }
-
-        } else {
-            request.setAttribute("mess", "Tài khoản hoặc mật khẩu không đúng");
-            request.getRequestDispatcher("Login.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**

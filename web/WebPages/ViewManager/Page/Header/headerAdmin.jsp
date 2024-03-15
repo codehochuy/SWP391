@@ -38,8 +38,8 @@
             </div>
             <hr>
             <ul class="app-menu">
-                <li><a class="app-menu__item haha" href="#"><i class='app-menu__icon bx bx-cart-alt'></i>
-                        <span class="app-menu__label">DashBoard</span></a></li>
+                <li><a class="app-menu__item haha" href="AdminQuotation"><i class='app-menu__icon bx bx-cart-alt'></i>
+                        <span class="app-menu__label">Quản lý báo giá</span></a></li>
                 <li><a class="app-menu__item " href="ManagerUser"><i class='app-menu__icon bx bx-user-voice'></i><span
                             class="app-menu__label">Quản Lý Khách Hàng</span></a></li>
                 <li><a class="app-menu__item " href="ManagerRoof"><i class='app-menu__icon bx bx-tachometer'></i>
