@@ -50,7 +50,10 @@ public class CustomerRequestDAO {
                 + "    u.Phone,\n"
                 + "    cv.Price,\n"
                 + "    cv.[Date],\n"
-                + "	cv.VersionID\n"
+                + "	cv.VersionID,\n"
+                + "	cv.CusQuoID,\n"
+                + "    cq.QuotationID\n"
+                + "\n"
                 + "FROM \n"
                 + "    Users u\n"
                 + "JOIN \n"
@@ -72,6 +75,8 @@ public class CustomerRequestDAO {
                 p.setQuotationname(rs.getString("CusQuoName"));
                 p.setPrice(rs.getDouble("Price"));
                 p.setTime(rs.getTimestamp("Date").toLocalDateTime());
+                p.setCusQuoId(rs.getInt("CusQuoID"));
+                p.setQuotationId(rs.getInt("QuotationID"));
 
                 list.add(p);
             }
@@ -81,6 +86,7 @@ public class CustomerRequestDAO {
 
         return list;
     }
+
     public static void main(String[] args) {
         CustomerRequestDAO dao = new CustomerRequestDAO();
         System.out.println(dao.getAll());

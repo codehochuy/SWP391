@@ -5,8 +5,14 @@
  */
 package Controller.AdminQuotation;
 
+import DAO.QuotationDAO;
+import DTO.CustomerHouseComponent;
+import DTO.HouseComponent;
+import DTO.Quotation;
+import DTO.QuotationVersion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,16 +39,47 @@ public class View extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet View</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet View at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            int cusQuoId = Integer.parseInt(request.getParameter("cusQuoId"));
+            int versionId = Integer.parseInt(request.getParameter("versionId"));
+            int quotationId = Integer.parseInt(request.getParameter("quotationId"));
+            QuotationDAO dao = new QuotationDAO();
+            List<CustomerHouseComponent> listCustomerHouseComponent = dao.getListCustomerHouseComponentByVersionId(versionId);
+            QuotationDAO dao1 = new QuotationDAO();
+            QuotationVersion cusQuoVersion = dao1.getCusQuoVersionById(versionId);
+            QuotationDAO dao2 = new QuotationDAO();
+            Quotation quotation1 = dao2.getQuotationID(quotationId + "");
+
+            //load quotation content info
+            int selectedHouseType = quotation1.getHouseType().getId();
+            int selectedService = quotation1.getService().getId();
+            int selectedStyle = quotation1.getStyle().getId();
+            int foundation = cusQuoVersion.getFoundationId();
+            int roof = cusQuoVersion.getRoofId();
+            int packagePrice = 0;
+            
+            QuotationDAO dao3 = new QuotationDAO();
+            List<HouseComponent> listHouseComponent = dao3.getHouseComponent(selectedHouseType);
+
+            QuotationDAO quotationDao = new QuotationDAO();
+            Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
+            if (selectedService == 2 && quotation.getPrice1() == cusQuoVersion.getPrice()) {
+                packagePrice = 1;
+            } else if(selectedService == 2 && quotation.getPrice2() == cusQuoVersion.getPrice()){
+                packagePrice = 2;
+            }
+            
+
+            request.setAttribute("listCustomerHouseComponent", listCustomerHouseComponent);
+            request.setAttribute("listHouseComponent", listHouseComponent);
+            request.setAttribute("cusQuoVersion", cusQuoVersion);
+            request.setAttribute("cusQuoId", cusQuoId);
+            request.setAttribute("selectedHouseType", selectedHouseType);
+            request.setAttribute("selectedService", selectedService);
+            request.setAttribute("selectedStyle", selectedStyle);
+            request.setAttribute("foundation", foundation);
+            request.setAttribute("roof", roof);
+            request.setAttribute("packagePrice", packagePrice);
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ViewRequest.jsp").forward(request, response);
         }
     }
 

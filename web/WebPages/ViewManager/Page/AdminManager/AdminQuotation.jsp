@@ -80,6 +80,8 @@
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="View" method="post">
                                                     <input type="hidden" name="versionId" value="${user.versionid}">
+                                                    <input type="hidden" name="cusQuoId" value="${user.cusQuoId}">
+                                                    <input type="hidden" name="quotationId" value="${user.quotationId}">
                                                     <button class="btn btn-primary btn-sm trash" type="submit" title="Xem chi tiết">
                                                         <i class="fas fa-eye"></i>
                                                     </button>

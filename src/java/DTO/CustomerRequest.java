@@ -18,17 +18,21 @@ public class CustomerRequest {
     private String phone;
     private double price;
     private LocalDateTime time;
+    private int cusQuoId;
+    private int quotationId;
 
     public CustomerRequest() {
     }
 
-    public CustomerRequest(int versionid, String customer, String quotationname, String phone, double price, LocalDateTime time) {
+    public CustomerRequest(int versionid, String customer, String quotationname, String phone, double price, LocalDateTime time, int cusQuoId, int quotationId) {
         this.versionid = versionid;
         this.customer = customer;
         this.quotationname = quotationname;
         this.phone = phone;
         this.price = price;
         this.time = time;
+        this.cusQuoId = cusQuoId;
+        this.quotationId = quotationId;
     }
 
     public int getVersionid() {
@@ -79,10 +83,27 @@ public class CustomerRequest {
         this.time = time;
     }
 
+    public int getCusQuoId() {
+        return cusQuoId;
+    }
+
+    public void setCusQuoId(int cusQuoId) {
+        this.cusQuoId = cusQuoId;
+    }
+
+    public int getQuotationId() {
+        return quotationId;
+    }
+
+    public void setQuotationId(int quotationId) {
+        this.quotationId = quotationId;
+    }
+
     @Override
     public String toString() {
-        return "CustomerRequest{" + "versionid=" + versionid + ", customer=" + customer + ", quotationname=" + quotationname + ", phone=" + phone + ", price=" + price + ", time=" + time + '}';
+        return "CustomerRequest{" + "versionid=" + versionid + ", customer=" + customer + ", quotationname=" + quotationname + ", phone=" + phone + ", price=" + price + ", time=" + time + ", cusQuoId=" + cusQuoId + ", quotationId=" + quotationId + '}';
     }
+
     
 
     
