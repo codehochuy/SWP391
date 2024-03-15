@@ -1,5 +1,5 @@
 # [TITAN Land]
-  Project môn học SWP391 - ArtWork_Sharing
+  Project môn học SWP391 - TITAN Land
 
 ### Members
   1. Phạm Trần Huy
