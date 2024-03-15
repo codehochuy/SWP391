@@ -70,26 +70,22 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${list}" var="user">
-                                        <c:if test="${user.userrole.getId() == 3}">
-                                            <tr> 
-                                                <td width="10"><input type="checkbox" name="check1" value="1"></td>
-                                                <td>${user.name}</td>                              
-                                                <td>${user.address}</td>
-                                                <td>${user.phone}</td>
-                                                <td>${user.email}</td>
-                                                <td>
-                                                    <c:if test="${user.userstatus == true}">
-                                                        <span class="badge bg-success">Hoạt động</span>
-                                                    </c:if>
-                                                    <c:if test="${user.userstatus == false}">
-                                                        <span class="badge bg-danger">Đã cấm</span>
-                                                    </c:if>
-
-                                                </td>
-                                                <td style="display: flex; justify-content: space-left">
-                                                </td>
-                                            </tr>
-                                        </c:if>
+                                        <tr> 
+                                            <td width="10"><input type="checkbox" name="check1" value="1"></td>
+                                            <td>${user.customer}</td>                              
+                                            <td>${user.quotationname}</td>
+                                            <td>${user.phone}</td>
+                                            <td>${user.price}</td>
+                                            <td>${user.time}</td>
+                                            <td style="display: flex; justify-content: space-left">
+                                                <form action="View" method="post">
+                                                    <input type="hidden" name="versionId" value="${user.versionid}">
+                                                    <button class="btn btn-primary btn-sm trash" type="submit" title="Xem chi tiết">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>

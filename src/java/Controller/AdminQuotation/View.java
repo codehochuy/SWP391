@@ -5,11 +5,8 @@
  */
 package Controller.AdminQuotation;
 
-import DAO.CustomerRequestDAO;
-import DTO.CustomerRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "AdminQuotation", urlPatterns = {"/AdminQuotation"})
-public class AdminQuotation extends HttpServlet {
+@WebServlet(name = "View", urlPatterns = {"/View"})
+public class View extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,10 +33,16 @@ public class AdminQuotation extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            CustomerRequestDAO dao = new CustomerRequestDAO();
-            List<CustomerRequest>list = dao.getAll();
-            request.setAttribute("list", list);
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/AdminQuotation.jsp").forward(request, response);
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet View</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet View at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
