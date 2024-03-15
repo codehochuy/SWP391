@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <title>TITAN - Lịch Sử Báo Giá</title>
+        <link rel="icon" href="img/logo.jpg" type="image/x-icon">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Construction Company Website Template" name="keywords">
         <meta content="Construction Company Website Template" name="description">
@@ -33,7 +34,17 @@
         <link href="WebPages/ViewWebPage/lib/slick/slick-theme.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="WebPages/ViewWebPage/css/style.css" rel="stylesheet">
+        <style>
+            .note textarea{
+                padding: 10px;
+                margin: 10px 0;
 
+            }
+            .text-note {
+                font-style: italic; 
+                opacity: 0.6;
+            }
+        </style>
     </head>
     <body>
         <div class="wrapper">      
@@ -59,12 +70,12 @@
                 <div class="section-header text-center">
                     <h2>Báo giá chi tiết</h2>
                 </div>
-                <div class="contact wow fadeInUp">
+                <div class="contact wow">
                     <div class="container">
                         <div class="row">
-                            <div id="quotationContent" class="col-md-6">
+                            <form id="quotationContent" class="col-md-6">
 
-                            </div>
+                            </form>
                             <!--Raw contruction-->
                             <div class="col-md-6 rawContruction">
                                 <div class="contact-form">
@@ -77,10 +88,12 @@
                                             <c:forEach items="${requestScope.listCustomerHouseComponent}" var="chc" varStatus="loop">
                                                 <input type="hidden" name="${chc.componentId}" value="${chc.value}"/>
                                             </c:forEach>
+                                            <input type="hidden" id="versionId" name="versionId" value="${versionId}"/>     
                                             <input type="hidden" id="service" name="service" value="${selectedService}"/>    
                                             <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
                                             <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
                                             <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cusQuoId}"/>
+                                            <input type="hidden" id="note" name="note" value="${note}"/>
                                         </form>
                                         <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill2" novalidate="novalidate">
 
@@ -174,6 +187,56 @@
                 });
             }
         </script>
+
+        <script>
+            document.getElementById("quotationContent").addEventListener("submit", function (event) {
+                event.preventDefault(); // Ngăn chặn việc gửi form mặc định
+
+                // Lấy ra giá trị của nút được nhấn
+                var action = event.submitter.value;
+                var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
+                $("#formFill").find("input").each(function () {
+                    formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
+                });
+
+                // Xác định hành động dựa trên giá trị của nút được nhấn
+                switch (action) {
+                    case "changeQuotationContent":
+                        // Xử lý chức năng 1
+                        $.ajax({// Sửa thành $.ajax thay vì $ajax
+                            url: "/SWP391/LoadFormChangeQuotationDetail",
+                            type: "get",
+                            data: formData,
+                            success: function (data) {
+                                var formFill = document.getElementById("formFill2");
+                                formFill.innerHTML = data;
+                            },
+                            error: function (xhr) {
+                                // Xử lý lỗi nếu cần
+                            }
+                        });
+                        break;
+                    case "sendRequestQuotation":
+                        $.ajax({
+                            url: 'SendRequestQuotation',
+                            type: 'get',
+                            data: formData,
+                            success: function (data) {
+                                var quotationContent = document.getElementById("quotationContent");
+                                quotationContent.innerHTML += data;
+                            },
+                            error: function (xhr) {
+                                console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                            }
+                        });
+                        break;
+                    default:
+                        // Xử lý mặc định nếu cần
+                        console.log("Không xác định hành động");
+                }
+            });
+        </script>
+
         <!--3-->
         <script>
             $(document).ready(function () {
@@ -183,7 +246,7 @@
 
 
                     var formData = {};
-                    $("#formFill2").find("input, select").each(function () {
+                    $("#formFill2").find("input, select, textarea").each(function () {
                         formData[$(this).attr("name")] = $(this).val();
                     });
 
@@ -204,7 +267,7 @@
             });
         </script>
 
-        <script>
+<!--        <script>
             $(document).ready(function () {
                 $('#quotationContent2').submit(function (event) {
                     event.preventDefault();
@@ -231,9 +294,57 @@
                     });
                 });
             });
+        </script>-->
+
+        <script>
+            document.getElementById("quotationContent2").addEventListener("submit", function (event) {
+                event.preventDefault(); // Ngăn chặn việc gửi form mặc định
+
+                // Lấy ra giá trị của nút được nhấn
+                var action = event.submitter.value;
+
+                var formData = {};
+                $("#quotationContent2").find("input").each(function () {
+                    formData[$(this).attr("name")] = $(this).val();
+                });
+
+                // Xác định hành động dựa trên giá trị của nút được nhấn
+                switch (action) {
+                    case "saveQuotationContent":
+                        // Xử lý chức năng 1
+                        $.ajax({
+                            url: '/SWP391/NewVersionQuotationContent',
+                            type: 'get',
+                            data: formData,
+                            success: function (data) {
+                                var quotationContent = document.getElementById("quotationContent2");
+                                quotationContent.innerHTML += data;
+                            },
+                            error: function (xhr) {
+                                console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                            }
+                        });
+                        break;
+                    case "saveAndSendRequestQuotation":
+                        $.ajax({
+                            url: 'NewVersionQuotationContent',
+                            type: 'post',
+                            data: formData,
+                            success: function (data) {
+                                var quotationContent = document.getElementById("quotationContent2");
+                                quotationContent.innerHTML += data;
+                            },
+                            error: function (xhr) {
+                                console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                            }
+                        });
+                        break;
+                    default:
+                        // Xử lý mặc định nếu cần
+                        console.log("Không xác định hành động");
+                }
+            });
         </script>
-
-
 
         <script>
             // JavaScript code for form validation
@@ -269,36 +380,36 @@
 
 //           
 
-                if (parseInt(_1.value) > 10000 || parseInt(_1.value) <= 0) {
+                if (parseDouble(_1.value) > 10000 || parseDouble(_1.value) <= 0) {
                     isValid = false;
                     error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
                 }
 
-                if (parseInt(_2.value) > 10000 || parseInt(_2.value) <= 0) {
+                if (parseDouble(_2.value) > 10000 || parseDouble(_2.value) <= 0) {
                     isValid = false;
                     error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
                 }
 
-                if ((parseInt(_3.value) >= parseInt(_1.value)) || parseInt(_3.value) < 0) {
+                if ((parseDouble(_3.value) >= parseDouble(_1.value)) || parseDouble(_3.value) < 0) {
                     isValid = false;
                     error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
                 }
-                if ((parseInt(_4.value) >= (parseInt(_1.value) - parseInt(_3.value))) || parseInt(_4.value) < 0) {
+                if ((parseDouble(_4.value) >= (parseDouble(_1.value) - parseDouble(_3.value))) || parseDouble(_4.value) < 0) {
                     isValid = false;
                     error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
                 }
 
                 if (_5.value !== '') {
-                    if (parseInt(_5.value) > 24 || parseInt(_5.value) < 0) {
+                    if (parseDouble(_5.value) > 24 || parseDouble(_5.value) < 0) {
                         isValid = false;
                         error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
                     }
                 }
 
                 if (_6.value !== '') {
-                    if (parseInt(_6.value) <= 0 || parseInt(_6.value) > 2) {
+                    if (parseDouble(_6.value) < 0 || parseDouble(_6.value) > 2) {
                         isValid = false;
-                        error_6.textContent = 'Chiều dài rộng ban công phải lớn hơn hoặc bằng 0 và nhỏ hơn 2m.';
+                        error_6.textContent = 'Chiều dài rộng ban công từ 0-2m.';
                     }
                 }
 

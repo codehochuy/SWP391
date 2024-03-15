@@ -61,7 +61,7 @@ public class LoadQuotationContent extends HttpServlet {
             double backYard = (request.getParameter("4") != null && !request.getParameter("4").isEmpty()) ? Double.parseDouble(request.getParameter("4")) : 0;
             double floor = (request.getParameter("5") != null && !request.getParameter("5").isEmpty()) ? Double.parseDouble(request.getParameter("5")) : 0;
             double balcony = (request.getParameter("6") != null && !request.getParameter("6").isEmpty()) ? Double.parseDouble(request.getParameter("6")) : 0;
-            
+            String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
             
             
             double price = 0;
@@ -186,17 +186,27 @@ public class LoadQuotationContent extends HttpServlet {
             String formattedTotalArea = decimalFormat3.format(totalArea);
             out.println("<h1>Tổng diện tích xây dựng: " + formattedTotalArea + "m2</h1>");
             out.println("<h1 style=\"color: red;\">Tổng chi phí xây dựng: " + formattedTotalPrice + "VNĐ</h1>");
+            if (note != ""){
+                out.println("<h4 class=\"text-note\">Ghi chú: " + note + "</h4>");
+            }
+            
             out.println("<input type=\"hidden\" name=\"houseType\" value=\""+selectedHouseType+"\">");
             out.println("<input type=\"hidden\" name=\"service\" value=\""+selectedService+"\">");
             out.println("<input type=\"hidden\" name=\"style\" value=\""+selectedStyle+"\">");
             out.println("<input type=\"hidden\" name=\"price\" value=\""+price+"\">");
+            out.println("<input type=\"hidden\" name=\"totalPrice\" value=\""+totalPrice+"\">");
             out.println("<input type=\"hidden\" name=\"cusQuoName\" value=\""+ quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() +"\">");
+            out.println("<input type=\"hidden\" name=\"note\" value=\""+ note + "\">");
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 out.println("<input type=\"hidden\" name=\""+listHouseComponent.get(i).getComponentId()+"\" value=\""+request.getParameter(listHouseComponent.get(i).getComponentId()+"")+"\">");
             }
             out.println("<div class=\"contact-form\">\n" +
-"                            <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\"  onclick=\"saveQuotationContent()\">Lưu báo giá</button>\n" +
+"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"saveQuotationContent\">Lưu báo giá</button>\n" +
 "                        </div>");
+            out.println("<div class=\"contact-form\">\n" +
+"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"saveAndSendRequestQuotation\">Lưu và Gửi báo giá</button>\n" +
+"                        </div>");
+           
             
         }
     }

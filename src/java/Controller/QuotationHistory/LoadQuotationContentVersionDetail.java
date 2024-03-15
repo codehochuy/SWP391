@@ -44,7 +44,9 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
             int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
             int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
-
+            String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
+            int versionId = (request.getParameter("versionId") != null && !request.getParameter("versionId").isEmpty()) ? Integer.parseInt(request.getParameter("versionId")) : 0;
+            int cusQuoId = (request.getParameter("cusQuoId") != null && !request.getParameter("cusQuoId").isEmpty()) ? Integer.parseInt(request.getParameter("cusQuoId")) : 0;
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
 
@@ -178,17 +180,28 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
             String formattedTotalArea = decimalFormat3.format(totalArea);
             out.println("<p>Tổng diện tích xây dựng: " + formattedTotalArea + "m2</p>");
             out.println("<p style=\"color: red;\">Tổng chi phí xây dựng: " + formattedTotalPrice + "VNĐ</p>");
+            if (note != ""){
+                out.println("<p class=\"text-note\">Ghi chú: " + note + "</p>");
+            }
+            out.println("<input type=\"hidden\" name=\"note\" value=\""+ note + "\">");
             out.println("<input type=\"hidden\" name=\"houseType\" value=\"" + selectedHouseType + "\">");
             out.println("<input type=\"hidden\" name=\"service\" value=\"" + selectedService + "\">");
             out.println("<input type=\"hidden\" name=\"style\" value=\"" + selectedStyle + "\">");
             out.println("<input type=\"hidden\" name=\"price\" value=\"" + price + "\">");
+            out.println("<input type=\"hidden\" name=\"totalPrice\" value=\""+totalPrice+"\">");
+            out.println("<input type=\"hidden\" name=\"versionId\" value=\""+versionId+"\">");
+            out.println("<input type=\"hidden\" name=\"cusQuoId\" value=\""+cusQuoId+"\">");
             out.println("<input type=\"hidden\" name=\"cusQuoName\" value=\"" + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + "\">");
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 out.println("<input type=\"hidden\" name=\"" + listHouseComponent.get(i).getComponentId() + "\" value=\"" + request.getParameter(listHouseComponent.get(i).getComponentId() + "") + "\">");
             }
-            out.println("<div class=\"contact-form\">\n"
-                    + "                            <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\"  onclick=\"loadFormChangeQuotationDetail()\">Thay đổi báo giá</button>\n"
-                    + "                        </div>");
+            out.println("<div class=\"contact-form\">\n" +
+"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"changeQuotationContent\">Thay đổi báo giá</button>\n" +
+"                        </div>");
+            out.println("<div class=\"contact-form\">\n" +
+"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"sendRequestQuotation\">Gửi báo giá</button>\n" +
+"                        </div>");
+            
         }
     }
 

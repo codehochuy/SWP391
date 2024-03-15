@@ -48,34 +48,32 @@ public class NewVersionQuotationContent extends HttpServlet {
             int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
             int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
             double price = (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) ? Double.parseDouble(request.getParameter("price")) : 0.0;
-
+            double totalPrice = (request.getParameter("totalPrice") != null && !request.getParameter("totalPrice").isEmpty()) ? Double.parseDouble(request.getParameter("totalPrice")) : 0.0;
+            String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
+            int cusQuoId = (request.getParameter("cusQuoId") != null && !request.getParameter("cusQuoId").isEmpty()) ? Integer.parseInt(request.getParameter("cusQuoId")) : 0;
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
-            
 
             QuotationDAO quotationDao = new QuotationDAO();
             DTO.Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
             int quotationId = quotation.getId();
 
-            QuotationDAO dao2 = new QuotationDAO();
-            int cusQuoId = dao2.getCusQuoId();
             QuotationDAO dao3 = new QuotationDAO();
-            boolean createCusQuoVersion = dao3.createCusQuoVersion(price, foundationId, roofId, cusQuoId);
+            boolean createCusQuoVersion = dao3.createCusQuoVersion(price, totalPrice, foundationId, roofId, cusQuoId, note);
             boolean createCustomerHouseComponent = false;
             if (createCusQuoVersion) {
                 for (int i = 0; i < listHouseComponent.size(); i++) {
-                HouseComponent houseComponent = listHouseComponent.get(i);
-                QuotationDAO dao4 = new QuotationDAO();
-                int versionId = dao4.getVersionId();
-                double value = (request.getParameter(houseComponent.getComponentId()+"") != null && !request.getParameter(houseComponent.getComponentId()+"").isEmpty()) ? Double.parseDouble(request.getParameter(houseComponent.getComponentId()+"")) : 0.0;
-                int componentID = houseComponent.getComponentId();
-                QuotationDAO dao5 = new QuotationDAO();
-                if (!(value == 0)){
-                    createCustomerHouseComponent = dao5.createCustomerHouseComponent(value, versionId, componentID);
+                    HouseComponent houseComponent = listHouseComponent.get(i);
+                    QuotationDAO dao4 = new QuotationDAO();
+                    int versionId = dao4.getVersionId();
+                    double value = (request.getParameter(houseComponent.getComponentId() + "") != null && !request.getParameter(houseComponent.getComponentId() + "").isEmpty()) ? Double.parseDouble(request.getParameter(houseComponent.getComponentId() + "")) : 0.0;
+                    int componentID = houseComponent.getComponentId();
+                    QuotationDAO dao5 = new QuotationDAO();
+                    if (!(value == 0)) {
+                        createCustomerHouseComponent = dao5.createCustomerHouseComponent(value, versionId, componentID);
+                    }
                 }
             }
-            }
-            
 
             if (createCustomerHouseComponent && createCusQuoVersion) {
                 out.println("<h1 style=\"color: red;\">Lưu báo giá thành công!</h1>");
@@ -111,7 +109,51 @@ public class NewVersionQuotationContent extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        /* TODO output your page here. You may use following sample code. */
+        HttpSession session = request.getSession(false);
+        User user = (User) session.getAttribute("USER");
+        int userId = user.getId();
+        int selectedHouseType = Integer.parseInt(request.getParameter("houseType"));
+        int selectedService = Integer.parseInt(request.getParameter("service"));
+        int selectedStyle = Integer.parseInt(request.getParameter("style"));
+        int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
+        int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
+        int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
+        double price = (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) ? Double.parseDouble(request.getParameter("price")) : 0.0;
+        double totalPrice = (request.getParameter("totalPrice") != null && !request.getParameter("totalPrice").isEmpty()) ? Double.parseDouble(request.getParameter("totalPrice")) : 0.0;
+        String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
+        int cusQuoId = (request.getParameter("cusQuoId") != null && !request.getParameter("cusQuoId").isEmpty()) ? Integer.parseInt(request.getParameter("cusQuoId")) : 0;
+        QuotationDAO dao = new QuotationDAO();
+        List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
+
+        QuotationDAO quotationDao = new QuotationDAO();
+        DTO.Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
+        int quotationId = quotation.getId();
+        QuotationDAO dao3 = new QuotationDAO();
+        boolean createCusQuoVersion = dao3.sendCusRequestQuoVersion(price, totalPrice, foundationId, roofId, cusQuoId, note);
+        boolean createCustomerHouseComponent = false;
+        if (createCusQuoVersion) {
+            for (int i = 0; i < listHouseComponent.size(); i++) {
+                HouseComponent houseComponent = listHouseComponent.get(i);
+                QuotationDAO dao4 = new QuotationDAO();
+                int versionId = dao4.getVersionId();
+                double value = (request.getParameter(houseComponent.getComponentId() + "") != null && !request.getParameter(houseComponent.getComponentId() + "").isEmpty()) ? Double.parseDouble(request.getParameter(houseComponent.getComponentId() + "")) : 0.0;
+                int componentID = houseComponent.getComponentId();
+                QuotationDAO dao5 = new QuotationDAO();
+                if (!(value == 0)) {
+                    createCustomerHouseComponent = dao5.createCustomerHouseComponent(value, versionId, componentID);
+                }
+            }
+        }
+
+        if (createCustomerHouseComponent && createCusQuoVersion) {
+            out.println("<h1 style=\"color: red;\">Lưu và gửi báo giá thành công!</h1>");
+        } else {
+            out.println("<h1 style=\"color: red;\">Lưu và gửi báo giá thất bại!</h1>");
+        }
+
     }
 
     /**

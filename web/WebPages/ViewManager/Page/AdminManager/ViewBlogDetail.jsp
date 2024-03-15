@@ -7,6 +7,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="img/logo.jpg" type="image/x-icon">
 
         <script src="https://cdn.tiny.cloud/1/n0rfd22a3z32jtupppuha019duk0huf5saykqwysdh0xkz3s/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
@@ -16,6 +17,7 @@
         </script>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TITAN -  Xem Chi Tiết Blog</title>
         <!-- Main CSS-->
         <link rel="stylesheet" type="text/css" href="css\admin.css">
 

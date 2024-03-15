@@ -9,6 +9,7 @@ import DAO.QuotationDAO;
 import DTO.QuotationVersion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -42,6 +43,7 @@ public class ShowQuotationVersion extends HttpServlet {
             int quotationId = Integer.parseInt(request.getParameter("quotationId"));
             QuotationDAO dao = new QuotationDAO();
             List<QuotationVersion> listQuotationVersion = dao.getListQuotationVersion(cusQuoId);
+            
             request.setAttribute("listQuotationVersion", listQuotationVersion);
             request.setAttribute("cusQuoName", cusQuoName);
             request.setAttribute("cusQuoId", cusQuoId);

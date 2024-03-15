@@ -6,6 +6,7 @@
 package DTO;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -13,24 +14,30 @@ import java.sql.Date;
  */
 public class QuotationVersion {
     private int versionId;
-    private Date date;
+    private LocalDateTime date;
     private Double price;
+    private Double totalPrice;
     private int roofId;
     private int foundationId;
     private boolean quotationVersionStatus;
-    private int cusQuoId;   
+    private int cusQuoId;
+    private boolean cusRequest;
+    private String note;
 
     public QuotationVersion() {
     }
 
-    public QuotationVersion(int versionId, Date date, Double price, int roofId, int foundationId, boolean quotationVersionStatus, int cusQuoId) {
+    public QuotationVersion(int versionId, LocalDateTime date, Double price, Double totalPrice, int roofId, int foundationId, boolean quotationVersionStatus, int cusQuoId, boolean cusRequest, String note) {
         this.versionId = versionId;
         this.date = date;
         this.price = price;
+        this.totalPrice = totalPrice;
         this.roofId = roofId;
         this.foundationId = foundationId;
         this.quotationVersionStatus = quotationVersionStatus;
         this.cusQuoId = cusQuoId;
+        this.cusRequest = cusRequest;
+        this.note = note;
     }
 
     public int getVersionId() {
@@ -41,11 +48,11 @@ public class QuotationVersion {
         this.versionId = versionId;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -55,6 +62,14 @@ public class QuotationVersion {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getRoofId() {
@@ -89,6 +104,21 @@ public class QuotationVersion {
         this.cusQuoId = cusQuoId;
     }
 
+    public boolean isCusRequest() {
+        return cusRequest;
+    }
+
+    public void setCusRequest(boolean cusRequest) {
+        this.cusRequest = cusRequest;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     
-     
 }

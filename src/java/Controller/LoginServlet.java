@@ -80,7 +80,7 @@ public class LoginServlet extends HttpServlet {
                 if (user.getUserrole().getId() == 1) {
                     System.out.println(user.getUserrole().getId());
                     session.setAttribute("USER", user);
-                    response.sendRedirect("ManagerUser");
+                    response.sendRedirect("AdminQuotation");
                 } else if (user.getUserrole().getId() == 2) {
                     session.setAttribute("USER", user);
                     int userid = user.getId();

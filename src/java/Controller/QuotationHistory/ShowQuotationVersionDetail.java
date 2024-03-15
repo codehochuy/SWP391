@@ -56,7 +56,7 @@ public class ShowQuotationVersionDetail extends HttpServlet {
             int foundation = cusQuoVersion.getFoundationId();
             int roof = cusQuoVersion.getRoofId();
             int packagePrice = 0;
-            
+            String note = cusQuoVersion.getNote();
             QuotationDAO dao3 = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao3.getHouseComponent(selectedHouseType);
 
@@ -68,7 +68,7 @@ public class ShowQuotationVersionDetail extends HttpServlet {
                 packagePrice = 2;
             }
             
-
+            request.setAttribute("versionId", versionId);
             request.setAttribute("listCustomerHouseComponent", listCustomerHouseComponent);
             request.setAttribute("listHouseComponent", listHouseComponent);
             request.setAttribute("cusQuoVersion", cusQuoVersion);
@@ -79,6 +79,7 @@ public class ShowQuotationVersionDetail extends HttpServlet {
             request.setAttribute("foundation", foundation);
             request.setAttribute("roof", roof);
             request.setAttribute("packagePrice", packagePrice);
+            request.setAttribute("note", note);
             request.getRequestDispatcher("WebPages/ViewWebPage/quotationHistoryVersionDetail.jsp").forward(request, response);
         }
     }

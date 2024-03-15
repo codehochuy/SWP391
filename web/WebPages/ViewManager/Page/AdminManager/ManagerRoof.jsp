@@ -11,8 +11,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TITAN - Quản Lý Mái Và Móng</title>
         <!-- Main CSS-->
         <link rel="stylesheet" type="text/css" href="css\admin.css">
+        <link rel="icon" href="img/logo.jpg" type="image/x-icon">
 
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
@@ -32,10 +34,8 @@
         <jsp:include page="../../Page/Header/headerAdmin.jsp"/>
         <main class="app-content">
             <div class="app-title"> 
-                <ul class="app-breadcrumb breadcrumb">
-                    <li class="breadcrumb-item"><a href="ManagerRoof">Quản lý phần Mái và Móng</a></li>
-                    <!--                    <li class="breadcrumb-item"><a href="CreateHouseStyle">Thêm kiểu nhà</a></li>
-                                        <li class="breadcrumb-item"><a href="#"></a></li>-->
+                <ul class="app-breadcrumb breadcrumb side">
+                    <li class="breadcrumb-item active"><a href="ManagerRoof"><b>Quản lý phần Mái và Móng</b></a></li>
                 </ul>
                 <div id="clock"></div>
             </div>

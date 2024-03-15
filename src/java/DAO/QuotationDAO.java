@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -550,19 +551,42 @@ public class QuotationDAO {
         }
     }
 
-    public boolean createCusQuoVersion(double totalPrice, int foundationId, int roofId, int cusQuoId) {
-        String sql = "INSERT INTO CusQuoVersion ([Date], Price, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID)\n"
-                + "VALUES (?,?,?,?,1,?);";
+    public boolean createCusQuoVersion(double price, double totalPrice, int foundationId, int roofId, int cusQuoId, String note) {
+        String sql = "INSERT INTO CusQuoVersion ([Date], Price, TotalPrice, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID, CusRequest, Note)\n"
+                + "VALUES (GETDATE(),?,?,?,?,1,?,0,?);";
 
         try (Connection conn = db.getConn();
-                PreparedStatement ps = conn.prepareStatement(sql)) {
-            LocalDate currentDate = LocalDate.now();
-            Date sqlDate = Date.valueOf(currentDate);
-            ps.setDate(1, sqlDate);
+                PreparedStatement ps = conn.prepareStatement(sql)) {            
+            ps.setDouble(1, price);
             ps.setDouble(2, totalPrice);
             ps.setInt(3, foundationId);
             ps.setInt(4, roofId);
             ps.setInt(5, cusQuoId);
+            ps.setString(6, note);
+
+            int rowsAffected = ps.executeUpdate();
+
+            // Kiểm tra xem ít nhất một dòng có được ảnh hưởng hay không
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            // Ghi log hoặc xử lý ngoại lệ theo cách cần thiết
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public boolean sendCusRequestQuoVersion(double price, double totalPrice, int foundationId, int roofId, int cusQuoId, String note) {
+        String sql = "INSERT INTO CusQuoVersion ([Date], Price, TotalPrice, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID, CusRequest, Note)\n"
+                + "VALUES (GETDATE(),?,?,?,?,1,?,1,?);";
+
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {            
+            ps.setDouble(1, price);
+            ps.setDouble(2, totalPrice);
+            ps.setInt(3, foundationId);
+            ps.setInt(4, roofId);
+            ps.setInt(5, cusQuoId);
+            ps.setString(6, note);
 
             int rowsAffected = ps.executeUpdate();
 
@@ -701,12 +725,15 @@ public class QuotationDAO {
             while (rs.next()) {
                 QuotationVersion c = new QuotationVersion();
                 c.setVersionId(rs.getInt("VersionID"));
-                c.setDate(rs.getDate("Date"));
+                c.setDate(rs.getTimestamp("Date").toLocalDateTime());
                 c.setPrice(rs.getDouble("Price"));
+                c.setTotalPrice(rs.getDouble("TotalPrice"));
                 c.setRoofId(rs.getInt("RoofID"));
                 c.setFoundationId(rs.getInt("FoundationID"));
                 c.setQuotationVersionStatus(rs.getBoolean("CusQuoVersionStatus"));
                 c.setCusQuoId(rs.getInt("CusQuoID"));
+                c.setCusRequest(rs.getBoolean("CusRequest"));
+                c.setNote(rs.getString("Note"));
                 list.add(c);
             }
             return list;
@@ -799,12 +826,15 @@ public class QuotationDAO {
             rs = ps.executeQuery();
             if (rs.next()) {
                 quotation.setVersionId(rs.getInt("VersionID"));
-                quotation.setDate(rs.getDate("Date"));
+                quotation.setDate(rs.getTimestamp("Date").toLocalDateTime());
                 quotation.setPrice(rs.getDouble("Price"));
+                quotation.setTotalPrice(rs.getDouble("TotalPrice"));
                 quotation.setRoofId(rs.getInt("RoofID"));
                 quotation.setFoundationId(rs.getInt("FoundationID"));
                 quotation.setQuotationVersionStatus(rs.getBoolean("CusQuoVersionStatus"));
                 quotation.setCusQuoId(rs.getInt("CusQuoID"));
+                quotation.setCusRequest(rs.getBoolean("CusRequest"));
+                quotation.setNote(rs.getString("Note"));
             }
             return quotation;
         } catch (SQLException e) {
@@ -871,13 +901,38 @@ public class QuotationDAO {
 
         return false;
     }
+    
+    public boolean updateCusRequest(int status, int versionId) {
+        String sql = "UPDATE CusQuoVersion SET CusRequest = ? WHERE VersionID = ?";
+
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, status);
+            ps.setInt(2, versionId);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 
     public static void main(String[] args) {
-        QuotationDAO dao = new QuotationDAO();
-        List<CustomerHouseComponent> list = dao.getListCustomerHouseComponentByVersionId(5);
-        for (CustomerHouseComponent customerHouseComponent : list) {
-            System.out.println(customerHouseComponent.getComponentId() +": "+customerHouseComponent.getComponentName());
-        }
+        LocalDateTime currentDate = LocalDateTime.now();
+        Date sqlDate = Date.valueOf(currentDate.toLocalDate());
+        System.out.println("SQL Date: " + currentDate);
     }
+
+    
+
+    
+
+    
+
+    
 
 }

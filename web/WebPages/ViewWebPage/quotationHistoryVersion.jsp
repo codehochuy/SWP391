@@ -13,6 +13,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <title>TITAN - Lịch Sử Báo Giá</title>
+        <link rel="icon" href="img/logo.jpg" type="image/x-icon">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Construction Company Website Template" name="keywords">
         <meta content="Construction Company Website Template" name="description">
@@ -92,6 +93,16 @@
             #toggle-contents {
                 margin-bottom: 10px;
             }
+
+            /* CSS styles */
+            .error {
+                color: red;
+                font-style: italic;
+            }
+            .text-note{
+                font-style: italic; 
+                opacity: 0.6; 
+            }
         </style>
     </head>
     <body>
@@ -125,7 +136,8 @@
                             <tr>
                                 <th>Phiên bản</th>
                                 <th>Ngày</th>
-<!--                                <th>Giá</th>-->
+                                <th>Giá</th>
+                                <th>Trạng thái</th>
                                 <th>Chức năng</th>
                             </tr>
                         </thead>
@@ -136,7 +148,12 @@
                                         <tr>
                                             <td>${qv.versionId}</td>
                                             <td>${qv.date}</td>
-<!--                                            <td><fmt:formatNumber type="number" value="${qv.price}" pattern="#,###.##" /> VNĐ/m2</td>-->
+                                            <td>
+                                                <fmt:formatNumber value="${qv.totalPrice}" pattern="#,###.##"/>
+                                                VNĐ
+                                            </td>
+                                            <td>${qv.cusRequest ? 'Đã gửi báo giá' : 'Chưa gửi báo giá'}</td>
+                                                                                        <!--                                            <td><fmt:formatNumber type="number" value="${qv.price}" pattern="#,###.##" /> VNĐ/m2</td>-->
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="" method="post">
                                                     <button class="btn btn-primary btn-sm trash" style="margin-right: 5px;" type="button" title="Xóa" onclick="confirmDelete(this)"

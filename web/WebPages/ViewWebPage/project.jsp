@@ -12,6 +12,7 @@
 
         <meta charset="UTF-8">
         <title>TITAN - Project Page</title>
+        <link rel="icon" href="img/logo.jpg" type="image/x-icon">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Construction Company Website Template" name="keywords">
         <meta content="Construction Company Website Template" name="description">

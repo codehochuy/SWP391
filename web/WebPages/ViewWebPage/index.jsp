@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
         <title>TITAN - Trang Chủ</title>
+        <link rel="icon" href="img/logo.jpg" type="image/x-icon">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Construction Company Website Template" name="keywords">
         <meta content="Construction Company Website Template" name="description">
@@ -52,7 +53,7 @@
                     <div class="carousel-caption">
                         <p class="animated fadeInRight">Thiết Kế Xây Nhà Chắc</p>
                         <h1 class="animated fadeInLeft">Vững Bước Thành Công</h1>
-                        <a class="btn animated fadeInUp" href="#">Nhận Báo Giá</a>
+                        <a class="btn animated fadeInUp" href="Quotation">Nhận Báo Giá</a>
                     </div>
                 </div>
 
@@ -61,7 +62,7 @@
                     <div class="carousel-caption">
                         <p class="animated fadeInRight">Xây Vững Niềm Tin</p>
                         <h1 class="animated fadeInLeft">Dựng Uy Tín Vàng</h1>
-                        <a class="btn animated fadeInUp" href="#">Nhận Báo Giá</a>
+                        <a class="btn animated fadeInUp" href="Quotation">Nhận Báo Giá</a>
                     </div>
                 </div>
 
@@ -70,7 +71,7 @@
                     <div class="carousel-caption">
                         <p class="animated fadeInRight">Thiết Kế Nhà Chất Lượng Là Sứ Mệnh</p>
                         <h1 class="animated fadeInLeft">Thành Công Là Điểm Đến</h1>
-                        <a class="btn animated fadeInUp" href="#">Nhận Báo Giá</a>
+                        <a class="btn animated fadeInUp" href="Quotation">Nhận Báo Giá</a>
                     </div>
                 </div>
             </div>

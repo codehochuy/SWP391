@@ -11,9 +11,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TITAN - Danh Sách Phong Cách</title>
         <!-- Main CSS-->
         <link rel="stylesheet" type="text/css" href="css\admin.css">
-
+        <link rel="icon" href="img/logo.jpg" type="image/x-icon">
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <!-- or -->
@@ -33,7 +34,7 @@
         <main class="app-content">
             <div class="app-title"> 
                 <ul class="app-breadcrumb breadcrumb side">
-                    <li class="breadcrumb-item active"><a href="#"><b>Danh sách người dùng</b></a></li>
+                    <li class="breadcrumb-item active"><a href="#"><b>Danh sách phong cách nhà</b></a></li>
                 </ul>
                 <div id="clock"></div>
             </div>
