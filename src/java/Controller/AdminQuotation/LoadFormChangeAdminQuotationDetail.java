@@ -69,7 +69,7 @@ public class LoadFormChangeAdminQuotationDetail extends HttpServlet {
             }
             out.println("<div class=\"control-group\">\n"
                     + "    <h5>Giá thi công/m&#178;</h5>\n"
-                    + "    <input type=\"number\" name=\"constructionPrice\" value=\"" + price1 + "\">\n"
+                    + "    <input type=\"number\" name=\"price\" value=\"" + price1 + "\">\n"
                     + "</div>");
 
             for (int i = 0; i < listHouseComponent.size(); i++) {
@@ -150,6 +150,7 @@ public class LoadFormChangeAdminQuotationDetail extends HttpServlet {
             out.println("<input type=\"hidden\" id=\"houseType\" name=\"houseType\" value=\"" + selectedHouseType + "\"/>");
             out.println("<input type=\"hidden\" id=\"style\" name=\"style\" value=\"" + selectedStyle + "\"/>");
             out.println("<input type=\"hidden\" id=\"style\" name=\"cusQuoId\" value=\"" + cusQuoId + "\"/>");
+            out.println("<input type=\"hidden\" id=\"style\" name=\"price2\" value=\"" + price1 + "\"/>");
 
             out.println("<div>\n"
                     + "                                        <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\" onclick=\"loadQuotationContentVersionDetail2()\">Nhận Báo Giá</button>\n"

@@ -95,7 +95,8 @@
                                                             <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
                                                             <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cusQuoId}"/>
                                                             <input type="hidden" id="note" name="note" value=""/>
-                                                             <input type="hidden" id="note" name="price" value="${price}"/>
+                                                            <input type="hidden" id="note" name="price" value="${price}"/>
+                                                            <input type="hidden" id="note" name="price2" value="${price2}"/>
                                                         </form>
                                                         <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill2" novalidate="novalidate">
 
@@ -241,13 +242,13 @@
 
 
                     var formData = {};
-                    $("#formFill2").find("input, select").each(function () {
+                    $("#formFill2").find("input, select, textarea").each(function () {
                         formData[$(this).attr("name")] = $(this).val();
                     });
 
                     // Gửi dữ liệu đến servlet bằng AJAX
                     $.ajax({
-                        url: 'LoadQuotationContentVersionDetail2',
+                        url: 'LoadQuotationAdminContentVersionDetail2',
                         type: 'get',
                         data: formData,
                         success: function (data) {
