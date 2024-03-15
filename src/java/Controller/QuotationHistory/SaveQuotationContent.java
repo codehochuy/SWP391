@@ -49,7 +49,7 @@ public class SaveQuotationContent extends HttpServlet {
             int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
             double price = (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) ? Double.parseDouble(request.getParameter("price")) : 0.0;
             String cusQuoName = (request.getParameter("cusQuoName") != null && !request.getParameter("cusQuoName").isEmpty()) ? request.getParameter("cusQuoName") : "0";
-
+            String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
             
@@ -64,7 +64,7 @@ public class SaveQuotationContent extends HttpServlet {
                 QuotationDAO dao2 = new QuotationDAO();
                 int cusQuoId = dao2.getCusQuoId();
                 QuotationDAO dao3 = new QuotationDAO();
-                createCusQuoVersion = dao3.createCusQuoVersion(price, foundationId, roofId, cusQuoId);
+                createCusQuoVersion = dao3.createCusQuoVersion(price, foundationId, roofId, cusQuoId, note);
             }
             boolean createCustomerHouseComponent = false;
             for (int i = 0; i < listHouseComponent.size(); i++) {

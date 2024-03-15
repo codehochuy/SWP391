@@ -53,6 +53,7 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
             int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
             int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
+            String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
 
             if (selectedService == 2) {
                 out.println("<div class=\"control-group\">\n"
@@ -71,7 +72,7 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
                     if (houseComponent.getComponentId() == 5) {
                         out.println("<div class=\"control-group\">\n"
                                 + "                                        <h5>Nhập " + houseComponent.getComponent() + " (số tầng)</h5>\n"
-                                + "                                        <input type=\"text\" oninput=\"this.value = this.value.replace(/[^\\d.]/g, '').replace(/(\\..*)\\./g, '$1');\" class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng\"\n"
+                                + "                                        <input type=\"number\"  class=\"form-control\" name=\"" + houseComponent.getComponentId() + "\" id=\"" + houseComponent.getComponentId() + "\" placeholder=\"Nhập " + houseComponent.getComponent() + " xây dựng\"\n"
                                 + "                                                 value=\"" + value + "\"\n"
                                 + "                                               required=\"required\"\n"
                                 + "                                               data-validation-required-message=\"Vui lòng nhập " + houseComponent.getComponent() + " xây dựng\" />\n"
@@ -132,6 +133,10 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
 
             out.println("    </select>\n"
                     + "    <p class=\"help-block text-danger\"></p>\n"
+                    + "</div>");
+            out.println("<div class=\"control-group note\">\n"
+                    + "    <h5>Ghi chú</h5>\n"
+                    + "    <textarea class=\"form-control ghi-chu\" id=\"note\" name=\"note\" placeholder=\"Nội dung ghi chú\">" + note + "</textarea>\n"
                     + "</div>");
 
             out.println("<input type=\"hidden\" id=\"service\" name=\"service\" value=\"" + selectedService + "\"/>");

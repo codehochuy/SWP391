@@ -16,6 +16,14 @@
                 color: red;
                 font-style: italic;
             }
+            .note textarea{
+                padding: 10px;
+                margin: 10px 0;
+            }
+            .text-note{
+                font-style: italic; 
+                opacity: 0.6;
+            }
         </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta charset="utf-8">
@@ -43,11 +51,7 @@
         <link href="WebPages/ViewWebPage/lib/slick/slick-theme.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="WebPages/ViewWebPage/css/style.css" rel="stylesheet">
-        <style>
-            .error{
-                color: red;
-            }
-        </style>
+
     </head>
     <body>
         <div class="wrapper">
@@ -188,34 +192,7 @@
 
 
         </script>
-        <script>
-            $(document).ready(function () {
-                $('#quotationContent').submit(function (event) {
-                    event.preventDefault();
 
-
-
-                    var formData = {};
-                    $("#quotationContent").find("input").each(function () {
-                        formData[$(this).attr("name")] = $(this).val();
-                    });
-                    console.log(formData);
-                    // Gửi dữ liệu đến servlet bằng AJAX
-                    $.ajax({
-                        url: 'SaveQuotationContent',
-                        type: 'get',
-                        data: formData,
-                        success: function (data) {
-                            var quotationContent = document.getElementById("quotationContent");
-                            quotationContent.innerHTML += data;
-                        },
-                        error: function (xhr) {
-                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
-                        }
-                    });
-                });
-            });
-        </script>
 
         <script>
             $(document).ready(function () {
@@ -225,7 +202,7 @@
 
 
                     var formData = {};
-                    $("#formFill").find("input, select").each(function () {
+                    $("#formFill").find("input, select, textarea").each(function () {
                         formData[$(this).attr("name")] = $(this).val();
                     });
 
@@ -245,77 +222,149 @@
                 });
             });
         </script>
-        
+
         <script>
-        // JavaScript code for form validation
-        const form = document.getElementById('formFill');
+            document.getElementById("quotationContent").addEventListener("submit", function (event) {
+                event.preventDefault(); // Ngăn chặn việc gửi form mặc định
 
-        form.addEventListener('click', function(event) {
-            let i = 0;
-            let isValid = true;
-            
-            const _1 = document.getElementById('1');
-            const _2 = document.getElementById('2');
-            const _3 = document.getElementById('3');
-            const _4 = document.getElementById('4');
-            const _5 = document.getElementById('5');
-            const _6 = document.getElementById('6');
-            
-            const error_1 = document.getElementById('error_1');
-            const error_2 = document.getElementById('error_2');
-            const error_3 = document.getElementById('error_3');
-            const error_4 = document.getElementById('error_4');
-            const error_5 = document.getElementById('error_5');
-            const error_6 = document.getElementById('error_6');
+                // Lấy ra giá trị của nút được nhấn
+                var action = event.submitter.value;
 
-            // Reset error messages
-            error_1.textContent = '';
-            error_2.textContent = '';
-            error_3.textContent = '';
-            error_4.textContent = '';
-            if (error_5) error_5.textContent = '';
-            if (error_6) error_6.textContent = '';
-            
+                var formData = {};
+                $("#quotationContent").find("input").each(function () {
+                    formData[$(this).attr("name")] = $(this).val();
+                });
+
+                // Xác định hành động dựa trên giá trị của nút được nhấn
+                switch (action) {
+                    case "saveQuotationContent":
+                        // Xử lý chức năng 1
+                        $.ajax({
+                                url: 'SaveQuotationContent',
+                                type: 'get',
+                                data: formData,
+                                success: function (data) {
+                                    var quotationContent = document.getElementById("quotationContent");
+                                    quotationContent.innerHTML += data;
+                                },
+                                error: function (xhr) {
+                                    console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                                }
+                            });
+                        break;
+                    case "sendRequestQuotation":
+                        // Xử lý chức năng 2
+                        alert("hi")
+                        break;
+                    default:
+                        // Xử lý mặc định nếu cần
+                        console.log("Không xác định hành động");
+                }
+            });
+        </script>
+
+
+<!--                <script>
+                    $(document).ready(function () {
+                        $('#quotationContent').submit(function (event) {
+                            event.preventDefault();
+        
+        
+        
+                            var formData = {};
+                            $("#quotationContent").find("input").each(function () {
+                                formData[$(this).attr("name")] = $(this).val();
+                            });
+                            console.log(formData);
+                            // Gửi dữ liệu đến servlet bằng AJAX
+                            $.ajax({
+                                url: 'SaveQuotationContent',
+                                type: 'get',
+                                data: formData,
+                                success: function (data) {
+                                    var quotationContent = document.getElementById("quotationContent");
+                                    quotationContent.innerHTML += data;
+                                },
+                                error: function (xhr) {
+                                    console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                                }
+                            });
+                        });
+                    });
+                </script>-->
+
+        <script>
+            // JavaScript code for form validation
+            const form = document.getElementById('formFill');
+
+            form.addEventListener('click', function (event) {
+                let i = 0;
+                let isValid = true;
+
+                const _1 = document.getElementById('1');
+                const _2 = document.getElementById('2');
+                const _3 = document.getElementById('3');
+                const _4 = document.getElementById('4');
+                const _5 = document.getElementById('5');
+                const _6 = document.getElementById('6');
+
+                const error_1 = document.getElementById('error_1');
+                const error_2 = document.getElementById('error_2');
+                const error_3 = document.getElementById('error_3');
+                const error_4 = document.getElementById('error_4');
+                const error_5 = document.getElementById('error_5');
+                const error_6 = document.getElementById('error_6');
+
+                // Reset error messages
+                error_1.textContent = '';
+                error_2.textContent = '';
+                error_3.textContent = '';
+                error_4.textContent = '';
+                if (error_5)
+                    error_5.textContent = '';
+                if (error_6)
+                    error_6.textContent = '';
+
 //           
 
-            if (parseInt(_1.value) > 10000 || parseInt(_1.value) <= 0) {
+                if (parseDouble(_1.value) > 10000 || parseDouble(_1.value) <= 0) {
+                    isValid = false;
+                    error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
+                }
+
+                if (parseDouble(_2.value) > 10000 || parseDouble(_2.value) <= 0) {
+                    isValid = false;
+                    error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
+                }
+
+                if ((parseDouble(_3.value) >= parseDouble(_1.value)) || parseDouble(_3.value) < 0) {
+                    isValid = false;
+                    error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
+                }
+                if ((parseDouble(_4.value) >= (parseDouble(_1.value) - parseDouble(_3.value))) || parseDouble(_4.value) < 0) {
+                    isValid = false;
+                    error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
+                }
+
+                if (_5.value !== '') {
+                    if (parseInt(_5.value) > 24 || parseInt(_5.value) < 0) {
                         isValid = false;
-                        error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
+                        error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
                     }
+                }
 
-                    if (parseInt(_2.value) > 10000 || parseInt(_2.value) <= 0) {
+                if (_6.value !== '') {
+                    if (parseDouble(_6.value) < 0 || parseDouble(_6.value) > 2) {
                         isValid = false;
-                        error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
+                        error_6.textContent = 'Chiều dài rộng ban công từ 0-2m.';
                     }
+                }
 
-                    if ((parseInt(_3.value) >= parseInt(_1.value)) || parseInt(_3.value) < 0) {
-                        isValid = false;
-                        error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
-                    }
-                    if ((parseInt(_4.value) >= (parseInt(_1.value) - parseInt(_3.value))) || parseInt(_4.value) < 0) {
-                        isValid = false;
-                        error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
-                    }
-
-                    if (_5.value !== '') {
-                        if (parseInt(_5.value) > 24 || parseInt(_5.value) < 0) {
-                            isValid = false;
-                            error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
-                        }
-                    }
-
-                    if (_6.value !== '') {
-                        if (parseInt(_6.value) < 0 || parseInt(_6.value) > 2) {
-                            isValid = false;
-                            error_6.textContent = 'Chiều dài rộng ban công từ 0-2m.';
-                        }
-                    }
-
-            if (!isValid) {
-                event.preventDefault();
-            }
-        });
-    </script>
+                if (!isValid) {
+                    event.preventDefault();
+                }
+            });
+        </script>
 
 
     </body>
