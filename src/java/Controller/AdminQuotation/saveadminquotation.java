@@ -52,7 +52,7 @@ public class saveadminquotation extends HttpServlet {
              
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
-            
+            double totalPrice = (request.getParameter("totalPrice") != null && !request.getParameter("totalPrice").isEmpty()) ? Double.parseDouble(request.getParameter("totalPrice")) : 0.0;
 
             QuotationDAO quotationDao = new QuotationDAO();
             DTO.Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
@@ -61,7 +61,7 @@ public class saveadminquotation extends HttpServlet {
             QuotationDAO dao2 = new QuotationDAO();
             int cusQuoId = dao2.getCusQuoId();
             QuotationDAO dao3 = new QuotationDAO();
-            boolean createCusQuoVersion = dao3.createCusQuoVersion(price, foundationId, roofId, cusQuoId, note);
+            boolean createCusQuoVersion = dao3.createCusQuoVersion(price,totalPrice, foundationId, roofId, cusQuoId, note);
             boolean createCustomerHouseComponent = false;
             if (createCusQuoVersion) {
                 for (int i = 0; i < listHouseComponent.size(); i++) {
