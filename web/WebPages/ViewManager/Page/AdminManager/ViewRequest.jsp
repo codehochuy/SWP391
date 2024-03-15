@@ -95,6 +95,7 @@
                                                             <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
                                                             <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cusQuoId}"/>
                                                             <input type="hidden" id="note" name="note" value=""/>
+                                                             <input type="hidden" id="note" name="price" value="${price}"/>
                                                         </form>
                                                         <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill2" novalidate="novalidate">
 

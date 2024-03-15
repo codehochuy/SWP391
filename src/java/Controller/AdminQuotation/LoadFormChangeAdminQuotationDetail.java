@@ -41,7 +41,7 @@ public class LoadFormChangeAdminQuotationDetail extends HttpServlet {
             int selectedService = Integer.parseInt(request.getParameter("service"));
             int selectedStyle = Integer.parseInt(request.getParameter("style"));
             int cusQuoId = Integer.parseInt(request.getParameter("cusQuoId"));
-            double price = Double.parseDouble(request.getParameter("price"));
+            double price1 = Double.parseDouble(request.getParameter("price"));
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
             QuotationDAO dao1 = new QuotationDAO();
@@ -69,7 +69,7 @@ public class LoadFormChangeAdminQuotationDetail extends HttpServlet {
             }
             out.println("<div class=\"control-group\">\n"
                     + "    <h5>Giá thi công/m&#178;</h5>\n"
-                    + "    <input type=\"number\" name=\"constructionPrice\" value=\"" + "" + "\">\n"
+                    + "    <input type=\"number\" name=\"constructionPrice\" value=\"" + price1 + "\">\n"
                     + "</div>");
 
             for (int i = 0; i < listHouseComponent.size(); i++) {
