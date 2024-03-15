@@ -305,9 +305,9 @@
                     }
 
                     if (_6.value !== '') {
-                        if (parseInt(_6.value) <= 0 || parseInt(_6.value) > 2) {
+                        if (parseInt(_6.value) < 0 || parseInt(_6.value) > 2) {
                             isValid = false;
-                            error_6.textContent = 'Chiều dài rộng ban công phải lớn hơn hoặc bằng 0 và nhỏ hơn 2m.';
+                            error_6.textContent = 'Chiều dài rộng ban công từ 0-2m.';
                         }
                     }
 

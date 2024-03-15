@@ -5,45 +5,42 @@
  */
 package DTO;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author PC
  */
-public class QuotationVersion {
-    private int versionId;
+public class AdminQuoVersion {
+    private int adminQuoVersionId;
     private LocalDateTime date;
     private Double price;
     private int roofId;
-    private int foundationId;
-    private boolean quotationVersionStatus;
-    private int cusQuoId;
-    private boolean cusRequest;
+    private int foundationId;;
+    private int versionId;
+    private boolean status;
     private String note;
 
-    public QuotationVersion() {
+    public AdminQuoVersion() {
     }
 
-    public QuotationVersion(int versionId, LocalDateTime date, Double price, int roofId, int foundationId, boolean quotationVersionStatus, int cusQuoId, boolean cusRequest, String note) {
-        this.versionId = versionId;
+    public AdminQuoVersion(int adminQuoVersionId, LocalDateTime date, Double price, int roofId, int foundationId, int versionId, boolean status, String note) {
+        this.adminQuoVersionId = adminQuoVersionId;
         this.date = date;
         this.price = price;
         this.roofId = roofId;
         this.foundationId = foundationId;
-        this.quotationVersionStatus = quotationVersionStatus;
-        this.cusQuoId = cusQuoId;
-        this.cusRequest = cusRequest;
+        this.versionId = versionId;
+        this.status = status;
         this.note = note;
     }
 
-    public int getVersionId() {
-        return versionId;
+    public int getAdminQuoVersionId() {
+        return adminQuoVersionId;
     }
 
-    public void setVersionId(int versionId) {
-        this.versionId = versionId;
+    public void setAdminQuoVersionId(int adminQuoVersionId) {
+        this.adminQuoVersionId = adminQuoVersionId;
     }
 
     public LocalDateTime getDate() {
@@ -78,28 +75,20 @@ public class QuotationVersion {
         this.foundationId = foundationId;
     }
 
-    public boolean isQuotationVersionStatus() {
-        return quotationVersionStatus;
+    public int getVersionId() {
+        return versionId;
     }
 
-    public void setQuotationVersionStatus(boolean quotationVersionStatus) {
-        this.quotationVersionStatus = quotationVersionStatus;
+    public void setVersionId(int versionId) {
+        this.versionId = versionId;
     }
 
-    public int getCusQuoId() {
-        return cusQuoId;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setCusQuoId(int cusQuoId) {
-        this.cusQuoId = cusQuoId;
-    }
-
-    public boolean isCusRequest() {
-        return cusRequest;
-    }
-
-    public void setCusRequest(boolean cusRequest) {
-        this.cusRequest = cusRequest;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getNote() {
@@ -109,6 +98,6 @@ public class QuotationVersion {
     public void setNote(String note) {
         this.note = note;
     }
-
+    
     
 }

@@ -552,8 +552,8 @@ public class QuotationDAO {
     }
 
     public boolean createCusQuoVersion(double totalPrice, int foundationId, int roofId, int cusQuoId) {
-        String sql = "INSERT INTO CusQuoVersion ([Date], Price, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID)\n"
-                + "VALUES (GETDATE(),?,?,?,1,?);";
+        String sql = "INSERT INTO CusQuoVersion ([Date], Price, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID, CusRequest)\n"
+                + "VALUES (GETDATE(),?,?,?,1,?,0);";
 
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {            
