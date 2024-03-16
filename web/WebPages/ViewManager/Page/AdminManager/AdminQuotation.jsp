@@ -75,7 +75,7 @@
                                             <td>${user.customer}</td>                              
                                             <td>${user.quotationname}</td>
                                             <td>${user.phone}</td>
-                                            <td>${user.price}</td>
+                                            <td>${formattedPrices}</td>
                                             <td>${user.time}</td>
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="View" method="post">
@@ -85,6 +85,7 @@
                                                     <input type="hidden" name="customer" value="${user.customer}">
                                                     <input type="hidden" name="quotationname" value="${user.quotationname}">
                                                     <input type="hidden" name="price" value="${user.price}">
+                                                    <input type="hidden" name="formattedPrices" value="${formattedPrices}">
                                                     <button class="btn btn-primary btn-sm trash" type="submit" title="Xem chi tiết">
                                                         <i class="fas fa-eye"></i>
                                                     </button>

@@ -9,7 +9,10 @@ import DAO.CustomerRequestDAO;
 import DTO.CustomerRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,7 +40,18 @@ public class AdminQuotation extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             CustomerRequestDAO dao = new CustomerRequestDAO();
-            List<CustomerRequest>list = dao.getAll();
+            List<CustomerRequest> list = dao.getAll();
+            List<String> formattedPrices = new ArrayList<>();
+            Locale locale = new Locale("vi", "VN");
+            NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(locale);
+
+            for (CustomerRequest customerRequest : list) {
+                double price = customerRequest.getTotalprice();
+                String formattedPrice = currencyFormatter.format(price);
+                formattedPrices.add(formattedPrice);
+            }
+
+            request.setAttribute("formattedPrices", formattedPrices);
             request.setAttribute("list", list);
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/AdminQuotation.jsp").forward(request, response);
         }

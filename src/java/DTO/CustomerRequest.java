@@ -20,11 +20,12 @@ public class CustomerRequest {
     private LocalDateTime time;
     private int cusQuoId;
     private int quotationId;
+    private double totalprice;
 
     public CustomerRequest() {
     }
 
-    public CustomerRequest(int versionid, String customer, String quotationname, String phone, double price, LocalDateTime time, int cusQuoId, int quotationId) {
+    public CustomerRequest(int versionid, String customer, String quotationname, String phone, double price, LocalDateTime time, int cusQuoId, int quotationId, double totalprice) {
         this.versionid = versionid;
         this.customer = customer;
         this.quotationname = quotationname;
@@ -33,6 +34,7 @@ public class CustomerRequest {
         this.time = time;
         this.cusQuoId = cusQuoId;
         this.quotationId = quotationId;
+        this.totalprice = totalprice;
     }
 
     public int getVersionid() {
@@ -99,11 +101,20 @@ public class CustomerRequest {
         this.quotationId = quotationId;
     }
 
-    @Override
-    public String toString() {
-        return "CustomerRequest{" + "versionid=" + versionid + ", customer=" + customer + ", quotationname=" + quotationname + ", phone=" + phone + ", price=" + price + ", time=" + time + ", cusQuoId=" + cusQuoId + ", quotationId=" + quotationId + '}';
+    public double getTotalprice() {
+        return totalprice;
     }
 
+    public void setTotalprice(double totalprice) {
+        this.totalprice = totalprice;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomerRequest{" + "versionid=" + versionid + ", customer=" + customer + ", quotationname=" + quotationname + ", phone=" + phone + ", price=" + price + ", time=" + time + ", cusQuoId=" + cusQuoId + ", quotationId=" + quotationId + ", totalprice=" + totalprice + '}';
+    }
+
+    
     
 
     

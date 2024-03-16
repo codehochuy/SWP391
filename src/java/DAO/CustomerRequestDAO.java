@@ -45,22 +45,23 @@ public class CustomerRequestDAO {
     public List<CustomerRequest> getAll() {
         List<CustomerRequest> list = new ArrayList<>();
         String sql = "SELECT \n"
-                + "    u.[Name] AS UserName,\n"
+                + "    u.Name AS UserName,\n"
                 + "    cq.CusQuoName,\n"
                 + "    u.Phone,\n"
-                + "    cv.Price,\n"
-                + "    cv.[Date],\n"
-                + "	cv.VersionID,\n"
-                + "	cv.CusQuoID,\n"
+                + "	cv.Price,\n"
+                + "    cv.TotalPrice,\n"
+                + "    cv.Date,\n"
+                + "    cv.VersionID,\n"
+                + "    cv.CusQuoID,\n"
                 + "    cq.QuotationID\n"
-                + "\n"
                 + "FROM \n"
                 + "    Users u\n"
                 + "JOIN \n"
                 + "    CustomerQuotation cq ON u.UsersID = cq.UsersID\n"
                 + "JOIN \n"
                 + "    CusQuoVersion cv ON cq.CusQuoID = cv.CusQuoID\n"
-                + "where CusRequest = 'true'";
+                + "WHERE \n"
+                + "    CusRequest = 'true';";
 
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -77,6 +78,7 @@ public class CustomerRequestDAO {
                 p.setTime(rs.getTimestamp("Date").toLocalDateTime());
                 p.setCusQuoId(rs.getInt("CusQuoID"));
                 p.setQuotationId(rs.getInt("QuotationID"));
+                p.setTotalprice(rs.getDouble("TotalPrice"));
 
                 list.add(p);
             }

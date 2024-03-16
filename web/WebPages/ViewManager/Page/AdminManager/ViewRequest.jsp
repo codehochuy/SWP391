@@ -54,21 +54,21 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Tên khách hàng</label>
-                                            <input class="form-control" type="text" name="projectname" value="${customer}">
+                                            <input class="form-control" type="text" name="projectname" value="${customer}" readonly="">
                                             <div class="error-message" id="tensp-error"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Tên báo giá</label>
-                                            <input class="form-control" type="text" name="date" value="${quotationname}" max="">
+                                            <input class="form-control" type="text" name="date" value="${quotationname}" max="" readonly="">
                                             <div class="error-message" id="price-error"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Giá</label>
-                                            <input class="form-control" type="number" min="0" name="time" value="${price}">
+                                            <input class="form-control" type="text"name="time" value="${formattedPrices}" readonly="">
                                             <div class="error-message" id="quantity-error"></div>
                                         </div>
                                     </div>
