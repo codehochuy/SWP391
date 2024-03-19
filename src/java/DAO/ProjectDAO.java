@@ -344,6 +344,39 @@ public class ProjectDAO {
 
         return projectID;
     }
+    
+    public boolean updateProject(String projectName, String description, String date, int time, int service, int houseTypes, int styles, int id) {
+        // Chuỗi SQL cho truy vấn cập nhật
+        String sql = "UPDATE Projects SET ProjectName = ?, Description = ?, Date = ?, Time = ?, ServiceID = ?, HouseTypeID = ?, StyleID = ? WHERE ProjectID = ?";
+        
+        try {
+            // Chuẩn bị câu lệnh truy vấn
+            PreparedStatement stmt = db.getConn().prepareStatement(sql);
+            
+            // Đặt các tham số cho câu lệnh truy vấn
+            stmt.setString(1, projectName);
+            stmt.setString(2, description);
+            stmt.setString(3, date);
+            stmt.setInt(4, time);
+            stmt.setInt(5, service);
+            stmt.setInt(6, houseTypes);
+            stmt.setInt(7, styles);
+            // Đặt giá trị của tham số id, bạn cần thay thế id bằng id thực tế của dự án bạn muốn cập nhật
+            stmt.setInt(8, id);
+            
+            // Thực thi câu lệnh truy vấn và kiểm tra số dòng bị ảnh hưởng
+            int rowsAffected = stmt.executeUpdate();
+            
+            // Trả về true nếu số dòng bị ảnh hưởng lớn hơn 0, tức là cập nhật thành công
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            // Xử lý ngoại lệ SQL nếu có
+            e.printStackTrace();
+        }
+        
+        // Trả về false nếu có lỗi xảy ra hoặc không có dòng nào bị ảnh hưởng, tức là cập nhật không thành công
+        return false;
+    }
 
     public static void main(String[] args) {
         ProjectDAO dao = new ProjectDAO();
