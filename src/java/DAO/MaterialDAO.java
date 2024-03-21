@@ -176,4 +176,30 @@ public class MaterialDAO {
             return false;
         }
     }
+    public boolean updateMaterial(String name, String description, String price, String material) {
+        // Chuỗi SQL cho truy vấn cập nhật
+        String sql = "UPDATE Projects SET ProjectName = ?, Description = ?, Date = ?, Time = ?, ServiceID = ?, HouseTypeID = ?, StyleID = ? WHERE ProjectID = ?";
+        
+        try {
+            // Chuẩn bị câu lệnh truy vấn
+            PreparedStatement stmt = db.getConn().prepareStatement(sql);
+            
+            // Đặt các tham số cho câu lệnh truy vấn
+            stmt.setString(1, name);
+            stmt.setString(2, price);
+            stmt.setString(3, material);
+            // Đặt giá trị của tham số id, bạn cần thay thế id bằng id thực tế của dự án bạn muốn cập nhật
+            
+            // Thực thi câu lệnh truy vấn và kiểm tra số dòng bị ảnh hưởng
+            int rowsAffected = stmt.executeUpdate();
+            
+            // Trả về true nếu số dòng bị ảnh hưởng lớn hơn 0, tức là cập nhật thành công
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            // Xử lý ngoại lệ SQL nếu có
+            e.printStackTrace();
+        }
+        // Trả về false nếu có lỗi xảy ra hoặc không có dòng nào bị ảnh hưởng, tức là cập nhật không thành công
+        return false;
+    }
 }

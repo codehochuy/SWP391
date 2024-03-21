@@ -45,13 +45,13 @@
 
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Tên vật liệu</label>
-                                    <input class="form-control" type="text" name="" value="${list.name}">
+                                    <input class="form-control" type="text" name="name" value="${list.name}">
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Giá</label>
-                                    <input class="form-control" type="text" name="" value="${list.price}">
+                                    <input class="form-control" type="text" name="price" value="${list.price}">
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
 
