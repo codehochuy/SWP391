@@ -12,6 +12,7 @@ import DAO.ProjectImageDAO;
 import DAO.ServiceDAO;
 import DAO.StyleDAO;
 import DTO.HouseType;
+import DTO.Material;
 import DTO.MaterialCategory;
 import DTO.ProjectImage;
 import DTO.Service;
@@ -48,17 +49,24 @@ public class UpdateMaterial extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String name = request.getParameter("name");
             String price = request.getParameter("price");
-            String material = request.getParameter("material");
+            String unit = request.getParameter("unit");
+            String type = request.getParameter("type");
+            String category = request.getParameter("category");
+            String id = request.getParameter("id");
+            
             MaterialDAO dao = new MaterialDAO();
-            //boolean result = dao.updateMaterial(name, price, material);
-//            if (result) {
-//                request.setAttribute("messtrue", "Thêm vật liệu thành công");
-//            } else {
-//                request.setAttribute("messefalse", "Thêm vật liệu thất bại");
-//            }
-
+            boolean result = dao.updateMaterial(name, price, unit, type, category, id);
+            if (result) {
+                request.setAttribute("messtrue", "Cập nhật vật liệu thành công");
+            } else {
+                request.setAttribute("messefalse", "Cập nhật vật liệu thất bại");
+            }
+            
+            MaterialDAO dao2 = new MaterialDAO();
+            Material list = dao2.getByID(id);
             MaterialDAO dao1 = new MaterialDAO();
             List<MaterialCategory> list1 = dao1.getMaterialCategory();
+            request.setAttribute("list", list);
             request.setAttribute("list1", list1);
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ShowMaterialDetail.jsp").forward(request, response);
         }

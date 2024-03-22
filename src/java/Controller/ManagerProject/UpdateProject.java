@@ -61,9 +61,9 @@ public class UpdateProject extends HttpServlet {
         ProjectDAO dao = new ProjectDAO();
         boolean result = dao.updateProject(projectname, description, date, time, service, houseTypes, styles, projectid);
         if (result) {
-            request.setAttribute("messtrue", "Thêm dự án thành công");
+            request.setAttribute("messtrue", "Cập nhật dự án thành công");
         } else {
-            request.setAttribute("messefalse", "Thêm dự án thất bại");
+            request.setAttribute("messefalse", "Cập nhật dự án thất bại");
         }
 
         ProjectDAO dao2 = new ProjectDAO();

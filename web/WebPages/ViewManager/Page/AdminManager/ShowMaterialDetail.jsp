@@ -8,7 +8,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <<title>Chi tiết vật liệu</title>
         <link rel="stylesheet" type="text/css" href="css\admin.css">
         <link rel="icon" href="img/logo.jpg" type="image/x-icon">
 
@@ -41,7 +41,7 @@
                     <div class="tile">
                         <h1 class="tile-title">Thông tin chi tiết</h1>
                         <div class="tile-body">
-                            <form class="row" action="UpdateMaterial" method="post" enctype="multipart/form-data" id="createPro">
+                            <form class="row" action="UpdateMaterial" method="post">
 
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Tên vật liệu</label>
@@ -54,10 +54,30 @@
                                     <input class="form-control" type="text" name="price" value="${list.price}">
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
-
                                 <div class="form-group col-md-4">
-                                    <label for="exampleSelect2" class="control-label">Loại</label>
-                                    <select class="form-control" id="exampleSelect2" name="material">
+                                    <label class="control-label">Đơn vị</label>
+                                    <input class="form-control" type="text" name="unit" value="${list.unit}">
+                                    <div class="error-message" id="tensp-error"></div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="exampleSelect2" class="control-label">Kiểu thi công</label>
+                                    <select class="form-control" id="exampleSelect2" name="type">
+                                        <option disabled>-- Kiểu thi công --</option>
+                                        <c:choose>
+                                            <c:when test="${list.type eq 0}">
+                                                <option value="0" selected>Thi công phần thô</option>
+                                                <option value="1">Thi công trọn gói</option>
+                                            </c:when>
+                                            <c:when test="${list.type eq 1}">
+                                                <option value="0">Thi công phần thô</option>
+                                                <option value="1" selected>Thi công trọn gói</option>
+                                            </c:when>
+                                        </c:choose>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="exampleSelect2" class="control-label">Loại vật liệu</label>
+                                    <select class="form-control" id="exampleSelect2" name="category">
                                         <option disabled>-- Chọn loại vật liệu --</option>
                                         <c:forEach items="${requestScope.list1}" var="i">
                                             <option value="${i.id}" 
@@ -76,11 +96,12 @@
                                         </a>
                                     </div>
                                 </div>
-                                        <button class="btn btn-save" type="submit" onclick="validateForm()">Lưu lại</button>
-                        <a class="btn btn-cancel" href="ManageMaterial">Hủy bỏ</a>
+                                <input class="form-control" type="text" name="id" value="${list.id}" hidden="">
+                                <button class="btn btn-save" type="submit">Lưu lại</button>
+                                <a class="btn btn-cancel" href="ManageMaterial">Hủy bỏ</a>
                             </form>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
@@ -102,47 +123,47 @@
 
 
         <script type="text/javascript">
-                            $('#sampleTable').DataTable();
-                            //Thời Gian
-                            function time() {
-                                var today = new Date();
-                                var weekday = new Array(7);
-                                weekday[0] = "Chủ Nhật";
-                                weekday[1] = "Thứ Hai";
-                                weekday[2] = "Thứ Ba";
-                                weekday[3] = "Thứ Tư";
-                                weekday[4] = "Thứ Năm";
-                                weekday[5] = "Thứ Sáu";
-                                weekday[6] = "Thứ Bảy";
-                                var day = weekday[today.getDay()];
-                                var dd = today.getDate();
-                                var mm = today.getMonth() + 1;
-                                var yyyy = today.getFullYear();
-                                var h = today.getHours();
-                                var m = today.getMinutes();
-                                var s = today.getSeconds();
-                                m = checkTime(m);
-                                s = checkTime(s);
-                                nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                if (dd < 10) {
-                                    dd = '0' + dd
-                                }
-                                if (mm < 10) {
-                                    mm = '0' + mm
-                                }
-                                today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                        '</span>';
-                                document.getElementById("clock").innerHTML = tmp;
-                                clocktime = setTimeout("time()", "1000", "Javascript");
+                                    $('#sampleTable').DataTable();
+                                    //Thời Gian
+                                    function time() {
+                                        var today = new Date();
+                                        var weekday = new Array(7);
+                                        weekday[0] = "Chủ Nhật";
+                                        weekday[1] = "Thứ Hai";
+                                        weekday[2] = "Thứ Ba";
+                                        weekday[3] = "Thứ Tư";
+                                        weekday[4] = "Thứ Năm";
+                                        weekday[5] = "Thứ Sáu";
+                                        weekday[6] = "Thứ Bảy";
+                                        var day = weekday[today.getDay()];
+                                        var dd = today.getDate();
+                                        var mm = today.getMonth() + 1;
+                                        var yyyy = today.getFullYear();
+                                        var h = today.getHours();
+                                        var m = today.getMinutes();
+                                        var s = today.getSeconds();
+                                        m = checkTime(m);
+                                        s = checkTime(s);
+                                        nowTime = h + " giờ " + m + " phút " + s + " giây";
+                                        if (dd < 10) {
+                                            dd = '0' + dd
+                                        }
+                                        if (mm < 10) {
+                                            mm = '0' + mm
+                                        }
+                                        today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                                        tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                                                '</span>';
+                                        document.getElementById("clock").innerHTML = tmp;
+                                        clocktime = setTimeout("time()", "1000", "Javascript");
 
-                                function checkTime(i) {
-                                    if (i < 10) {
-                                        i = "0" + i;
+                                        function checkTime(i) {
+                                            if (i < 10) {
+                                                i = "0" + i;
+                                            }
+                                            return i;
+                                        }
                                     }
-                                    return i;
-                                }
-                            }
         </script>
     </body>
 

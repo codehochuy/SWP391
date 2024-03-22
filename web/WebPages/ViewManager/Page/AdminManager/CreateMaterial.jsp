@@ -52,6 +52,19 @@
                                     <div class="error-message" id="price-error"></div>
                                 </div>
                                 <div class="form-group col-md-4">
+                                    <label class="control-label">Đơn vị</label>
+                                    <input class="form-control" type="text" name="unit" required>
+                                    <div class="error-message" id="tensp-error"></div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="exampleSelect2" class="control-label">Kiểu thi công</label>
+                                    <select class="form-control" id="exampleSelect2" name="type">
+                                        <option disabled>-- Kiểu thi công --</option>
+                                        <option value="0">Thi công phần thô</option>
+                                        <option value="1">Thi công trọn gói</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
                                     <label for="exampleSelect2" class="control-label">Loại vật liệu</label>
                                     <select class="form-control" id="exampleSelect2" name="category">
                                         <option disabled>-- Chọn loại vật liệu --</option>
@@ -73,6 +86,33 @@
                                     <span id="imageError" class="error"></span>
                                 </div>
                                 <button class="btn btn-save" type="submit">Lưu lại</button>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var saveButton = document.querySelector('.btn-save');
+                                        var imageInput = document.getElementById('uploadfile');
+                                        var imageError = document.getElementById('imageError');
+
+                                        saveButton.addEventListener('click', function (event) {
+                                            var selectedFiles = imageInput.files;
+
+                                            if (selectedFiles.length === 0) {
+                                                // Sử dụng SweetAlert để hiển thị thông báo
+                                                swal({
+                                                    title: 'Lỗi',
+                                                    text: 'Vui lòng chọn ít nhất một ảnh',
+                                                    icon: 'error',
+                                                    buttons: 'OK',
+                                                    dangerMode: true,
+                                                });
+
+                                                // Ngăn chặn sự kiện mặc định của nút "Lưu lại" (ngăn form được submit)
+                                                event.preventDefault();
+                                            } else {
+                                                imageError.innerHTML = ''; // Xóa thông báo lỗi nếu có
+                                            }
+                                        });
+                                    });
+                                </script>
                                 <a class="btn btn-cancel" href="ManageMaterial">Hủy bỏ</a>
                             </form>
                         </div>
