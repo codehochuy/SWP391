@@ -388,22 +388,10 @@
                                     </ul>
                                 </div>
                             </section>
-
-                            <!-- Add more sections as needed -->
                         </article>
                     </main>
-
-
-
-
-
-
-
-
                 </div>
             </div>
-            <!-- Portfolio End -->
-
 
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
 
@@ -424,7 +412,7 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
         <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $('#materialtable').DataTable();
             });
         </script>
