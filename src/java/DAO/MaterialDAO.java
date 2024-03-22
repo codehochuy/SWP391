@@ -68,7 +68,7 @@ public class MaterialDAO {
         }
         return list;
     }
-    
+
     public Material getByID(String materialID) {
         Material mat = new Material();
         try {
@@ -76,10 +76,10 @@ public class MaterialDAO {
                     + "FROM Material\n"
                     + "INNER JOIN CategoryMaterial ON Material.CategoryMaterialID = CategoryMaterial.CategoryMaterialID\n"
                     + "WHERE Material.MaterialID = ?";
-            
+
             PreparedStatement stmt = db.getConn().prepareStatement(sql);
             stmt.setString(1, materialID);
-            
+
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 String id = rs.getString("MaterialID");
@@ -97,7 +97,7 @@ public class MaterialDAO {
         }
         return null;
     }
-    
+
     public List<MaterialCategory> getMaterialCategory() {
         List<MaterialCategory> list = new ArrayList<>();
         try {
@@ -168,7 +168,7 @@ public class MaterialDAO {
             e.printStackTrace();
         }
     }
-    
+
     public boolean deleteMaterial(String id) {
         try (Connection con = db.getConn();
                 PreparedStatement stm = con.prepareStatement("DELETE FROM Material WHERE MaterialID = ?")) {
@@ -183,14 +183,15 @@ public class MaterialDAO {
             return false;
         }
     }
+
     public boolean updateMaterial(String name, String price, String unit, String type, String material, String id) {
         // Chuỗi SQL cho truy vấn cập nhật
         String sql = "UPDATE Material SET MaterialName = ?, MaterialPrice = ?, MaterialUnit = ?, MaterialType = ?, CategoryMaterialID = ? WHERE MaterialID = ?";
-        
+
         try {
             // Chuẩn bị câu lệnh truy vấn
             PreparedStatement stmt = db.getConn().prepareStatement(sql);
-            
+
             // Đặt các tham số cho câu lệnh truy vấn
             stmt.setString(1, name);
             stmt.setString(2, price);
@@ -199,10 +200,10 @@ public class MaterialDAO {
             stmt.setString(5, material);
             stmt.setString(6, id);
             // Đặt giá trị của tham số id, bạn cần thay thế id bằng id thực tế của dự án bạn muốn cập nhật
-            
+
             // Thực thi câu lệnh truy vấn và kiểm tra số dòng bị ảnh hưởng
             int rowsAffected = stmt.executeUpdate();
-            
+
             // Trả về true nếu số dòng bị ảnh hưởng lớn hơn 0, tức là cập nhật thành công
             return rowsAffected > 0;
         } catch (SQLException e) {
@@ -212,7 +213,7 @@ public class MaterialDAO {
         // Trả về false nếu có lỗi xảy ra hoặc không có dòng nào bị ảnh hưởng, tức là cập nhật không thành công
         return false;
     }
-    
+
     public int SendLeaveApplication(String ID, String leaveShift, String leaveReason, String submitTime, String submitDate) throws SQLException {
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -335,6 +336,7 @@ public class MaterialDAO {
             e.printStackTrace();
         }
     }
+
     public void TakeAttendance(String date, String time, String employeeID, String leaveShift, String button) {
         Connection conn = null;
         PreparedStatement ptm = null;

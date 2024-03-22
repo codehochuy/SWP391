@@ -53,7 +53,7 @@ public class UpdateMaterial extends HttpServlet {
             String type = request.getParameter("type");
             String category = request.getParameter("category");
             String id = request.getParameter("id");
-            
+
             MaterialDAO dao = new MaterialDAO();
             boolean result = dao.updateMaterial(name, price, unit, type, category, id);
             if (result) {
@@ -61,7 +61,7 @@ public class UpdateMaterial extends HttpServlet {
             } else {
                 request.setAttribute("messefalse", "Cập nhật vật liệu thất bại");
             }
-            
+
             MaterialDAO dao2 = new MaterialDAO();
             Material list = dao2.getByID(id);
             MaterialDAO dao1 = new MaterialDAO();
