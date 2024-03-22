@@ -68,6 +68,33 @@ public class MaterialDAO {
         }
         return list;
     }
+    
+    public List<Material> getMaterialRaw() {
+        List<Material> list = new ArrayList<>();
+        try {
+            String sql = "SELECT Material.MaterialID, Material.MaterialName, Material.MaterialPrice, Material.MaterialType, Material.MaterialUnit, Material.MaterialLink, CategoryMaterial.CategoryMaterialName\n"
+                    + "FROM Material\n"
+                    + "INNER JOIN CategoryMaterial ON Material.CategoryMaterialID = CategoryMaterial.CategoryMaterialID WHERE Material.MaterialType = 0 ORDER BY Material.MaterialID DESC";
+
+            PreparedStatement stmt = db.getConn().prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String id = rs.getString("MaterialID");
+                String name = rs.getString("MaterialName");
+                String price = rs.getString("MaterialPrice");
+                String category = rs.getString("CategoryMaterialName");
+                String link = rs.getString("MaterialLink");
+                String type = rs.getString("MaterialType");
+                String unit = rs.getString("MaterialUnit");
+                Material mat = new Material(id, name, price, type, unit, category, link);
+                list.add(mat);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 
     public Material getByID(String materialID) {
         Material mat = new Material();
