@@ -45,20 +45,26 @@
 
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Tên vật liệu</label>
-                                    <input class="form-control" type="text" name="name" value="${list.name}">
+                                    <input class="form-control" type="text" name="name" value="${list.name}" required>
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Giá</label>
-                                    <input class="form-control" type="text" name="price" value="${list.price}">
+                                    <input class="form-control" type="text" name="price" value="${list.price}" id="price" required>
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Đơn vị</label>
-                                    <input class="form-control" type="text" name="unit" value="${list.unit}">
+                                    <input class="form-control" type="text" name="unit" value="${list.unit}" required>
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
                                 <div class="form-group col-md-4">
                                     <label for="exampleSelect2" class="control-label">Kiểu thi công</label>
                                     <select class="form-control" id="exampleSelect2" name="type">
@@ -75,6 +81,11 @@
                                         </c:choose>
                                     </select>
                                 </div>
+                                    
+                                    
+                                    
+                                    
+                                    
                                 <div class="form-group col-md-4">
                                     <label for="exampleSelect2" class="control-label">Loại vật liệu</label>
                                     <select class="form-control" id="exampleSelect2" name="category">
@@ -88,6 +99,9 @@
                                     </select>
                                 </div>
 
+                                    
+                                    
+                                    
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Ảnh</label>
                                     <div class="image-gallery">
@@ -107,6 +121,11 @@
             </div>
         </main>
 
+                                
+                                
+                                
+                                
+                                
         <script src="./js/jquery-3.2.1.min.js"></script>
         <script src="./js/popper.min.js"></script>
         <script src="./js/bootstrap.min.js"></script>
@@ -164,6 +183,34 @@
                 return i;
             }
         }
+        </script>
+        <script>
+            document.getElementById("price").addEventListener("keydown", function (event) {
+                var key = event.key;
+                var value = this.value;
+                if (!isNumberKey(key)) {
+                    event.preventDefault();
+                }
+            });
+
+            function isNumberKey(key) {
+                return (!isNaN(parseInt(key)) || key === "Backspace") && key !== " " && key !== "e" && key !== ".";
+            }
+        </script>
+        
+        
+        
+        
+        <script>
+            document.getElementById("price").addEventListener("input", function (event) {
+                var value = this.value;
+
+                // Nếu giá trị chỉ chứa số 0 và người dùng thêm một số khác
+                if (value.length === 1 && value === "0") {
+                    this.value = ""; // Xóa số 0
+                    return;
+                }
+            });
         </script>
     </body>
 

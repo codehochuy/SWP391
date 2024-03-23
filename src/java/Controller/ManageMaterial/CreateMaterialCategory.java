@@ -47,7 +47,7 @@ public class CreateMaterialCategory extends HttpServlet {
         MaterialDAO dao = new MaterialDAO();
         List<Material> list = dao.getAll();
         request.setAttribute("list", list);
-        
+
         MaterialDAO dao2 = new MaterialDAO();
         List<MaterialCategory> cat = dao2.getMaterialCategory();
         request.setAttribute("cat", cat);
