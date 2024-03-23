@@ -49,8 +49,8 @@
                                     </a>
                                 </div>
                                 <div class="col-sm-2">
-                                    <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
-                                            class="fas fa-file-upload"></i> Tải từ file</a>
+                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#createCategory"><i
+                                            class="fas fa-folder-plus"></i> Thêm loại vật liệu</a>
                                 </div>
                             </div>
                             <table class="table table-hover table-bordered" id="sampleTable">
@@ -107,97 +107,131 @@
                 </div>
             </div>
         </main>
+        <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form action="CreateMaterialCategory" method="post" >
+                            <div class="row">
+                                <div class="form-group  col-md-12">
+                                    <span class="thong-tin-thanh-toan">
+                                        <h5>Thêm loại vật liệu mới</h5>
+                                    </span>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Nhập tên:</label>
+                                    <input class="form-control" type="text" required name="categoryname">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Danh sách các loại vật liệu hiện có:</label>
+                                    <ul class="compact-list">
+                                        <c:forEach items="${requestScope.cat}" var="i" varStatus="status">
+                                                <div>- ${i.name}</div>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                    </div>
+                    <button class="btn btn-save" type="submit">Lưu lại</button>
+                    <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <script src="./js/jquery-3.2.1.min.js"></script>
-        <script src="./js/popper.min.js"></script>
-        <script src="./js/bootstrap.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="src/jquery.table2excel.js"></script>
-        <script src="./js/main.js"></script>
+    <script src="./js/jquery-3.2.1.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="src/jquery.table2excel.js"></script>
+    <script src="./js/main.js"></script>
 
-        <script src="js/plugins/pace.min.js"></script>
+    <script src="js/plugins/pace.min.js"></script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 
-        <script type="text/javascript" src="./js/plugins/jquery.dataTables.min.js"></script>
-        <script type="text/javascript" src="./js/plugins/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="./js/plugins/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="./js/plugins/dataTables.bootstrap.min.js"></script>
 
-        <script type="text/javascript">
-                                                        $('#sampleTable').DataTable();
-                                                        //Thời Gian
-                                                        function time() {
-                                                            var today = new Date();
-                                                            var weekday = new Array(7);
-                                                            weekday[0] = "Chủ Nhật";
-                                                            weekday[1] = "Thứ Hai";
-                                                            weekday[2] = "Thứ Ba";
-                                                            weekday[3] = "Thứ Tư";
-                                                            weekday[4] = "Thứ Năm";
-                                                            weekday[5] = "Thứ Sáu";
-                                                            weekday[6] = "Thứ Bảy";
-                                                            var day = weekday[today.getDay()];
-                                                            var dd = today.getDate();
-                                                            var mm = today.getMonth() + 1;
-                                                            var yyyy = today.getFullYear();
-                                                            var h = today.getHours();
-                                                            var m = today.getMinutes();
-                                                            var s = today.getSeconds();
-                                                            m = checkTime(m);
-                                                            s = checkTime(s);
-                                                            nowTime = h + " giờ " + m + " phút " + s + " giây";
-                                                            if (dd < 10) {
-                                                                dd = '0' + dd
-                                                            }
-                                                            if (mm < 10) {
-                                                                mm = '0' + mm
-                                                            }
-                                                            today = day + ', ' + dd + '/' + mm + '/' + yyyy;
-                                                            tmp = '<span class="date"> ' + today + ' - ' + nowTime +
-                                                                    '</span>';
-                                                            document.getElementById("clock").innerHTML = tmp;
-                                                            clocktime = setTimeout("time()", "1000", "Javascript");
-
-                                                            function checkTime(i) {
-                                                                if (i < 10) {
-                                                                    i = "0" + i;
-                                                                }
-                                                                return i;
-                                                            }
+    <script type="text/javascript">
+                                                    $('#sampleTable').DataTable();
+                                                    //Thời Gian
+                                                    function time() {
+                                                        var today = new Date();
+                                                        var weekday = new Array(7);
+                                                        weekday[0] = "Chủ Nhật";
+                                                        weekday[1] = "Thứ Hai";
+                                                        weekday[2] = "Thứ Ba";
+                                                        weekday[3] = "Thứ Tư";
+                                                        weekday[4] = "Thứ Năm";
+                                                        weekday[5] = "Thứ Sáu";
+                                                        weekday[6] = "Thứ Bảy";
+                                                        var day = weekday[today.getDay()];
+                                                        var dd = today.getDate();
+                                                        var mm = today.getMonth() + 1;
+                                                        var yyyy = today.getFullYear();
+                                                        var h = today.getHours();
+                                                        var m = today.getMinutes();
+                                                        var s = today.getSeconds();
+                                                        m = checkTime(m);
+                                                        s = checkTime(s);
+                                                        nowTime = h + " giờ " + m + " phút " + s + " giây";
+                                                        if (dd < 10) {
+                                                            dd = '0' + dd
                                                         }
-        </script>
+                                                        if (mm < 10) {
+                                                            mm = '0' + mm
+                                                        }
+                                                        today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+                                                        tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+                                                                '</span>';
+                                                        document.getElementById("clock").innerHTML = tmp;
+                                                        clocktime = setTimeout("time()", "1000", "Javascript");
 
-        <script>
-            function confirmDelete(button) {
-                var materialid = button.getAttribute("data-userID");
+                                                        function checkTime(i) {
+                                                            if (i < 10) {
+                                                                i = "0" + i;
+                                                            }
+                                                            return i;
+                                                        }
+                                                    }
+    </script>
 
-                swal({
-                    title: "Cảnh báo",
-                    text: "Bạn có muốn xóa vật liệu này?",
-                    buttons: ["Hủy bỏ", "Đồng ý"],
-                }).then((willDelete) => {
-                    if (willDelete) {
-                        var form = button.closest("form");
-                        form.action = "DeleteMaterial?id=" + materialid;
-                        form.submit();
-                    }
+    <script>
+        function confirmDelete(button) {
+            var materialid = button.getAttribute("data-userID");
 
-                });
-            }
-        </script>
+            swal({
+                title: "Cảnh báo",
+                text: "Bạn có muốn xóa vật liệu này?",
+                buttons: ["Hủy bỏ", "Đồng ý"],
+            }).then((willDelete) => {
+                if (willDelete) {
+                    var form = button.closest("form");
+                    form.action = "DeleteMaterial?id=" + materialid;
+                    form.submit();
+                }
 
-        <script>
-            <% if (request.getAttribute("messtrue") != null) {%>
+            });
+        }
+    </script>
+
+    <script>
+        <% if (request.getAttribute("messtrue") != null) {%>
             swal("<%= request.getAttribute("messtrue")%>", "", "success");
-            <% request.removeAttribute("messtrue"); %>
-            <% } %>
-        </script>
+        <% request.removeAttribute("messtrue"); %>
+        <% } %>
+    </script>
 
-        <script>
-            <% if (request.getAttribute("messefalse") != null) {%>
+    <script>
+        <% if (request.getAttribute("messefalse") != null) {%>
             swal("<%= request.getAttribute("messefalse")%>", "", "error");
-            <% request.removeAttribute("messefalse"); %>
-            <% }%>
-        </script>
+        <% request.removeAttribute("messefalse"); %>
+        <% }%>
+    </script>
 
-    </body>
+</body>
 </html>
