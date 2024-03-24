@@ -9,6 +9,7 @@
     <head>
 
         <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>TITAN - Chi Tiết Dự Án</title>
@@ -49,7 +50,7 @@
                     <div class="tile">
                         <h1 class="tile-title">Thông tin chi tiết</h1>
                         <div class="tile-body">
-                            <form class="row" action="UpdateProject" method="post" enctype="multipart/form-data" id="createPro">
+                            <form class="row" action="UpdateProject" method="post">
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Tên dự án</label>
                                     <input class="form-control" type="text" name="projectname" value="${project.name}">
@@ -82,7 +83,7 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="exampleSelect2" class="control-label">Kiểu nhà</label>
-                                    <select class="form-control" id="exampleSelect2" name="material">
+                                    <select class="form-control" id="exampleSelect2" name="houseTypes">
                                         <option disabled>-- Chọn kiểu nhà --</option>
                                         <c:forEach items="${requestScope.houseTypes}" var="houseType">
                                             <option value="${houseType.id}" 
@@ -96,7 +97,7 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="exampleSelect3" class="control-label">Phong cách</label>
-                                    <select class="form-control" id="exampleSelect3" name="size">
+                                    <select class="form-control" id="exampleSelect3" name="styles">
                                         <option disabled>-- Phong cách --</option>
                                         <c:forEach items="${requestScope.styles}" var="style">
                                             <option value="${style.id}" 
@@ -122,10 +123,12 @@
                                         </c:forEach>
                                     </div>
                                 </div>
+                                    <input class="form-control" type="text" name="projectid" value="${project.id}" hidden="">
+                                    <button class="btn btn-save" type="submit">Lưu lại</button>
+                        <a class="btn btn-cancel" href="ManagerProject">Hủy bỏ</a>
                             </form>
                         </div>
-                        <button class="btn btn-save" type="button" onclick="validateForm()">Lưu lại</button>
-                        <a class="btn btn-cancel" href="ManagerProject">Hủy bỏ</a>
+                        
                     </div>
 
                 </div>

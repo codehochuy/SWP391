@@ -161,4 +161,19 @@ public class MaterialDAO {
             e.printStackTrace();
         }
     }
+    
+    public boolean deleteMaterial(String id) {
+        try (Connection con = db.getConn();
+                PreparedStatement stm = con.prepareStatement("DELETE FROM Material WHERE MaterialID = ?")) {
+
+            stm.setString(1, id);
+            int effectRow = stm.executeUpdate();
+
+            return effectRow > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

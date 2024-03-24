@@ -76,10 +76,11 @@
                                         </a>
                                     </div>
                                 </div>
+                                        <button class="btn btn-save" type="submit" onclick="validateForm()">Lưu lại</button>
+                        <a class="btn btn-cancel" href="ManageMaterial">Hủy bỏ</a>
                             </form>
                         </div>
-                        <button class="btn btn-save" type="button" onclick="validateForm()">Lưu lại</button>
-                        <a class="btn btn-cancel" href="ManageMaterial">Hủy bỏ</a>
+                        
                     </div>
                 </div>
             </div>
