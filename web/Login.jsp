@@ -25,7 +25,8 @@
             <div class="container-login100">
                 <div class="wrap-login100">
                     <div class="login100-pic js-tilt" data-tilt>
-                        <img src="img/team_4.jpg" alt="IMG">
+                        <a href="index"><img src="img/team_4.jpg" alt="IMG"></a>
+                        
                     </div>
                     <!--=====TIÊU ĐỀ======-->
                     <div class="login100-form validate-form">
@@ -55,11 +56,7 @@
                             </div>
                             <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile&redirect_uri=https://8dda-118-69-182-144.ngrok-free.app/SWP391/LoginGoogleHandler&response_type=code
                                &client_id=763130706443-1ag9h8eptq9s3m17v09t55ifiklh9fi7.apps.googleusercontent.com&approval_prompt=force">Login With Google</a>
-                            <div class="text-right p-t-12">
-                                <a class="txt2" href="index">
-                                    Quay về trang chủ
-                                </a>
-                            </div>
+                            
                             <div class="text-right p-t-12">
                                 <a class="txt2" href="register.jsp">
                                     Đăng ký tài khoản mới

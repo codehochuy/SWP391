@@ -155,7 +155,7 @@
                                 lượng cao, kết hợp sự hiểu biết sâu rộng và tầm nhìn đổi mới để đáp ứng mọi yêu cầu của
                                 khách hàng. Cùng TITAN, chúng ta sẽ xây dựng tương lai bền vững và thịnh vượng.
                             </p>
-                            <a class="btn" href="">Nhận Báo Giá</a>
+                            <a class="btn" href="Quotation">Nhận Báo Giá</a>
                         </div>
                     </div>
                 </div>
