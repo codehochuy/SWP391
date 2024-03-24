@@ -273,36 +273,6 @@
             });
         </script>
 
-
-<!--                <script>
-                    $(document).ready(function () {
-                        $('#quotationContent').submit(function (event) {
-                            event.preventDefault();
-        
-        
-        
-                            var formData = {};
-                            $("#quotationContent").find("input").each(function () {
-                                formData[$(this).attr("name")] = $(this).val();
-                            });
-                            console.log(formData);
-                            // Gửi dữ liệu đến servlet bằng AJAX
-                            $.ajax({
-                                url: 'SaveQuotationContent',
-                                type: 'get',
-                                data: formData,
-                                success: function (data) {
-                                    var quotationContent = document.getElementById("quotationContent");
-                                    quotationContent.innerHTML += data;
-                                },
-                                error: function (xhr) {
-                                    console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
-                                }
-                            });
-                        });
-                    });
-                </script>-->
-
         <script>
             // JavaScript code for form validation
             const form = document.getElementById('formFill');

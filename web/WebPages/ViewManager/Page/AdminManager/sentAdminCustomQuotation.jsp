@@ -1,3 +1,8 @@
+<%-- 
+    Document   : sentAdminCustomQuotation
+    Created on : Mar 25, 2024, 3:45:39 AM
+    Author     : PC
+--%>
 
 <%@ page import="java.text.DecimalFormat" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -55,7 +60,7 @@
                                         Báo giá chưa trả lời</a>
                                 </div>
                                 <div class="col-sm-2">
-                                    <a class="btn btn-save btn-sm" href="SentAdminCustomQuotation" title="Báo giá đã gửi"><i class="fas fa-edit"></i>
+                                    <a class="btn btn-save btn-sm" href="SentQuotation" title="Báo giá đã gửi"><i class="fas fa-edit"></i>
                                         Báo giá đã trả lời</a>
                                 </div>
                             </div>      
@@ -85,7 +90,7 @@
                                             <td>${user.time}</td>
                                             <td class="confirm-status">${user.adminReponse ? 'Đã trả lời' : 'Chưa trả lời'}</td> 
                                             <td style="display: flex; justify-content: space-left">
-                                                <form action="View" method="post">
+                                                <form action="ViewSentAdminCustomQuotation" method="post">
                                                     <input type="hidden" name="versionId" value="${user.versionid}">
                                                     <input type="hidden" name="cusQuoId" value="${user.cusQuoId}">
                                                     <input type="hidden" name="quotationId" value="${user.quotationId}">

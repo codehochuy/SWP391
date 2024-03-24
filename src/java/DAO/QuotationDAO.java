@@ -553,8 +553,8 @@ public class QuotationDAO {
     }
 
     public boolean createCusQuoVersion(double price, double totalPrice, int foundationId, int roofId, int cusQuoId, String note) {
-        String sql = "INSERT INTO CusQuoVersion ([Date], Price, TotalPrice, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID, CusRequest, Note)\n"
-                + "VALUES (GETDATE(),?,?,?,?,1,?,0,?);";
+        String sql = "INSERT INTO CusQuoVersion ([Date], Price, TotalPrice, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID, CusRequest, AdminReponse, Note)\n"
+                + "VALUES (GETDATE(),?,?,?,?,1,?,?,?,?);";
 
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -563,7 +563,9 @@ public class QuotationDAO {
             ps.setInt(3, foundationId);
             ps.setInt(4, roofId);
             ps.setInt(5, cusQuoId);
-            ps.setString(6, note);
+            ps.setInt(6, 0); // Thiết lập giá trị cho AdminReponse
+            ps.setInt(7, 0); // Thiết lập giá trị cho CusRequest
+            ps.setString(8, note);
 
             int rowsAffected = ps.executeUpdate();
 
@@ -574,6 +576,7 @@ public class QuotationDAO {
             e.printStackTrace();
             return false;
         }
+
     }
 
     public boolean createAdminQuoVersion(double price, double totalPrice, int foundationId, int roofId, int versionID, int userId, String note) {
@@ -602,8 +605,8 @@ public class QuotationDAO {
     }
 
     public boolean sendCusRequestQuoVersion(double price, double totalPrice, int foundationId, int roofId, int cusQuoId, String note) {
-        String sql = "INSERT INTO CusQuoVersion ([Date], Price, TotalPrice, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID, CusRequest, Note)\n"
-                + "VALUES (GETDATE(),?,?,?,?,1,?,1,?);";
+        String sql = "INSERT INTO CusQuoVersion ([Date], Price, TotalPrice, FoundationID, RoofID, CusQuoVersionStatus, CusQuoID, CusRequest,AdminReponse, Note)\n"
+                + "VALUES (GETDATE(),?,?,?,?,1,?,1,0,?);";
 
         try (Connection conn = db.getConn();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -1063,7 +1066,7 @@ public class QuotationDAO {
             return -1;
         }
     }
-    
+
     public double getCusQuoVersionPriceByVersionId(int versionId) {
         String sql = "SELECT * FROM CusQuoVersion cqv join CustomerQuotation cq on cq.CusQuoID = cqv.CusQuoID\n"
                 + "where cqv.VersionID = ?";
@@ -1084,7 +1087,7 @@ public class QuotationDAO {
             return -1;
         }
     }
-    
+
     public int getCusQuoIdByVersionId(int versionId) {
         String sql = "SELECT * FROM CusQuoVersion where VersionID =?";
         try (Connection conn = db.getConn();
@@ -1104,7 +1107,6 @@ public class QuotationDAO {
             return -1;
         }
     }
-
 
     public List<AdminHouseComponent> getListAdminHouseComponentByAdminQuoVersionID(int adminQuoVersionId) {
         List<AdminHouseComponent> list = new ArrayList<>();
@@ -1225,12 +1227,44 @@ public class QuotationDAO {
 
         return false;
     }
-    
+
+    public boolean changeAdminReponseStatus(int status, int versionId) {
+        String sql = "UPDATE CusQuoVersion SET AdminReponse = ? WHERE VersionID = ?";
+
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, status);
+            ps.setInt(2, versionId);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     public static void main(String[] args) {
         QuotationDAO dao = new QuotationDAO();
-        List<AdminHouseComponent> list = dao.getListAdminHouseComponentByAdminQuoVersionID(5);
-        for (AdminHouseComponent listAD : list) {
-            System.out.println(listAD.getComponentName()+": "+listAD.getValue());
+        double price = 100.0;
+        double totalPrice = 150.0;
+        int foundationId = 1;
+        int roofId = 2;
+        int cusQuoId = 3;
+        String note = "This is a test note 1.";
+
+        // Thực hiện gọi phương thức createCusQuoVersion
+        boolean result = dao.createCusQuoVersion(price, totalPrice, foundationId, roofId, cusQuoId, note);
+
+        // Kiểm tra kết quả
+        if (result) {
+            System.out.println("Customer Quotation Version created successfully.");
+        } else {
+            System.out.println("Failed to create Customer Quotation Version.");
         }
     }
+
 }

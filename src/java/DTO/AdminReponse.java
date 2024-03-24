@@ -9,9 +9,9 @@ import java.time.LocalDateTime;
 
 /**
  *
- * @author ACER
+ * @author PC
  */
-public class CustomerRequest {
+public class AdminReponse {
     private int versionid;
     private String customer;
     private String quotationname;
@@ -22,8 +22,23 @@ public class CustomerRequest {
     private int cusQuoId;
     private int quotationId;
     private boolean adminReponse;
+    private boolean confirmStatus;
 
-    public CustomerRequest() {
+    public AdminReponse() {
+    }
+
+    public AdminReponse(int versionid, String customer, String quotationname, String phone, double price, double totalPrice, LocalDateTime time, int cusQuoId, int quotationId, boolean adminReponse, boolean confirmStatus) {
+        this.versionid = versionid;
+        this.customer = customer;
+        this.quotationname = quotationname;
+        this.phone = phone;
+        this.price = price;
+        this.totalPrice = totalPrice;
+        this.time = time;
+        this.cusQuoId = cusQuoId;
+        this.quotationId = quotationId;
+        this.adminReponse = adminReponse;
+        this.confirmStatus = confirmStatus;
     }
 
     public int getVersionid() {
@@ -106,17 +121,12 @@ public class CustomerRequest {
         this.adminReponse = adminReponse;
     }
 
-    
-
-    
-    @Override
-    public String toString() {
-        return "CustomerRequest{" + "versionid=" + versionid + ", customer=" + customer + ", quotationname=" + quotationname + ", phone=" + phone + ", price=" + price + ", time=" + time + ", cusQuoId=" + cusQuoId + ", quotationId=" + quotationId + '}';
+    public boolean isConfirmStatus() {
+        return confirmStatus;
     }
 
-    
-
-    
-    
+    public void setConfirmStatus(boolean confirmStatus) {
+        this.confirmStatus = confirmStatus;
+    }
     
 }

@@ -78,10 +78,12 @@ public class saveadminquotation extends HttpServlet {
                 }
             }
             }
-            
-
-            if (createAdminHouseComponent && createAdminQuoVersion) {
+            QuotationDAO dao6 = new QuotationDAO();
+            boolean sentStatus = dao6.changeAdminReponseStatus(1, versionId);
+            if (createAdminHouseComponent && createAdminQuoVersion && sentStatus) {
                 out.println("<h1 style=\"color: red;\">Gửi báo giá cho khách hàng thành công</h1>");
+                
+                
             } else {
                 out.println("<h1 style=\"color: red;\">Gửi báo giá cho khách hàng thất bại!</h1>");
             }
