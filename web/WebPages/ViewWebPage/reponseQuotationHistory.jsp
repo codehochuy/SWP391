@@ -155,8 +155,9 @@
                                 <th>Phiên bản</th>
                                 <th>Ngày</th>
                                 <th>Giá</th>
-                                <th>Trạng thái</th>
                                 <th>Ghi chú</th>
+                                <th>Thời gian hiệu lực</th>
+                                <th>Trạng thái</th>
                                 <th>Chức năng</th>
                             </tr>
                         </thead>
@@ -171,8 +172,9 @@
                                                 <fmt:formatNumber value="${qv.totalPrice}" pattern="#,###.##"/>
                                                 VNĐ
                                             </td>
-                                            <td class="confirm-status">${qv.confirmStatus ? 'Đã xác nhận báo giá' : 'Chưa xác nhận báo giá'}</td>
-                                            <td>${qv.note}</td>                                            
+                                            <td class="note">${qv.note}</td> 
+                                            <td class="date">${qv.date}</td>
+                                            <td class="confirm-status">${qv.confirmStatus ? 'Đã xác nhận báo giá' : 'Chưa xác nhận báo giá'}</td> 
                                             <td style="display: flex; justify-content: space-left">
 
                                                 <form action="ShowReponseQuotationVersionDetail" method="post">
@@ -240,16 +242,45 @@
             document.addEventListener("DOMContentLoaded", function () {
                 // Lấy tất cả các phần tử có lớp 'confirm-status'
                 var confirmStatusElements = document.querySelectorAll('.confirm-status');
+                var dateElements = document.querySelectorAll('.date'); // Thêm class 'date' vào phần tử hiển thị thời gian
 
                 // Lặp qua từng phần tử để áp dụng các hiệu ứng màu sắc tương ứng
-                confirmStatusElements.forEach(function (element) {
+                confirmStatusElements.forEach(function (element, index) {
                     // Nếu có trạng thái đã xác nhận, thêm lớp 'confirmed'
                     if (element.textContent.trim() === 'Đã xác nhận báo giá') {
                         element.classList.add('confirmed');
                     }
+
+                    // Tính thời gian hiệu lực còn lại và hiển thị nó
+                    var date = new Date(dateElements[index].textContent); // Lấy ngày từ phần tử 'date'
+                    var expirationDate = new Date(date.getTime() + (7 * 24 * 60 * 60 * 1000)); // Tính thời gian hiệu lực còn lại (7 ngày)
+
+                    // Hiển thị thời gian hiệu lực còn lại dưới ghi chú
+                    var remainingTime = expirationDate - Date.now(); // Tính thời gian còn lại tính bằng mili giây
+                    var remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24)); // Chuyển đổi thành số ngày
+                    var remainingHours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Chuyển đổi thành số giờ
+
+                    // Định dạng lại chuỗi thời gian còn lại
+                    var remainingTimeString = remainingDays + " ngày " + remainingHours + " giờ";
+
+                    dateElements[index].textContent = "Hiệu lực còn lại: " + remainingTimeString;
                 });
             });
-
         </script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var noteElements = document.querySelectorAll('.note'); // Lấy tất cả các phần tử có lớp 'note'
+
+                // Lặp qua từng phần tử để cắt và hiển thị tối đa 250 ký tự
+                noteElements.forEach(function (element) {
+                    var note = element.textContent;
+                    if (note.length > 100) {
+                        element.textContent = note.slice(0, 100) + '...'; // Cắt chuỗi và thêm dấu ba chấm
+                    }
+                });
+            });
+        </script>
+
     </body>
 </html>

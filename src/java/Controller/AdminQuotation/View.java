@@ -61,7 +61,8 @@ public class View extends HttpServlet {
             int foundation = cusQuoVersion.getFoundationId();
             int roof = cusQuoVersion.getRoofId();
             int packagePrice = 0;
-            Double price = cusQuoVersion.getPrice();
+            QuotationDAO dao6 = new QuotationDAO();
+            double price = dao6.getCusQuoVersionPriceByVersionId(versionId);
             String note = cusQuoVersion.getNote();
             QuotationDAO dao3 = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao3.getHouseComponent(selectedHouseType);

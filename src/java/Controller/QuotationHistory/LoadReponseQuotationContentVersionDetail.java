@@ -198,7 +198,7 @@ public class LoadReponseQuotationContentVersionDetail extends HttpServlet {
             out.println("<input type=\"hidden\" name=\"price\" value=\"" + price + "\">");
             out.println("<input type=\"hidden\" name=\"totalPrice\" value=\"" + totalPrice + "\">");
             out.println("<input type=\"hidden\" name=\"versionId\" value=\"" + versionId + "\">");
-            out.println("<input type=\"hidden\" name=\"cusQuoId\" value=\"" + cusQuoId + "\">");
+            out.println("<input type=\"hidden\" name=\"adminQuoVersionId\" value=\"" + adminQuoVersionId + "\">");
             out.println("<input type=\"hidden\" name=\"cusQuoName\" value=\"" + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + "\">");
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 out.println("<input type=\"hidden\" name=\"" + listHouseComponent.get(i).getComponentId() + "\" value=\"" + request.getParameter(listHouseComponent.get(i).getComponentId() + "") + "\">");
@@ -213,7 +213,7 @@ public class LoadReponseQuotationContentVersionDetail extends HttpServlet {
                     + "                        </div>");
             } else {
                 if (diffInDays > 7) {
-                out.println("<h5>Báo giá đã hết hạn vui lòng tạo báo giá mới!</h5>");
+                out.println("<h5 style=\"color: red;\">Báo giá đã hết hạn vui lòng tạo báo giá mới!</h5>");
             } else {
                 out.println("<div class=\"contact-form\">\n"
                     + "                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"changeQuotationContent\">Thay đổi báo giá</button>\n"

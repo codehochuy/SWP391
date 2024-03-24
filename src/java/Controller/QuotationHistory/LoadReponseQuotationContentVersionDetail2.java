@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.AdminQuotation;
+package Controller.QuotationHistory;
 
 import DAO.QuotationDAO;
+import DTO.AdminQuoVersion;
 import DTO.HouseComponent;
 import DTO.RoofNFoundation2;
 import java.io.IOException;
@@ -20,14 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ACER
+ * @author PC
  */
-@WebServlet(name = "LoadAdminQuotaionDetail", urlPatterns = {"/LoadAdminQuotaionDetail"})
-public class LoadAdminQuotaionDetail extends HttpServlet {
+@WebServlet(name = "LoadReponseQuotationContentVersionDetail2", urlPatterns = {"/LoadReponseQuotationContentVersionDetail2"})
+public class LoadReponseQuotationContentVersionDetail2 extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -38,14 +38,22 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             int selectedHouseType = Integer.parseInt(request.getParameter("houseType"));
             int selectedService = Integer.parseInt(request.getParameter("service"));
             int selectedStyle = Integer.parseInt(request.getParameter("style"));
             int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
             int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
-            String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
+            
             int versionId = (request.getParameter("versionId") != null && !request.getParameter("versionId").isEmpty()) ? Integer.parseInt(request.getParameter("versionId")) : 0;
+            int adminQuoVersionId = (request.getParameter("adminQuoVersionId") != null && !request.getParameter("adminQuoVersionId").isEmpty()) ? Integer.parseInt(request.getParameter("adminQuoVersionId")) : 0;
+            QuotationDAO dao1 = new QuotationDAO();
+            AdminQuoVersion adminQuoVersion = dao1.getAdminQuoVersionById(adminQuoVersionId);
+            
+            String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
+            QuotationDAO dao2 = new QuotationDAO();
+            int cusQuoId = dao2.getCusQuoIdByVersionId(versionId);
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
 
@@ -59,7 +67,7 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             double floor = (request.getParameter("5") != null && !request.getParameter("5").isEmpty()) ? Double.parseDouble(request.getParameter("5")) : 0;
             double balcony = (request.getParameter("6") != null && !request.getParameter("6").isEmpty()) ? Double.parseDouble(request.getParameter("6")) : 0;
 
-            double price = (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) ? Double.parseDouble(request.getParameter("price")) : 0;
+            double price = adminQuoVersion.getPrice();
             double S = length * width;
             double s = (length - frontYard - backYard) * width;
             double totalArea = 0;
@@ -82,8 +90,8 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             double sFoundation = 0;
             double sRoof = 0;
             //print out result
-            out.println("<p>Kết quả tính diện tích và chi phí xây nhà</p>");
-            out.println("<p>Bạn cần " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + " với diện tích là " + width + "m x " + length + "m:</p>");
+            out.println("<h5>Kết quả tính diện tích và chi phí xây nhà</h5>");
+            out.println("<h6>Bạn cần " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + " với diện tích là " + width + "m x " + length + "m:</h6>");
             DecimalFormat decimalFormat2 = new DecimalFormat("#.##");
             String formatteds = decimalFormat2.format(s);
             out.println("<p>Diện tích tầng trệt: " + s + "m2 x 100% = " + formatteds + "m2</p>");
@@ -161,15 +169,15 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             if (selectedService == 2 && packagePrice != 0) {
 
                 if (packagePrice == 1) {
-                    out.println("<p>Gói xây dựng Tiết kiệm: " + formattedPrice + " VNĐ/m2</p>");
+                    out.println("<h6>Gói xây dựng Tiết kiệm: " + formattedPrice + " VNĐ/m2</h6>");
                     out.println("<input type=\"hidden\" name=\"packagePrice\" value=\"" + packagePrice + "\">");
                 } else {
-                    out.println("<p>Gói xây dựng VIP: " + formattedPrice + " VNĐ/m2</p>");
+                    out.println("<h6>Gói xây dựng VIP: " + formattedPrice + " VNĐ/m2</h6>");
                     out.println("<input type=\"hidden\" name=\"packagePrice\" value=\"" + packagePrice + "\">");
                 }
 
             } else {
-                out.println("<p>Đơn giá " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + ": " + formattedPrice + " VNĐ/m2</p>");
+                out.println("<h6>Đơn giá " + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + ": " + formattedPrice + " VNĐ/m2</h6>");
             }
 
             double totalPrice = totalArea * price;
@@ -177,25 +185,31 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             String formattedTotalPrice = decimalFormat.format(totalPrice);
             DecimalFormat decimalFormat3 = new DecimalFormat("#.##");
             String formattedTotalArea = decimalFormat3.format(totalArea);
-            out.println("<p>Tổng diện tích xây dựng: " + formattedTotalArea + "m2</p>");
-            out.println("<p style=\"color: red;\">Tổng chi phí xây dựng: " + formattedTotalPrice + "VNĐ</p>");
-            if (note != "") {
-                out.println("<p class=\"text-note\">Ghi chú: " + note + "</p>");
+            out.println("<h5>Tổng diện tích xây dựng: " + formattedTotalArea + "m2</h5>");
+            out.println("<h5 style=\"color: red;\">Tổng chi phí xây dựng: " + formattedTotalPrice + "VNĐ</h5>");
+            if (note != ""){
+                out.println("<h5 class=\"text-note\">Ghi chú: " + note + "</h5>");
             }
-            out.println("<input type=\"hidden\" name=\"versionId\" value=\"" + versionId + "\">");
-            out.println("<input type=\"hidden\" name=\"note\" value=\"" + note + "\">");
+            out.println("<input type=\"hidden\" name=\"note\" value=\""+ note + "\">");
             out.println("<input type=\"hidden\" name=\"houseType\" value=\"" + selectedHouseType + "\">");
             out.println("<input type=\"hidden\" name=\"service\" value=\"" + selectedService + "\">");
             out.println("<input type=\"hidden\" name=\"style\" value=\"" + selectedStyle + "\">");
             out.println("<input type=\"hidden\" name=\"price\" value=\"" + price + "\">");
+            out.println("<input type=\"hidden\" name=\"totalPrice\" value=\""+totalPrice+"\">");
             out.println("<input type=\"hidden\" name=\"cusQuoName\" value=\"" + quotation.getService().getName() + " " + quotation.getHouseType().getName() + " " + quotation.getStyle().getName() + "\">");
+            out.println("<input type=\"hidden\" id=\"cusQuoId\" name=\"cusQuoId\" value=\"" + cusQuoId + "\"/>");
+            out.println("<input type=\"hidden\" id=\"versionId\" name=\"versionId\" value=\"" + versionId + "\"/>");
+            out.println("<input type=\"hidden\" id=\"adminQuoVersionId\" name=\"adminQuoVersionId\" value=\"" + adminQuoVersionId + "\"/>");
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 out.println("<input type=\"hidden\" name=\"" + listHouseComponent.get(i).getComponentId() + "\" value=\"" + request.getParameter(listHouseComponent.get(i).getComponentId() + "") + "\">");
             }
-            out.println("<div class=\"contact-form\">\n"
-                    + "                            <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\"  onclick=\"loadFormChangeQuotationDetail()\">Thay đổi báo giá</button>\n"
-                    + "                        </div>");
-
+            out.println("<div class=\"contact-form\">\n" +
+"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"saveQuotationContent\">Lưu báo giá mới</button>\n" +
+"                        </div>");
+            out.println("<div class=\"contact-form\">\n" +
+"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"saveAndSendRequestQuotation\">Lưu và Gửi yêu cầu báo giá mới</button>\n" +
+"                        </div>");
+            
         }
     }
 

@@ -1063,6 +1063,47 @@ public class QuotationDAO {
             return -1;
         }
     }
+    
+    public double getCusQuoVersionPriceByVersionId(int versionId) {
+        String sql = "SELECT * FROM CusQuoVersion cqv join CustomerQuotation cq on cq.CusQuoID = cqv.CusQuoID\n"
+                + "where cqv.VersionID = ?";
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, versionId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int quotationId = rs.getInt("Price");
+                return quotationId;
+            } else {
+                // Trường hợp không có kết quả
+                return 0;
+            }
+        } catch (SQLException e) {
+            // Ghi log hoặc xử lý ngoại lệ theo cách cần thiết
+            e.printStackTrace();
+            return -1;
+        }
+    }
+    
+    public int getCusQuoIdByVersionId(int versionId) {
+        String sql = "SELECT * FROM CusQuoVersion where VersionID =?";
+        try (Connection conn = db.getConn();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, versionId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int cusQuoId = rs.getInt("CusQuoID");
+                return cusQuoId;
+            } else {
+                // Trường hợp không có kết quả
+                return 0;
+            }
+        } catch (SQLException e) {
+            // Ghi log hoặc xử lý ngoại lệ theo cách cần thiết
+            e.printStackTrace();
+            return -1;
+        }
+    }
 
 
     public List<AdminHouseComponent> getListAdminHouseComponentByAdminQuoVersionID(int adminQuoVersionId) {

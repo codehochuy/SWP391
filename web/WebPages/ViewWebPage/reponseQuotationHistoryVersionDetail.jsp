@@ -94,6 +94,7 @@
                                             <c:forEach items="${requestScope.listAdminHouseComponent}" var="chc" varStatus="loop">
                                                 <input type="hidden" name="${chc.componentId}" value="${chc.value}"/>
                                             </c:forEach>
+                                                
                                             <input type="hidden" id="versionId" name="versionId" value="${versionId}"/> 
                                             <input type="hidden" id="adminQuoVersionId" name="adminQuoVersionId" value="${adminQuoVersionId}"/>
                                             <input type="hidden" id="service" name="service" value="${selectedService}"/>    
@@ -113,7 +114,7 @@
                     </div>
                 </div>
             </div>
-            <div class="contact wow fadeInUp container">
+            <div class="contact  container">
                 <form action="SaveQuotationContent" id="quotationContent2" method="post" name="sentMessage" novalidate="novalidate">
 
                 </form>
@@ -208,20 +209,19 @@
                 // Xác định hành động dựa trên giá trị của nút được nhấn
                 switch (action) {
                     case "changeQuotationContent":
-                        alert("hi")
                         // Xử lý chức năng 1
-//                        $.ajax({// Sửa thành $.ajax thay vì $ajax
-//                            url: "/SWP391/LoadFormChangeQuotationDetail",
-//                            type: "get",
-//                            data: formData,
-//                            success: function (data) {
-//                                var formFill = document.getElementById("formFill2");
-//                                formFill.innerHTML = data;
-//                            },
-//                            error: function (xhr) {
-//                                // Xử lý lỗi nếu cần
-//                            }
-//                        });
+                        $.ajax({// Sửa thành $.ajax thay vì $ajax
+                            url: "/SWP391/LoadFormChangeReponseQuotationDetail",
+                            type: "get",
+                            data: formData,
+                            success: function (data) {
+                                var formFill = document.getElementById("formFill2");
+                                formFill.innerHTML = data;
+                            },
+                            error: function (xhr) {
+                                // Xử lý lỗi nếu cần
+                            }
+                        });
                         break;
                     case "sendRequestQuotation":
                         $.ajax({
@@ -259,7 +259,7 @@
 
                     // Gửi dữ liệu đến servlet bằng AJAX
                     $.ajax({
-                        url: 'LoadQuotationContentVersionDetail2',
+                        url: 'LoadReponseQuotationContentVersionDetail2',
                         type: 'get',
                         data: formData,
                         success: function (data) {
@@ -273,35 +273,6 @@
                 });
             });
         </script>
-
-<!--        <script>
-            $(document).ready(function () {
-                $('#quotationContent2').submit(function (event) {
-                    event.preventDefault();
-
-
-
-                    var formData = {};
-                    $("#quotationContent2").find("input").each(function () {
-                        formData[$(this).attr("name")] = $(this).val();
-                    });
-
-                    // Gửi dữ liệu đến servlet bằng AJAX
-                    $.ajax({
-                        url: '/SWP391/NewVersionQuotationContent',
-                        type: 'get',
-                        data: formData,
-                        success: function (data) {
-                            var quotationContent = document.getElementById("quotationContent2");
-                            quotationContent.innerHTML += data;
-                        },
-                        error: function (xhr) {
-                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
-                        }
-                    });
-                });
-            });
-        </script>-->
 
         <script>
             document.getElementById("quotationContent2").addEventListener("submit", function (event) {
@@ -320,7 +291,7 @@
                     case "saveQuotationContent":
                         // Xử lý chức năng 1
                         $.ajax({
-                            url: '/SWP391/NewVersionQuotationContent',
+                            url: '/SWP391/NewReponseVersionQuotationContent',
                             type: 'get',
                             data: formData,
                             success: function (data) {
@@ -334,7 +305,7 @@
                         break;
                     case "saveAndSendRequestQuotation":
                         $.ajax({
-                            url: 'NewVersionQuotationContent',
+                            url: 'NewReponseVersionQuotationContent',
                             type: 'post',
                             data: formData,
                             success: function (data) {
