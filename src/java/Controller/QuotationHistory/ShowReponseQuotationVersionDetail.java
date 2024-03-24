@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controller.AdminQuotation;
+package Controller.QuotationHistory;
 
 import DAO.QuotationDAO;
+import DTO.AdminHouseComponent;
 import DTO.CustomerHouseComponent;
 import DTO.HouseComponent;
 import DTO.Quotation;
-import DTO.QuotationVersion;
+import DTO.AdminQuoVersion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -21,14 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author ACER
+ * @author PC
  */
-@WebServlet(name = "View", urlPatterns = {"/View"})
-public class View extends HttpServlet {
+@WebServlet(name = "ShowReponseQuotationVersionDetail", urlPatterns = {"/ShowReponseQuotationVersionDetail"})
+public class ShowReponseQuotationVersionDetail extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -39,18 +39,16 @@ public class View extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            request.setCharacterEncoding("UTF-8");
-            int cusQuoId = Integer.parseInt(request.getParameter("cusQuoId"));
+            /* TODO output your page here. You may use following sample code. */
             int versionId = Integer.parseInt(request.getParameter("versionId"));
-            int quotationId = Integer.parseInt(request.getParameter("quotationId"));
-            String customer = request.getParameter("customer");
-            String quotationname = request.getParameter("quotationname");
-            String phoneNumber = request.getParameter("phoneNumber");
-           
+            int adminQuoVersionId = Integer.parseInt(request.getParameter("adminQuoVersionId"));
+            QuotationDAO dao4 = new QuotationDAO();
+            int quotationId = dao4.getQuotationIdByVersionId(versionId);
+            
             QuotationDAO dao = new QuotationDAO();
-            List<CustomerHouseComponent> listCustomerHouseComponent = dao.getListCustomerHouseComponentByVersionId(versionId);
+            List<AdminHouseComponent> listAdminHouseComponent = dao.getListAdminHouseComponentByAdminQuoVersionID(adminQuoVersionId);
             QuotationDAO dao1 = new QuotationDAO();
-            QuotationVersion cusQuoVersion = dao1.getCusQuoVersionById(versionId);
+            AdminQuoVersion adminQuoVersion = dao1.getAdminQuoVersionById(adminQuoVersionId);
             QuotationDAO dao2 = new QuotationDAO();
             Quotation quotation1 = dao2.getQuotationID(quotationId + "");
 
@@ -58,32 +56,25 @@ public class View extends HttpServlet {
             int selectedHouseType = quotation1.getHouseType().getId();
             int selectedService = quotation1.getService().getId();
             int selectedStyle = quotation1.getStyle().getId();
-            int foundation = cusQuoVersion.getFoundationId();
-            int roof = cusQuoVersion.getRoofId();
+            int foundation = adminQuoVersion.getFoundationId();
+            int roof = adminQuoVersion.getRoofId();
             int packagePrice = 0;
-            Double price = cusQuoVersion.getPrice();
-            String note = cusQuoVersion.getNote();
+            String note = adminQuoVersion.getNote();
             QuotationDAO dao3 = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao3.getHouseComponent(selectedHouseType);
 
             QuotationDAO quotationDao = new QuotationDAO();
             Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
-            if (selectedService == 2 && quotation.getPrice1() == cusQuoVersion.getPrice()) {
+            if (selectedService == 2 && quotation.getPrice1() == adminQuoVersion.getPrice()) {
                 packagePrice = 1;
-            } else if(selectedService == 2 && quotation.getPrice2() == cusQuoVersion.getPrice()){
+            } else if(selectedService == 2 && quotation.getPrice2() == adminQuoVersion.getPrice()){
                 packagePrice = 2;
             }
             
-            
-            request.setAttribute("customer", customer);
-            request.setAttribute("quotationname", quotationname);
-            request.setAttribute("phoneNumber", phoneNumber);
-            request.setAttribute("price", price);
             request.setAttribute("versionId", versionId);
-            request.setAttribute("listCustomerHouseComponent", listCustomerHouseComponent);
+            request.setAttribute("listAdminHouseComponent", listAdminHouseComponent);
             request.setAttribute("listHouseComponent", listHouseComponent);
-            request.setAttribute("cusQuoVersion", cusQuoVersion);
-            request.setAttribute("cusQuoId", cusQuoId);
+            request.setAttribute("adminQuoVersionId", adminQuoVersionId);
             request.setAttribute("selectedHouseType", selectedHouseType);
             request.setAttribute("selectedService", selectedService);
             request.setAttribute("selectedStyle", selectedStyle);
@@ -91,7 +82,7 @@ public class View extends HttpServlet {
             request.setAttribute("roof", roof);
             request.setAttribute("packagePrice", packagePrice);
             request.setAttribute("note", note);
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ViewRequest.jsp").forward(request, response);
+            request.getRequestDispatcher("WebPages/ViewWebPage/reponseQuotationHistoryVersionDetail.jsp").forward(request, response);
         }
     }
 

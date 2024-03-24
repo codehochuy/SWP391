@@ -127,7 +127,8 @@
                                 </a>
                                 <div class="dropdown-menu">
                                     <a href="Profile" class="dropdown-item">Hồ sơ</a>
-                                    <a href="QuotationHistory" class="dropdown-item">Lịch sử báo giá</a>
+                                    <a href="QuotationHistory" class="dropdown-item">Yêu cầu báo giá</a>
+                                    <a href="ReponseQuotationHistory" class="dropdown-item">Phản hồi báo giá</a>
                                     <a href="Logout" class="dropdown-item">Đăng xuất</a>
                                 </div>
                             </div>

@@ -27,7 +27,17 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+        <style>
+            .note textarea{
+                padding: 10px;
+                margin: 10px 0;
 
+            }
+            .text-note {
+                font-style: italic; 
+                opacity: 0.6;
+            }
+        </style>
 
     </head>
 
@@ -54,22 +64,22 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">Tên khách hàng</label>
-                                            <input class="form-control" type="text" name="projectname" value="${customer}">
+                                            <input readonly="" class="form-control" type="text" name="projectname" value="${customer}">
                                             <div class="error-message" id="tensp-error"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="control-label">Tên báo giá</label>
-                                            <input class="form-control" type="text" name="date" value="${quotationname}" max="">
+                                            <label class="control-label">Số điện thoại</label>
+                                            <input readonly="" class="form-control" type="text" name="date" value="${phoneNumber}" max="">
                                             <div class="error-message" id="price-error"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label class="control-label">Giá</label>
-                                            <input class="form-control" type="number" min="0" name="time" value="${price}">
-                                            <div class="error-message" id="quantity-error"></div>
+                                            <label class="control-label">Tên báo giá</label>
+                                            <input readonly="" class="form-control" type="text" name="date" value="${quotationname}" max="">
+                                            <div class="error-message" id="price-error"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -86,17 +96,16 @@
                                                             <input type="hidden" id="packagePrice" name="packagePrice" value="${packagePrice}"/>
                                                             <input type="hidden" id="foundation" name="foundation" value="${foundation}"/>
                                                             <input type="hidden" id="roof" name="roof" value="${roof}"/>
-
+                                                            <input type="hidden" id="price" name="price" value="${price}"/>    
                                                             <c:forEach items="${requestScope.listCustomerHouseComponent}" var="chc" varStatus="loop">
                                                                 <input type="hidden" name="${chc.componentId}" value="${chc.value}"/>
                                                             </c:forEach>
+                                                            <input type="hidden" id="versionId" name="versionId" value="${versionId}"/>     
                                                             <input type="hidden" id="service" name="service" value="${selectedService}"/>    
                                                             <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
                                                             <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
                                                             <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cusQuoId}"/>
-                                                            <input type="hidden" id="note" name="note" value=""/>
-                                                            <input type="hidden" id="note" name="price" value="${price}"/>
-                                                            <input type="hidden" id="note" name="price2" value="${price2}"/>
+                                                            <input type="hidden" id="note" name="note" value="${note}"/>
                                                         </form>
                                                         <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill2" novalidate="novalidate">
 

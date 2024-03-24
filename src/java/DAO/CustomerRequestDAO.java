@@ -49,6 +49,7 @@ public class CustomerRequestDAO {
                 + "    cq.CusQuoName,\n"
                 + "    u.Phone,\n"
                 + "    cv.Price,\n"
+                + "    cv.TotalPrice,\n"
                 + "    cv.[Date],\n"
                 + "	cv.VersionID,\n"
                 + "	cv.CusQuoID,\n"
@@ -74,6 +75,7 @@ public class CustomerRequestDAO {
                 p.setPhone(rs.getString("Phone"));
                 p.setQuotationname(rs.getString("CusQuoName"));
                 p.setPrice(rs.getDouble("Price"));
+                p.setTotalPrice(rs.getDouble("TotalPrice"));
                 p.setTime(rs.getTimestamp("Date").toLocalDateTime());
                 p.setCusQuoId(rs.getInt("CusQuoID"));
                 p.setQuotationId(rs.getInt("QuotationID"));

@@ -1,5 +1,5 @@
 
-
+<%@ page import="java.text.DecimalFormat" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -75,7 +75,8 @@
                                             <td>${user.customer}</td>                              
                                             <td>${user.quotationname}</td>
                                             <td>${user.phone}</td>
-                                            <td>${user.price}</td>
+                                            <td><fmt:formatNumber value="${user.totalPrice}" pattern="#,###.##"/>
+                                                VNĐ</td>
                                             <td>${user.time}</td>
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="View" method="post">
@@ -84,7 +85,7 @@
                                                     <input type="hidden" name="quotationId" value="${user.quotationId}">
                                                     <input type="hidden" name="customer" value="${user.customer}">
                                                     <input type="hidden" name="quotationname" value="${user.quotationname}">
-                                                    <input type="hidden" name="price" value="${user.price}">
+                                                    <input type="hidden" name="phoneNumber" value="${user.phone}">
                                                     <button class="btn btn-primary btn-sm trash" type="submit" title="Xem chi tiết">
                                                         <i class="fas fa-eye"></i>
                                                     </button>

@@ -25,8 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoadFormChangeAdminQuotationDetail extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
@@ -41,7 +40,6 @@ public class LoadFormChangeAdminQuotationDetail extends HttpServlet {
             int selectedService = Integer.parseInt(request.getParameter("service"));
             int selectedStyle = Integer.parseInt(request.getParameter("style"));
             int cusQuoId = Integer.parseInt(request.getParameter("cusQuoId"));
-            double price1 = Double.parseDouble(request.getParameter("price"));
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
             QuotationDAO dao1 = new QuotationDAO();
@@ -50,13 +48,13 @@ public class LoadFormChangeAdminQuotationDetail extends HttpServlet {
             List<RoofNFoundation2> listRoof = dao2.getRoof();
             QuotationDAO quotationDao = new QuotationDAO();
             DTO.Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
-            
 
             int roofId = (request.getParameter("roof") != null && !request.getParameter("roof").isEmpty()) ? Integer.parseInt(request.getParameter("roof")) : 0;
             int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
+            double price = (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) ? Double.parseDouble(request.getParameter("price")) : 0.0;
             String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
-
+            int versionId = (request.getParameter("versionId") != null && !request.getParameter("versionId").isEmpty()) ? Integer.parseInt(request.getParameter("versionId")) : 0;
             if (selectedService == 2) {
                 out.println("<div class=\"control-group\">\n"
                         + "    <h5>Chọn gói xây dựng</h5>\n"
@@ -67,11 +65,6 @@ public class LoadFormChangeAdminQuotationDetail extends HttpServlet {
                         + "    <p class=\"help-block text-danger\"></p>\n"
                         + "</div>");
             }
-            out.println("<div class=\"control-group\">\n"
-                    + "    <h5>Giá thi công/m&#178;</h5>\n"
-                    + "    <input type=\"number\" name=\"price\" value=\"" + price1 + "\">\n"
-                    + "</div>");
-
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 HouseComponent houseComponent = listHouseComponent.get(i);
                 double value = (request.getParameter(houseComponent.getComponentId() + "") != null && !request.getParameter(houseComponent.getComponentId() + "").isEmpty()) ? Double.parseDouble(request.getParameter(houseComponent.getComponentId() + "")) : 0;
@@ -137,20 +130,32 @@ public class LoadFormChangeAdminQuotationDetail extends HttpServlet {
                 }
                 out.println("    <option value=\"" + r.getRoofNFoundationId() + "\"" + selected + ">" + r.getRoofNFoundationName() + "</option>\n");
             }
-
+            
             out.println("    </select>\n"
                     + "    <p class=\"help-block text-danger\"></p>\n"
                     + "</div>");
+            
+            out.println("<div class=\"control-group\">\n"
+                            + "                                        <h5>Nhập đơn giá/m2</h5>\n"
+                            + "                                        <input type=\"text\" oninput=\"this.value = this.value.replace(/[^\\d.]/g, '').replace(/(\\..*)\\./g, '$1');\" class=\"form-control\" name=\"price\" id=\"price\" placeholder=\"Nhập đơn giá xây dựng /m2\"\n"
+                            + "                                                 value=\"" + price + "\"\n"
+                            + "                                               required=\"required\"\n"
+                            + "                                               data-validation-required-message=\"Vui lòng nhập đơn giá xây dựng\" />\n"
+                            + "                                        <p class=\"help-block text-danger\"></p>\n"
+//                            + "<span id=\"error_" + houseComponent.getComponentId() + "\" class=\"error\"></span>"
+                            + "                                    </div>");
+            
             out.println("<div class=\"control-group note\">\n"
                     + "    <h5>Ghi chú</h5>\n"
-                    + "    <textarea class=\"form-control ghi-chu\" id=\"note\" name=\"note\" placeholder=\"Nội dung ghi chú\">" + note + "</textarea>\n"
+                    + "    <textarea class=\"form-control ghi-chu\" id=\"note\" name=\"note\" placeholder=\"Nội dung ghi chú\"></textarea>\n"
                     + "</div>");
-
+            
+            
+            out.println("<input type=\"hidden\" name=\"versionId\" value=\"" + versionId + "\">");
             out.println("<input type=\"hidden\" id=\"service\" name=\"service\" value=\"" + selectedService + "\"/>");
             out.println("<input type=\"hidden\" id=\"houseType\" name=\"houseType\" value=\"" + selectedHouseType + "\"/>");
             out.println("<input type=\"hidden\" id=\"style\" name=\"style\" value=\"" + selectedStyle + "\"/>");
-            out.println("<input type=\"hidden\" id=\"style\" name=\"cusQuoId\" value=\"" + cusQuoId + "\"/>");
-            out.println("<input type=\"hidden\" id=\"style\" name=\"price2\" value=\"" + price1 + "\"/>");
+            out.println("<input type=\"hidden\" id=\"cusQuoId\" name=\"cusQuoId\" value=\"" + cusQuoId + "\"/>");
 
             out.println("<div>\n"
                     + "                                        <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\" onclick=\"loadQuotationContentVersionDetail2()\">Nhận Báo Giá</button>\n"
