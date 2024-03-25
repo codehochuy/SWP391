@@ -59,12 +59,12 @@
                                     <input class="form-control" type="text" name="unit" value="${list.unit}" required>
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
+
+
+
+
+
+
                                 <div class="form-group col-md-4">
                                     <label for="exampleSelect2" class="control-label">Kiểu thi công</label>
                                     <select class="form-control" id="exampleSelect2" name="type">
@@ -81,11 +81,11 @@
                                         </c:choose>
                                     </select>
                                 </div>
-                                    
-                                    
-                                    
-                                    
-                                    
+
+
+
+
+
                                 <div class="form-group col-md-4">
                                     <label for="exampleSelect2" class="control-label">Loại vật liệu</label>
                                     <select class="form-control" id="exampleSelect2" name="category">
@@ -99,9 +99,9 @@
                                     </select>
                                 </div>
 
-                                    
-                                    
-                                    
+
+
+
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Ảnh</label>
                                     <div class="image-gallery">
@@ -121,11 +121,11 @@
             </div>
         </main>
 
-                                
-                                
-                                
-                                
-                                
+
+
+
+
+
         <script src="./js/jquery-3.2.1.min.js"></script>
         <script src="./js/popper.min.js"></script>
         <script src="./js/bootstrap.min.js"></script>
@@ -197,10 +197,10 @@
                 return (!isNaN(parseInt(key)) || key === "Backspace") && key !== " " && key !== "e" && key !== ".";
             }
         </script>
-        
-        
-        
-        
+
+
+
+
         <script>
             document.getElementById("price").addEventListener("input", function (event) {
                 var value = this.value;

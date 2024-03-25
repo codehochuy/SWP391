@@ -191,7 +191,7 @@
                                             <c:forEach items="${requestScope.mat}" var="i">
                                                 <tr>
                                                     <td>${i.name}</td>
-                                                    <td><fmt:formatNumber value="${i.price}" pattern="###,###,###"/>đ</td>
+                                                    <td><fmt:formatNumber value="${i.price}" pattern="###,###,###"/>đ/${i.unit}</td>
                                                     <td>${i.category}</td>
                                                     <td><img src="img/${i.link}" alt="${i.name}" width="100" height="100"></td>
                                                 </tr>
