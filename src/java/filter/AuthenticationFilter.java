@@ -36,24 +36,13 @@ public class AuthenticationFilter implements Filter {
                 && !uri.endsWith("Service")
                 && !uri.endsWith("Team")
                 && !uri.endsWith("ListProject")
-                && !uri.endsWith("Blog")
+                && uri.equals("Blog")
                 && !uri.endsWith("FullContructionPrice")
                 && !uri.endsWith("RawContructionPrice")
                 && !uri.endsWith("Contact")
                 && !uri.endsWith("Quotation")
                 && !uri.endsWith("LoadFormFill")
                 && !uri.endsWith("LoadQuotationContent")
-//blog
-                && !uri.endsWith("CreateBlog")
-                && !uri.endsWith("CreateBlogCategory")
-                && !uri.endsWith("DeleteBlog")
-                && !uri.endsWith("DeleteBlogCategory")
-                && !uri.endsWith("ManagerBlog")
-                && !uri.endsWith("ManagerBlogCategory")
-                && !uri.endsWith("UpdateBlog")
-                && !uri.endsWith("UpdateBlogCategory")
-                && !uri.endsWith("ViewBlogDetail")
-                && !uri.endsWith("loadbyID")
             ) {
             this.context.log("Unauthorized access request");
             res.sendRedirect("Login.jsp");
