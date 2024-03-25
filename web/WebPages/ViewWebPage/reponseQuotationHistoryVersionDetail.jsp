@@ -254,8 +254,10 @@
                     // Reset error messages
                     error_1.textContent = '';
                     error_2.textContent = '';
-                    error_3.textContent = '';
-                    error_4.textContent = '';
+                    if (error_3)
+                        error_3.textContent = '';
+                    if (error_4)
+                        error_4.textContent = '';
                     if (error_5)
                         error_5.textContent = '';
                     if (error_6)
@@ -265,8 +267,23 @@
 
                     const _1 = parseFloat(document.getElementById('1').value);
                     const _2 = parseFloat(document.getElementById('2').value);
-                    const _3 = parseFloat(document.getElementById('3').value);
-                    const _4 = parseFloat(document.getElementById('4').value);
+                    let _3 = 0;
+                    const element3 = document.getElementById('3');
+                    if (element3 !== null) {
+                        const _3 = parseInt(element3.value);
+                        if (_3 >= _1 || _3 < 0) {
+                            isValid = false;
+                            error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
+                        }
+                    }
+                    const element4 = document.getElementById('4');
+                    if (element4 !== null) {
+                        const _4 = parseInt(element4.value);
+                        if (_4 >= (_1 - _3) || _4 < 0) {
+                            isValid = false;
+                            error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
+                        }
+                    }
                     const element5 = document.getElementById('5');
                     if (element5 !== null) {
                         const _5 = parseInt(element5.value);
@@ -293,14 +310,14 @@
                         error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
                     }
 
-                    if (_3 >= _1 || _3 < 0) {
-                        isValid = false;
-                        error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
-                    }
-                    if (_4 >= (_1 - _3) || _4 < 0) {
-                        isValid = false;
-                        error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
-                    }
+//                    if (_3 >= _1 || _3 < 0) {
+//                        isValid = false;
+//                        error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
+//                    }
+//                    if (_4 >= (_1 - _3) || _4 < 0) {
+//                        isValid = false;
+//                        error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
+//                    }
                     var formData = {};
                     $("#formFill").find("input").each(function () {
                         formData[$(this).attr("name")] = $(this).val();
@@ -313,7 +330,7 @@
                             if (intKey >= 7 && parseInt(value) >= 900) {
                                 var errorId = "error_" + key;
                                 errorIdcontent = document.getElementById(errorId);
-                                errorIdcontent.textContent = "Diện tích không được nhỏ hơn 1 và lớn hơn 900m2.";
+                                errorIdcontent.textContent = "Diện tích không được nhỏ hơn 1 và lớn hơn 900.";
                                 isValid = false;
                             }
 
