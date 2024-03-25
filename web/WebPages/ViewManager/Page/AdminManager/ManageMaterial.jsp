@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 
@@ -47,10 +48,10 @@
                                         <i class="fas fa-plus"></i> Thêm vật liệu
                                     </a>
                                 </div>
-<!--                                <div class="col-sm-2">
-                                    <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
-                                            class="fas fa-file-upload"></i> Tải từ file</a>
-                                </div>-->
+                                <div class="col-sm-2">
+                                    <a class="btn btn-add btn-sm" data-toggle="modal" data-target="#createCategory"><i
+                                            class="fas fa-folder-plus"></i> Thêm loại vật liệu</a>
+                                </div>
                             </div>
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
@@ -59,7 +60,7 @@
                                         <th>Tên vật liệu</th>
                                         <th>Giá vật liệu</th>
                                         <th>Loại vật liệu</th>
-                                        <!--                                        <th>Ảnh</th>-->
+                                        <th>Kiểu thi công</th>
                                         <th>Chức năng</th>
                                     </tr>
                                 </thead>
@@ -68,9 +69,20 @@
                                         <tr>
                                             <td width="10"><input type="checkbox" name="check1" value="1"></td>
                                             <td>${list.name}</td>
-                                            <td>${list.price}</td>
+                                            <td>
+                                                <c:set var="multipliedPrice" value="${list.price}" />
+                                                <fmt:formatNumber value="${multipliedPrice}" pattern="###,###,###" />đ/${list.unit}
+                                            </td>
                                             <td>${list.category}</td>
-<!--                                            <td>${list.link}</td>-->
+        <!--                                            <td>${list.link}</td>-->
+                                            <td>
+                                                <c:if test="${list.type eq 0}">
+                                                    Thi công phần thô
+                                                </c:if>
+                                                <c:if test="${list.type eq 1}">
+                                                    Thi công trọn gói
+                                                </c:if>
+                                            </td>
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="" method="post">
                                                     <button class="btn btn-primary btn-sm trash" type="button" title="Xóa" onclick="confirmDelete(this)"
@@ -95,6 +107,40 @@
                 </div>
             </div>
         </main>
+        <div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+             data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <form action="CreateMaterialCategory" method="post" >
+                            <div class="row">
+                                <div class="form-group  col-md-12">
+                                    <span class="thong-tin-thanh-toan">
+                                        <h5>Thêm loại vật liệu mới</h5>
+                                    </span>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Nhập tên:</label>
+                                    <input class="form-control" type="text" required name="categoryname">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="control-label">Danh sách các loại vật liệu hiện có:</label>
+                                    <ul class="compact-list">
+                                        <c:forEach items="${requestScope.cat}" var="i" varStatus="status">
+                                            <div>- ${i.name}</div>
+                                        </c:forEach>
+                                    </ul>
+                                </div>
+                            </div>
+                            <button class="btn btn-save" type="submit">Lưu lại</button>
+                            <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script src="./js/jquery-3.2.1.min.js"></script>
         <script src="./js/popper.min.js"></script>

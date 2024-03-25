@@ -75,7 +75,7 @@ public class DeleteMaterial extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String id = request.getParameter("id");
-        
+
         MaterialDAO dao = new MaterialDAO();
         boolean result = dao.deleteMaterial(id);
         if (result) {

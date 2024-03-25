@@ -81,9 +81,11 @@ public class CreateMaterial extends HttpServlet {
         String name = request.getParameter("name");
         String price = request.getParameter("price");
         String category = request.getParameter("category");
+        String unit = request.getParameter("unit");
+        String type = request.getParameter("type");
 
         MaterialDAO dao = new MaterialDAO();
-        boolean result = dao.createMaterial(name, price, category);
+        boolean result = dao.createMaterial(name, price, unit, type, category);
 
         if (result) {
             request.setAttribute("messtrue", "Thêm vật liệu thành công!");
@@ -111,7 +113,7 @@ public class CreateMaterial extends HttpServlet {
             }
 
         } else {
-            request.setAttribute("messfalse", "Thêm dự vật liệu thất bại!");
+            request.setAttribute("messfalse", "Thêm vật liệu thất bại!");
         }
         doGet(request, response);
     }

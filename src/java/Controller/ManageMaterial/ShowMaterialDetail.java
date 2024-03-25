@@ -76,16 +76,16 @@ public class ShowMaterialDetail extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String materialID = request.getParameter("materialID");
         MaterialDAO dao = new MaterialDAO();
         Material list = dao.getByID(materialID);
         request.setAttribute("list", list);
-        
+
         MaterialDAO dao1 = new MaterialDAO();
         List<MaterialCategory> list1 = dao1.getMaterialCategory();
         request.setAttribute("list1", list1);
-        
+
         response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ShowMaterialDetail.jsp").forward(request, response);
     }
