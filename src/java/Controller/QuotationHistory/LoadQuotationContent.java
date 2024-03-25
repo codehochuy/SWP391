@@ -163,7 +163,7 @@ public class LoadQuotationContent extends HttpServlet {
                 out.println("<input type=\"hidden\" name=\"roof\" value=\""+roofId+"\">");
             }
 
-            DecimalFormat decimalFormat1 = new DecimalFormat("#,###.##");
+                DecimalFormat decimalFormat1 = new DecimalFormat("#,###.##");
             String formattedPrice = decimalFormat1.format(price);
             if (selectedService == 2 && packagePrice != 0) {
 
