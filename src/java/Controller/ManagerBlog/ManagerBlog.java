@@ -64,16 +64,10 @@ public class ManagerBlog extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Khởi tạo BlogDAO và lấy danh sách blog
         BlogDAO blogDAO = new BlogDAO();
         List<BlogDTO> blogs = blogDAO.getAll();
-
-        // Đặt danh sách blog vào thuộc tính của request để hiển thị trên trang JSP
         request.setAttribute("blogs", blogs);
-
-        // Chuyển hướng đến trang JSP để hiển thị danh sách blog
         RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlog.jsp");
-
         dispatcher.forward(request, response);
     }
 

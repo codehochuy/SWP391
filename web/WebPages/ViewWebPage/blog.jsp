@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-
         <meta charset="UTF-8">
         <title>TITAN - Blog Page</title>
         <link rel="icon" href="img/logo.jpg" type="image/x-icon">
@@ -18,14 +17,11 @@
         <meta content="Construction Company Website Template" name="description">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <!-- Favicon -->
         <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
-
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet">
-
         <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -47,13 +43,11 @@
                 display: flex;
                 flex-wrap: wrap;  Cho phép các phần tử con xuống dòng khi cần thiết 
             }
-
             .menu-item {
                 flex: 0 0 0; /* Set each item to take up one-third of the container width */
                 box-sizing: border-box;
                 padding: 10px; /* Add padding to each item */
             }
-
             .menu-btn {
                 background-color: #6c757d;
                 color: #fff;
@@ -67,14 +61,11 @@
                 display: flex;
                 white-space: nowrap; /* Prevent text from wrapping to the next line */
             }
-
             .menu-btn:hover {
                 background-color: #495057;
                 border-color: #495057;
                 color: #fff;
             }
-
-
             .show-all-btn {
                 width: 45px; /* Set a fixed width for a square shape */
                 height: 45px; /* Set the same height as width for a square shape */
@@ -87,28 +78,20 @@
                 border: 1px solid #6c757d;
                 box-sizing: border-box;
                 padding: 0; /* Remove padding */
-
                 margin-top: 10px; /* Add margin-bottom of 10px */
                 cursor: pointer;
                 transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
             }
-
-
             @media (max-width: 768px) {
                 .menu-item {
                     flex: 0 0 100%; /* On smaller screens, each item takes the full width */
                 }
             }
         </style>
-
-
-
-
     </head>
     <body>
         <div class="wrapper">
             <jsp:include page="../../WebPages/ViewWebPage/HeaderPage.jsp"/>
-
             <!-- Page Header Start -->
             <div class="page-header">
                 <div class="container">
@@ -124,12 +107,6 @@
                 </div>
             </div>
             <!-- Page Header End -->
-
-
-
-
-
-
             <!-- Blog Start -->
             <div class="blog">
                 <div class="container">
@@ -137,8 +114,6 @@
                         <p>Bài viết mới nhất</p>
                         <h2>Bài viết mới nhất từ chúng tôi</h2>
                     </div>
-
-
                     <div class="row" style="margin-left: 660px;">
                         <form action="searchbyTags" method="POST">
                             <label for="tagSearch">Tìm kiếm tag</label>
@@ -146,8 +121,6 @@
                             <button type="subtmit" >Tìm kiếm</button>
                         </form>
                     </div>
-
-
                     <ul id="categories" class="menu-list">
                         <c:forEach var="category" items="${blogCategories}" varStatus="loop">
                             <li class="menu-item ${loop.index > 2 ? 'category-hidden' : ''}">
@@ -163,252 +136,155 @@
                             <i class="fas fa-ellipsis-v fa-sm"></i> <!-- Font Awesome icon for three dots with smaller size -->
                         </button>
                     </ul>
-
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
                             var categoryLinks = document.querySelectorAll('.menu-item');
                             var showAllBtn = document.querySelector('.show-all-btn');
                             var isExpanded = false;
-
                             function hideCategories() {
                                 for (var i = 6; i < categoryLinks.length; i++) {
                                     categoryLinks[i].style.display = 'none';
                                 }
                             }
-
                             function showAllCategories() {
                                 categoryLinks.forEach(function (link, index) {
                                     link.style.display = 'flex';
                                 });
                             }
-
-                            // Ẩn các category khi trang được tải
                             hideCategories();
-
                             if (showAllBtn) {
                                 showAllBtn.addEventListener('click', function () {
                                     if (isExpanded) {
-                                        // Thu hồi các category đã được mở rộng
                                         hideCategories();
                                     } else {
-                                        // Hiển thị tất cả các category
                                         showAllCategories();
                                     }
-
-                                    // Cập nhật trạng thái mở rộng
                                     isExpanded = !isExpanded;
                                 });
                             }
                         });
                     </script>
-
-
-
-
                     <div class="row blog-page">
                         <c:forEach var="blog" items="${blogs}">
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
                                 <div class="blog-item">
-
                                     <div class="blog-img">
                                         <img src="" alt="" data-src = "" style="width: 350px; height: 200px;">
                                         <div class="hidden-blog-content" style="display: none;">
                                             ${blog.content}
                                         </div>
                                     </div>
-
                                     <script>
                                         document.addEventListener("DOMContentLoaded", function () {
                                             // Get all elements with the class 'hidden-blog-content'
                                             var hiddenBlogContents = document.querySelectorAll('.hidden-blog-content');
-
                                             // Regular expression to match img tags and extract src attribute
                                             var imgRegex = /<img[^>]*\ssrc="([^"]*)"[^>]*>/g;
-
                                             // Regular expression to match URLs starting with "https://"
                                             var fallbackRegex = /"https:\/\/[^'"\s]+/;
-
                                             // Loop through each hidden-blog-content element
                                             hiddenBlogContents.forEach(function (hiddenBlogContent) {
                                                 // Get the content of the hidden-blog-content
                                                 var content = hiddenBlogContent.innerHTML;
-
                                                 // Use the imgRegex to find the first image src in the content
                                                 var imgMatch = imgRegex.exec(content);
                                                 var imageUrl = imgMatch ? imgMatch[1] : '';
-
                                                 // If imgRegex didn't find a match, use the fallbackRegex
                                                 if (!imageUrl) {
                                                     var fallbackMatch = fallbackRegex.exec(content);
                                                     imageUrl = fallbackMatch ? fallbackMatch[0].replace('"', '') : '';
                                                 }
-                                                console.log(fallbackMatch);
-
-
                                                 // Find the corresponding blog-img element in the same parent container
                                                 var blogImg = hiddenBlogContent.closest('.blog-item').querySelector('.blog-img img');
-
                                                 // Set the src attribute of the blog-img's img tag with the image URL
                                                 if (blogImg) {
                                                     blogImg.src = imageUrl;
                                                 }
-
                                                 // Reset the regex lastIndex for the next iteration
                                                 imgRegex.lastIndex = 0;
                                                 fallbackRegex.lastIndex = 0;
                                             });
                                         });
                                     </script>
-
-
                                     <div class="blog-title">
                                         <h3><c:out value="${blog.title}" /></h3>
                                         <a class="btn" href="BlogDetail?blogid=${blog.blogID}">+</a>
                                     </div>
-
-                                    <%--         <div class="blog-meta">
-                                                 <p>Tạo bởi ${blog.user.name} </p><br>
-                                                 <p>Ngày tạo  ${blog.dateCreate}</p><br>
-                                                  <p>Ngày sửa đổi  ${blog.dateModified}</p>
-                                             </div> --%>
-
-
-                                    <%--              <div class="blog-text" style="display: none;">
-                                                     <p>
-                                                         <c:out value="${blog.content}" />
-                                                     </p>
-                                                 </div> --%>
                                 </div>
                             </div>
                         </c:forEach>
                     </div>
-
-
-                    <!--                    <div class="row" style="margin-left: 800px;">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <ul class="pagination justify-content-center">
-                                                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                        <li class="page-item "><a class="page-link" href="#">2</a></li>
-                                                         <li class="page-item "><a class="page-link" href="#">3</a></li>
-                                     
-                    
-                                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>-->
                     <div class="row" style="margin-left: 800px;">
                         <div class="row">
                             <div class="col-12">
                                 <ul class="pagination justify-content-center" id="pagination">
                                     <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-
-                                    <c:forEach var="page" begin="1" end="${(blogSize + 5) / 6}" step="1">
+                                        <c:forEach var="page" begin="1" end="${(blogSize + 5) / 6}" step="1">
                                         <li class="page-item ${page == 1 ? 'active' : ''}">
                                             <a class="page-link" href="#" onclick="showBlogs(${page})">${page}</a>
                                         </li>
                                     </c:forEach>
-
                                     <li class="page-item"><a class="page-link" href="#">Next</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
-
-
-
-
-
                 </div>
             </div>
-
-
-
-
-
-
-
             <!-- Blog End -->
-
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
-
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script>
                                                 $(document).ready(function () {
                                                     // Set the number of blogs to display per page
                                                     var blogsPerPage = 6;
-
                                                     // Get the total number of blogs
                                                     var totalBlogs = $(".blog-item").length;
-
                                                     // Calculate the total number of pages
                                                     var totalPages = Math.ceil(totalBlogs / blogsPerPage);
-
                                                     // Hide all blogs initially
                                                     $(".blog-item").hide();
-
                                                     // Show the first set of blogs (1 to blogsPerPage)
                                                     $(".blog-item:lt(" + blogsPerPage + ")").show();
-
                                                     // Handle pagination clicks
                                                     $(".page-link").on("click", function (e) {
                                                         e.preventDefault();
-
                                                         // Get the target page from the link
                                                         var targetPage = parseInt($(this).text());
-
                                                         // Calculate the range of blogs to display for the target page
                                                         var startIndex = (targetPage - 1) * blogsPerPage;
                                                         var endIndex = startIndex + blogsPerPage;
-
                                                         // Hide all blogs
                                                         $(".blog-item").hide();
-
                                                         // Show the blogs in the calculated range
                                                         $(".blog-item").slice(startIndex, endIndex).show();
-
                                                         // Update active class for pagination links
                                                         $(".page-item").removeClass("active");
                                                         $(this).parent().addClass("active");
-
                                                         // Store the selected page in a data attribute
                                                         $("#pagination").data("selectedPage", targetPage);
                                                     });
-
                                                     // Handle Next button click
                                                     $("#nextPage").on("click", function (e) {
                                                         e.preventDefault();
                                                         var activePage = $(".page-item.active .page-link").text();
                                                         activePage = parseInt(activePage);
-
                                                         if (activePage < totalPages) {
                                                             $(".page-link:contains('" + (activePage + 1) + "')").trigger("click");
                                                         }
                                                     });
-
                                                     // Handle Previous button click
                                                     $("#previousPage").on("click", function (e) {
                                                         e.preventDefault();
                                                         var activePage = $(".page-item.active .page-link").text();
                                                         activePage = parseInt(activePage);
-
                                                         if (activePage > 1) {
                                                             $(".page-link:contains('" + (activePage - 1) + "')").trigger("click");
                                                         }
                                                     });
-
                                                     // Restore the selected page if it was saved
                                                     var selectedPage = $("#pagination").data("selectedPage");
                                                     if (selectedPage) {
@@ -416,9 +292,6 @@
                                                     }
                                                 });
         </script>
-
-
-
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/easing/easing.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/wow/wow.min.js"></script>
@@ -428,16 +301,7 @@
         <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
-
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
-
-
-
-
-
-
-
-
     </body>
 </html>

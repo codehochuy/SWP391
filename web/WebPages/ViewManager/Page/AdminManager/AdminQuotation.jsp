@@ -1,5 +1,5 @@
 
-
+<%@ page import="java.text.DecimalFormat" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -27,7 +27,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-
+        
     </head>
 
     <body onload="time()" class="app sidebar-mini rtl">
@@ -47,12 +47,16 @@
                         <div class="tile-body">
                             <div class="row element-button">
                                 <div class="col-sm-2">
-                                    <a class="btn btn-save btn-sm" href="AdminQuotation" title="Thêm"><i class="fas fa-edit"></i>
+                                    <a class="btn btn-save btn-sm" href="AdminQuotation" title="Yêu cầu báo giá của người dùng"><i class="fas fa-edit"></i>
                                         Yêu cầu báo giá của người dùng</a>
                                 </div>
                                 <div class="col-sm-2">
-                                    <a class="btn btn-save btn-sm" href="createProduct" title="Thêm"><i class="fas fa-edit"></i>
-                                        Báo giá đã gửi</a>
+                                    <a class="btn btn-save btn-sm" href="NotSentQuotation" title="Báo giá đã gửi"><i class="fas fa-edit"></i>
+                                        Báo giá chưa trả lời</a>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-save btn-sm" href="SentAdminCustomQuotation" title="Báo giá đã gửi"><i class="fas fa-edit"></i>
+                                        Báo giá đã trả lời</a>
                                 </div>
                             </div>      
 
@@ -65,6 +69,7 @@
                                         <th>Số điện thoại</th>
                                         <th>Giá</th>
                                         <th>Thời gian</th>
+                                        <th>Trạng thái</th>
                                         <th>Chức năng</th>
                                     </tr>
                                 </thead>
@@ -75,8 +80,10 @@
                                             <td>${user.customer}</td>                              
                                             <td>${user.quotationname}</td>
                                             <td>${user.phone}</td>
-                                            <td>${user.price}</td>
+                                            <td><fmt:formatNumber value="${user.totalPrice}" pattern="#,###.##"/>
+                                                VNĐ</td>
                                             <td>${user.time}</td>
+                                            <td class="confirm-status">${user.adminReponse ? 'Đã trả lời' : 'Chưa trả lời'}</td> 
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="View" method="post">
                                                     <input type="hidden" name="versionId" value="${user.versionid}">
@@ -84,7 +91,7 @@
                                                     <input type="hidden" name="quotationId" value="${user.quotationId}">
                                                     <input type="hidden" name="customer" value="${user.customer}">
                                                     <input type="hidden" name="quotationname" value="${user.quotationname}">
-                                                    <input type="hidden" name="price" value="${user.price}">
+                                                    <input type="hidden" name="phoneNumber" value="${user.phone}">
                                                     <button class="btn btn-primary btn-sm trash" type="submit" title="Xem chi tiết">
                                                         <i class="fas fa-eye"></i>
                                                     </button>
@@ -161,6 +168,8 @@
             }
         }
         </script>
+
+
     </body>
 
 </html>

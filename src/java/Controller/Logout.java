@@ -40,6 +40,7 @@ public class Logout extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
              HttpSession session = request.getSession();
             session.removeAttribute("USER");
+             session.invalidate();
             response.sendRedirect("Login.jsp");
         }
     }

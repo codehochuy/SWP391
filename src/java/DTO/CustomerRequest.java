@@ -17,22 +17,13 @@ public class CustomerRequest {
     private String quotationname;
     private String phone;
     private double price;
+    private double totalPrice;
     private LocalDateTime time;
     private int cusQuoId;
     private int quotationId;
+    private boolean adminReponse;
 
     public CustomerRequest() {
-    }
-
-    public CustomerRequest(int versionid, String customer, String quotationname, String phone, double price, LocalDateTime time, int cusQuoId, int quotationId) {
-        this.versionid = versionid;
-        this.customer = customer;
-        this.quotationname = quotationname;
-        this.phone = phone;
-        this.price = price;
-        this.time = time;
-        this.cusQuoId = cusQuoId;
-        this.quotationId = quotationId;
     }
 
     public int getVersionid() {
@@ -75,6 +66,14 @@ public class CustomerRequest {
         this.price = price;
     }
 
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     public LocalDateTime getTime() {
         return time;
     }
@@ -99,6 +98,17 @@ public class CustomerRequest {
         this.quotationId = quotationId;
     }
 
+    public boolean isAdminReponse() {
+        return adminReponse;
+    }
+
+    public void setAdminReponse(boolean adminReponse) {
+        this.adminReponse = adminReponse;
+    }
+
+    
+
+    
     @Override
     public String toString() {
         return "CustomerRequest{" + "versionid=" + versionid + ", customer=" + customer + ", quotationname=" + quotationname + ", phone=" + phone + ", price=" + price + ", time=" + time + ", cusQuoId=" + cusQuoId + ", quotationId=" + quotationId + '}';

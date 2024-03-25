@@ -78,12 +78,8 @@ public class DeleteBlog extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Lấy ID của blog cần xóa từ request
         int blogID = Integer.parseInt(request.getParameter("id"));
-
-        // Tạo BlogDAO và xóa blog từ cơ sở dữ liệu
         BlogDAO blogDAO = new BlogDAO(new DBContext());
-
         boolean result = blogDAO.deleteBlog(blogID);
         if (result) {
             BlogDAO blogDAO2 = new BlogDAO();
@@ -91,7 +87,6 @@ public class DeleteBlog extends HttpServlet {
             request.setAttribute("blogs", blogs);
             request.setAttribute("messtrue", "Xóa bài viết thành công");
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlog.jsp").forward(request, response);
-
         } else {
             BlogDAO blogDAO2 = new BlogDAO();
             List<BlogDTO> blogs = blogDAO2.getAll();
@@ -99,7 +94,6 @@ public class DeleteBlog extends HttpServlet {
             request.setAttribute("messefalse", "Xóa bài viết thất bại");
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlog.jsp").forward(request, response);
         }
-
     }
 
     /**

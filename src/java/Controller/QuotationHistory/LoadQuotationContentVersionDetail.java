@@ -52,7 +52,9 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
 
             QuotationDAO quotationDao = new QuotationDAO();
             DTO.Quotation quotation = quotationDao.getQuotaitonByServiveTypeStyle(selectedService, selectedHouseType, selectedStyle);
-
+            QuotationDAO dao6 = new QuotationDAO();
+            double price = dao6.getCusQuoVersionPriceByVersionId(versionId);
+            
             Double length = (request.getParameter("1") != null && !request.getParameter("1").isEmpty()) ? Double.parseDouble(request.getParameter("1")) : 0;
             Double width = (request.getParameter("2") != null && !request.getParameter("2").isEmpty()) ? Double.parseDouble(request.getParameter("2")) : 0;
             double frontYard = (request.getParameter("3") != null && !request.getParameter("3").isEmpty()) ? Double.parseDouble(request.getParameter("3")) : 0;
@@ -60,23 +62,23 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
             double floor = (request.getParameter("5") != null && !request.getParameter("5").isEmpty()) ? Double.parseDouble(request.getParameter("5")) : 0;
             double balcony = (request.getParameter("6") != null && !request.getParameter("6").isEmpty()) ? Double.parseDouble(request.getParameter("6")) : 0;
 
-            double price = 0;
+//            double price = 0;
             double S = length * width;
             double s = (length - frontYard - backYard) * width;
             double totalArea = 0;
-            if (selectedService == 2 && packagePrice != 0) {
-                if (packagePrice == 1) {
-                    price = quotation.getPrice1();
-                } else {
-                    price = quotation.getPrice2();
-                }
-            } else {
-                if (S >= 200) {
-                    price = quotation.getPrice1();
-                } else {
-                    price = quotation.getPrice2();
-                }
-            }
+//            if (selectedService == 2 && packagePrice != 0) {
+//                if (packagePrice == 1) {
+//                    price = quotation.getPrice1();
+//                } else {
+//                    price = quotation.getPrice2();
+//                }
+//            } else {
+//                if (S >= 200) {
+//                    price = quotation.getPrice1();
+//                } else {
+//                    price = quotation.getPrice2();
+//                }
+//            }
             double sFrontYard = 0;
             double sBackYard = 0;
             double sBalcony = 0;
@@ -199,7 +201,7 @@ public class LoadQuotationContentVersionDetail extends HttpServlet {
 "                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"changeQuotationContent\">Thay đổi báo giá</button>\n" +
 "                        </div>");
             out.println("<div class=\"contact-form\">\n" +
-"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"sendRequestQuotation\">Gửi báo giá</button>\n" +
+"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"sendRequestQuotation\">Gửi yêu cầu báo giá</button>\n" +
 "                        </div>");
             
         }

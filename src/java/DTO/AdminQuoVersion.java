@@ -15,23 +15,29 @@ public class AdminQuoVersion {
     private int adminQuoVersionId;
     private LocalDateTime date;
     private Double price;
+    private Double totalPrice;
     private int roofId;
     private int foundationId;;
     private int versionId;
     private boolean status;
+    private boolean confirmStatus;
+    private int userId;
     private String note;
 
     public AdminQuoVersion() {
     }
 
-    public AdminQuoVersion(int adminQuoVersionId, LocalDateTime date, Double price, int roofId, int foundationId, int versionId, boolean status, String note) {
+    public AdminQuoVersion(int adminQuoVersionId, LocalDateTime date, Double price, Double totalPrice, int roofId, int foundationId, int versionId, boolean status, boolean confirmStatus, int userId, String note) {
         this.adminQuoVersionId = adminQuoVersionId;
         this.date = date;
         this.price = price;
+        this.totalPrice = totalPrice;
         this.roofId = roofId;
         this.foundationId = foundationId;
         this.versionId = versionId;
         this.status = status;
+        this.confirmStatus = confirmStatus;
+        this.userId = userId;
         this.note = note;
     }
 
@@ -57,6 +63,14 @@ public class AdminQuoVersion {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public int getRoofId() {
@@ -91,6 +105,22 @@ public class AdminQuoVersion {
         this.status = status;
     }
 
+    public boolean isConfirmStatus() {
+        return confirmStatus;
+    }
+
+    public void setConfirmStatus(boolean confirmStatus) {
+        this.confirmStatus = confirmStatus;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public String getNote() {
         return note;
     }
@@ -98,6 +128,6 @@ public class AdminQuoVersion {
     public void setNote(String note) {
         this.note = note;
     }
-    
+
     
 }

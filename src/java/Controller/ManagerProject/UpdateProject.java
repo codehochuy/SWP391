@@ -45,48 +45,76 @@ public class UpdateProject extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String projectidParameter = request.getParameter("projectid");
-        int projectid = (projectidParameter != null && !projectidParameter.isEmpty()) ? Integer.parseInt(projectidParameter) : 0;
-        String projectname = request.getParameter("projectname");
-        String date = request.getParameter("date");
-        String serviceParameter = request.getParameter("service");
-        int service = (serviceParameter != null && !serviceParameter.isEmpty()) ? Integer.parseInt(serviceParameter) : 0;
-        String houseTypesParameter = request.getParameter("houseTypes");
-        int houseTypes = (houseTypesParameter != null && !houseTypesParameter.isEmpty()) ? Integer.parseInt(houseTypesParameter) : 0;
-        String stylesParameter = request.getParameter("styles");
-        int styles = (stylesParameter != null && !stylesParameter.isEmpty()) ? Integer.parseInt(stylesParameter) : 0;
-        String description = request.getParameter("description");
-        String timeParameter = request.getParameter("time");
-        int time = (timeParameter != null && !timeParameter.isEmpty()) ? Integer.parseInt(timeParameter) : 0;
+            int projectid = (projectidParameter != null && !projectidParameter.isEmpty()) ? Integer.parseInt(projectidParameter) : 0;
+            String projectname = request.getParameter("projectname");
+            String date = request.getParameter("date");
+            String serviceParameter = request.getParameter("service");
+            int service = (serviceParameter != null && !serviceParameter.isEmpty()) ? Integer.parseInt(serviceParameter) : 0;
+            String houseTypesParameter = request.getParameter("houseTypes");
+            int houseTypes = (houseTypesParameter != null && !houseTypesParameter.isEmpty()) ? Integer.parseInt(houseTypesParameter) : 0;
+            String stylesParameter = request.getParameter("styles");
+            int styles = (stylesParameter != null && !stylesParameter.isEmpty()) ? Integer.parseInt(stylesParameter) : 0;
+            String description = request.getParameter("description");
+            String timeParameter = request.getParameter("time");
+            int inttimeParameter = Integer.parseInt(timeParameter);
+            int time = (timeParameter != null && !timeParameter.isEmpty()) ? Integer.parseInt(timeParameter) : 0;
 
-        ProjectDAO dao = new ProjectDAO();
-        boolean result = dao.updateProject(projectname, description, date, time, service, houseTypes, styles, projectid);
-        if (result) {
-            request.setAttribute("messtrue", "Cập nhật dự án thành công");
-        } else {
-            request.setAttribute("messefalse", "Cập nhật dự án thất bại");
-        }
+            if (inttimeParameter <= 0) {
 
-        ProjectDAO dao2 = new ProjectDAO();
-        DTO.Project project = dao2.getProjectbyID(projectidParameter);
+                ProjectDAO dao9 = new ProjectDAO();
+                DTO.Project project = dao9.getProjectbyID(projectidParameter);
 
-        ServiceDAO serviceDAO = new ServiceDAO();
-        List<Service> listService = serviceDAO.getAll();
+                ServiceDAO serviceDAO9 = new ServiceDAO();
+                List<Service> listService = serviceDAO9.getAll();
 
-        StyleDAO styleDAO = new StyleDAO();
-        List<Style> listStyle = styleDAO.getAll();
+                StyleDAO styleDAO9 = new StyleDAO();
+                List<Style> listStyle = styleDAO9.getAll();
 
-        HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-        List<HouseType> listHouseType = houseTypeDAO.getAll();
+                HouseTypeDAO houseTypeDAO9 = new HouseTypeDAO();
+                List<HouseType> listHouseType = houseTypeDAO9.getAll();
 
-        ProjectImageDAO imageDAO = new ProjectImageDAO();
-        List<ProjectImage> images = imageDAO.getProjectImagesByProjectID(projectidParameter);
+                ProjectImageDAO imageDAO9 = new ProjectImageDAO();
+                List<ProjectImage> images = imageDAO9.getProjectImagesByProjectID(projectidParameter);
 
-        request.setAttribute("images", images);
-        request.setAttribute("services", listService);
-        request.setAttribute("styles", listStyle);
-        request.setAttribute("houseTypes", listHouseType);
-        request.setAttribute("project", project);
-        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerProjectDetail.jsp").forward(request, response);
+                request.setAttribute("images", images);
+                request.setAttribute("services", listService);
+                request.setAttribute("styles", listStyle);
+                request.setAttribute("houseTypes", listHouseType);
+                request.setAttribute("project", project);
+                request.setAttribute("messefalse", "Sai thời gian hoàn thành / ngày");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerProjectDetail.jsp").forward(request, response);
+            } else {
+
+                ProjectDAO dao = new ProjectDAO();
+                boolean result = dao.updateProject(projectname, description, date, time, service, houseTypes, styles, projectid);
+                if (result) {
+                    request.setAttribute("messtrue", "Cập nhật dự án thành công");
+                } else {
+                    request.setAttribute("messefalse", "Cập nhật dự án thất bại");
+                }
+
+                ProjectDAO dao2 = new ProjectDAO();
+                DTO.Project project = dao2.getProjectbyID(projectidParameter);
+
+                ServiceDAO serviceDAO = new ServiceDAO();
+                List<Service> listService = serviceDAO.getAll();
+
+                StyleDAO styleDAO = new StyleDAO();
+                List<Style> listStyle = styleDAO.getAll();
+
+                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                List<HouseType> listHouseType = houseTypeDAO.getAll();
+
+                ProjectImageDAO imageDAO = new ProjectImageDAO();
+                List<ProjectImage> images = imageDAO.getProjectImagesByProjectID(projectidParameter);
+
+                request.setAttribute("images", images);
+                request.setAttribute("services", listService);
+                request.setAttribute("styles", listStyle);
+                request.setAttribute("houseTypes", listHouseType);
+                request.setAttribute("project", project);
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerProjectDetail.jsp").forward(request, response);
+            }
         }
     }
 
@@ -116,7 +144,7 @@ public class UpdateProject extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

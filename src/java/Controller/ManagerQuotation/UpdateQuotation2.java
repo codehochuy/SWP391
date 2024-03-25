@@ -44,7 +44,7 @@ public class UpdateQuotation2 extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateQuotation2</title>");            
+            out.println("<title>Servlet UpdateQuotation2</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateQuotation2 at " + request.getContextPath() + "</h1>");
@@ -84,11 +84,10 @@ public class UpdateQuotation2 extends HttpServlet {
         String style = request.getParameter("style");
         String service = request.getParameter("service");
         String price1 = request.getParameter("price1");
+        int intPrice1 = Integer.parseInt(price1);
         String price2 = request.getParameter("price2");
-
-        QuotationDAO dao = new QuotationDAO();
-        boolean result = dao.updateQuotation(id, price1, price2, "0");
-        if (result) {
+        int intPrice2 = Integer.parseInt(price2);
+        if (intPrice2 <= intPrice1) {
             QuotationDAO dAO = new QuotationDAO();
             List<Quotation> list = dAO.getAll();
 
@@ -101,25 +100,45 @@ public class UpdateQuotation2 extends HttpServlet {
             request.setAttribute("styles", styles);
             request.setAttribute("houseTypes", houseTypes);
             request.setAttribute("list", list);
-            request.setAttribute("messtrue", "Cập nhật bảng giá thành công");
+            request.setAttribute("messefalse", "Sai giá tiền !!");
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
-
         } else {
-            QuotationDAO dAO = new QuotationDAO();
-            List<Quotation> list = dAO.getAll();
 
-            StyleDAO styleDAO = new StyleDAO();
-            List<Style> styles = styleDAO.getAll();
+            QuotationDAO dao = new QuotationDAO();
+            boolean result = dao.updateQuotation(id, price1, price2, "0");
+            if (result) {
+                QuotationDAO dAO = new QuotationDAO();
+                List<Quotation> list = dAO.getAll();
 
-            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-            List<HouseType> houseTypes = houseTypeDAO.getAll();
+                StyleDAO styleDAO = new StyleDAO();
+                List<Style> styles = styleDAO.getAll();
 
-            request.setAttribute("styles", styles);
-            request.setAttribute("houseTypes", houseTypes);
-            request.setAttribute("list", list);
-            request.setAttribute("messefalse", "Cập nhật bảng giá thất bại");
-            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                List<HouseType> houseTypes = houseTypeDAO.getAll();
 
+                request.setAttribute("styles", styles);
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("list", list);
+                request.setAttribute("messtrue", "Cập nhật bảng giá thành công");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+
+            } else {
+                QuotationDAO dAO = new QuotationDAO();
+                List<Quotation> list = dAO.getAll();
+
+                StyleDAO styleDAO = new StyleDAO();
+                List<Style> styles = styleDAO.getAll();
+
+                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                List<HouseType> houseTypes = houseTypeDAO.getAll();
+
+                request.setAttribute("styles", styles);
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("list", list);
+                request.setAttribute("messefalse", "Cập nhật bảng giá thất bại");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+
+            }
         }
     }
 

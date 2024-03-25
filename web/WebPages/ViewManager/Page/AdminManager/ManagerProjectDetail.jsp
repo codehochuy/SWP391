@@ -199,6 +199,18 @@
                                 }
                             }
         </script>
+                <script>
+            <% if (request.getAttribute("messtrue") != null) {%>
+            swal("<%= request.getAttribute("messtrue")%>", "", "success");
+            <% request.removeAttribute("messtrue"); %>
+            <% } %>
+        </script>
+        <script>
+            <% if (request.getAttribute("messefalse") != null) {%>
+            swal("<%= request.getAttribute("messefalse")%>", "", "error");
+            <% request.removeAttribute("messefalse"); %>
+            <% }%>
+        </script>
     </body>
 
 </html>

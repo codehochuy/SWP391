@@ -45,7 +45,7 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             int foundationId = (request.getParameter("foundation") != null && !request.getParameter("foundation").isEmpty()) ? Integer.parseInt(request.getParameter("foundation")) : 0;
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
             String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
-
+            int versionId = (request.getParameter("versionId") != null && !request.getParameter("versionId").isEmpty()) ? Integer.parseInt(request.getParameter("versionId")) : 0;
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
 
@@ -59,23 +59,23 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             double floor = (request.getParameter("5") != null && !request.getParameter("5").isEmpty()) ? Double.parseDouble(request.getParameter("5")) : 0;
             double balcony = (request.getParameter("6") != null && !request.getParameter("6").isEmpty()) ? Double.parseDouble(request.getParameter("6")) : 0;
 
-            double price = 0;
+            double price = (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) ? Double.parseDouble(request.getParameter("price")) : 0;
             double S = length * width;
             double s = (length - frontYard - backYard) * width;
             double totalArea = 0;
-            if (selectedService == 2 && packagePrice != 0) {
-                if (packagePrice == 1) {
-                    price = quotation.getPrice1();
-                } else {
-                    price = quotation.getPrice2();
-                }
-            } else {
-                if (S >= 200) {
-                    price = quotation.getPrice1();
-                } else {
-                    price = quotation.getPrice2();
-                }
-            }
+//            if (selectedService == 2 && packagePrice != 0) {
+//                if (packagePrice == 1) {
+//                    price = quotation.getPrice1();
+//                } else {
+//                    price = quotation.getPrice2();
+//                }
+//            } else {
+//                if (S >= 200) {
+//                    price = quotation.getPrice1();
+//                } else {
+//                    price = quotation.getPrice2();
+//                }
+//            }
             double sFrontYard = 0;
             double sBackYard = 0;
             double sBalcony = 0;
@@ -182,6 +182,7 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             if (note != "") {
                 out.println("<p class=\"text-note\">Ghi chú: " + note + "</p>");
             }
+            out.println("<input type=\"hidden\" name=\"versionId\" value=\"" + versionId + "\">");
             out.println("<input type=\"hidden\" name=\"note\" value=\"" + note + "\">");
             out.println("<input type=\"hidden\" name=\"houseType\" value=\"" + selectedHouseType + "\">");
             out.println("<input type=\"hidden\" name=\"service\" value=\"" + selectedService + "\">");

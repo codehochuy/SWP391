@@ -45,7 +45,7 @@ public class View extends HttpServlet {
             int quotationId = Integer.parseInt(request.getParameter("quotationId"));
             String customer = request.getParameter("customer");
             String quotationname = request.getParameter("quotationname");
-            double price = Double.parseDouble(request.getParameter("price"));
+            String phoneNumber = request.getParameter("phoneNumber");
            
             QuotationDAO dao = new QuotationDAO();
             List<CustomerHouseComponent> listCustomerHouseComponent = dao.getListCustomerHouseComponentByVersionId(versionId);
@@ -61,6 +61,8 @@ public class View extends HttpServlet {
             int foundation = cusQuoVersion.getFoundationId();
             int roof = cusQuoVersion.getRoofId();
             int packagePrice = 0;
+            QuotationDAO dao6 = new QuotationDAO();
+            double price = dao6.getCusQuoVersionPriceByVersionId(versionId);
             String note = cusQuoVersion.getNote();
             QuotationDAO dao3 = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao3.getHouseComponent(selectedHouseType);
@@ -73,10 +75,12 @@ public class View extends HttpServlet {
                 packagePrice = 2;
             }
             
-
+            
             request.setAttribute("customer", customer);
             request.setAttribute("quotationname", quotationname);
+            request.setAttribute("phoneNumber", phoneNumber);
             request.setAttribute("price", price);
+            request.setAttribute("versionId", versionId);
             request.setAttribute("listCustomerHouseComponent", listCustomerHouseComponent);
             request.setAttribute("listHouseComponent", listHouseComponent);
             request.setAttribute("cusQuoVersion", cusQuoVersion);

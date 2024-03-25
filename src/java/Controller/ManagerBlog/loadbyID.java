@@ -34,14 +34,12 @@ public class loadbyID extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             String id = request.getParameter("id");
-          BlogDAO dao = new BlogDAO();
+            BlogDAO dao = new BlogDAO();
             BlogCategoryDTO dto = dao.getBlogCategoryID(id);
-
-      
-   out.println("<form action=\"UpdateQuotation\" method=\"POST\" id=\"updateblogcate\">\n"
+            out.println("<form action=\"UpdateQuotation\" method=\"POST\" id=\"updateblogcate\">\n"
                     + "    <div class=\"row\">\n"
                     + "        <div class=\"form-group col-md-6\">\n"
                     + "            <label class=\"control-label\">ID </label>\n"
@@ -49,7 +47,7 @@ public class loadbyID extends HttpServlet {
                     + "        </div>\n"
                     + "        <div class=\"form-group col-md-6\">\n"
                     + "            <label class=\"control-label\">Tên danh mục bài viết</label>\n"
-               + "            <input class=\"form-control\" type=\"text\" name=\"blogcategoryname\" value=\"" + dto.getBlogCategoryName() + "\" placeholder=\"Không chấp nhận kí tự đặc biệt\" required>\n"
+                    + "            <input class=\"form-control\" type=\"text\" name=\"blogcategoryname\" value=\"" + dto.getBlogCategoryName() + "\" placeholder=\"Không chấp nhận kí tự đặc biệt\" required>\n"
                     + "        </div>\n"
                     + "    </div>\n"
                     + "    <BR>\n"

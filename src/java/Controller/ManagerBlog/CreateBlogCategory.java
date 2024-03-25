@@ -81,10 +81,8 @@ public class CreateBlogCategory extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         String newCategoryValue = request.getParameter("newCategoryValue");
         BlogDAO dao = new BlogDAO();
-
         List<BlogCategoryDTO> existingCategories = dao.getAllBlogCategories();
         boolean categoryExists = false;
-
         // Check if newCategoryValue already exists in the database
         for (BlogCategoryDTO existingCategory : existingCategories) {
             if (existingCategory.getBlogCategoryName().equalsIgnoreCase(newCategoryValue)) {
@@ -92,10 +90,7 @@ public class CreateBlogCategory extends HttpServlet {
                 break;
             }
         }
-
         if (categoryExists) {
-            // Category already exists, send a response indicating duplication
-
             BlogDAO blogDAO2 = new BlogDAO();
             List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
             request.setAttribute("blogCategories", blogCategories);
@@ -106,12 +101,8 @@ public class CreateBlogCategory extends HttpServlet {
             BlogDAO blogDAO2 = new BlogDAO();
             List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
             request.setAttribute("blogCategories", blogCategories);
-//
-//            RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
-//            dispatcher.forward(request, response);
             response.getWriter().write("SUCCESS");
         }
-
     }
 
     /**

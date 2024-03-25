@@ -197,7 +197,7 @@ public class LoadQuotationContentVersionDetail2 extends HttpServlet {
 "                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"saveQuotationContent\">Lưu báo giá mới</button>\n" +
 "                        </div>");
             out.println("<div class=\"contact-form\">\n" +
-"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"saveAndSendRequestQuotation\">Lưu và Gửi báo giá mới</button>\n" +
+"                            <button class=\"btn\" style=\"border: 1px solid #FFD700;\" type=\"submit\"  name=\"action\" value=\"saveAndSendRequestQuotation\">Lưu và Gửi yêu cầu báo giá mới</button>\n" +
 "                        </div>");
             
         }
