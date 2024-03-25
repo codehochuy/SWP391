@@ -189,12 +189,7 @@
                 $('#formFill').submit(function (event) {
                     let isValid = true;
 
-                    const _1 = parseFloat(document.getElementById('1').value);
-                    const _2 = parseFloat(document.getElementById('2').value);
-                    const _3 = parseFloat(document.getElementById('3').value);
-                    const _4 = parseFloat(document.getElementById('4').value);
-                    const _5 = parseInt(document.getElementById('5').value);
-                    const _6 = parseFloat(document.getElementById('6').value);
+
 
                     const error_1 = document.getElementById('error_1');
                     const error_2 = document.getElementById('error_2');
@@ -208,9 +203,33 @@
                     error_2.textContent = '';
                     error_3.textContent = '';
                     error_4.textContent = '';
-                    error_5.textContent = '';
-                    error_6.textContent = '';
+                    if (error_5)
+                        error_5.textContent = '';
+                    if (error_6)
+                        error_6.textContent = '';
 
+
+
+                    const _1 = parseFloat(document.getElementById('1').value);
+                    const _2 = parseFloat(document.getElementById('2').value);
+                    const _3 = parseFloat(document.getElementById('3').value);
+                    const _4 = parseFloat(document.getElementById('4').value);
+                    const element5 = document.getElementById('5');
+                    if (element5 !== null) {
+                        const _5 = parseInt(element5.value);
+                        if (_5 > 24 || _5 < 0) {
+                            isValid = false;
+                            error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
+                        }
+                    }
+                    const element6 = document.getElementById('6');
+                    if (element6 !== null) {
+                        const _6 = parseInt(element6.value);
+                        if (!isNaN(_6) && (_6 < 0 || _6 > 2)) {
+                            isValid = false;
+                            error_6.textContent = 'Chiều dài rộng ban công từ 0-2m.';
+                        }
+                    }
                     if (_1 > 10000 || _1 <= 0) {
                         isValid = false;
                         error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
@@ -229,15 +248,23 @@
                         isValid = false;
                         error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
                     }
+                    var formData = {};
+                    $("#formFill").find("input").each(function () {
+                        formData[$(this).attr("name")] = $(this).val();
+                    });
+                    for (var key in formData) {
+                        var errorIdcontent = '';
+                        if (formData.hasOwnProperty(key)) {
+                            var value = formData[key];
+                            var intKey = parseInt(key);
+                            if (intKey >= 7 && parseInt(value) >= 900) {
+                                var errorId = "error_" + key;
+                                errorIdcontent = document.getElementById(errorId);
+                                errorIdcontent.textContent = "Diện tích không được nhỏ hơn 1 và lớn hơn 900.";
+                                isValid = false;
+                            }
 
-                    if (isNaN(_5) || _5 > 24 || _5 < 0) {
-                        isValid = false;
-                        error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
-                    }
-
-                    if (!isNaN(_6) && (_6 < 0 || _6 > 2)) {
-                        isValid = false;
-                        error_6.textContent = 'Chiều dài rộng ban công từ 0-2m.';
+                        }
                     }
 
                     if (!isValid) {
