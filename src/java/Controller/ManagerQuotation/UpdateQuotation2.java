@@ -82,11 +82,9 @@ public class UpdateQuotation2 extends HttpServlet {
         String id = request.getParameter("quotationid");
         String housetype = request.getParameter("housetype");
         String style = request.getParameter("style");
-        String service = request.getParameter("service");
-        String price1 = request.getParameter("price1");
-        int intPrice1 = Integer.parseInt(price1);
-        String price2 = request.getParameter("price2");
-        int intPrice2 = Integer.parseInt(price2);
+        String service = request.getParameter("service");     
+        String price1 = request.getParameter("price1");double intPrice1 = Double.parseDouble(price1);
+        String price2 = request.getParameter("price2");double intPrice2 = Double.parseDouble(price2);
         if (intPrice2 <= intPrice1) {
             QuotationDAO dAO = new QuotationDAO();
             List<Quotation> list = dAO.getAll();

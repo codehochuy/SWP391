@@ -93,10 +93,10 @@ public class CreateQuotation extends HttpServlet {
         double price2 = 0.0;
 
         String price1Param = request.getParameter("price1");
-        int intPrice1 = Integer.parseInt(price1Param);
+        double doublePrice1 = Double.parseDouble(price1Param);
         String price2Param = request.getParameter("price2");;
-        int intPrice2 = Integer.parseInt(price2Param);
-        if (intPrice2 <= intPrice1) {
+        double doublePrice2 = Double.parseDouble(price2Param);
+        if (doublePrice2 <= doublePrice1) {
 
             QuotationDAO dAO = new QuotationDAO();
             List<Quotation> list = dAO.getAll();
