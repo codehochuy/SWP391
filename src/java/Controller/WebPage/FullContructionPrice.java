@@ -5,7 +5,9 @@
  */
 package Controller.WebPage;
 
+import DAO.MaterialDAO;
 import DAO.QuotationDAO;
+import DTO.Material;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -34,6 +36,11 @@ public class FullContructionPrice extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            
+            MaterialDAO dao1 = new MaterialDAO();
+            List<Material> mat = dao1.getMaterialFull();
+            request.setAttribute("mat", mat);
+            
             QuotationDAO dao = new QuotationDAO();
             List<DTO.Quotation> list = dao.getAll();
             request.setAttribute("list", list);

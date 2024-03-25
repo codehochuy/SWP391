@@ -6,11 +6,14 @@
 package Controller.ManageMaterial;
 
 import DAO.HouseTypeDAO;
+import DAO.MaterialDAO;
 import DAO.ProjectDAO;
 import DAO.ProjectImageDAO;
 import DAO.ServiceDAO;
 import DAO.StyleDAO;
 import DTO.HouseType;
+import DTO.Material;
+import DTO.MaterialCategory;
 import DTO.ProjectImage;
 import DTO.Service;
 import DTO.Style;
@@ -44,49 +47,28 @@ public class UpdateMaterial extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String projectidParameter = request.getParameter("projectid");
-        int projectid = (projectidParameter != null && !projectidParameter.isEmpty()) ? Integer.parseInt(projectidParameter) : 0;
-        String projectname = request.getParameter("projectname");
-        String date = request.getParameter("date");
-        String serviceParameter = request.getParameter("service");
-        int service = (serviceParameter != null && !serviceParameter.isEmpty()) ? Integer.parseInt(serviceParameter) : 0;
-        String houseTypesParameter = request.getParameter("houseTypes");
-        int houseTypes = (houseTypesParameter != null && !houseTypesParameter.isEmpty()) ? Integer.parseInt(houseTypesParameter) : 0;
-        String stylesParameter = request.getParameter("styles");
-        int styles = (stylesParameter != null && !stylesParameter.isEmpty()) ? Integer.parseInt(stylesParameter) : 0;
-        String description = request.getParameter("description");
-        String timeParameter = request.getParameter("time");
-        int time = (timeParameter != null && !timeParameter.isEmpty()) ? Integer.parseInt(timeParameter) : 0;
+            String name = request.getParameter("name");
+            String price = request.getParameter("price");
+            String unit = request.getParameter("unit");
+            String type = request.getParameter("type");
+            String category = request.getParameter("category");
+            String id = request.getParameter("id");
 
-        ProjectDAO dao = new ProjectDAO();
-        boolean result = dao.updateProject(projectname, description, date, time, service, houseTypes, styles, projectid);
-        if (result) {
-            request.setAttribute("messtrue", "Thêm dự án thành công");
-        } else {
-            request.setAttribute("messefalse", "Thêm dự án thất bại");
-        }
+            MaterialDAO dao = new MaterialDAO();
+            boolean result = dao.updateMaterial(name, price, unit, type, category, id);
+            if (result) {
+                request.setAttribute("messtrue", "Cập nhật vật liệu thành công");
+            } else {
+                request.setAttribute("messefalse", "Cập nhật vật liệu thất bại");
+            }
 
-        ProjectDAO dao2 = new ProjectDAO();
-        DTO.Project project = dao2.getProjectbyID(projectidParameter);
-
-        ServiceDAO serviceDAO = new ServiceDAO();
-        List<Service> listService = serviceDAO.getAll();
-
-        StyleDAO styleDAO = new StyleDAO();
-        List<Style> listStyle = styleDAO.getAll();
-
-        HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-        List<HouseType> listHouseType = houseTypeDAO.getAll();
-
-        ProjectImageDAO imageDAO = new ProjectImageDAO();
-        List<ProjectImage> images = imageDAO.getProjectImagesByProjectID(projectidParameter);
-
-        request.setAttribute("images", images);
-        request.setAttribute("services", listService);
-        request.setAttribute("styles", listStyle);
-        request.setAttribute("houseTypes", listHouseType);
-        request.setAttribute("project", project);
-        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerProjectDetail.jsp").forward(request, response);
+            MaterialDAO dao2 = new MaterialDAO();
+            Material list = dao2.getByID(id);
+            MaterialDAO dao1 = new MaterialDAO();
+            List<MaterialCategory> list1 = dao1.getMaterialCategory();
+            request.setAttribute("list", list);
+            request.setAttribute("list1", list1);
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ShowMaterialDetail.jsp").forward(request, response);
         }
     }
 
@@ -116,7 +98,7 @@ public class UpdateMaterial extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-processRequest(request, response);
+        processRequest(request, response);
     }
 
     /**

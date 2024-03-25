@@ -8,21 +8,25 @@ package Controller.ManageMaterial;
 import DAO.MaterialDAO;
 import DTO.Material;
 import DTO.MaterialCategory;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
- * @author ACER
+ * @author DELL
  */
-@WebServlet(name = "ManageMaterial", urlPatterns = {"/ManageMaterial"})
-public class ManageMaterial extends HttpServlet {
+@WebServlet(name = "CreateMaterialCategory", urlPatterns = {"/CreateMaterialCategory"})
+public class CreateMaterialCategory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,6 +39,11 @@ public class ManageMaterial extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+
+//        MaterialDAO dao = new MaterialDAO();
+//        List<MaterialCategory> cat = dao.getMaterialCategory();
+//        request.setAttribute("cat", cat);
         MaterialDAO dao = new MaterialDAO();
         List<Material> list = dao.getAll();
         request.setAttribute("list", list);
@@ -43,7 +52,6 @@ public class ManageMaterial extends HttpServlet {
         List<MaterialCategory> cat = dao2.getMaterialCategory();
         request.setAttribute("cat", cat);
 
-        response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManageMaterial.jsp").forward(request, response);
     }
 
@@ -73,7 +81,13 @@ public class ManageMaterial extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        String categoryname = request.getParameter("categoryname");
+
+        MaterialDAO dao = new MaterialDAO();
+        boolean result = dao.createCategory(categoryname);
+
+        doGet(request, response);
     }
 
     /**
@@ -85,5 +99,4 @@ public class ManageMaterial extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

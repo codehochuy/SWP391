@@ -152,7 +152,7 @@
                                     </div>
                                     <p>Xây dựng phần thô được hiểu là việc thi công định hình phần khung sườn cho ngôi nhà bao gồm phần móng và bể ngầm; Các hệ thống kết cấu chịu lực (như cột, dầm, khung, sàn, bê tông,…); Phần cầu thang; Bản và bậc; Hệ thống tường bao che, ngăn phòng…vv.</p>
                                     <p>Đây là giai đoạn hết sức quan trọng bởi nó quyết định đến độ an toàn, chắc chắn của công trình. Phần thô càng tốt, càng chuẩn, chính xác thì những phần thi công sau này càng thuận lợi như tiết kiệm thời gian và chi phí, hạn chế tối đa những ảnh hưởng đến chất lượng công trình.</p>
-                                    
+
                                     <p>Bảng giá xây dựng phần thô được TITAN cung cấp dưới đây sẽ giúp quý khách hàng có thể ước lượng được chi phí xây dựng phần thô, xây tổ ấm của mình một cách dễ dàng, nhanh chóng. Bảng giá được chia làm 3 hạng mục công trình cơ bản:</p>
                                     <ul>
                                         <c:forEach items="${requestScope.list}" var="i">
@@ -177,100 +177,25 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="table" border="1">
+                                    <h4>Vật tư phần thô</h4>
+                                    <table class="table" border="1" id="materialtable">
                                         <thead>
                                             <tr>
                                                 <th>Vật tư phần thô</th>
-                                                <th>Nhà phố hiện đại</th>
-                                                <th>Biệt thự hiện đại</th>
-                                                <th>Biệt thự cổ điển</th>
+                                                <th>Giá</th>
+                                                <th>Loại</th>
+                                                <th>Hình ảnh</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Cát đổ bê tông</td>
-                                                <td>Cát hạt lớn</td>
-                                                <td>Cát hạt lớn</td>
-                                                <td>Cát hạt lớn</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Gạch ống, gạch đinh</td>
-                                                <td>Tuynel Đồng Nai, Bình Dương</td>
-                                                <td>Tuynel Đồng Nai, Bình Dương</td>
-                                                <td>Tuynel Đồng Nai, Bình Dương</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Cát xây tường, tô tường, cán nền</td>
-                                                <td>Cát hạt trung</td>
-                                                <td>Cát hạt trung</td>
-                                                <td>Cát hạt trung</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Đá 1x2 đổ bê tông</td>
-                                                <td>Đá Đồng Nai</td>
-                                                <td>Đá Đồng Nai</td>
-                                                <td>Đá Đồng Nai</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Xi măng xây tường, tô tường cán nền</td>
-                                                <td>Hà Tiên</td>
-                                                <td>Hà Tiên</td>
-                                                <td>Hà Tiên</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Xi măng đổ bê tông</td>
-                                                <td>Holcim</td>
-                                                <td>Holcim</td>
-                                                <td>Holcim</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Sắt thép</td>
-                                                <td>Việt Nhật - Pomina</td>
-                                                <td>Việt Nhật - Pomina</td>
-                                                <td>Việt Nhật - Pomina</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Dây điện</td>
-                                                <td>Cadivi</td>
-                                                <td>Cadivi</td>
-                                                <td>Cadivi</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Dây cáp internet</td>
-                                                <td>Nano</td>
-                                                <td>Nano</td>
-                                                <td>Nano</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Dây cáp tivi</td>
-                                                <td>Sino</td>
-                                                <td>Sino</td>
-                                                <td>Sino</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Đế âm tường, ống luồn dây điện</td>
-                                                <td>Sino</td>
-                                                <td>Sino</td>
-                                                <td>Sino</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Đường nước cấp nước, thoát nước (nước lạnh)</td>
-                                                <td>Bình Minh</td>
-                                                <td>Bình Minh</td>
-                                                <td>Bình Minh</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Đường nước cấp nước, thoát nước (nước nóng)</td>
-                                                <td>Bình Minh</td>
-                                                <td>Bình Minh</td>
-                                                <td>Vesbo</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Chống thấm WC, ban công, sân thượng, mái bê tông</td>
-                                                <td>CT11A</td>
-                                                <td>CT11A</td>
-                                                <td>CT11A</td>
-                                            </tr>
+                                            <c:forEach items="${requestScope.mat}" var="i">
+                                                <tr>
+                                                    <td>${i.name}</td>
+                                                    <td><fmt:formatNumber value="${i.price}" pattern="###,###,###"/>đ/${i.unit}</td>
+                                                    <td>${i.category}</td>
+                                                    <td><img src="img/${i.link}" alt="${i.name}" width="100" height="100"></td>
+                                                </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
                                     <ul>
@@ -374,7 +299,7 @@
                                     <div class="centered">
                                         <img src="WebPages/ViewWebPage/img/quotation-raw-2.png" alt="Quotation Image">
                                     </div>
-                                    
+
                                     <p><strong>Xây nhà phần thô</strong> quyết định trực tiếp đến chất lượng công trình, cho nên việc lựa chọn một công ty xây dựng uy tín, chuyên nghiệp để <strong>đảm bảo xây dựng ngôi nhà</strong> chắc chắn và đẹp đồng thời lên dự toán chính xác chi phí xây dựng, cũng như hạn chế tối đa phát sinh chi phí, là những vấn đề quý khách hàng cần lưu ý ngoài ra những vấn đề ảnh hưởng trực tiếp đến đơn giá thi công.</p>
                                     <p><strong>Quy mô công trình nào được áp dụng đơn giá trên theo m2?</strong></p>
                                     <ul>
@@ -407,7 +332,7 @@
                                     <div class="centered">
                                         <img src="WebPages/ViewWebPage/img/quotation-raw-3.jpg" alt="Quotation Image">
                                     </div>
-                                    
+
                                     <p><strong>Là một trong những đơn vị thi công các công trình biệt thự, nhà phố,… TITAN xin gửi lời cảm ơn sâu sắc tới quý khách hàng đã tin tưởng hợp tác cũng như đồng hành cùng công ty trong thời gian qua. Chúng tôi luôn tuân thủ quy trình rõ ràng, chuẩn mực khi làm việc với khách hàng, cụ thể:</strong></p>
                                     <ul>
                                         <li>Tiếp nhận thông tin của khách hàng về nhu cầu xây dựng, vị trí, diện tích, chi phí đầu tư tương ứng,…</li>
@@ -474,7 +399,15 @@
         <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
-
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+        <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#materialtable').DataTable();
+            });
+        </script>
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
         <script>
