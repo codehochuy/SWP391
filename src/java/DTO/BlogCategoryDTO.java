@@ -10,10 +10,10 @@ package DTO;
  * @author Admin
  */
 public class BlogCategoryDTO {
+
     private int blogCategoryID;
     private String blogCategoryName;
 
-    // Constructors
     public BlogCategoryDTO() {
     }
 

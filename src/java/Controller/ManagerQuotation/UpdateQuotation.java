@@ -83,9 +83,28 @@ public class UpdateQuotation extends HttpServlet {
         String housetype = request.getParameter("housetype");
         String style = request.getParameter("style");
         String service = request.getParameter("service");
-        String price1 = request.getParameter("price1");
-        String price2 = request.getParameter("price2");
+        String price1 = request.getParameter("price1");int intPrice1 = Integer.parseInt(price1);
+        String price2 = request.getParameter("price2");int intPrice2 = Integer.parseInt(price2);
+        if (intPrice2 <= intPrice1) {
+             QuotationDAO dAO = new QuotationDAO();
+            List<Quotation> list = dAO.getAll();
 
+            StyleDAO styleDAO = new StyleDAO();
+            List<Style> styles = styleDAO.getAll();
+
+            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+            List<HouseType> houseTypes = houseTypeDAO.getAll();
+
+            request.setAttribute("styles", styles);
+            request.setAttribute("houseTypes", houseTypes);
+            request.setAttribute("list", list);
+            request.setAttribute("messefalse", "Sai giá tiền !!");
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+        }else{
+            
+      
+
+        
         QuotationDAO dao = new QuotationDAO();
         boolean result = dao.updateQuotation(id, price1, price2, "0");
         if (result) {
@@ -121,7 +140,7 @@ public class UpdateQuotation extends HttpServlet {
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
 
         }
-
+  }
     }
 
     /**

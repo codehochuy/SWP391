@@ -47,7 +47,7 @@ public class CreateStyle extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateStyle</title>");            
+            out.println("<title>Servlet CreateStyle</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CreateStyle at " + request.getContextPath() + "</h1>");
@@ -85,57 +85,79 @@ public class CreateStyle extends HttpServlet {
         try {
             request.setCharacterEncoding("UTF-8");
             String styleversion = request.getParameter("styleversion");
-             StyleDAO aO = new StyleDAO();
+            StyleDAO aO = new StyleDAO();
             String name = request.getParameter("style");
-            boolean result = aO.addStyle(name);
-            if (result) {
-                QuotationDAO dAO = new QuotationDAO();
-                List<Quotation> list = dAO.getAll();
-                
-                StyleDAO styleDAO = new StyleDAO();
-                List<Style> styles = styleDAO.getAll();
+            String regex = "^[0-9a-zA-Z\\p{L}\\p{P}][0-9a-zA-Z\\p{L}\\p{P}\\s]*[0-9a-zA-Z\\p{L}\\p{P}]$";
+            if (!name.matches(regex)) {
+                QuotationDAO dAO9 = new QuotationDAO();
+                List<Quotation> list = dAO9.getAll();
 
-                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-                List<HouseType> houseTypes = houseTypeDAO.getAll();
-                
+                StyleDAO styleDAO9 = new StyleDAO();
+                List<Style> styles = styleDAO9.getAll();
+
+                HouseTypeDAO houseTypeDAO9 = new HouseTypeDAO();
+                List<HouseType> houseTypes = houseTypeDAO9.getAll();
+
                 request.setAttribute("styles", styles);
                 request.setAttribute("houseTypes", houseTypes);
                 request.setAttribute("list", list);
 
-                request.setAttribute("messtrue", "Đã thêm thành công");
-                if(styleversion.equalsIgnoreCase("1")){
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);                    
-                }
-                else{
+                request.setAttribute("messefalse", "Sai tên!!");
+                if (styleversion.equalsIgnoreCase("1")) {
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+                } else {
                     request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
                 }
-                
-
             } else {
-                QuotationDAO dAO = new QuotationDAO();
-                List<Quotation> list = dAO.getAll();
-                
-                StyleDAO styleDAO = new StyleDAO();
-                List<Style> styles = styleDAO.getAll();
 
-                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-                List<HouseType> houseTypes = houseTypeDAO.getAll();
-                
-                request.setAttribute("styles", styles);
-                request.setAttribute("houseTypes", houseTypes);
-                request.setAttribute("list", list);
+                boolean result = aO.addStyle(name);
+                if (result) {
+                    QuotationDAO dAO = new QuotationDAO();
+                    List<Quotation> list = dAO.getAll();
 
-                request.setAttribute("messefalse", "Đã thêm thất bại");
-                if(styleversion.equalsIgnoreCase("1")){
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);                    
-                }
-                else{
-                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+                    StyleDAO styleDAO = new StyleDAO();
+                    List<Style> styles = styleDAO.getAll();
+
+                    HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                    List<HouseType> houseTypes = houseTypeDAO.getAll();
+
+                    request.setAttribute("styles", styles);
+                    request.setAttribute("houseTypes", houseTypes);
+                    request.setAttribute("list", list);
+
+                    request.setAttribute("messtrue", "Đã thêm thành công");
+                    if (styleversion.equalsIgnoreCase("1")) {
+                        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+                    }
+
+                } else {
+                    QuotationDAO dAO = new QuotationDAO();
+                    List<Quotation> list = dAO.getAll();
+
+                    StyleDAO styleDAO = new StyleDAO();
+                    List<Style> styles = styleDAO.getAll();
+
+                    HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                    List<HouseType> houseTypes = houseTypeDAO.getAll();
+
+                    request.setAttribute("styles", styles);
+                    request.setAttribute("houseTypes", houseTypes);
+                    request.setAttribute("list", list);
+
+                    request.setAttribute("messefalse", "Đã thêm thất bại");
+                    if (styleversion.equalsIgnoreCase("1")) {
+                        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+                    } else {
+                        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+                    }
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(CreateHouseStyle.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**

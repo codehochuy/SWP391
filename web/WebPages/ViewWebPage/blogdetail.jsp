@@ -74,7 +74,7 @@
                     </div>
                 </c:if>
                 <c:if test="${empty blog}">
-                    <p>Blog not found</p>
+                    <p>Không có bài viết nào</p>
                 </c:if>
             </div>
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>

@@ -82,27 +82,17 @@ public class ViewBlogDetail extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            // Lấy BlogID từ request
             int blogID = Integer.parseInt(request.getParameter("blogid"));
-
-            // Gọi DAO để lấy thông tin chi tiết của blog
             BlogDAO blogDAO = new BlogDAO();
             BlogDTO blog = blogDAO.getBlogByID(blogID);
             BlogDAO dao = new BlogDAO();
             List<String> categoryList = dao.listCategory();
             request.setAttribute("categoryList", categoryList);
-
-            // Đặt đối tượng BlogDTO vào request attribute
             request.setAttribute("blog", blog);
-
-            // Chuyển hướng request đến trang ViewBlogDetail.jsp để hiển thị thông tin blog
             RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ViewBlogDetail.jsp");
             dispatcher.forward(request, response);
-
         } catch (Exception e) {
-            // Xử lý ngoại lệ nếu có
             e.printStackTrace();
-            // Trả về lỗi 500 Internal Server Error
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }

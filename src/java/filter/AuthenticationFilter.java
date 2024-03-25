@@ -22,20 +22,15 @@ public class AuthenticationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-
         String uri = req.getRequestURI();
-        //this.context.log("Requested Resource::"+uri);
-
         HttpSession session = req.getSession(false);
         User user = null;
         if (session != null) {
             user = (User) session.getAttribute("USER");
         }
-
-        if (user == null && !uri.endsWith("Login.jsp") && !uri.endsWith("LoginServlet") && !uri.endsWith(".css") && !uri.endsWith(".png") && !uri.endsWith(".jpg") 
+        if (user == null && !uri.endsWith("Login.jsp") && !uri.endsWith("LoginServlet") && !uri.endsWith(".css") && !uri.endsWith(".png") && !uri.endsWith(".jpg")
                 && !uri.endsWith("index")
                 && !uri.endsWith("About")
                 && !uri.endsWith("Service")
@@ -48,14 +43,23 @@ public class AuthenticationFilter implements Filter {
                 && !uri.endsWith("Quotation")
                 && !uri.endsWith("LoadFormFill")
                 && !uri.endsWith("LoadQuotationContent")
-                
+//blog
+                && !uri.endsWith("CreateBlog")
+                && !uri.endsWith("CreateBlogCategory")
+                && !uri.endsWith("DeleteBlog")
+                && !uri.endsWith("DeleteBlogCategory")
+                && !uri.endsWith("ManagerBlog")
+                && !uri.endsWith("ManagerBlogCategory")
+                && !uri.endsWith("UpdateBlog")
+                && !uri.endsWith("UpdateBlogCategory")
+                && !uri.endsWith("ViewBlogDetail")
+                && !uri.endsWith("loadbyID")
             ) {
             this.context.log("Unauthorized access request");
             res.sendRedirect("Login.jsp");
         } else {
             chain.doFilter(request, response);
         }
-        
     }
 
     @Override

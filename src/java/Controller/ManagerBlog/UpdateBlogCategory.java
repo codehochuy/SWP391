@@ -88,27 +88,27 @@ public class UpdateBlogCategory extends HttpServlet {
             request.setAttribute("blogCategories", blogCategories);
             RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
             dispatcher.forward(request, response);
-        }else{
-        BlogDAO dao = new BlogDAO();
-        List<BlogCategoryDTO> existingCategories = dao.getAllBlogCategories();
-        if (existingCategories.stream().anyMatch(category -> category.getBlogCategoryName().equalsIgnoreCase(blogcategoryname))) {
-            request.setAttribute("messefalse", "Danh mục đã tồn tại trong cơ sở dữ liệu");
-            BlogDAO dao5 = new BlogDAO();
-            List<BlogCategoryDTO> blogCategories = dao5.getAllBlogCategories();
-            request.setAttribute("blogCategories", blogCategories);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
-            dispatcher.forward(request, response);
         } else {
-            BlogDAO dao1 = new BlogDAO();
-            dao1.updateBlogCategory(categoryid, blogcategoryname);
-            BlogDAO dao2 = new BlogDAO();
-            List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
-            request.setAttribute("blogCategories", blogCategories);
-            request.setAttribute("messtrue", "Cập nhật danh mục thành công");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
-            dispatcher.forward(request, response);
+            BlogDAO dao = new BlogDAO();
+            List<BlogCategoryDTO> existingCategories = dao.getAllBlogCategories();
+            if (existingCategories.stream().anyMatch(category -> category.getBlogCategoryName().equalsIgnoreCase(blogcategoryname))) {
+                request.setAttribute("messefalse", "Danh mục đã tồn tại trong cơ sở dữ liệu");
+                BlogDAO dao5 = new BlogDAO();
+                List<BlogCategoryDTO> blogCategories = dao5.getAllBlogCategories();
+                request.setAttribute("blogCategories", blogCategories);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                BlogDAO dao1 = new BlogDAO();
+                dao1.updateBlogCategory(categoryid, blogcategoryname);
+                BlogDAO dao2 = new BlogDAO();
+                List<BlogCategoryDTO> blogCategories = dao2.getAllBlogCategories();
+                request.setAttribute("blogCategories", blogCategories);
+                request.setAttribute("messtrue", "Cập nhật danh mục thành công");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+                dispatcher.forward(request, response);
+            }
         }
-}
     }
 
     /**

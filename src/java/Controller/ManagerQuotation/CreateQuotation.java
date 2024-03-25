@@ -93,26 +93,11 @@ public class CreateQuotation extends HttpServlet {
         double price2 = 0.0;
 
         String price1Param = request.getParameter("price1");
-        String price2Param = request.getParameter("price2");
+        int intPrice1 = Integer.parseInt(price1Param);
+        String price2Param = request.getParameter("price2");;
+        int intPrice2 = Integer.parseInt(price2Param);
+        if (intPrice2 <= intPrice1) {
 
-        try {
-            if (price1Param != null && !price1Param.isEmpty()) {
-                price1 = Double.parseDouble(price1Param);
-            }
-
-            if (price2Param != null && !price2Param.isEmpty()) {
-                price2 = Double.parseDouble(price2Param);
-            }
-        } catch (NumberFormatException e) {
-            // Xử lý ngoại lệ khi không thể chuyển đổi thành double
-            e.printStackTrace(); // Hoặc thực hiện xử lý thông báo lỗi khác
-        }
-
-        String timeParameter = request.getParameter("time");
-        int time = (timeParameter != null && !timeParameter.isEmpty()) ? Integer.parseInt(timeParameter) : 0;
-        QuotationDAO aO = new QuotationDAO();
-        boolean result = aO.createQuotation(price1, price2, time, styleid, houseTypeid, serviceid);
-        if (result) {
             QuotationDAO dAO = new QuotationDAO();
             List<Quotation> list = dAO.getAll();
 
@@ -125,32 +110,73 @@ public class CreateQuotation extends HttpServlet {
             request.setAttribute("styles", styles);
             request.setAttribute("houseTypes", houseTypes);
             request.setAttribute("list", list);
-            request.setAttribute("messtrue", "Thêm báo giá mới thành công");
-            if(serviceid == 1){
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);       
-            }else{
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);     
+            request.setAttribute("messefalse", "Sai giá tiền !!");
+            request.setAttribute("messefalse1", "Sai giá tiền !!");
+            if (serviceid == 1) {
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+            } else {
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
             }
-            
+
         } else {
-            QuotationDAO dAO = new QuotationDAO();
-            List<Quotation> list = dAO.getAll();
 
-            StyleDAO styleDAO = new StyleDAO();
-            List<Style> styles = styleDAO.getAll();
+            try {
+                if (price1Param != null && !price1Param.isEmpty()) {
+                    price1 = Double.parseDouble(price1Param);
+                }
 
-            HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
-            List<HouseType> houseTypes = houseTypeDAO.getAll();
+                if (price2Param != null && !price2Param.isEmpty()) {
+                    price2 = Double.parseDouble(price2Param);
+                }
+            } catch (NumberFormatException e) {
+                // Xử lý ngoại lệ khi không thể chuyển đổi thành double
+                e.printStackTrace(); // Hoặc thực hiện xử lý thông báo lỗi khác
+            }
 
-            request.setAttribute("styles", styles);
-            request.setAttribute("houseTypes", houseTypes);
-            request.setAttribute("list", list);
-            request.setAttribute("messefalse", "Tồn tại 1 báo giá tương tự");
-            request.setAttribute("messefalse1", "Tồn tại 1 báo giá tương tự");
-            if(serviceid == 1){
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);       
-            }else{
-                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);     
+            String timeParameter = request.getParameter("time");
+            int time = (timeParameter != null && !timeParameter.isEmpty()) ? Integer.parseInt(timeParameter) : 0;
+            QuotationDAO aO = new QuotationDAO();
+            boolean result = aO.createQuotation(price1, price2, time, styleid, houseTypeid, serviceid);
+            if (result) {
+                QuotationDAO dAO = new QuotationDAO();
+                List<Quotation> list = dAO.getAll();
+
+                StyleDAO styleDAO = new StyleDAO();
+                List<Style> styles = styleDAO.getAll();
+
+                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                List<HouseType> houseTypes = houseTypeDAO.getAll();
+
+                request.setAttribute("styles", styles);
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("list", list);
+                request.setAttribute("messtrue", "Thêm báo giá mới thành công");
+                if (serviceid == 1) {
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                }
+
+            } else {
+                QuotationDAO dAO = new QuotationDAO();
+                List<Quotation> list = dAO.getAll();
+
+                StyleDAO styleDAO = new StyleDAO();
+                List<Style> styles = styleDAO.getAll();
+
+                HouseTypeDAO houseTypeDAO = new HouseTypeDAO();
+                List<HouseType> houseTypes = houseTypeDAO.getAll();
+
+                request.setAttribute("styles", styles);
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("list", list);
+                request.setAttribute("messefalse", "Tồn tại 1 báo giá tương tự");
+                request.setAttribute("messefalse1", "Tồn tại 1 báo giá tương tự");
+                if (serviceid == 1) {
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerQuotation2.jsp").forward(request, response);
+                }
             }
         }
     }

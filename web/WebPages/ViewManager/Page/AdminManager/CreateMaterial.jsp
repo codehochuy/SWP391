@@ -46,11 +46,58 @@
                                     <input class="form-control" type="text" name="name" required>
                                     <div class="error-message" id="tensp-error"></div>
                                 </div>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var projectNameInput = document.getElementsByName('name')[0];
+                                        var regex = /^[0-9a-zA-Z\p{L}\p{P}][0-9a-zA-Z\p{L}\p{P}\s]*[0-9a-zA-Z\p{L}\p{P}]$/u;
+                                        projectNameInput.addEventListener('blur', function () {
+                                            var projectNameValue = projectNameInput.value.trim();
+
+                                            if (!projectNameValue.match(regex)) {
+                                                // Sử dụng SweetAlert để hiển thị thông báo
+                                                swal({
+                                                    title: 'Lỗi',
+                                                    text: 'Tên vật liệu không hợp lệ',
+                                                    icon: 'error',
+                                                    buttons: 'OK',
+                                                    dangerMode: true,
+                                                }).then(function () {
+                                                    projectNameInput.focus();
+                                                });
+                                            } else {
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
+
                                 <div class="form-group col-md-4">
                                     <label class="control-label">Giá</label>
                                     <input class="form-control" type="number" name="price" required>
                                     <div class="error-message" id="price-error"></div>
                                 </div>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var priceInput = document.getElementsByName('price')[0];
+
+                                        priceInput.addEventListener('blur', function () {
+                                            var priceValue = parseFloat(priceInput.value);
+
+                                            if (isNaN(priceValue) || priceValue <= 0) {
+                                                swal({
+                                                    title: 'Lỗi',
+                                                    text: 'Giá phải là một số lớn hơn 0',
+                                                    icon: 'error',
+                                                    buttons: 'OK',
+                                                    dangerMode: true,
+                                                }).then(function () {
+                                                    priceInput.focus();
+                                                });
+                                            }
+                                        });
+                                    });
+                                </script>
                                 <div class="form-group col-md-4">
                                     <label for="exampleSelect2" class="control-label">Loại vật liệu</label>
                                     <select class="form-control" id="exampleSelect2" name="category">
@@ -73,6 +120,35 @@
                                     <span id="imageError" class="error"></span>
                                 </div>
                                 <button class="btn btn-save" type="submit">Lưu lại</button>
+                                 <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var saveButton = document.querySelector('.btn-save');
+                                        var imageInput = document.getElementById('uploadfile');
+                                        var imageError = document.getElementById('imageError');
+
+                                        saveButton.addEventListener('click', function (event) {
+                                            var selectedFiles = imageInput.files;
+
+                                            if (selectedFiles.length === 0) {
+                                                // Sử dụng SweetAlert để hiển thị thông báo
+                                                swal({
+                                                    title: 'Lỗi',
+                                                    text: 'Vui lòng chọn ít nhất một ảnh',
+                                                    icon: 'error',
+                                                    buttons: 'OK',
+                                                    dangerMode: true,
+                                                });
+
+                                                // Ngăn chặn sự kiện mặc định của nút "Lưu lại" (ngăn form được submit)
+                                                event.preventDefault();
+                                            } else {
+                                                imageError.innerHTML = ''; // Xóa thông báo lỗi nếu có
+                                            }
+                                        });
+                                    });
+                                </script>
+                                
+                                
                                 <a class="btn btn-cancel" href="ManageMaterial">Hủy bỏ</a>
                             </form>
                         </div>

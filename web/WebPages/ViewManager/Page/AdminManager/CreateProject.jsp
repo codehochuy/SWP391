@@ -172,7 +172,7 @@
                                                 // Sử dụng SweetAlert để hiển thị thông báo
                                                 swal({
                                                     title: 'Lỗi',
-                                                    text: 'Tên dự án không hợp lệ',
+                                                    text: 'Miêu tả dự án không hợp lệ',
                                                     icon: 'error',
                                                     buttons: 'OK',
                                                     dangerMode: true,

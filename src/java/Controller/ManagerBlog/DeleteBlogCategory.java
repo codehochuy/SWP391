@@ -43,7 +43,7 @@ public class DeleteBlogCategory extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteBlogCategory</title>");            
+            out.println("<title>Servlet DeleteBlogCategory</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet DeleteBlogCategory at " + request.getContextPath() + "</h1>");
@@ -78,28 +78,23 @@ public class DeleteBlogCategory extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         // Lấy ID của blog cần xóa từ request
         int blogCategoryID = Integer.parseInt(request.getParameter("id"));
-
-        // Tạo BlogDAO và xóa blog từ cơ sở dữ liệu
         BlogDAO blogDAO = new BlogDAO(new DBContext());
-
         boolean result = blogDAO.deleteBlogCategory(blogCategoryID);
         if (result) {
             BlogDAO blogDAO2 = new BlogDAO();
-          List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
+            List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
             request.setAttribute("blogCategories", blogCategories);
             request.setAttribute("messtrue", "Xóa danh mục bài viết thành công");
-             RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
-        dispatcher.forward(request, response);
-
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+            dispatcher.forward(request, response);
         } else {
             BlogDAO blogDAO2 = new BlogDAO();
-           List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
+            List<BlogCategoryDTO> blogCategories = blogDAO2.getAllBlogCategories();
             request.setAttribute("blogCategories", blogCategories);
             request.setAttribute("messefalse", "Danh mục bài viết đã liên kết với bài viết, không thể xoá");
-          RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
-        dispatcher.forward(request, response);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerBlogCategory.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
