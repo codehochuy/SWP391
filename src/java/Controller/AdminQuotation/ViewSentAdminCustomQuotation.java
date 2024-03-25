@@ -6,6 +6,7 @@
 package Controller.AdminQuotation;
 
 import DAO.QuotationDAO;
+import DTO.AdminHouseComponent;
 import DTO.CustomerHouseComponent;
 import DTO.HouseComponent;
 import DTO.Quotation;
@@ -42,6 +43,7 @@ public class ViewSentAdminCustomQuotation extends HttpServlet {
             int cusQuoId = Integer.parseInt(request.getParameter("cusQuoId"));
             int versionId = Integer.parseInt(request.getParameter("versionId"));
             int quotationId = Integer.parseInt(request.getParameter("quotationId"));
+            int adminQuoVersionId = Integer.parseInt(request.getParameter("adminQuoVersionId"));
             String customer = request.getParameter("customer");
             String quotationname = request.getParameter("quotationname");
             String phoneNumber = request.getParameter("phoneNumber");
@@ -74,13 +76,17 @@ public class ViewSentAdminCustomQuotation extends HttpServlet {
                 packagePrice = 2;
             }
             
+            QuotationDAO dao7 = new QuotationDAO();
+            List<AdminHouseComponent> listAdminHouseComponent = dao7.getListAdminHouseComponentByAdminQuoVersionID(adminQuoVersionId);
             
+            request.setAttribute("adminQuoVersionId", adminQuoVersionId);
             request.setAttribute("customer", customer);
             request.setAttribute("quotationname", quotationname);
             request.setAttribute("phoneNumber", phoneNumber);
             request.setAttribute("price", price);
             request.setAttribute("versionId", versionId);
             request.setAttribute("listCustomerHouseComponent", listCustomerHouseComponent);
+            request.setAttribute("listAdminHouseComponent", listAdminHouseComponent);
             request.setAttribute("listHouseComponent", listHouseComponent);
             request.setAttribute("cusQuoVersion", cusQuoVersion);
             request.setAttribute("cusQuoId", cusQuoId);

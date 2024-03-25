@@ -209,7 +209,7 @@ public class CustomerRequestDAO {
 
             while (rs.next()) {
                 AdminReponse p = new AdminReponse();
-
+                p.setAdminQuoVersionId(rs.getInt("AdminQuoVersionID"));
                 p.setVersionid(rs.getInt("VersionID"));
                 p.setCustomer(rs.getString("Name"));
                 p.setPhone(rs.getString("Phone"));

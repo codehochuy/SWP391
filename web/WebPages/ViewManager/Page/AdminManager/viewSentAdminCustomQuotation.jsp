@@ -114,7 +114,20 @@
                                                             <input type="hidden" id="note" name="note" value="${note}"/>
                                                         </form>
                                                         <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill2" novalidate="novalidate">
+                                                            <input type="hidden" id="packagePrice" name="packagePrice" value="${packagePrice}"/>
+                                                            <input type="hidden" id="foundation" name="foundation" value="${foundation}"/>
+                                                            <input type="hidden" id="roof" name="roof" value="${roof}"/>
 
+                                                            <c:forEach items="${requestScope.listAdminHouseComponent}" var="chc" varStatus="loop">
+                                                                <input type="hidden" name="${chc.componentId}" value="${chc.value}"/>
+                                                            </c:forEach>
+
+                                                            <input type="hidden" id="versionId" name="versionId" value="${versionId}"/> 
+                                                            <input type="hidden" id="adminQuoVersionId" name="adminQuoVersionId" value="${adminQuoVersionId}"/>
+                                                            <input type="hidden" id="service" name="service" value="${selectedService}"/>    
+                                                            <input type="hidden" id="houseType" name="houseType" value="${selectedHouseType}"/> 
+                                                            <input type="hidden" id="style" name="style" value="${selectedStyle}"/>
+                                                            <input type="hidden" id="note" name="note" value="${note}"/>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -199,20 +212,39 @@
             }
         }
         </script>
+
         <script>
             $(document).ready(function () {
-                // Kích hoạt sự kiện submit của biểu mẫu khi trang được tải
-                $('#formFill').submit(function (event) {
-                    event.preventDefault(); // Ngăn chặn hành vi mặc định của form
-
-                    var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
-                    $("#formFill").find("input, select").each(function () {
-                        formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
+                // Hàm xử lý AJAX cho formFill2
+                function submitForm2() {
+                    var formData = {};
+                    $("#formFill2").find("input, select, textarea").each(function () {
+                        formData[$(this).attr("name")] = $(this).val();
                     });
 
-                    // Gửi dữ liệu đến servlet bằng AJAX
                     $.ajax({
-                        url: 'LoadAdminQuotaionDetail',
+                        url: 'LoadReponseQuotationContentVersionDetail4View',
+                        type: 'get',
+                        data: formData,
+                        success: function (data) {
+                            var quotationContent = document.getElementById("formFill2");
+                            quotationContent.innerHTML = data;
+                        },
+                        error: function (xhr) {
+                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                        }
+                    });
+                }
+
+                // Hàm xử lý AJAX cho formFill
+                function submitForm() {
+                    var formData = {};
+                    $("#formFill").find("input, select").each(function () {
+                        formData[$(this).attr("name")] = $(this).val();
+                    });
+
+                    $.ajax({
+                        url: 'LoadAdminQuotaionDetail4View',
                         type: 'get',
                         data: formData,
                         success: function (data) {
@@ -223,60 +255,17 @@
                             console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
                         }
                     });
-                });
+                }
 
-                // Tự động kích hoạt sự kiện submit của biểu mẫu khi trang được tải
-                $('#formFill').trigger('submit');
+                // Gọi hàm xử lý AJAX cho formFill2 khi trang được tải
+                submitForm2();
+
+                // Gọi hàm xử lý AJAX cho formFill khi trang được tải
+                submitForm();
             });
+
         </script>
-        <script>
-            function loadFormChangeQuotationDetail() {
-                var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
-                $("#formFill").find("input").each(function () {
-                    formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
-                });
-                $.ajax({// Sửa thành $.ajax thay vì $ajax
-                    url: "/SWP391/LoadFormChangeAdminQuotationDetail",
-                    type: "get",
-                    data: formData,
-                    success: function (data) {
-                        var formFill = document.getElementById("formFill2");
-                        formFill.innerHTML = data;
-                    },
-                    error: function (xhr) {
-                        // Xử lý lỗi nếu cần
-                    }
-                });
-            }
-        </script>
-        <script>
-            $(document).ready(function () {
-                $('#formFill2').submit(function (event) {
-                    event.preventDefault();
 
-
-
-                    var formData = {};
-                    $("#formFill2").find("input, select, textarea").each(function () {
-                        formData[$(this).attr("name")] = $(this).val();
-                    });
-
-                    // Gửi dữ liệu đến servlet bằng AJAX
-                    $.ajax({
-                        url: 'LoadQuotationAdminContentVersionDetail2',
-                        type: 'get',
-                        data: formData,
-                        success: function (data) {
-                            var quotationContent = document.getElementById("quotationContent2");
-                            quotationContent.innerHTML = data;
-                        },
-                        error: function (xhr) {
-                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
-                        }
-                    });
-                });
-            });
-        </script>
 
         <script>
             $(document).ready(function () {

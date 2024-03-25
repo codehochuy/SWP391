@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  * @author PC
  */
 public class AdminReponse {
+    private int adminQuoVersionId;
     private int versionid;
     private String customer;
     private String quotationname;
@@ -27,7 +28,8 @@ public class AdminReponse {
     public AdminReponse() {
     }
 
-    public AdminReponse(int versionid, String customer, String quotationname, String phone, double price, double totalPrice, LocalDateTime time, int cusQuoId, int quotationId, boolean adminReponse, boolean confirmStatus) {
+    public AdminReponse(int adminQuoVersionId, int versionid, String customer, String quotationname, String phone, double price, double totalPrice, LocalDateTime time, int cusQuoId, int quotationId, boolean adminReponse, boolean confirmStatus) {
+        this.adminQuoVersionId = adminQuoVersionId;
         this.versionid = versionid;
         this.customer = customer;
         this.quotationname = quotationname;
@@ -39,6 +41,14 @@ public class AdminReponse {
         this.quotationId = quotationId;
         this.adminReponse = adminReponse;
         this.confirmStatus = confirmStatus;
+    }
+
+    public int getAdminQuoVersionId() {
+        return adminQuoVersionId;
+    }
+
+    public void setAdminQuoVersionId(int adminQuoVersionId) {
+        this.adminQuoVersionId = adminQuoVersionId;
     }
 
     public int getVersionid() {
@@ -128,5 +138,7 @@ public class AdminReponse {
     public void setConfirmStatus(boolean confirmStatus) {
         this.confirmStatus = confirmStatus;
     }
+
+    
     
 }
