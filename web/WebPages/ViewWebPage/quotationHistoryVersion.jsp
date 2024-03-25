@@ -61,15 +61,9 @@
             tbody tr:hover {
                 background-color: #ecf0f1;
             }
-            img {
-                /*                display: block;
-                                margin: 15px auto;
-                                width: 80%;
-                                height: auto;*/
-            }
             /* styles.css */
             #table-of-contents {
-                display: none; /* Mục lục mặc định ẩn đi */
+                display: none; 
                 background-color: #f0f0f0;
                 padding: 10px;
                 border-radius: 5px;
@@ -153,7 +147,6 @@
                                                 VNĐ
                                             </td>
                                             <td>${qv.cusRequest ? 'Đã gửi báo giá' : 'Chưa gửi báo giá'}</td>
-                                                                                        <!--                                            <td><fmt:formatNumber type="number" value="${qv.price}" pattern="#,###.##" /> VNĐ/m2</td>-->
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="" method="post">
                                                     <button class="btn btn-primary btn-sm trash" style="margin-right: 5px;" type="button" title="Xóa" onclick="confirmDelete(this)"
@@ -178,10 +171,8 @@
                                     </c:when>
                                 </c:choose>
                             </c:forEach>
-
                         </tbody>
                     </table>
-
                 </div>
             </div>
             <!-- Portfolio End -->

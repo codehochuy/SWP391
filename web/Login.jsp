@@ -28,7 +28,6 @@
                         <a href="index"><img src="img/team_4.jpg" alt="IMG"></a>
                         
                     </div>
-                    <!--=====TIÊU ĐỀ======-->
                     <div class="login100-form validate-form">
                         <span class="login100-form-title">
                             <b>ĐĂNG NHẬP </b>
@@ -49,8 +48,6 @@
                                     <i class='bx bx-key'></i>
                                 </span> 
                             </div>
-
-                            <!--=====ĐĂNG NHẬP======-->
                             <div class="container-login100-form-btn">
                                 <input type="submit" value="Đăng nhập" />
                             </div>
@@ -62,7 +59,6 @@
                                     Đăng ký tài khoản mới
                                 </a>
                             </div>
-                            <!--=====LINK TÌM MẬT KHẨU======-->
                             <div class="text-right p-t-12">
                                 <a class="txt2" href="forgot.jsp">
                                     Bạn quên mật khẩu?
@@ -71,12 +67,6 @@
                         </form>
 
                         <p style="color: red">${mess}</p>
-
-                        <!--=====FOOTER======-->
-                        <!--                        <div class="text-center p-t-70 txt2">
-                                                    Phần mềm quản lý bán hàng <i class="far fa-copyright" aria-hidden="true"></i>
-                                                    <script type="text/javascript">document.write(new Date().getFullYear());</script> <a-->
-
                     </div>
                 </div>
             </div>

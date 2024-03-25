@@ -15,14 +15,11 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Construction Company Website Template" name="keywords">
         <meta content="Construction Company Website Template" name="description">
-
         <!-- Favicon -->
         <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
-
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet">
-
         <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -59,12 +56,6 @@
             tbody tr:hover {
                 background-color: #ecf0f1;
             }
-            img {
-/*                display: block;
-                margin: 15px auto;
-                width: 80%;
-                height: auto;*/
-            }
             /* styles.css */
             #table-of-contents {
                 display: none; /* Mục lục mặc định ẩn đi */
@@ -96,8 +87,6 @@
     <body>
         <div class="wrapper">
             <jsp:include page="../../WebPages/ViewWebPage/HeaderPage.jsp"/>
-
-
             <!-- Page Header Start -->
             <div class="page-header">
                 <div class="container">
@@ -113,8 +102,6 @@
                 </div>
             </div>
             <!-- Page Header End -->
-
-
             <!-- Portfolio Start -->
             <div class="portfolio">
                 <div class="container">
@@ -132,7 +119,6 @@
                                 <li><a href="#section-6">6. Quy trình báo giá xây nhà hoàn thiện của TITAN [Mới nhất 2024]</a></li>
                                 <li><a href="#section-7">7. TITAN cam kết dịch vụ xây nhà hoàn thiện 2024</a></li>
                             </ul>
-
                             <section id="section-1">
                                 <div class="single-content wow fadeInUp">
                                     <h3>1. Bảng báo giá xây nhà hoàn thiện tại TITAN [Mới Nhất 2024] </h3>
@@ -161,7 +147,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
                                     <p><strong>Một số loại vật tư hoàn thiện mà TITAN sử dụng bao gồm</strong>: Gạch men, cửa các loại, thạch cao, đá hoa cương, lan can, tủ bếp, sơn nước, thiết bị chiếu sáng, thiết bị wc và nhà bếp … vv.</p>
                                     <table border="1">
                                         <thead>
@@ -194,7 +179,6 @@
                                     </ul>
                                 </div>
                             </section>
-
                             <section id="section-2">
                                 <div class="single-content wow fadeInUp">
                                     <h3>2. Vậy dịch vụ xây nhà hoàn thiện là gì?</h3>
@@ -203,7 +187,6 @@
                                     <p>Chính vì tiện ích của <strong>dịch vụ xây nhà hoàn thiện</strong> này, mà chủ đầu tư không phải quá khó khăn trong công việc hoàn thiện các chi tiết của dự án.</p>
                                 </div>
                             </section>
-
                             <section id="section-3">
                                 <div class="single-content wow fadeInUp">
                                     <h3>3. Ưu điểm của dịch vụ xây nhà hoàn thiện</h3>
@@ -220,7 +203,6 @@
                                     </ul>
                                 </div>
                             </section>
-
                             <section id="section-4">
                                 <div class="single-content wow fadeInUp">
                                     <h3>4. Cách tính diện tích xây dựng hoàn thiện 2024</h3>
@@ -247,7 +229,6 @@
                                     </ul>
                                 </div>
                             </section>
-
                             <section id="section-5">
                                 <div class="single-content wow fadeInUp">
                                     <h3>5. Một số hạng mục thi công xây nhà trọn gói 2024</h3>
@@ -266,7 +247,6 @@
                                     </ul>
                                 </div>
                             </section>
-
                             <section id="section-6">
                                 <div class="single-content wow fadeInUp">
                                     <h3>6. Quy trình báo giá xây nhà hoàn thiện của TITAN [Mới nhất 2024]</h3>
@@ -286,7 +266,6 @@
                                     <p><strong>Quy trình làm việc ở dịch vụ xây nhà hoàn thiện hay bất kì các dịch vụ khác của chúng tôi đều thể hiện sự chuyên nghiệp trong cách làm việc, tạo cảm giác tin tưởng dành cho khách hàng đồng hành cùng công ty.</strong></p>
                                 </div>
                             </section>
-
                             <section id="section-7">
                                 <div class="single-content wow fadeInUp">
                                     <h3>7. TITAN cam kết dịch vụ xây nhà hoàn thiện 2024</h3>
@@ -309,13 +288,9 @@
                 </div>
             </div>
             <!-- Portfolio End -->
-
-
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
-
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -327,7 +302,6 @@
         <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
-
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
         <script>

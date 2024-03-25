@@ -15,14 +15,11 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Construction Company Website Template" name="keywords">
         <meta content="Construction Company Website Template" name="description">
-
         <!-- Favicon -->
         <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
-
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet">
-
         <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -38,8 +35,6 @@
     <body>
     <div class="wrapper">
         <jsp:include page="../../WebPages/ViewWebPage/HeaderPage.jsp"/>
-
-
         <!-- Carousel Start -->
         <div id="carousel" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -56,7 +51,6 @@
                         <a class="btn animated fadeInUp" href="Quotation">Nhận Báo Giá</a>
                     </div>
                 </div>
-
                 <div class="carousel-item">
                     <img src="WebPages/ViewWebPage/img/carousel-2.jpg" alt="Carousel Image">
                     <div class="carousel-caption">
@@ -65,7 +59,6 @@
                         <a class="btn animated fadeInUp" href="Quotation">Nhận Báo Giá</a>
                     </div>
                 </div>
-
                 <div class="carousel-item">
                     <img src="WebPages/ViewWebPage/img/carousel-3.jpg" alt="Carousel Image">
                     <div class="carousel-caption">
@@ -75,7 +68,6 @@
                     </div>
                 </div>
             </div>
-
             <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
@@ -86,8 +78,6 @@
             </a>
         </div>
         <!-- Carousel End -->
-
-
         <!-- Feature Start-->
         <div class="feature wow fadeInUp" data-wow-delay="0.1s">
             <div class="container-fluid">
@@ -133,8 +123,6 @@
             </div>
         </div>
         <!-- Feature End-->
-
-
         <!-- About Start -->
         <div class="about wow fadeInUp" data-wow-delay="0.1s">
             <div class="container">
@@ -162,8 +150,6 @@
             </div>
         </div>
         <!-- About End -->
-
-
         <!-- Fact Start -->
         <div class="fact">
             <div class="container-fluid">
@@ -216,8 +202,6 @@
             </div>
         </div>
         <!-- Fact End -->
-
-
         <!-- Service Start -->
         <div class="service">
             <div class="container">
@@ -346,8 +330,6 @@
             </div>
         </div>
         <!-- Service End -->
-
-
         <!-- Video Start -->
         <div class="video wow fadeIn" data-wow-delay="0.1s">
             <div class="container">
@@ -357,7 +339,6 @@
                 </button>
             </div>
         </div>
-
         <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -377,10 +358,7 @@
                 </div>
             </div>
         </div>
-
         <!-- Video End -->
-
-
         <!-- Team Start -->
         <div class="team">
             <div class="container">
@@ -461,8 +439,6 @@
             </div>
         </div>
         <!-- Team End -->
-
-
         <!-- FAQs Start -->
         <div class="faqs">
             <div class="container">
@@ -613,8 +589,6 @@
             </div>
         </div>
         <!-- FAQs End -->
-
-
         <!-- Testimonial Start -->
         <div class="testimonial wow fadeIn" data-wow-delay="0.1s">
             <div class="container">
@@ -697,8 +671,6 @@
             </div>
         </div>
         <!-- Testimonial End -->
-
-
         <!-- Blog Start -->
         <div class="blog">
             <div class="container">
@@ -771,13 +743,9 @@
             </div>
         </div>
         <!-- Blog End -->
-
-
         <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
-
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
     </div>
-
     <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -789,7 +757,6 @@
         <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
-
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
 </body>

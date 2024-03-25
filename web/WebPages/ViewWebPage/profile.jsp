@@ -15,14 +15,11 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Construction Company Website Template" name="keywords">
         <meta content="Construction Company Website Template" name="description">
-
         <!-- Favicon -->
         <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
-
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet">
-
         <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -66,10 +63,8 @@
             </div>
             <div class="site-section">
                 <div class="container">
-
                     <div class="row mb-5">
                         <div class="col-md-9 order-2">
-
                             <div class="col-md-12">
                                 <h2 class="h3 mb-3 text-black">Hồ sơ của tôi</h2>
                                 <div class="p-3 p-lg-5 border display">
@@ -86,16 +81,9 @@
                                     <p for="c_code" class="text-black mb-3">Địa chỉ: ${user.address}</p>
                                     <div class="input-group w-75">
                                         <div class="input-group-append">
-                                            <!--                                            <form action="#">
-                                                                                            <button class="btn btn-primary btn-sm" type="button" data-toggle="modal"
-                                                                                                            data-target="#ModalUP" onclick="getData()" id="button-addon2">Thay đổi thông tin</button>
-                                                                                        </form>-->
                                             <div class="deleteBtn">
-                                                <!-- Button HTML (to Trigger Modal) -->
                                                 <a href="#myModal" class="trigger-btn btn btn-primary btn-sm" data-toggle="modal">Thay đổi thông tin</a>
                                             </div>
-
-                                            <!-- Modal HTML -->
                                             <div id="myModal" class="modal fade">
                                                 <div class="modal-dialog modal-confirm">
                                                     <div class="modal-content">
@@ -103,7 +91,6 @@
                                                             <div class="icon-box">
                                                                 <h4>Thay đổi thông tin</h4>
                                                             </div>						
-
                                                             <form action="UpdateProfile" method="post" class="form-horizontal">
                                                                 <div class="change">
                                                                     <c:choose>
@@ -119,15 +106,11 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Tên người dùng:</label>
-
                                                                     <input class="form-control" name="name" type="text" value="${user.name}">
-
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Số điện thoại:</label>
-
                                                                     <input class="form-control" name="phone" type="text" value="${user.phone}">
-
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Địa chỉ:</label>
@@ -135,38 +118,29 @@
                                                                         <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
                                                                             <option value="" selected>Chọn tỉnh thành</option>           
                                                                         </select>
-
                                                                         <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
                                                                             <option value="" selected>Chọn quận huyện</option>
                                                                         </select>
-
                                                                         <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
                                                                             <option value="" selected>Chọn phường xã</option>
                                                                         </select>
                                                                     </div>    
-
                                                                     <input class="form-control" id="result" name="address" type="text">
                                                                 </div>
                                                                 <div class="modal-footer justify-content-center">
-
                                                                     <button type="submit" class="btn btn-primary" id="">Cập nhật</button>
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-
                                                                 </div>
                                                             </form>    
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-3 order-1 mb-5 mb-md-0">
                             <div class="border p-4 rounded mb-4">
                                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Tài khoản của tôi</h3>
@@ -183,22 +157,13 @@
                                     <a href="QuotationHistory" class="d-flex">Lịch sử báo giá</a>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
-
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -210,10 +175,8 @@
         <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
-
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
-
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script>
             var citis = document.getElementById("city");

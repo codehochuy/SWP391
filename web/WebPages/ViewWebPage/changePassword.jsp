@@ -15,14 +15,11 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Construction Company Website Template" name="keywords">
         <meta content="Construction Company Website Template" name="description">
-
         <!-- Favicon -->
         <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
-
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet">
-
         <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -66,10 +63,8 @@
             </div>
             <div class="site-section">
                 <div class="container">
-
                     <div class="row mb-5">
                         <div class="col-md-9 order-2">
-
                             <h1>Thay đổi mật khẩu</h1>
                             <!-- Form -->
                             <form id="form" action="ChangePassword" method="post">
@@ -103,7 +98,6 @@
                                 <h3 id="message"></h3>
                             </div>
                         </div>
-
                         <div class="col-md-3 order-1 mb-5 mb-md-0">
                             <div class="border p-4 rounded mb-4">
                                 <h3 class="mb-3 h6 text-uppercase text-black d-block">Tài khoản của tôi</h3>
@@ -113,22 +107,13 @@
                                     <a href="QuotationHistory" class="d-flex">Lịch sử báo giá</a>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
-
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -140,10 +125,8 @@
         <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
-
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
-
         <script>
                                     document.querySelector('input[type=file]').addEventListener('change', function (e) {
                                         var reader = new FileReader();
@@ -168,16 +151,13 @@
             let checkOldPassword = false;
 
             function validateForm() {
-                // Using Constraint API
                 isValid = form.checkValidity();
-                // Style main message for an error
                 if (!isValid) {
                     message.textContent = "Vui lòng điền hết tất cả các trường.";
                     message.style.color = "red";
                     messageContainer.style.borderColor = "red";
                     return;
                 }
-                // Check to see if passwords match - old password
                 if (password0E0.value === '${user.password}') {
                     checkOldPassword = true;
                     password0E0.style.borderColor = "green";
@@ -188,7 +168,6 @@
                     password0E0.style.borderColor = "red";
                     return;
                 }
-                // new password
                 if (password1El.value === password2El.value) {
                     passwordsMatch = true;
                     password1El.style.borderColor = "green";
@@ -202,28 +181,21 @@
                     password2El.style.borderColor = "red";
                     return;
                 }
-                // If form is valid and passwords match
                 if (isValid && passwordsMatch && checkOldPassword) {
                     message.textContent = "Thay đổi thành công.";
                     message.style.color = "green";
                     messageContainer.style.borderColor = "green";
                 }
             }
-
             function processFormData(e) {
-                // Validate Form
                 validateForm();
                 if (isValid && passwordsMatch && checkOldPassword) {
-                    // The conditions are met, allow the form to submit
                     return true;
                 } else {
-                    // Prevent default form submission
                     e.preventDefault();
                     return false;
                 }
             }
-
-            // Event Listeners
             document.getElementById("form").addEventListener("submit", processFormData);
         </script>
     </body>

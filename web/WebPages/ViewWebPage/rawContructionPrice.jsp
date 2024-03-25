@@ -61,15 +61,9 @@
             tbody tr:hover {
                 background-color: #ecf0f1;
             }
-            img {
-                /*                display: block;
-                                margin: 15px auto;
-                                width: 80%;
-                                height: auto;*/
-            }
             /* styles.css */
             #table-of-contents {
-                display: none; /* Mục lục mặc định ẩn đi */
+                display: none; 
                 background-color: #f0f0f0;
                 padding: 10px;
                 border-radius: 5px;
@@ -95,8 +89,8 @@
             }
             .centered {
                 display: flex;
-                justify-content: center; /* căn giữa theo chiều ngang */
-                align-items: center; /* căn giữa theo chiều dọc */
+                justify-content: center;
+                align-items: center;
                 padding: 20px;
             }
         </style>
@@ -121,8 +115,6 @@
                 </div>
             </div>
             <!-- Page Header End -->
-
-
             <!-- Portfolio Start -->
             <div class="portfolio">
                 <div class="container">
@@ -141,7 +133,6 @@
                                 <li><a href="#section-6">6. Một số lưu ý về thi công, báo giá xây dựng nhà phần thô 2024</a></li>
                                 <li><a href="#section-7">7. Quy trình thi công xây dựng phần thô TITAN</a></li>
                                 <li><a href="#section-8">8. Cam Kết của TITAN khi thi công, báo giá xây dựng phần thô 2024</a></li>
-
                             </ul>
 
                             <section id="section-1">
@@ -158,7 +149,6 @@
                                         <c:forEach items="${requestScope.list}" var="i">
                                             <c:if test="${i.service.id eq 1}"><li><strong>Công trình ${i.houseType.name} ${i.style.name}</strong>: Giá thi công phần thô giao động từ <strong><fmt:formatNumber value="${i.price1}" pattern="###,###,###" /></strong> đến <strong><fmt:formatNumber value="${i.price2}" pattern="###,###,###" /> đ/m²</strong>.</li></th></c:if>
                                             </c:forEach>
-
                                     </ul>
                                     <h4>Bảng giá xây nhà phần thô</h4>
                                     <table border="1">
@@ -445,14 +435,6 @@
                             </section>
                         </article>
                     </main>
-
-
-
-
-
-
-
-
                 </div>
             </div>
             <!-- Portfolio End -->
@@ -481,10 +463,7 @@
             document.addEventListener('DOMContentLoaded', function () {
                 var toggleButton = document.getElementById('toggle-contents');
                 var tableOfContents = document.getElementById('table-of-contents');
-
-                // Ẩn mục lục khi trang được tải lần đầu
                 tableOfContents.style.display = 'none';
-
                 toggleButton.addEventListener('click', function () {
                     if (tableOfContents.style.display === 'none' || tableOfContents.style.display === '') {
                         tableOfContents.style.display = 'block';

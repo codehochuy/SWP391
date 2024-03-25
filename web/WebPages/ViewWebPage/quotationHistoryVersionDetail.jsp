@@ -84,7 +84,6 @@
                                             <input type="hidden" id="packagePrice" name="packagePrice" value="${packagePrice}"/>
                                             <input type="hidden" id="foundation" name="foundation" value="${foundation}"/>
                                             <input type="hidden" id="roof" name="roof" value="${roof}"/>
-
                                             <c:forEach items="${requestScope.listCustomerHouseComponent}" var="chc" varStatus="loop">
                                                 <input type="hidden" name="${chc.componentId}" value="${chc.value}"/>
                                             </c:forEach>
@@ -101,8 +100,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -113,10 +110,8 @@
                 </form>
             </div>
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
-
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -128,26 +123,20 @@
         <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
-
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
         <jsp:include page="../../PluginChatMess.jsp"/>
-
-
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <!--1-->
         <script>
             $(document).ready(function () {
-                // Kích hoạt sự kiện submit của biểu mẫu khi trang được tải
                 $('#formFill').submit(function (event) {
-                    event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+                    event.preventDefault();
 
-                    var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
+                    var formData = {};
                     $("#formFill").find("input, select").each(function () {
-                        formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
+                        formData[$(this).attr("name")] = $(this).val();
                     });
-
-                    // Gửi dữ liệu đến servlet bằng AJAX
                     $.ajax({
                         url: 'LoadQuotationContentVersionDetail',
                         type: 'get',
@@ -161,49 +150,17 @@
                         }
                     });
                 });
-
-                // Tự động kích hoạt sự kiện submit của biểu mẫu khi trang được tải
                 $('#formFill').trigger('submit');
             });
         </script>
         <!--2-->
-        <script>
-            function loadFormChangeQuotationDetail() {
-                var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
-                $("#formFill").find("input").each(function () {
-                    formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
-                });
-                $.ajax({// Sửa thành $.ajax thay vì $ajax
-                    url: "/SWP391/LoadFormChangeQuotationDetail",
-                    type: "get",
-                    data: formData,
-                    success: function (data) {
-                        var formFill = document.getElementById("formFill2");
-                        formFill.innerHTML = data;
-                    },
-                    error: function (xhr) {
-                        // Xử lý lỗi nếu cần
-                    }
-                });
-            }
-        </script>
-
-        <script>
-            document.getElementById("quotationContent").addEventListener("submit", function (event) {
-                event.preventDefault(); // Ngăn chặn việc gửi form mặc định
-
-                // Lấy ra giá trị của nút được nhấn
-                var action = event.submitter.value;
-                var formData = {}; // Khởi tạo đối tượng chứa dữ liệu biểu mẫu
-                $("#formFill").find("input").each(function () {
-                    formData[$(this).attr("name")] = $(this).val(); // Thu thập dữ liệu từ các trường input và select
-                });
-
-                // Xác định hành động dựa trên giá trị của nút được nhấn
-                switch (action) {
-                    case "changeQuotationContent":
-                        // Xử lý chức năng 1
-                        $.ajax({// Sửa thành $.ajax thay vì $ajax
+        <!--        <script>
+                    function loadFormChangeQuotationDetail() {
+                        var formData = {}; 
+                        $("#formFill").find("input").each(function () {
+                            formData[$(this).attr("name")] = $(this).val(); 
+                        });
+                        $.ajax({
                             url: "/SWP391/LoadFormChangeQuotationDetail",
                             type: "get",
                             data: formData,
@@ -212,7 +169,32 @@
                                 formFill.innerHTML = data;
                             },
                             error: function (xhr) {
-                                // Xử lý lỗi nếu cần
+                               console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                            }
+                        });
+                    }
+                </script>-->
+
+        <script>
+            document.getElementById("quotationContent").addEventListener("submit", function (event) {
+                event.preventDefault();
+                var action = event.submitter.value;
+                var formData = {};
+                $("#formFill").find("input").each(function () {
+                    formData[$(this).attr("name")] = $(this).val();
+                });
+                switch (action) {
+                    case "changeQuotationContent":
+                        $.ajax({
+                            url: "/SWP391/LoadFormChangeQuotationDetail",
+                            type: "get",
+                            data: formData,
+                            success: function (data) {
+                                var formFill = document.getElementById("formFill2");
+                                formFill.innerHTML = data;
+                            },
+                            error: function (xhr) {
+                                console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
                             }
                         });
                         break;
@@ -231,7 +213,6 @@
                         });
                         break;
                     default:
-                        // Xử lý mặc định nếu cần
                         console.log("Không xác định hành động");
                 }
             });
@@ -241,77 +222,94 @@
         <script>
             $(document).ready(function () {
                 $('#formFill2').submit(function (event) {
-                    event.preventDefault();
+                    let isValid = true;
 
+                    const _1 = parseFloat(document.getElementById('1').value);
+                    const _2 = parseFloat(document.getElementById('2').value);
+                    const _3 = parseFloat(document.getElementById('3').value);
+                    const _4 = parseFloat(document.getElementById('4').value);
+                    const _5 = parseInt(document.getElementById('5').value);
+                    const _6 = parseFloat(document.getElementById('6').value);
 
+                    const error_1 = document.getElementById('error_1');
+                    const error_2 = document.getElementById('error_2');
+                    const error_3 = document.getElementById('error_3');
+                    const error_4 = document.getElementById('error_4');
+                    const error_5 = document.getElementById('error_5');
+                    const error_6 = document.getElementById('error_6');
 
-                    var formData = {};
-                    $("#formFill2").find("input, select, textarea").each(function () {
-                        formData[$(this).attr("name")] = $(this).val();
-                    });
+                    // Reset error messages
+                    error_1.textContent = '';
+                    error_2.textContent = '';
+                    error_3.textContent = '';
+                    error_4.textContent = '';
+                    error_5.textContent = '';
+                    error_6.textContent = '';
 
-                    // Gửi dữ liệu đến servlet bằng AJAX
-                    $.ajax({
-                        url: 'LoadQuotationContentVersionDetail2',
-                        type: 'get',
-                        data: formData,
-                        success: function (data) {
-                            var quotationContent = document.getElementById("quotationContent2");
-                            quotationContent.innerHTML = data;
-                        },
-                        error: function (xhr) {
-                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
-                        }
-                    });
+                    if (_1 > 10000 || _1 <= 0) {
+                        isValid = false;
+                        error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
+                    }
+
+                    if (_2 > 10000 || _2 <= 0) {
+                        isValid = false;
+                        error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
+                    }
+
+                    if (_3 >= _1 || _3 < 0) {
+                        isValid = false;
+                        error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
+                    }
+                    if (_4 >= (_1 - _3) || _4 < 0) {
+                        isValid = false;
+                        error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
+                    }
+
+                    if (isNaN(_5) || _5 > 24 || _5 < 0) {
+                        isValid = false;
+                        error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
+                    }
+
+                    if (!isNaN(_6) && (_6 < 0 || _6 > 2)) {
+                        isValid = false;
+                        error_6.textContent = 'Chiều dài rộng ban công từ 0-2m.';
+                    }
+
+                    if (!isValid) {
+                        event.preventDefault();
+                    } else {
+                        event.preventDefault();
+                        var formData = {};
+                        $("#formFill2").find("input, select, textarea").each(function () {
+                            formData[$(this).attr("name")] = $(this).val();
+                        });
+                        $.ajax({
+                            url: 'LoadQuotationContentVersionDetail2',
+                            type: 'get',
+                            data: formData,
+                            success: function (data) {
+                                var quotationContent = document.getElementById("quotationContent2");
+                                quotationContent.innerHTML = data;
+                            },
+                            error: function (xhr) {
+                                console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                            }
+                        });
+                    }
+
                 });
             });
         </script>
-
-<!--        <script>
-            $(document).ready(function () {
-                $('#quotationContent2').submit(function (event) {
-                    event.preventDefault();
-
-
-
-                    var formData = {};
-                    $("#quotationContent2").find("input").each(function () {
-                        formData[$(this).attr("name")] = $(this).val();
-                    });
-
-                    // Gửi dữ liệu đến servlet bằng AJAX
-                    $.ajax({
-                        url: '/SWP391/NewVersionQuotationContent',
-                        type: 'get',
-                        data: formData,
-                        success: function (data) {
-                            var quotationContent = document.getElementById("quotationContent2");
-                            quotationContent.innerHTML += data;
-                        },
-                        error: function (xhr) {
-                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
-                        }
-                    });
-                });
-            });
-        </script>-->
-
         <script>
             document.getElementById("quotationContent2").addEventListener("submit", function (event) {
-                event.preventDefault(); // Ngăn chặn việc gửi form mặc định
-
-                // Lấy ra giá trị của nút được nhấn
+                event.preventDefault();
                 var action = event.submitter.value;
-
                 var formData = {};
                 $("#quotationContent2").find("input").each(function () {
                     formData[$(this).attr("name")] = $(this).val();
                 });
-
-                // Xác định hành động dựa trên giá trị của nút được nhấn
                 switch (action) {
                     case "saveQuotationContent":
-                        // Xử lý chức năng 1
                         $.ajax({
                             url: '/SWP391/NewVersionQuotationContent',
                             type: 'get',
@@ -340,12 +338,10 @@
                         });
                         break;
                     default:
-                        // Xử lý mặc định nếu cần
                         console.log("Không xác định hành động");
                 }
             });
         </script>
-
         <script>
             // JavaScript code for form validation
             const form = document.getElementById('formFill2');
@@ -368,7 +364,6 @@
                 const error_5 = document.getElementById('error_5');
                 const error_6 = document.getElementById('error_6');
 
-                // Reset error messages
                 error_1.textContent = '';
                 error_2.textContent = '';
                 error_3.textContent = '';
@@ -377,8 +372,6 @@
                     error_5.textContent = '';
                 if (error_6)
                     error_6.textContent = '';
-
-//           
 
                 if (parseDouble(_1.value) > 10000 || parseDouble(_1.value) <= 0) {
                     isValid = false;

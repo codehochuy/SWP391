@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <html>
     <head>
-
         <meta charset="UTF-8">
         <title>TITAN - Blog Page</title>
         <link rel="icon" href="img/logo.jpg" type="image/x-icon">
@@ -18,14 +17,11 @@
         <meta content="Construction Company Website Template" name="description">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
         <!-- Favicon -->
         <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
-
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet">
-
         <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -49,35 +45,32 @@
             }
 
             .menu-item {
-                flex: 0 0 0; /* Set each item to take up one-third of the container width */
+                flex: 0 0 0; 
                 box-sizing: border-box;
-                padding: 10px; /* Add padding to each item */
+                padding: 10px;
             }
 
             .menu-btn {
                 background-color: #6c757d;
                 color: #fff;
                 border: 1px solid #6c757d;
-                box-sizing: border-box; /* Ensure padding and border are included in the width */
+                box-sizing: border-box; 
                 padding: 10px 15px;
                 cursor: pointer;
                 transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-                width: auto; /* Set width to auto to fit content */
-                margin-bottom: 10px; /* Khoảng cách giữa các dòng */
+                width: auto; 
+                margin-bottom: 10px; 
                 display: flex;
-                white-space: nowrap; /* Prevent text from wrapping to the next line */
+                white-space: nowrap;
             }
-
             .menu-btn:hover {
                 background-color: #495057;
                 border-color: #495057;
                 color: #fff;
             }
-
-
             .show-all-btn {
-                width: 45px; /* Set a fixed width for a square shape */
-                height: 45px; /* Set the same height as width for a square shape */
+                width: 45px;
+                height: 45px; 
                 display: flex;
                 margin-left: 10px;
                 align-items: center;
@@ -86,9 +79,8 @@
                 color: #fff;
                 border: 1px solid #6c757d;
                 box-sizing: border-box;
-                padding: 0; /* Remove padding */
-
-                margin-top: 10px; /* Add margin-bottom of 10px */
+                padding: 0; 
+                margin-top: 10px; 
                 cursor: pointer;
                 transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
             }
@@ -96,14 +88,10 @@
 
             @media (max-width: 768px) {
                 .menu-item {
-                    flex: 0 0 100%; /* On smaller screens, each item takes the full width */
+                    flex: 0 0 100%;
                 }
             }
         </style>
-
-
-
-
     </head>
     <body>
         <div class="wrapper">
@@ -124,12 +112,6 @@
                 </div>
             </div>
             <!-- Page Header End -->
-
-
-
-
-
-
             <!-- Blog Start -->
             <div class="blog">
                 <div class="container">
@@ -137,8 +119,6 @@
                         <p>Bài viết mới nhất</p>
                         <h2>Bài viết mới nhất từ chúng tôi</h2>
                     </div>
-
-
                     <div class="row" style="margin-left: 660px;">
                         <form action="searchbyTags" method="POST">
                             <label for="tagSearch">Tìm kiếm tag</label>
@@ -146,8 +126,6 @@
                             <button type="subtmit" >Tìm kiếm</button>
                         </form>
                     </div>
-
-
                     <ul id="categories" class="menu-list">
                         <c:forEach var="category" items="${blogCategories}" varStatus="loop">
                             <li class="menu-item ${loop.index > 2 ? 'category-hidden' : ''}">
@@ -163,7 +141,6 @@
                             <i class="fas fa-ellipsis-v fa-sm"></i> <!-- Font Awesome icon for three dots with smaller size -->
                         </button>
                     </ul>
-
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
                             var categoryLinks = document.querySelectorAll('.menu-item');
@@ -175,36 +152,25 @@
                                     categoryLinks[i].style.display = 'none';
                                 }
                             }
-
                             function showAllCategories() {
                                 categoryLinks.forEach(function (link, index) {
                                     link.style.display = 'flex';
                                 });
                             }
-
-                            // Ẩn các category khi trang được tải
                             hideCategories();
 
                             if (showAllBtn) {
                                 showAllBtn.addEventListener('click', function () {
                                     if (isExpanded) {
-                                        // Thu hồi các category đã được mở rộng
                                         hideCategories();
                                     } else {
-                                        // Hiển thị tất cả các category
                                         showAllCategories();
                                     }
-
-                                    // Cập nhật trạng thái mở rộng
                                     isExpanded = !isExpanded;
                                 });
                             }
                         });
                     </script>
-
-
-
-
                     <div class="row blog-page">
                         <c:forEach var="blog" items="${blogs}">
                             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
@@ -216,89 +182,37 @@
                                             ${blog.content}
                                         </div>
                                     </div>
-
                                     <script>
                                         document.addEventListener("DOMContentLoaded", function () {
-                                            // Get all elements with the class 'hidden-blog-content'
                                             var hiddenBlogContents = document.querySelectorAll('.hidden-blog-content');
-
-                                            // Regular expression to match img tags and extract src attribute
                                             var imgRegex = /<img[^>]*\ssrc="([^"]*)"[^>]*>/g;
-
-                                            // Regular expression to match URLs starting with "https://"
                                             var fallbackRegex = /"https:\/\/[^'"\s]+/;
-
-                                            // Loop through each hidden-blog-content element
                                             hiddenBlogContents.forEach(function (hiddenBlogContent) {
-                                                // Get the content of the hidden-blog-content
                                                 var content = hiddenBlogContent.innerHTML;
-
-                                                // Use the imgRegex to find the first image src in the content
                                                 var imgMatch = imgRegex.exec(content);
                                                 var imageUrl = imgMatch ? imgMatch[1] : '';
-
-                                                // If imgRegex didn't find a match, use the fallbackRegex
                                                 if (!imageUrl) {
                                                     var fallbackMatch = fallbackRegex.exec(content);
                                                     imageUrl = fallbackMatch ? fallbackMatch[0].replace('"', '') : '';
                                                 }
                                                 console.log(fallbackMatch);
-
-
-                                                // Find the corresponding blog-img element in the same parent container
                                                 var blogImg = hiddenBlogContent.closest('.blog-item').querySelector('.blog-img img');
-
-                                                // Set the src attribute of the blog-img's img tag with the image URL
                                                 if (blogImg) {
                                                     blogImg.src = imageUrl;
                                                 }
-
-                                                // Reset the regex lastIndex for the next iteration
                                                 imgRegex.lastIndex = 0;
                                                 fallbackRegex.lastIndex = 0;
                                             });
                                         });
                                     </script>
-
-
                                     <div class="blog-title">
                                         <h3><c:out value="${blog.title}" /></h3>
                                         <a class="btn" href="BlogDetail?blogid=${blog.blogID}">+</a>
                                     </div>
-
-                                    <%--         <div class="blog-meta">
-                                                 <p>Tạo bởi ${blog.user.name} </p><br>
-                                                 <p>Ngày tạo  ${blog.dateCreate}</p><br>
-                                                  <p>Ngày sửa đổi  ${blog.dateModified}</p>
-                                             </div> --%>
-
-
-                                    <%--              <div class="blog-text" style="display: none;">
-                                                     <p>
-                                                         <c:out value="${blog.content}" />
-                                                     </p>
-                                                 </div> --%>
                                 </div>
                             </div>
                         </c:forEach>
                     </div>
-
-
-                    <!--                    <div class="row" style="margin-left: 800px;">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <ul class="pagination justify-content-center">
-                                                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                        <li class="page-item "><a class="page-link" href="#">2</a></li>
-                                                         <li class="page-item "><a class="page-link" href="#">3</a></li>
-                                     
-                    
-                                                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>-->
                     <div class="row" style="margin-left: 800px;">
                         <div class="row">
                             <div class="col-12">

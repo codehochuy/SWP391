@@ -86,6 +86,7 @@
                                             <td class="confirm-status">${user.adminReponse ? 'Đã trả lời' : 'Chưa trả lời'}</td> 
                                             <td style="display: flex; justify-content: space-left">
                                                 <form action="View" method="post">
+                                                    <input type="hidden" name="adminReponse" value="${user.adminReponse}">
                                                     <input type="hidden" name="versionId" value="${user.versionid}">
                                                     <input type="hidden" name="cusQuoId" value="${user.cusQuoId}">
                                                     <input type="hidden" name="quotationId" value="${user.quotationId}">

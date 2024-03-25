@@ -46,7 +46,7 @@ public class View extends HttpServlet {
             String customer = request.getParameter("customer");
             String quotationname = request.getParameter("quotationname");
             String phoneNumber = request.getParameter("phoneNumber");
-           
+            boolean adminReponse = (request.getParameter("adminReponse") != null && !request.getParameter("adminReponse").isEmpty()) ? Boolean.parseBoolean(request.getParameter("adminReponse")) : false;
             QuotationDAO dao = new QuotationDAO();
             List<CustomerHouseComponent> listCustomerHouseComponent = dao.getListCustomerHouseComponentByVersionId(versionId);
             QuotationDAO dao1 = new QuotationDAO();
@@ -75,7 +75,7 @@ public class View extends HttpServlet {
                 packagePrice = 2;
             }
             
-            
+            request.setAttribute("adminReponse", adminReponse);
             request.setAttribute("customer", customer);
             request.setAttribute("quotationname", quotationname);
             request.setAttribute("phoneNumber", phoneNumber);

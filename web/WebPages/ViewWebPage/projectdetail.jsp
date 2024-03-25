@@ -35,11 +35,11 @@
         <link href="WebPages/ViewWebPage/lib/slick/slick-theme.css" rel="stylesheet">
         <!-- Template Stylesheet -->
         <link href="WebPages/ViewWebPage/css/style.css" rel="stylesheet">
-<style>
-    .blog-content img {
-        max-width: 970px;
-    }
-</style>
+        <style>
+            .blog-content img {
+                max-width: 970px;
+            }
+        </style>
 
     </head>
     <body>
@@ -59,44 +59,31 @@
                     </div>
                 </div>
             </div>
-
-
             <div style="margin-left: 200px; margin-right: 200px;">
-                  <!-- Retrieve the BlogDTO object from the request attribute -->
-             
-
-                  <!-- Check if the blog object is not null -->
-             
-                    <div>
+                <div>
                     <div style="text-align: center;">
-    <h2><strong>Tên dự án: ${project.name}</strong></h2>
-    <!-- Other content goes here -->
-</div>
+                        <h2><strong>Tên dự án: ${project.name}</strong></h2>
+                    </div>
+                    <p>Ngày hoàn thành: ${project.date}</p>
+                    <p>Thời gian hoàn thành/ngày: ${project.time}</p>
+                    <p>Tên dịch vụ: ${project.service.name}</p>
+                    <p>Kiểu nhà: ${project.houseType.name}</p>
+                    <p>Phong cách: ${project.style.name}</p>
+                    <p>Miêu tả: ${project.description}</p>
+                    <p>Ảnh dự án</p>
+                    <div class="image-gallery">
+                        <c:forEach var="image" items="${images}">
+                            <a href="img/${image.link}" data-lightbox="project-gallery" data-title="${image.caption}">
+                                <img src="img/${image.link}" alt="${image.caption}" class="thumbnail" />
+                            </a>
+                        </c:forEach>
+                    </div>  
+                </div>
 
-             <p>Ngày hoàn thành: ${project.date}</p>
-              <p>Thời gian hoàn thành/ngày: ${project.time}</p>
-                 <p>Tên dịch vụ: ${project.service.name}</p>
-                 <p>Kiểu nhà: ${project.houseType.name}</p>
-                 <p>Phong cách: ${project.style.name}</p>
-                      <p>Miêu tả: ${project.description}</p>
-                       <p>Ảnh dự án</p>
-                       <div class="image-gallery">
-                                        <c:forEach var="image" items="${images}">
-                                            <a href="img/${image.link}" data-lightbox="project-gallery" data-title="${image.caption}">
-                                                <img src="img/${image.link}" alt="${image.caption}" class="thumbnail" />
-                                            </a>
-                                        </c:forEach>
-                                    </div>  
-        </div>
-               
-              </div>
-                
-                
-                
+            </div>
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

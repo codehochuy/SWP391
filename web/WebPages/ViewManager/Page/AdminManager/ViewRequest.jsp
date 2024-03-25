@@ -37,6 +37,10 @@
                 font-style: italic; 
                 opacity: 0.6;
             }
+            .error {
+                color: red;
+                font-style: italic;
+            }
         </style>
 
     </head>
@@ -92,7 +96,8 @@
                                             <div class="col-md-6 rawContruction">
                                                 <div class="contact-form">
                                                     <div class="contact wow fadeInUp container contact-form">
-                                                        <form action="LoadQuotationContent" method="post" name="sentMessage" id="formFill" novalidate="novalidate">
+                                                        <form action="" method="post" name="sentMessage" id="formFill" novalidate="novalidate">
+                                                            <input type="hidden" id="adminReponse" name="adminReponse" value="${adminReponse}"/>
                                                             <input type="hidden" id="packagePrice" name="packagePrice" value="${packagePrice}"/>
                                                             <input type="hidden" id="foundation" name="foundation" value="${foundation}"/>
                                                             <input type="hidden" id="roof" name="roof" value="${roof}"/>
@@ -246,28 +251,83 @@
         <script>
             $(document).ready(function () {
                 $('#formFill2').submit(function (event) {
-                    event.preventDefault();
+                    let isValid = true;
 
+                    const _1 = parseFloat(document.getElementById('1').value);
+                    const _2 = parseFloat(document.getElementById('2').value);
+                    const _3 = parseFloat(document.getElementById('3').value);
+                    const _4 = parseFloat(document.getElementById('4').value);
+                    const _5 = parseInt(document.getElementById('5').value);
+                    const _6 = parseFloat(document.getElementById('6').value);
 
+                    const error_1 = document.getElementById('error_1');
+                    const error_2 = document.getElementById('error_2');
+                    const error_3 = document.getElementById('error_3');
+                    const error_4 = document.getElementById('error_4');
+                    const error_5 = document.getElementById('error_5');
+                    const error_6 = document.getElementById('error_6');
 
-                    var formData = {};
-                    $("#formFill2").find("input, select, textarea").each(function () {
-                        formData[$(this).attr("name")] = $(this).val();
-                    });
+                    // Reset error messages
+                    error_1.textContent = '';
+                    error_2.textContent = '';
+                    error_3.textContent = '';
+                    error_4.textContent = '';
+                    error_5.textContent = '';
+                    error_6.textContent = '';
 
-                    // Gửi dữ liệu đến servlet bằng AJAX
-                    $.ajax({
-                        url: 'LoadQuotationAdminContentVersionDetail2',
-                        type: 'get',
-                        data: formData,
-                        success: function (data) {
-                            var quotationContent = document.getElementById("quotationContent2");
-                            quotationContent.innerHTML = data;
-                        },
-                        error: function (xhr) {
-                            console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
-                        }
-                    });
+                    if (_1 > 10000 || _1 <= 0) {
+                        isValid = false;
+                        error_1.textContent = 'Chiều dài không được nhỏ hơn 1 và lớn hơn 10,000.';
+                    }
+
+                    if (_2 > 10000 || _2 <= 0) {
+                        isValid = false;
+                        error_2.textContent = 'Chiều rộng không được nhỏ hơn 1 và lớn hơn 10,000.';
+                    }
+
+                    if (_3 >= _1 || _3 < 0) {
+                        isValid = false;
+                        error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
+                    }
+                    if (_4 >= (_1 - _3) || _4 < 0) {
+                        isValid = false;
+                        error_4.textContent = 'Sân sau phải nhỏ hơn chiều dài còn lại sau khi trừ đi sân trước và lớn hơn hoặc bằng 0.';
+                    }
+
+                    if (isNaN(_5) || _5 > 24 || _5 < 0) {
+                        isValid = false;
+                        error_5.textContent = 'Số lầu phải nằm trong đoạn từ 0 đến 24.';
+                    }
+
+                    if (!isNaN(_6) && (_6 < 0 || _6 > 2)) {
+                        isValid = false;
+                        error_6.textContent = 'Chiều dài rộng ban công từ 0-2m.';
+                    }
+
+                    if (!isValid) {
+                        event.preventDefault();
+                    } else {
+                        event.preventDefault();
+                        var formData = {};
+                        $("#formFill2").find("input, select, textarea").each(function () {
+                            formData[$(this).attr("name")] = $(this).val();
+                        });
+
+                        // Gửi dữ liệu đến servlet bằng AJAX
+                        $.ajax({
+                            url: 'LoadQuotationAdminContentVersionDetail2',
+                            type: 'get',
+                            data: formData,
+                            success: function (data) {
+                                var quotationContent = document.getElementById("quotationContent2");
+                                quotationContent.innerHTML = data;
+                            },
+                            error: function (xhr) {
+                                console.log('Đã xảy ra lỗi khi gửi biểu mẫu.');
+                            }
+                        });
+                    }
+
                 });
             });
         </script>

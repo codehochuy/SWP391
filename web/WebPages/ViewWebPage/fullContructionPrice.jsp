@@ -3,7 +3,6 @@
     Created on : Feb 2, 2024, 12:00:50 PM
     Author     : PC
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -17,14 +16,11 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="Construction Company Website Template" name="keywords">
         <meta content="Construction Company Website Template" name="description">
-
         <!-- Favicon -->
         <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
-
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet">
-
         <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -61,13 +57,6 @@
             tbody tr:hover {
                 background-color: #ecf0f1;
             }
-            img {
-                /*                display: block;
-                                margin: 15px auto;
-                                width: 80%;
-                                height: auto;*/
-            }
-            /* styles.css */
             #table-of-contents {
                 display: none; /* Mục lục mặc định ẩn đi */
                 background-color: #f0f0f0;
@@ -80,16 +69,13 @@
                 margin-bottom: 5px;
                 list-style: none;
             }
-
             #table-of-contents a {
                 text-decoration: none;
                 color: #333;
             }
-
             #table-of-contents a:hover {
                 color: #fdbe33;
             }
-
             #toggle-contents {
                 margin-bottom: 10px;
             }
@@ -104,8 +90,6 @@
     <body>
         <div class="wrapper">
             <jsp:include page="../../WebPages/ViewWebPage/HeaderPage.jsp"/>
-
-
             <!-- Page Header Start -->
             <div class="page-header">
                 <div class="container">
@@ -121,8 +105,6 @@
                 </div>
             </div>
             <!-- Page Header End -->
-
-
             <!-- Portfolio Start -->
             <div class="portfolio">
                 <div class="container">
@@ -141,14 +123,12 @@
                                 <li><a href="#section-7">7. Quy trình báo giá xây nhà trọn gói của TITAN [Mới nhất 2024]</a></li>
                                 <li><a href="#section-8">8. TITAN cam kết dịch vụ xây nhà trọn gói 2024</a></li>
                             </ul>
-
                             <section id="section-1">
                                 <div class="single-content wow fadeInUp">
                                     <h3>1. Bảng báo giá xây nhà trọn gói tại TITAN [Mới Nhất 2024] </h3>
                                     <div class="centered">
                                         <img src="WebPages/ViewWebPage/img/quotation-full-3.jpg" alt="Quotation Image">
                                     </div>
-
                                     <p><strong>Tùy thuộc vào từng loại nhà thi công mà gia chủ lựa chọn, đơn giá xây nhà trọn gói tại TITAN được chia thành 3 nhóm chính như sau (chưa bao gồm vật tư hoàn thiện):</strong></p>
                                     <ul>
                                         <c:forEach items="${requestScope.list}" var="i">
@@ -298,27 +278,22 @@
                                     </ul>
                                 </div>
                             </section>
-
                             <section id="section-2">
                                 <div class="single-content wow fadeInUp">
                                     <h3>2. Vậy dịch vụ xây nhà trọn gói là gì?</h3>
                                     <div class="centered">
                                         <img src="WebPages/ViewWebPage/img/quotation-full-1.jpg" alt="Quotation Image">
                                     </div>
-
                                     <p><strong>Xây nhà trọn gói </strong>(hay còn gọi là chìa khóa trao tay) là một loại dịch vụ xây dựng nhà mà chủ đầu tư sẽ giao toàn bộ công việc cho nhà thầu. Từ việc lên ý tưởng sơ bộ, thiết kế hồ sơ chi tiết thi công, xin giấy phép xây dựng, thi công phần thô, thi công phần hoàn thiện, bàn giao cho khách hàng, bảo hành sau thi công.</p>
-
                                     <p>Chính vì tiện ích của <strong>dịch vụ xây nhà trọn gói</strong> này, mà chủ đầu tư không phải quá khó khăn trong công việc tìm kiếm ý tưởng thiết kế dành cho ngôi nhà của mình, hay mất nhiều thời gian cho các tờ giấy, thủ tục liên quan, cũng như giám sát đội ngũ thi công và không thiếu hụt nguyên vật liệu … vv.</p>
                                 </div>
                             </section>
-
                             <section id="section-3">
                                 <div class="single-content wow fadeInUp">
                                     <h3>3. Ưu điểm của dịch vụ xây nhà trọn gói</h3>
                                     <div class="centered">
                                         <img src="WebPages/ViewWebPage/img/Xay-nha-tron-goi-tai-My-Loc.jpeg" alt="Quotation Image">
                                     </div>
-
                                     <p>Đây là một loại hình xây dựng được hầu hết mọi người đang áp dụng hiện nay. Dịch vụ này có rất nhiều ưu điểm, cũng như phù hợp với nhịp sống nhanh, hiện đại ngày nay như thời gian xây dựng nhà nhanh, tiết kiệm công sức hiệu quả, đảm bảo kỹ thuật và tính thẩm mỹ cao, hạn chế được các chi phí phát sinh trong quá trình xây nhà trọn gói, vật tư đúng chất lượng cam kết từ nhà thầu, và cụ thể chi tiết từng ưu điểm của dịch vụ xây nhà trọn gói xem ngay bên dưới:</p>
                                     <ul>
                                         <li><strong>Rút ngắn thời gian xây dựng công trình: </strong>Đây là một trong những lợi ích dễ có thể nhận thấy nhất. Bởi khi chúng ta đã giao cho công ty xây dựng nhà trọn gói uy tín thì tất cả các hạng mục đều được triển khai nhịp nhàng, theo tuần tự hợp lý, từ việc thiết kế bản vẽ thi công, xin phép xây dựng, cho đến khi ngôi nhà hoàn thiện. Dĩ nhiên, điều này có được là nhờ vào những kinh nghiệm thi công từ nhiều công trình đúc kết được của đơn vị xây dựng. Vì thế, thời gian xây dựng sẽ được rút ngắn.</li>
@@ -329,7 +304,6 @@
                                     </ul>
                                 </div>
                             </section>
-
                             <section id="section-4">
                                 <div class="single-content wow fadeInUp">
                                     <h3>4. Cách tính diện tích xây dựng trọn gói 2024</h3>
@@ -352,14 +326,12 @@
                                     </ul>
                                 </div>
                             </section>
-
                             <section id="section-5">
                                 <div class="single-content wow fadeInUp">
                                     <h3>5. Tiêu chí khi chọn đơn vị báo giá xây nhà trọn gói năm 2024</h3>
                                     <div class="centered">
                                         <img src="WebPages/ViewWebPage/img/cach-tinh-chi-phi-xay-biet-thu-tron-goi.jpg" alt="Quotation Image">
                                     </div>
-
                                     <p><strong>Làm cách nào để có thể lựa chọn được một công ty xây nhà uy tín? Hay có những tiêu chí nào trong việc lựa chọn cho mình một đơn vị có dịch vụ xây nhà chuyên nghiệp? Bạn có thể tham khảo một số tiêu chí dưới đây:</strong></p>
                                     <ul>
                                         <li><strong>Chọn công ty có kinh nghiệm lâu năm:</strong> Việc xây dựng nhà là một quá trình chuẩn bị khoản đầu tư không hề nhỏ. Ngôi nhà sẽ theo ta đi đến hết cuộc đời. Chính vì thế mà trong việc lựa chọn một đơn vị đồng hành kiến tạo nên ngôi nhà, chủ đầu tư cần lựa chọn nhà thầu uy tín, có nhiều kinh nghiệm.</li>
@@ -371,14 +343,12 @@
                                     </ul>
                                 </div>
                             </section>
-
                             <section id="section-6">
                                 <div class="single-content wow fadeInUp">
                                     <h3>6. Một số hạng mục thi công xây nhà trọn gói 2024</h3>
                                     <div class="centered">
                                         <img src="WebPages/ViewWebPage/img/quotation-full-2.jpg" alt="Quotation Image">
                                     </div>
-
                                     <p><strong>Phần xây dựng Phần thô</strong></p>
                                     <ul>
                                         <li>Tổ chức dọn dẹp mặt bằng công trường, làm lán trại cho công nhân (nếu mặt bằng thi công cho phép).</li>
@@ -423,7 +393,6 @@
                                     </ul>
                                 </div>
                             </section>
-
                             <section id="section-7">
                                 <div class="single-content wow fadeInUp">
                                     <h3>7. Quy trình báo giá xây nhà trọn gói của TITAN [Mới nhất 2024]</h3>
@@ -445,7 +414,6 @@
                                     <p><strong>Quy trình làm việc ở dịch vụ xây nhà trọn gói hay bất kì các dịch vụ khác của chúng tôi đều thể hiện sự chuyên nghiệp trong cách làm việc, tạo cảm giác tin tưởng dành cho khách hàng đồng hành cùng công ty.</strong></p>
                                 </div>
                             </section>
-
                             <section id="section-8">
                                 <div class="single-content wow fadeInUp">
                                     <h3>8. TITAN cam kết dịch vụ xây nhà trọn gói 2024</h3>
@@ -463,28 +431,15 @@
                                     </ul>
                                 </div>
                             </section>
-
                             <!-- Add more sections as needed -->
                         </article>
                     </main>
-
-
-
-
-
-
-
-
                 </div>
             </div>
             <!-- Portfolio End -->
-
-
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
-
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -496,7 +451,6 @@
         <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
-
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
         <script>

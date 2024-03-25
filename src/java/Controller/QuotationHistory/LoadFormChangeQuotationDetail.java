@@ -145,7 +145,7 @@ public class LoadFormChangeQuotationDetail extends HttpServlet {
             out.println("<input type=\"hidden\" id=\"cusQuoId\" name=\"cusQuoId\" value=\"" + cusQuoId + "\"/>");
 
             out.println("<div>\n"
-                    + "                                        <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\" onclick=\"loadQuotationContentVersionDetail2()\">Nhận Báo Giá</button>\n"
+                    + "                                        <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\" >Nhận Báo Giá</button>\n"
                     + "                                    </div>");
 
         }

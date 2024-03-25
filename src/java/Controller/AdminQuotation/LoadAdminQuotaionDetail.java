@@ -46,6 +46,7 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             int packagePrice = (request.getParameter("packagePrice") != null && !request.getParameter("packagePrice").isEmpty()) ? Integer.parseInt(request.getParameter("packagePrice")) : 0;
             String note = (request.getParameter("note") != null && !request.getParameter("note").isEmpty()) ? request.getParameter("note") : "";
             int versionId = (request.getParameter("versionId") != null && !request.getParameter("versionId").isEmpty()) ? Integer.parseInt(request.getParameter("versionId")) : 0;
+            boolean adminReponse = (request.getParameter("adminReponse") != null && !request.getParameter("adminReponse").isEmpty()) ? Boolean.parseBoolean(request.getParameter("adminReponse")) : false;
             QuotationDAO dao = new QuotationDAO();
             List<HouseComponent> listHouseComponent = dao.getHouseComponent(selectedHouseType);
 
@@ -58,7 +59,7 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             double backYard = (request.getParameter("4") != null && !request.getParameter("4").isEmpty()) ? Double.parseDouble(request.getParameter("4")) : 0;
             double floor = (request.getParameter("5") != null && !request.getParameter("5").isEmpty()) ? Double.parseDouble(request.getParameter("5")) : 0;
             double balcony = (request.getParameter("6") != null && !request.getParameter("6").isEmpty()) ? Double.parseDouble(request.getParameter("6")) : 0;
-
+            
             double price = (request.getParameter("price") != null && !request.getParameter("price").isEmpty()) ? Double.parseDouble(request.getParameter("price")) : 0;
             double S = length * width;
             double s = (length - frontYard - backYard) * width;
@@ -192,9 +193,13 @@ public class LoadAdminQuotaionDetail extends HttpServlet {
             for (int i = 0; i < listHouseComponent.size(); i++) {
                 out.println("<input type=\"hidden\" name=\"" + listHouseComponent.get(i).getComponentId() + "\" value=\"" + request.getParameter(listHouseComponent.get(i).getComponentId() + "") + "\">");
             }
+            if (adminReponse){
+                out.println("<p style=\"color: green;\">Bạn đã phản hồi yêu cầu báo giá này!</p>");
+            } else {
             out.println("<div class=\"contact-form\">\n"
                     + "                            <button class=\"btn\" type=\"submit\" style=\"border: 1px solid #FFD700;\"  onclick=\"loadFormChangeQuotationDetail()\">Thay đổi báo giá</button>\n"
                     + "                        </div>");
+            }
 
         }
     }

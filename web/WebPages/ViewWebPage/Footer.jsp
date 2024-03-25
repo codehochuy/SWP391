@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+
     </head>
     <body>
         <!-- Footer Start -->
@@ -89,7 +89,6 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/counterup/counterup.min.js"></script>
     <script src="lib/slick/slick.min.js"></script>
-
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </html>

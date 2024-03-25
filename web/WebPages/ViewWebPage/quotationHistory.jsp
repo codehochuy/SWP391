@@ -59,12 +59,6 @@
             tbody tr:hover {
                 background-color: #ecf0f1;
             }
-            img {
-                /*                display: block;
-                                margin: 15px auto;
-                                width: 80%;
-                                height: auto;*/
-            }
             /* styles.css */
             #table-of-contents {
                 display: none; /* Mục lục mặc định ẩn đi */
@@ -111,7 +105,6 @@
                 </div>
             </div>
             <!-- Page Header End -->
-
             <div class="section-header text-center">
                 <h2>Lịch sử báo giá</h2>
             </div>
@@ -140,7 +133,6 @@
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
-
                                                 <form action="ShowQuotationVersion" method="post" accept-charset="UTF-8">
                                                     <input type="hidden" id="cusQuoId" name="cusQuoId" value="${cq.cusQuoId}">
                                                     <input type="hidden" id="cusQuoName" name="cusQuoName" value="${cq.cusQuoName}">
@@ -156,20 +148,16 @@
                             </c:forEach>
                         </tbody>
                     </table>
-
                 </div>
             </div>
             <!-- Portfolio End -->
             <div class="contact wow fadeInUp container">
                 <form action="SaveQuotationContent" id="quotationContent" method="post" name="sentMessage" novalidate="novalidate">
-
                 </form>
             </div>
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
-
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -181,11 +169,9 @@
         <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
-
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
         <jsp:include page="../../PluginChatMess.jsp"/>
-
         <!--ajax-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -193,15 +179,10 @@
                                                         $(document).ready(function () {
                                                             $('#formFill').submit(function (event) {
                                                                 event.preventDefault();
-
-
-
                                                                 var formData = {};
                                                                 $("#formFill").find("input, select").each(function () {
                                                                     formData[$(this).attr("name")] = $(this).val();
                                                                 });
-
-                                                                // Gửi dữ liệu đến servlet bằng AJAX
                                                                 $.ajax({
                                                                     url: 'LoadQuotationContent',
                                                                     type: 'get',
@@ -231,7 +212,6 @@
                         form.action = "BanCustomerQuotation?cusQuoId=" + cusQuoId;
                         form.submit();
                     }
-
                 });
             }
         </script>

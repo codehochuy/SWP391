@@ -61,15 +61,9 @@
             tbody tr:hover {
                 background-color: #ecf0f1;
             }
-            img {
-                /*                display: block;
-                                margin: 15px auto;
-                                width: 80%;
-                                height: auto;*/
-            }
             /* styles.css */
             #table-of-contents {
-                display: none; /* Mục lục mặc định ẩn đi */
+                display: none; 
                 background-color: #f0f0f0;
                 padding: 10px;
                 border-radius: 5px;
@@ -104,19 +98,17 @@
                 opacity: 0.6; 
             }
             .confirm-status {
-                /* Thiết lập mặc định cho trạng thái chưa xác nhận */
                 color: red;
                 border: 1px solid red;
             }
 
             .confirm-status.confirmed {
-                /* Thiết lập cho trạng thái đã xác nhận */
                 color: green;
                 border: 1px solid green;
             }
             .notification {
-                color: red; /* Đặt màu chữ là màu đỏ */
-                font-style: italic; /* In nghiêng chữ */
+                color: red; 
+                font-style: italic; 
             }
 
         </style>
@@ -240,29 +232,18 @@
         </script>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                // Lấy tất cả các phần tử có lớp 'confirm-status'
                 var confirmStatusElements = document.querySelectorAll('.confirm-status');
-                var dateElements = document.querySelectorAll('.date'); // Thêm class 'date' vào phần tử hiển thị thời gian
-
-                // Lặp qua từng phần tử để áp dụng các hiệu ứng màu sắc tương ứng
+                var dateElements = document.querySelectorAll('.date'); 
                 confirmStatusElements.forEach(function (element, index) {
-                    // Nếu có trạng thái đã xác nhận, thêm lớp 'confirmed'
                     if (element.textContent.trim() === 'Đã xác nhận báo giá') {
                         element.classList.add('confirmed');
                     }
-
-                    // Tính thời gian hiệu lực còn lại và hiển thị nó
-                    var date = new Date(dateElements[index].textContent); // Lấy ngày từ phần tử 'date'
-                    var expirationDate = new Date(date.getTime() + (7 * 24 * 60 * 60 * 1000)); // Tính thời gian hiệu lực còn lại (7 ngày)
-
-                    // Hiển thị thời gian hiệu lực còn lại dưới ghi chú
-                    var remainingTime = expirationDate - Date.now(); // Tính thời gian còn lại tính bằng mili giây
-                    var remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24)); // Chuyển đổi thành số ngày
-                    var remainingHours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Chuyển đổi thành số giờ
-
-                    // Định dạng lại chuỗi thời gian còn lại
+                    var date = new Date(dateElements[index].textContent);
+                    var expirationDate = new Date(date.getTime() + (7 * 24 * 60 * 60 * 1000));
+                    var remainingTime = expirationDate - Date.now();
+                    var remainingDays = Math.floor(remainingTime / (1000 * 60 * 60 * 24)); 
+                    var remainingHours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                     var remainingTimeString = remainingDays + " ngày " + remainingHours + " giờ";
-
                     dateElements[index].textContent = "Hiệu lực còn lại: " + remainingTimeString;
                 });
             });
@@ -270,13 +251,11 @@
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                var noteElements = document.querySelectorAll('.note'); // Lấy tất cả các phần tử có lớp 'note'
-
-                // Lặp qua từng phần tử để cắt và hiển thị tối đa 250 ký tự
+                var noteElements = document.querySelectorAll('.note'); 
                 noteElements.forEach(function (element) {
                     var note = element.textContent;
                     if (note.length > 100) {
-                        element.textContent = note.slice(0, 100) + '...'; // Cắt chuỗi và thêm dấu ba chấm
+                        element.textContent = note.slice(0, 100) + '...'; 
                     }
                 });
             });

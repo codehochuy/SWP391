@@ -17,11 +17,9 @@
         <link rel="icon" href="img/logo.jpg" type="image/x-icon">
         <!-- Favicon -->
         <link href="WebPages/ViewWebPage/img/favicon.ico" rel="icon">
-
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
               rel="stylesheet">
-
         <!-- CSS Libraries -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -52,8 +50,6 @@
                 </div>
             </div>
             <!-- Page Header End -->
-
-
             <!-- About Start -->
             <div class="about wow fadeInUp" data-wow-delay="0.1s">
                 <div class="container">
@@ -81,8 +77,6 @@
                 </div>
             </div>
             <!-- About End -->
-
-
             <!-- Fact Start -->
             <div class="fact">
                 <div class="container-fluid">
@@ -135,8 +129,6 @@
                 </div>
             </div>
             <!-- Fact End -->
-
-
             <!-- FAQs Start -->
             <div class="faqs">
                 <div class="container">
@@ -287,13 +279,9 @@
                 </div>
             </div>
             <!-- FAQs End -->
-
-
             <jsp:include page="../../WebPages/ViewWebPage/Footer.jsp"/>
-
             <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
         </div>
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
@@ -305,7 +293,6 @@
         <script src="WebPages/ViewWebPage/lib/waypoints/waypoints.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/counterup/counterup.min.js"></script>
         <script src="WebPages/ViewWebPage/lib/slick/slick.min.js"></script>
-
         <!-- Template Javascript -->
         <script src="WebPages/ViewWebPage/js/main.js"></script>
     </body>
