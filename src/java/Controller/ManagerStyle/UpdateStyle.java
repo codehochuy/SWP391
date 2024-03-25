@@ -43,7 +43,7 @@ public class UpdateStyle extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateStyle</title>");            
+            out.println("<title>Servlet UpdateStyle</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet UpdateStyle at " + request.getContextPath() + "</h1>");
@@ -76,30 +76,37 @@ public class UpdateStyle extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    request.setCharacterEncoding("UTF-8"); 
-    String id = request.getParameter("styleID");
-    String name = request.getParameter("StyleName");
-    
-    StyleDAO dao = new  StyleDAO();
-    boolean  result = dao.updateStyleName(id, name);
-    if(result){
-        StyleDAO styleDAO = new StyleDAO();
-        List<Style> styles = styleDAO.getAll();
-        request.setAttribute("styles", styles);
-        request.setAttribute("messtrue", "Cập nhật phong cách công");
-        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
-    }
-    else{
-        StyleDAO styleDAO = new StyleDAO();
-        List<Style> styles = styleDAO.getAll();
-        request.setAttribute("styles", styles);
-        request.setAttribute("messefalse", "Cập nhật phong thất bại");
-        request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
-    }
-}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String id = request.getParameter("styleID");
+        String name = request.getParameter("StyleName");
+        String regex = "^[0-9a-zA-Z\\p{L}\\p{P}][0-9a-zA-Z\\p{L}\\p{P}\\s]*[0-9a-zA-Z\\p{L}\\p{P}]$";
+        if (!name.matches(regex)) {
+            StyleDAO styleDAO9 = new StyleDAO();
+            List<Style> styles = styleDAO9.getAll();
+            request.setAttribute("styles", styles);
+            request.setAttribute("messefalse", "Sai tên!");
+            request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+        } else {
+            StyleDAO dao = new StyleDAO();
+            boolean result = dao.updateStyleName(id, name);
+            if (result) {
+                StyleDAO styleDAO = new StyleDAO();
+                List<Style> styles = styleDAO.getAll();
+                request.setAttribute("styles", styles);
+                request.setAttribute("messtrue", "Cập nhật phong cách công");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+            } else {
+                StyleDAO styleDAO = new StyleDAO();
+                List<Style> styles = styleDAO.getAll();
+                request.setAttribute("styles", styles);
+                request.setAttribute("messefalse", "Cập nhật phong thất bại");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerStyle.jsp").forward(request, response);
+            }
+        }
 
+    }
 
     /**
      * Returns a short description of the servlet.

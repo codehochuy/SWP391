@@ -79,6 +79,16 @@ public class UpdateHouseStyle extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
         String name = request.getParameter("name");
+        String regex = "^[0-9a-zA-Z\\p{L}\\p{P}][0-9a-zA-Z\\p{L}\\p{P}\\s]*[0-9a-zA-Z\\p{L}\\p{P}]$";
+       if (!name.matches(regex)) {
+               HouseTypeDAO aO = new HouseTypeDAO();
+                List<HouseType> houseTypes = aO.getAll();
+                request.setAttribute("houseTypes", houseTypes);
+                request.setAttribute("messefalse", "Sai tên !!");
+                request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
+       }else{
+           
+     
         int housetypeid = Integer.parseInt(id);
         String[] componentIds = request.getParameterValues("componentId");
         if (componentIds != null) {
@@ -117,7 +127,7 @@ public class UpdateHouseStyle extends HttpServlet {
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerHouseStyle.jsp").forward(request, response);
 
         }
-
+  }
     }
 
     /**

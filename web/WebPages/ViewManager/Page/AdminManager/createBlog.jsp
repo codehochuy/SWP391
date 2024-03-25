@@ -44,7 +44,7 @@
             <div class="app-title">
                 <ul class="app-breadcrumb breadcrumb side">
                     <li class="breadcrumb-item active"><a href="ManagerBlog"><b>Bài viết</b></a></li>
-                         <li class="breadcrumb-item active"><a href="ManagerBlog"><b>Loại bài viết</b></a></li>
+                    <li class="breadcrumb-item active"><a href="ManagerBlog"><b>Loại bài viết</b></a></li>
                 </ul>
             </div>
 
@@ -77,37 +77,31 @@
                         </div>
                         <div class="form-group col-md-12">
                             <label class="control-label">Tiêu đề</label>
-                            <input class="form-control" type="text" id="title" name="title" required onblur="checkDuplicateTitle()" placeholder="Chấp nhận các kí tự đặc biệt , . % ' - : "><br>
+                            <input class="form-control" type="text" id="title" name="title" required onblur="checkDuplicateTitle()" placeholder="Nhập tiêu đề"><br>
                         </div>
                         <script>
                             function checkDuplicateTitle() {
                                 var title = document.getElementById('title').value;
-
-                                // Send AJAX request to the server to check for duplicate title
                                 var xhttp = new XMLHttpRequest();
                                 xhttp.onreadystatechange = function () {
                                     if (this.readyState == 4) {
                                         if (this.status == 200) {
                                             var response = this.responseText;
                                             if (response === "DUPLICATE_TITLE") {
-                                                // Display SweetAlert for duplicate title
                                                 swal({
                                                     title: "Tiêu đề đã tồn tại",
                                                     text: "Vui lòng chọn một tiêu đề khác",
                                                     icon: "error",
                                                     button: "OK",
                                                 }).then(function () {
-                                                    // Clear the input field after displaying the alert
                                                     document.getElementById('title').value = "";
                                                 });
                                             } else {
-                                                // Clear the error message if no duplicate title
                                                 document.getElementById('titleErrorMessage').innerText = "";
                                             }
                                         }
                                     }
                                 };
-
                                 xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlog", true);
                                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                                 xhttp.send("title=" + encodeURIComponent(title));
@@ -115,44 +109,26 @@
                         </script>
 
                         <script>
-                            //  All Special   `~!@#$%^&*()-_=+[{]}\|;:'",<.>/?
-                            //   title="Chấp nhận các kí tự đặc biệt , . % ' - : ">
                             document.getElementById('title').addEventListener('blur', function () {
                                 trimInput('title');
                             });
-
                             function trimInput(inputId) {
                                 var inputElement = document.getElementById(inputId);
                                 if (inputElement) {
                                     var sanitizedValue = inputElement.value;
                                     //caplock
                                     sanitizedValue = sanitizedValue.charAt(0).toUpperCase() + sanitizedValue.slice(1);
-                                    // Loại bỏ một số kí tự đặc biệt
-                                    sanitizedValue = sanitizedValue.replace(/[~`!@#$^&*()\_=+{}\[\]\\|;"<>\/?]/g, '');
-
-                                    // Loại bỏ các ký tự đặc biệt liên tiếp 
-                                    sanitizedValue = sanitizedValue.replace(/([`~!@#$%^&*()-_=+\[{\]}\\|;:'",<.>/?])\1+/g, '');
-
-                                    // Kiểm tra xem kí tự đầu tiên có phải là một trong các kí tự đặc biệt không
-                                    if (/^[~`!@#$%^&*()\-_=+{}\[\]\\|;:'",<.>\/?]/.test(sanitizedValue)) {
-                                        sanitizedValue = sanitizedValue.substring(1);
-                                    }
-                                    // Xoá khoảng trắng đầu và cuối và loại bỏ khoảng trắng liên tiếp
                                     sanitizedValue = sanitizedValue.replace(/^\s+|\s+$/g, '').replace(/\s{2,}/g, ' ');
-                                    if (sanitizedValue.length < 20 || sanitizedValue.length > 70) {
-                                        // Display a SweetAlert2 pop-up
+                                    if (sanitizedValue.length < 20 || sanitizedValue.length > 200) {
                                         Swal.fire({
                                             icon: 'warning',
-                                            title: 'Tiêu đề ít nhất 20 kí tự, nhiều nhất 70 kí tự',
-//                    text: 'Please enter at least 20 characters.',
+                                            title: 'Tiêu đề ít nhất 20 kí tự, nhiều nhất 200 kí tự',
                                             confirmButtonText: 'OK',
                                             onClose: function () {
-                                                // Optionally, focus back on the input field or perform other actions
                                                 inputElement.focus();
                                             }
                                         });
                                     }
-                                    // Gán giá trị đã được xử lý lại cho inputElement
                                     inputElement.value = sanitizedValue;
                                 }
                             }
@@ -162,11 +138,10 @@
 
                         <div class="form-group col-md-12">
                             <label class="control-label">Tags</label>
-                            <input class="form-control" type="text" id="tags" name="tags" placeholder = "Tối đa 20 tags" oninput="checkTags(this)" required><br>
+                            <input class="form-control" type="text" id="tags" name="tags" placeholder = "Tối đa 50 tags" oninput="checkTags(this)" required><br>
                         </div>
                         <script>
                             function checkTags(inputField) {
-                                // Get the current value of the input field
                                 var currentValue = inputField.value;
 
                                 // Remove all invalid characters
@@ -183,8 +158,8 @@
 
                                 // Process each word to ensure it starts with '#' and only contains valid characters
                                 for (let i = 0; i < words.length; i++) {
-                                    // Add '#' before each word, but limit to 20 '#' signs
-                                    if (words[i].length > 0 && words[i][0] !== '#' && hashCount < 20) {
+                                    // Add '#' before each word, but limit to 50 '#' signs
+                                    if (words[i].length > 0 && words[i][0] !== '#' && hashCount < 50) {
                                         words[i] = '#' + words[i];
                                         hashCount++;
                                     }
@@ -210,19 +185,14 @@
                                 // Get the current value of the input field
                                 let inputField = document.getElementById('tags');
                                 let currentValue = inputField.value;
-
                                 // Remove extra spaces between words and trim leading/trailing spaces
                                 let cleanedValue = currentValue.replace(/\s+/g, ' ').trim();
-
                                 // Split the cleaned input into words
                                 let words = cleanedValue.split(' ');
-
                                 // Check for duplicate words
                                 let uniqueWords = [...new Set(words)];
-
                                 // Remove '#' signs followed by an empty string
                                 let cleanedUniqueWords = uniqueWords.filter(word => word !== '#');
-
                                 // Remove all characters that don't have '#' signs before them
                                 let cleanedString = cleanedUniqueWords.map(word => {
                                     // Check if the word starts with '#' and only contains valid characters after '#'
@@ -232,46 +202,29 @@
                                         return '';
                                     }
                                 }).join(' ');
-
                                 // Set the cleaned string back to the input field
                                 inputField.value = cleanedString.trim();
                             }
-
-                            // Add click event listener to the document body
-                            document.body.addEventListener('click', function (event) {
-                                // Check if the clicked element is not the Tags input
-                                if (event.target.id !== 'tags') {
-                                    // Call the checkDuplicates function
-                                    checkDuplicates();
-                                }
+                            document.getElementById('tags').addEventListener('blur', function () {
+                                checkDuplicates('tags');
                             });
                         </script>
-
-
                         <script>
-                            // Lấy ngày hiện tại
                             var today = new Date();
-
-                            // Định dạng ngày thành yyyy-mm-dd
                             var dd = String(today.getDate()).padStart(2, '0');
-                            var mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+                            var mm = String(today.getMonth() + 1).padStart(2, '0');
                             var yyyy = today.getFullYear();
-
                             today = yyyy + '-' + mm + '-' + dd;
-
-                            // Đặt giá trị của trường ngày thành ngày hôm nay
                             document.getElementById('date').value = today;
                         </script>
-                  <textarea id="mytextarea" placeholder="Nhập nội dung"></textarea>
-
+                        <textarea id="mytextarea" placeholder="Nhập nội dung"></textarea>
                     </div>
                 </div>
             </div>
         </div>
-        <button class="btn btn-save" onclick="createBlog()">Tạo Blog</button>
+        <button class="btn btn-save" onclick="createBlog()">Tạo bài viết</button>
         <a class="btn btn-cancel" href="ManagerBlog">Hủy bỏ</a>
     </main>
-
 
     <!-- Essential javascripts for application to work-->
     <script src="./js/jquery-3.2.1.min.js"></script>
@@ -287,8 +240,6 @@
     <!-- Data table plugin-->
     <script type="text/javascript" src="./js/plugins/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="./js/plugins/dataTables.bootstrap.min.js"></script>
-
-
     <script type="text/javascript">
             $('#sampleTable').DataTable();
             //Thời Gian
@@ -323,7 +274,6 @@
                         '</span>';
                 document.getElementById("clock").innerHTML = tmp;
                 clocktime = setTimeout("time()", "1000", "Javascript");
-
                 function checkTime(i) {
                     if (i < 10) {
                         i = "0" + i;
@@ -335,24 +285,37 @@
 
     <script>
         function createBlog() {
-//             String regex = "^[0-9a-zA-Z\\p{L}\\p{P}][0-9a-zA-Z\\p{L}\\p{P}\\s]*[0-9a-zA-Z\\p{L}\\p{P}]$";
-            var title = encodeURIComponent(document.getElementById("title").value); // Mã hóa tiêu đề
-            var tags = encodeURIComponent(document.getElementById("tags").value); // Mã hóa tiêu đề
-            var content = encodeURIComponent(tinymce.activeEditor.getContent()); // Mã hóa nội dung
+            var title = encodeURIComponent(document.getElementById("title").value); //encode
+            var tags = encodeURIComponent(document.getElementById("tags").value); //encode
+            var content = encodeURIComponent(tinymce.activeEditor.getContent()); //encode
             var date = document.getElementById("date").value;
             var selectedCategory = document.getElementById("blogCategory").value;
             if (selectedCategory === 'newCategory') {
-                // If a new category is selected, use the value from the additional input field
                 var newCategory = encodeURIComponent(document.getElementById("newCategoryValue").value);
                 selectedCategory = newCategory;
             }
-
 //check validate
             var decodedTitle = decodeURIComponent(title);
             var decodedTags = decodeURIComponent(tags);
+            var tagArray = decodedTags.split("#");
             var decodedContent = decodeURIComponent(content);
-
-
+            for (var i = 1; i < tagArray.length; i++) {
+                var tag = tagArray[i].trim();
+                var tagParts = tag.split(" ");
+                if (tagParts.length > 1) {
+                    var containsSpace = tagParts.some(function (part) {
+                        return !part;
+                    });
+                    if (containsSpace) {
+                        Swal.fire({
+                            title: "Mỗi tag không được chứa dấu space",
+                            icon: "error",
+                            confirmButtonText: "OK",
+                        });
+                        return;
+                    }
+                }
+            }
             if (!title.trim() || !tags.trim() || !content.trim() || !selectedCategory.trim()) {
                 Swal.fire({
                     title: "Vui lòng điền đầy đủ thông tin",
@@ -369,44 +332,34 @@
                 });
                 return;
             }
-
-
-
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     if (this.status == 200) {
-                        // Sử dụng SweetAlert để hiển thị thông báo
                         swal({
-                            title: "Tạo blog thành công",
-//                text: "Blog created successfully!",
+                            title: "Tạo bài viết thành công",
                             icon: "success",
                             button: "OK",
                         }).then((value) => {
-                            // Tải lại trang sau khi người dùng nhấp vào nút OK
                             if (value) {
                                 window.location.reload();
                             }
                         });
                     } else {
-                        // Xử lý trường hợp lỗi
                         swal({
-                            title: "Tạo blog thất bại",
-//                text: "Failed to create blog!",
+                            title: "Tạo bài viết thất bại",
                             icon: "error",
                             button: "OK",
                         });
                     }
                 }
             };
-
             xhttp.open("POST", "http://localhost:8084/SWP391/CreateBlog", true);
             xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xhttp.send("content=" + content + "&title=" + title + "&tags=" + tags + "&date=" + date + "&category=" + selectedCategory);
         }
 
     </script>
-
     <script>
         <% if (request.getAttribute("messtrue") != null) {%>
         swal({
@@ -428,6 +381,5 @@
         );
         <% }%>
     </script>
-
 </body>
 </html>

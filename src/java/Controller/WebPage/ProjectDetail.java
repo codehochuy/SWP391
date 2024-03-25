@@ -48,7 +48,7 @@ public class ProjectDetail extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProjectDetail</title>");            
+            out.println("<title>Servlet ProjectDetail</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ProjectDetail at " + request.getContextPath() + "</h1>");
@@ -69,20 +69,13 @@ public class ProjectDetail extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-     String id = request.getParameter("id");
-     
+        String id = request.getParameter("id");
         ProjectDAO dao = new ProjectDAO();
         Project project = dao.getProjectbyID(id);
-        
-        
         ProjectImageDAO imageDAO = new ProjectImageDAO();
         List<ProjectImage> images = imageDAO.getProjectImagesByProjectID(id);
-        
         request.setAttribute("images", images);
         request.setAttribute("project", project);
- 
-
-        // Chuyển hướng request đến trang ViewBlogDetail.jsp để hiển thị thông tin blog
         RequestDispatcher dispatcher = request.getRequestDispatcher("WebPages/ViewWebPage/projectdetail.jsp");
         dispatcher.forward(request, response);
     }

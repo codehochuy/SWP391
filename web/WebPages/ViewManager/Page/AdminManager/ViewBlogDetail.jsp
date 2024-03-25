@@ -20,12 +20,9 @@
         <title>TITAN -  Xem Chi Tiết Blog</title>
         <!-- Main CSS-->
         <link rel="stylesheet" type="text/css" href="css\admin.css">
-
-
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <!-- or -->
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-
         <!-- Font-icon css-->
         <link rel="stylesheet" type="text/css"
               href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -37,10 +34,7 @@
         <!-- Lightbox JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.1/js/lightbox.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-
     </head>
-
     <body onload="time()" class="app sidebar-mini rtl">
         <jsp:include page="../../Page/Header/headerAdmin.jsp"/>
         <main class="app-content">
@@ -55,13 +49,9 @@
                     <div class="tile">
                         <h1 class="tile-title">Chỉnh sửa bài viết</h1>
                         <div class="tile-body">
-
                             <div id="blogDetail">
                                 <%-- Hiển thị dữ liệu --%>
                                 <c:set var="blog" value="${blog}" />
-
-                                <!-- Thêm một trường ẩn để lưu ID của bài viết -->
-
                                 <div class="form-group col-md-12">
                                     <label class="control-label">ID bài viết</label>
                                     <input class="form-control" type="text" id="blogId" name="blogId" readonly="true" required value="<c:out value='${blog.blogID}' />"><br>
@@ -79,21 +69,13 @@
                                     function setCurrentDate() {
                                         // Get the current date
                                         var currentDate = new Date();
-
                                         // Format the date as "YYYY-MM-DD" (required by the input type="date")
                                         var formattedDate = currentDate.toISOString().split('T')[0];
-
                                         // Set the formatted date to the input field
                                         document.getElementById("dateModified").value = formattedDate;
                                     }
-
-                                    // Call the function to set the current date on page load
                                     setCurrentDate();
                                 </script>
-
-
-
-
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Loại tin tức</label>
                                     <select class="form-control" id="categorySelect">
@@ -103,128 +85,57 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Tiêu đề</label>
-                                    <input class="form-control" type="text" id="title" value="<c:out value='${blog.title}' />" placeholder="Chấp nhận các kí tự đặc biệt , . % ' - : ">
+                                    <input class="form-control" type="text" id="title" value="<c:out value='${blog.title}' />" placeholder="Nhập tiêu đề">
                                 </div>
-
-                                <!--                             <script>
-                                    function checkDuplicateTitle() {
-                                         var blogId = document.getElementById('blogId').value;
-                                       var title = document.getElementById('title').value.trim().replace(/\s{2,}/g, ' '); // Remove leading and trailing spaces and replace consecutive spaces
-                                
-                                        // Perform client-side validation
-                                        // ...
-                                
-                                        // Send AJAX request to the server to check for duplicate title
-                                        var xhttp = new XMLHttpRequest();
-                                        xhttp.onreadystatechange = function () {
-                                            if (this.readyState == 4) {
-                                                if (this.status == 200) {
-                                                    var response = this.responseText;
-                                                    handleDuplicateTitleResponse(response);
-                                                }
-                                            }
-                                        };
-                                
-                                        xhttp.open("POST", "http://localhost:8084/SWP391/UpdateBlog", true);
-                                        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                                    xhttp.send("blogId=" + encodeURIComponent(blogId) + "&title=" + encodeURIComponent(title));
-                                    }
-                                
-                                    function handleDuplicateTitleResponse(response) {
-                                        if (response === "DUPLICATE_TITLE") {
-                                            // Display SweetAlert for duplicate title
-                                            Swal.fire({
-                                                title: "Tiêu đề đã tồn tại",
-                                                text: "Vui lòng chọn một tiêu đề khác",
-                                                icon: "error",
-                                                confirmButtonText: "OK",
-                                            }).then(function () {
-                                                // Clear the input field after displaying the alert
-                                           document.getElementById('title').focus();
-                                            });
-                                        } 
-                                    }
-                                </script>-->
                                 <script>
-                                    //  All Special   `~!@#$%^&*()-_=+[{]}\|;:'",<.>/?
-                                    //   title="Chấp nhận các kí tự đặc biệt , . % ' - : ">
                                     document.getElementById('title').addEventListener('blur', function () {
                                         trimInput('title');
                                     });
-
                                     function trimInput(inputId) {
                                         var inputElement = document.getElementById(inputId);
                                         if (inputElement) {
                                             var sanitizedValue = inputElement.value;
                                             //caplock
                                             sanitizedValue = sanitizedValue.charAt(0).toUpperCase() + sanitizedValue.slice(1);
-                                            // Loại bỏ một số kí tự đặc biệt
-                                            sanitizedValue = sanitizedValue.replace(/[~`!@#$^&*()\_=+{}\[\]\\|;"<>\/?]/g, '');
-
-                                            // Loại bỏ các ký tự đặc biệt liên tiếp 
-                                            sanitizedValue = sanitizedValue.replace(/([`~!@#$%^&*()-_=+\[{\]}\\|;:'",<.>/?])\1+/g, '');
-
-                                            // Kiểm tra xem kí tự đầu tiên có phải là một trong các kí tự đặc biệt không
-                                            if (/^[~`!@#$%^&*()\-_=+{}\[\]\\|;:'",<.>\/?]/.test(sanitizedValue)) {
-                                                sanitizedValue = sanitizedValue.substring(1);
-                                            }
-                                            // Xoá khoảng trắng đầu và cuối và loại bỏ khoảng trắng liên tiếp
                                             sanitizedValue = sanitizedValue.replace(/^\s+|\s+$/g, '').replace(/\s{2,}/g, ' ');
-                                            if (sanitizedValue.length < 20 || sanitizedValue.length > 70) {
-                                                // Display a SweetAlert2 pop-up
+                                            if (sanitizedValue.length < 20 || sanitizedValue.length > 200) {
                                                 Swal.fire({
                                                     icon: 'warning',
-                                                    title: 'Tiêu đề ít nhất 20 kí tự, nhiều nhất 70 kí tự',
-                                                    //                    text: 'Please enter at least 20 characters.',
+                                                    title: 'Tiêu đề ít nhất 20 kí tự, nhiều nhất 200 kí tự',
                                                     confirmButtonText: 'OK',
                                                     onClose: function () {
-                                                        // Optionally, focus back on the input field or perform other actions
                                                         inputElement.focus();
                                                     }
                                                 });
                                             }
-                                            // Gán giá trị đã được xử lý lại cho inputElement
                                             inputElement.value = sanitizedValue;
                                         }
                                     }
                                 </script>
-
-
-
-
-
                                 <div class="form-group col-md-12">
                                     <label class="control-label">Tags</label>
-                                    <input class="form-control" type="text" id="tags" placeholder = "Tối đa 20 tags" oninput="checkTags(this)" value="<c:out value='${blog.tags}' />">
+                                    <input class="form-control" type="text" id="tags" placeholder = "Tối đa 50 tags" oninput="checkTags(this)" value="<c:out value='${blog.tags}' />">
                                 </div>
                                 <script>
                                     function checkTags(inputField) {
-                                        // Get the current value of the input field
                                         var currentValue = inputField.value;
-
                                         // Remove all invalid characters
                                         currentValue = currentValue.replace(/[^0-9a-zA-Z\u00C0-\u024F ]/g, '');
-
                                         // Remove extra spaces between words
                                         var cleanedValue = currentValue.replace(/\s+/g, ' ');
-
                                         // Split the cleaned input into words
                                         let words = cleanedValue.split(' ');
-
                                         // Variable to count '#' signs
                                         let hashCount = 0;
-
                                         // Process each word to ensure it starts with '#' and only contains valid characters
                                         for (let i = 0; i < words.length; i++) {
-                                            // Add '#' before each word, but limit to 20 '#' signs
-                                            if (words[i].length > 0 && words[i][0] !== '#' && hashCount < 20) {
+                                            // Add '#' before each word, but limit to 50 '#' signs
+                                            if (words[i].length > 0 && words[i][0] !== '#' && hashCount < 50) {
                                                 words[i] = '#' + words[i];
                                                 hashCount++;
                                             }
-
                                             // Remove invalid characters after '#' sign
                                             words[i] = words[i].replace(/#([^0-9a-zA-Z\u00C0-\u024F])/g, '#');
 
@@ -234,31 +145,23 @@
                                                 words[i] = '#' + words[i].slice(1).replace(/[^0-9a-zA-Z\u00C0-\u024F]/g, '');
                                             }
                                         }
-
                                         // Join the words back together with spaces
                                         inputField.value = words.join(' ');
                                     }
                                 </script>
-
-
                                 <script>
                                     function checkDuplicates() {
                                         // Get the current value of the input field
                                         let inputField = document.getElementById('tags');
                                         let currentValue = inputField.value;
-
                                         // Remove extra spaces between words and trim leading/trailing spaces
                                         let cleanedValue = currentValue.replace(/\s+/g, ' ').trim();
-
                                         // Split the cleaned input into words
                                         let words = cleanedValue.split(' ');
-
                                         // Check for duplicate words
                                         let uniqueWords = [...new Set(words)];
-
                                         // Remove '#' signs followed by an empty string
                                         let cleanedUniqueWords = uniqueWords.filter(word => word !== '#');
-
                                         // Remove all characters that don't have '#' signs before them
                                         let cleanedString = cleanedUniqueWords.map(word => {
                                             // Check if the word starts with '#' and only contains valid characters after '#'
@@ -268,39 +171,21 @@
                                                 return '';
                                             }
                                         }).join(' ');
-
                                         // Set the cleaned string back to the input field
                                         inputField.value = cleanedString.trim();
                                     }
-
-                                    // Add click event listener to the document body
-                                    document.body.addEventListener('click', function (event) {
-                                        // Check if the clicked element is not the Tags input
-                                        if (event.target.id !== 'tags') {
-                                            // Call the checkDuplicates function
-                                            checkDuplicates();
-                                        }
+                                    document.getElementById('tags').addEventListener('blur', function () {
+                                        checkDuplicates('tags');
                                     });
                                 </script>
-
-
-
                                 <textarea id="mytextarea">${blog.content}</textarea>
-
-
-
                             </div>
                         </div>
-
                     </div>
-
                 </div>
             </div>
-
             <button class="btn btn-save" onclick="updateBlog()">Cập nhật bài viết</button>
             <a class="btn btn-cancel" href="ManagerBlog">Hủy bỏ</a>
-
-
         </main>
         <!-- Essential javascripts for application to work-->
         <script src="./js/jquery-3.2.1.min.js"></script>
@@ -316,8 +201,6 @@
         <!-- Data table plugin-->
         <script type="text/javascript" src="./js/plugins/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="./js/plugins/dataTables.bootstrap.min.js"></script>
-
-
         <script type="text/javascript">
                 $('#sampleTable').DataTable();
                 //Thời Gian
@@ -352,7 +235,6 @@
                             '</span>';
                     document.getElementById("clock").innerHTML = tmp;
                     clocktime = setTimeout("time()", "1000", "Javascript");
-
                     function checkTime(i) {
                         if (i < 10) {
                             i = "0" + i;
@@ -362,22 +244,37 @@
                 }
         </script>
         <script>
-
             function updateBlog() {
-                var blogId = document.getElementById("blogId").value; // Lấy ID của bài viết
+                var blogId = document.getElementById("blogId").value;
                 var titleInput = document.getElementById("title");
-                var title = encodeURIComponent(titleInput.value); // Mã hóa tiêu đề
-                var tags = encodeURIComponent(document.getElementById("tags").value); // Mã hóa tags
-                var content = encodeURIComponent(tinymce.activeEditor.getContent());
+                var title = encodeURIComponent(titleInput.value); //encode
+                var tags = encodeURIComponent(document.getElementById("tags").value); //encode
+                var content = encodeURIComponent(tinymce.activeEditor.getContent());//encode
                 var categorySelect = document.getElementById("categorySelect");
                 var selectedCategory = categorySelect.options[categorySelect.selectedIndex].value;
                 var dateModified = document.getElementById("dateModified").value;
-
                 // Check validate
                 var decodedTitle = decodeURIComponent(title);
                 var decodedTags = decodeURIComponent(tags);
+                var tagArray = decodedTags.split("#");
                 var decodedContent = decodeURIComponent(content);
-
+                for (var i = 1; i < tagArray.length; i++) {
+                    var tag = tagArray[i].trim();
+                    var tagParts = tag.split(" ");
+                    if (tagParts.length > 1) {
+                        var containsSpace = tagParts.some(function (part) {
+                            return !part;
+                        });
+                        if (containsSpace) {
+                            Swal.fire({
+                                title: "Mỗi tag không được chứa dấu space",
+                                icon: "error",
+                                confirmButtonText: "OK",
+                            });
+                            return;
+                        }
+                    }
+                }
                 if (!title.trim() || !tags.trim() || !content.trim() || !selectedCategory.trim()) {
                     Swal.fire({
                         title: "Vui lòng điền đầy đủ thông tin",
@@ -394,15 +291,12 @@
                     });
                     return;
                 }
-
-                // Send AJAX request to check for duplicate title
                 var duplicateCheckXhttp = new XMLHttpRequest();
                 duplicateCheckXhttp.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         if (this.status == 200) {
                             var response = this.responseText;
                             if (response === "DUPLICATE_TITLE") {
-                                // Display SweetAlert for duplicate title
                                 Swal.fire({
                                     title: "Tiêu đề đã tồn tại",
                                     text: "Vui lòng chọn một tiêu đề khác",
@@ -412,7 +306,6 @@
                                     titleInput.focus();
                                 });
                             } else {
-                                // No duplicate title, proceed with updating the blog
                                 performBlogUpdate(blogId, title, tags, content, selectedCategory, dateModified);
                             }
                         }
@@ -425,38 +318,32 @@
             }
 
             function performBlogUpdate(blogId, title, tags, content, selectedCategory, dateModified) {
-                // Send AJAX request to update the blog
                 var updateXhttp = new XMLHttpRequest();
                 updateXhttp.onreadystatechange = function () {
                     if (this.readyState == 4) {
                         if (this.status == 200) {
-                            // Sử dụng SweetAlert2 để hiển thị thông báo
                             Swal.fire({
-                                title: "Cập nhật blog thành công",
+                                title: "Cập nhật bài viết thành công",
                                 icon: "success",
                                 confirmButtonText: "OK",
                             }).then((result) => {
-                                // Tải lại trang sau khi người dùng nhấp vào nút OK
                                 if (result.isConfirmed) {
                                     window.location.reload();
                                 }
                             });
                         } else {
-                            // Xử lý trường hợp lỗi
                             Swal.fire({
-                                title: "Cập nhật blog thất bại",
+                                title: "Cập nhật bài viết thất bại",
                                 icon: "error",
                                 confirmButtonText: "OK",
                             });
                         }
                     }
                 };
-
                 updateXhttp.open("POST", "http://localhost:8084/SWP391/UpdateBlog", true);
                 updateXhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 updateXhttp.send("blogId=" + blogId + "&title=" + title + "&tags=" + tags + "&content=" + content + "&category=" + selectedCategory + "&dateModified=" + dateModified);
             }
         </script>
-
     </body>
 </html>

@@ -7,14 +7,13 @@ import java.util.List;
 public class BlogDTO {
 
     private int blogID;
-     private String title;
+    private String title;
     private String content;
-        private String tags;
+    private String tags;
     private Date dateCreate;
     private Date dateModified;
     private User user;
     private BlogCategoryDTO blogCategory;
-
 
     public BlogDTO() {
     }

@@ -90,7 +90,7 @@ public class CreateRoof extends HttpServlet {
             RoofNFoundationDAO dao = new RoofNFoundationDAO();
             List<RoofNFoundation> foundations = dao.getAll();
             request.setAttribute("foundations", foundations);
-            request.setAttribute("messefalse", "Kiểm tra tên hoặc % diện tích");
+            request.setAttribute("messefalse", "Sai tên hoặc % diện tích");
             request.getRequestDispatcher("WebPages/ViewManager/Page/AdminManager/ManagerRoof.jsp").forward(request, response);
         } else {
             try {

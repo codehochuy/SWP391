@@ -5,9 +5,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,21 +13,16 @@
         <!-- Main CSS-->
         <link rel="stylesheet" type="text/css" href="css\admin.css">
         <link rel="icon" href="img/logo.jpg" type="image/x-icon">
-
-
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
         <!-- or -->
         <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-
         <!-- Font-icon css-->
         <link rel="stylesheet" type="text/css"
               href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
-
     </head>
-
     <body onload="time()" class="app sidebar-mini rtl">
         <jsp:include page="../../Page/Header/headerAdmin.jsp"/>
         <main class="app-content">
@@ -42,30 +35,23 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="tile">
-                        <!--khong phai huycute-->
                         <div class="tile-body">
                             <div class="row element-button">
-
                                 <div class="col-sm-2">
                                     <a class="btn btn-add btn-sm" href="CreateBlog" title="Thêm">
                                         <i class="fas fa-plus"></i> Tạo bài viết
                                     </a>
                                 </div>
-                                
-                                   <div class="col-sm-2">
+                                <div class="col-sm-2">
                                     <a class="btn btn-delete btn-sm nhap-tu-file" href="ManagerBlogCategory" title="Các loại tin tức">
                                         <i class="fas fa-file-upload"></i> Danh mục bài viết
                                     </a>
                                 </div>
-                                 
-
-
-
                             </div>
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                     <tr>
-                                        <th>ID bài viết</th>
+                                        <th>ID</th>
                                         <th>Tiêu đề</th>
                                         <th>Ngày tạo</th>
                                         <th>Ngày sửa đổi</th>
@@ -73,7 +59,6 @@
                                         <th>Tags</th>
                                         <th>Người tạo</th>
                                         <th>Chức năng</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -83,12 +68,10 @@
                                             <td>${blog.title}</td>
                                             <td>${blog.dateCreate}</td>
                                             <td>${blog.dateModified}</td>
-                                          
-                                              <td>${blog.blogCategory.blogCategoryName}</td>
-                                              <td>${blog.tags}</td>
-                                                <td>${blog.user.name}</td>
+                                            <td>${blog.blogCategory.blogCategoryName}</td>
+                                            <td>${blog.tags}</td>
+                                            <td>${blog.user.name}</td>
                                             <td style="display: flex; justify-content: space-left">
-
                                                 <form action="DeleteBlog" method="Post">
                                                     <button class="btn btn-primary btn-sm trash" type="button" title="Delete" onclick="confirmDelete(this)"
                                                             data-blogID="${blog.blogID}">
@@ -101,21 +84,16 @@
                                                         <i class="fas fa-eye"></i>
                                                     </button>
                                                 </form>
-
                                             </td>
-
-
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
                 </div>
             </div>
         </main>
-
         <!-- Essential javascripts for application to work-->
         <script src="./js/jquery-3.2.1.min.js"></script>
         <script src="./js/popper.min.js"></script>
@@ -130,8 +108,6 @@
         <!-- Data table plugin-->
         <script type="text/javascript" src="./js/plugins/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="./js/plugins/dataTables.bootstrap.min.js"></script>
-
-
         <script type="text/javascript">
                                                         $('#sampleTable').DataTable();
                                                         //Thời Gian
@@ -178,7 +154,6 @@
         <script>
             function confirmDelete(button) {
                 var blogid = button.getAttribute("data-blogID");
-
                 swal({
                     title: "Cảnh báo",
                     text: "Bạn có muốn xóa bài viết này?",
@@ -193,29 +168,25 @@
                 });
             }
         </script>
-
-
-      <script>
-    <% if (request.getAttribute("messtrue") != null) {%>
-        swal({
-            title: "<%= request.getAttribute("messtrue")%>",
-            icon: "success",
-        }).then((value) => {
+        <script>
+            <% if (request.getAttribute("messtrue") != null) {%>
+          swal({
+              title: "<%= request.getAttribute("messtrue")%>",
+              icon: "success",
+          }).then((value) => {
             <% request.removeAttribute("messtrue"); %>
-        });
-    <% } %>
-</script>
-      <script>
-    <% if (request.getAttribute("messefalse") != null) {%>
-        swal({
-            title: "<%= request.getAttribute("messefalse")%>",
-            icon: "error",
-        }).then((value) => {
+          });
+            <% } %>
+        </script>
+        <script>
+            <% if (request.getAttribute("messefalse") != null) {%>
+          swal({
+              title: "<%= request.getAttribute("messefalse")%>",
+              icon: "error",
+          }).then((value) => {
             <% request.removeAttribute("messefalse"); %>
-        });
-    <% } %>
-</script>
-
+          });
+            <% }%>
+        </script>
     </body>
-
 </html>
