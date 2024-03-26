@@ -270,10 +270,12 @@
                     let _3 = 0;
                     const element3 = document.getElementById('3');
                     if (element3 !== null) {
-                        const _3 = parseInt(element3.value);
-                        if (_3 >= _1 || _3 < 0) {
+                        const _3Value = parseInt(element3.value);
+                        if (_3Value >= _1 || _3Value < 0) {
                             isValid = false;
                             error_3.textContent = 'Sân trước phải nhỏ hơn chiều dài tổng thể và lớn hơn hoặc bằng 0.';
+                        } else {
+                            _3 = _3Value;
                         }
                     }
                     const element4 = document.getElementById('4');
